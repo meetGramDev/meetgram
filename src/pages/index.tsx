@@ -1,3 +1,4 @@
+import { Button } from '@/shared/ui/button/button'
 import { Inter } from 'next/font/google'
 import Image from 'next/image'
 

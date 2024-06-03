@@ -1,0 +1,18 @@
+.button {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.fullWidth {
+  width: 100%;
+}
+.primary {
+  background-color: var(--color-accent-500);
+}
+.secondary {
+  background-color: var(--dark-color-300);
+}
+.tertiary {
+}
+.link {
+}
