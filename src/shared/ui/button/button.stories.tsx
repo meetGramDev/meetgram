@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    children: 'Primary button',
+    children: 'Button',
     disabled: false,
     variant: 'primary',
   },
@@ -26,17 +26,38 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
+    children: 'Button',
+    disabled: false,
     variant: 'secondary',
+  },
+}
+export const Outlined: Story = {
+  args: {
+    children: 'Button',
+    disabled: false,
+    variant: 'outlined',
+  },
+}
+export const Text: Story = {
+  args: {
+    children: 'Button',
+    disabled: false,
+    variant: 'text',
+  },
+}
+export const AsLink: Story = {
+  args: {
+    as: 'a',
+    children: 'Link that looks like a button',
+    disabled: false,
+    href: '#',
+    variant: 'primary',
   },
 }
 export const FullWidth: Story = {
   args: {
+    children: 'Button',
     fullWidth: true,
+    variant: 'primary',
   },
 }
-
-// import { Button } from '@/shared/ui/button/button'
-//
-// export default { component: Button, title: 'Button123' }
-//
-// export const Default = {}
