@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/button/button'
+import Button from '@/shared/ui/button/button'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
