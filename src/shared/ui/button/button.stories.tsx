@@ -51,7 +51,7 @@ export const AsLink: Story = {
     children: 'Link that looks like a button',
     disabled: false,
     href: '#',
-    variant: 'primary',
+    variant: 'link',
   },
 }
 export const FullWidth: Story = {

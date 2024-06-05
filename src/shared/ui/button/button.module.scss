@@ -64,13 +64,28 @@
     outline: 2px solid var(--accent-color-700);
   }
 }
+
 .outlined {
+  @include button;
   background-color: rgba(28, 28, 28, 0);
   color: var(--accent-color-500);
   border: 1px solid var(--accent-color-500);
+
+  &:hover {
+    background-color: var(--accent-color-100);
+    color: var(--light-color-100);
+  }
+  &:active {
+    background-color: var(--accent-color-700);
+    color: var(--light-color-500);
+  }
   &:disabled {
+    opacity: 0.8;
     border-color: var(--accent-color-900);
     color: var(--accent-color-900);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent-color-700);
   }
 }
 .text {
