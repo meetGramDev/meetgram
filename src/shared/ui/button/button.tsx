@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 import s from './button.module.scss'
 
-export type ButtonVariant = 'outlined' | 'primary' | 'secondary' | 'text'
+export type ButtonVariant = 'link' | 'outlined' | 'primary' | 'secondary' | 'text'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
@@ -14,7 +14,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   variant?: ButtonVariant
 } & ComponentPropsWithoutRef<T>
 
-const Button = forwardRef(<T extends ElementType = 'button'>(props: ButtonProps<T>, ref: any) => {
+export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
   const { as, className, fullWidth, variant = 'primary', ...rest } = props
 
   const classNames = { root: clsx(fullWidth && s.fullWidth, s[variant], className) }
@@ -22,10 +22,8 @@ const Button = forwardRef(<T extends ElementType = 'button'>(props: ButtonProps<
   const Component = as || 'button'
 
   return (
-    <Component className={classNames.root} ref={ref} {...rest}>
+    <Component className={classNames.root} {...rest}>
       {props.children}
     </Component>
   )
-})
-
-export default Button
+}

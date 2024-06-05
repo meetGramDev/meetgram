@@ -1,11 +1,11 @@
-import Button from '@/shared/ui/button/button'
+import { Button } from '@/shared/ui/button/button'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   argTypes: {
     variant: {
       control: { type: 'radio' },
-      options: ['primary', 'secondary', 'tertiary', 'link'],
+      options: ['outlined', 'primary', 'secondary', 'text', 'link'],
     },
   },
   component: Button,
