@@ -6,8 +6,20 @@ import { fn } from '@storybook/test'
 
 import Select, { OptionType } from './select'
 
+const items: OptionType[] = [
+  { label: 'banana', value: 'banana' },
+  { label: 'apple', value: 'apple' },
+  { disabled: true, label: 'orange', value: 'orange' },
+  { label: 'lemon', value: 'lemon' },
+]
+
 const meta = {
-  args: { onOpenChange: fn(), onValueChange: fn() },
+  args: {
+    onOpenChange: fn(),
+    onValueChange: fn(),
+    options: items,
+    placeholder: 'Select a fruit...',
+  },
   component: Select,
   tags: ['autodocs'],
   title: 'UI/Select',
@@ -16,19 +28,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const items: OptionType[] = [
-  { label: 'banana', value: 'banana' },
-  { label: 'apple', value: 'apple' },
-  { disabled: true, label: 'orange', value: 'orange' },
-  { label: 'lemon', value: 'lemon' },
-]
-
 export const Default: Story = {
-  args: {
-    options: items,
-    placeholder: 'Select a fruit...',
-  },
-
   render: args => {
     return <Select {...args} />
   },
@@ -37,16 +37,12 @@ export const Default: Story = {
 export const SelectWithLabel: Story = {
   args: {
     label: 'Select box',
-    options: items,
-    placeholder: 'Select a fruit...',
   },
 }
 
 export const Disabled: Story = {
   args: {
     disabled: true,
-    options: items,
-    placeholder: 'Select a fruit...',
   },
 }
 
@@ -72,5 +68,20 @@ export const OverflowContent: Story = {
       value: String(v),
     })),
     placeholder: 'Select...',
+  },
+}
+
+export const SelectWithError: Story = {
+  args: {
+    disabled: true,
+    error: 'Error',
+  },
+}
+
+export const RequiredField: Story = {
+  args: {
+    error: 'Required',
+    label: 'Select item',
+    required: true,
   },
 }

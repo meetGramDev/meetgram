@@ -7,7 +7,7 @@
 
 @layer components {
   .select-trigger {
-    @apply border select-paddings select-outline-shadow flex min-w-40 items-center justify-between rounded-[2px] border-dark-100 bg-dark-500 text-regular16 text-light-100 hover:text-light-900 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-accent-500 data-[disabled]:pointer-events-none data-[disabled]:data-[placeholder]:text-dark-100 data-[placeholder]:text-light-100 hover:data-[placeholder]:text-light-900;
+    @apply select-paddings select-outline-shadow flex items-center justify-between gap-3 rounded-[2px] border border-dark-100 bg-dark-500 text-regular16 text-light-100 hover:text-light-900 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-accent-500 data-[disabled]:pointer-events-none data-[disabled]:data-[placeholder]:text-dark-100 data-[placeholder]:text-light-100 hover:data-[placeholder]:text-light-900;
   }
 
   .select-content {
