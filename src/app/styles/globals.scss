@@ -1,6 +1,13 @@
 @import 'reset';
 @import 'colors';
+@import 'typography';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font: var(--font-regular);
+  color: var(--light-color-100);
+  background: var(--dark-color-900);
+}
