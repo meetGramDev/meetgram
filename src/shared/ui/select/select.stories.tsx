@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { useState } from 'react'
 
+import { OptionType } from '@/shared/ui/select/option'
+import { Select } from '@/shared/ui/select/select'
 import { fn } from '@storybook/test'
-
-import Select, { OptionType } from './select'
 
 const items: OptionType[] = [
   { label: 'banana', value: 'banana' },

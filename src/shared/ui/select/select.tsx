@@ -3,26 +3,10 @@ import React, { forwardRef } from 'react'
 
 import { ArrowDown } from '@/shared/assets/icons/ArrowDown'
 import { cn } from '@/shared/lib/cn'
+import { Option, OptionType } from '@/shared/ui/select/option'
 import * as SelectRadix from '@radix-ui/react-select'
 
-export type OptionType = {
-  disabled?: boolean
-  /**
-   * Option's text content
-   */
-  label: number | string
-  /**
-   * Optional text used for typeahead purposes.
-   * Use this when the content is complex, or you have non-textual content inside.
-   */
-  textValue?: string
-  /**
-   * The value given as data when submitted with a name
-   */
-  value: string
-}
-
-type SelectProps = {
+type Props = {
   /**
    * Applied to the component that pops out when the select is open
    */
@@ -51,11 +35,11 @@ type SelectProps = {
    */
   rootClassName?: string
 } & SelectRadix.SelectProps
-type SelectType = React.ForwardRefExoticComponent<
-  React.RefAttributes<HTMLButtonElement> & SelectProps
+type SelectComponent = React.ForwardRefExoticComponent<
+  Props & React.RefAttributes<HTMLButtonElement>
 >
 
-const Select: SelectType = forwardRef(
+export const Select: SelectComponent = forwardRef(
   (
     {
       children,
@@ -78,7 +62,7 @@ const Select: SelectType = forwardRef(
         'fill-light-100 transition-transform duration-300 group-data-[state=open]:rotate-180'
       ),
       content: cn('select-content', contentClassName),
-      error: cn('ml-1 text-danger-300'),
+      error: cn('absolute ml-1 mt-1 text-danger-300'),
       label: cn(
         'block text-regular14 text-light-900',
         required && 'after:ml-0.5 after:text-red-500 after:content-["*"]',
@@ -86,6 +70,8 @@ const Select: SelectType = forwardRef(
       ),
       trigger: cn('select-trigger', 'group', error && 'border-danger-300', rootClassName),
     }
+
+    const optionsToRender = children ? 'children' : 'options'
 
     return (
       <>
@@ -110,9 +96,9 @@ const Select: SelectType = forwardRef(
           <SelectRadix.Portal container={portal}>
             <SelectRadix.Content className={classes.content} position={'popper'}>
               <SelectRadix.Viewport>
-                {children && children}
-                {options &&
-                  options.map(o => (
+                {optionsToRender === 'children' && children}
+                {optionsToRender === 'options' &&
+                  options?.map(o => (
                     <Option key={o.value} {...o}>
                       {o.label}
                     </Option>
@@ -126,19 +112,3 @@ const Select: SelectType = forwardRef(
     )
   }
 )
-
-type OptionComponent = React.ForwardRefExoticComponent<
-  React.RefAttributes<HTMLDivElement> & SelectRadix.SelectItemProps
->
-
-export const Option: OptionComponent = forwardRef(
-  ({ children, className, ...props }, forwardedRef) => {
-    return (
-      <SelectRadix.Item className={cn('select-item')} {...props} ref={forwardedRef}>
-        <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
-      </SelectRadix.Item>
-    )
-  }
-)
-
-export default Select
