@@ -1,9 +1,11 @@
 @import 'reset';
 @import 'colors';
+@import 'typography';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @layer components {
   .select-trigger {
@@ -25,5 +27,11 @@
   }
   .select-outline-shadow {
     @apply data-[state="open"]:shadow-[0_0_0_1px] data-[state="open"]:shadow-light-100;
-  }
+}
+
+body {
+  font: var(--font-regular);
+  color: var(--light-color-100);
+  background: var(--dark-color-900);
+
 }
