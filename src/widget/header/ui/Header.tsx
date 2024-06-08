@@ -1,11 +1,9 @@
+'use client'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { Button } from '@/shared/ui/button/button'
 import { OptionType } from '@/shared/ui/select/option'
 import { Select } from '@/shared/ui/select/select'
-import clsx from 'clsx'
 import Link from 'next/link'
-
-import s from './Header.module.scss'
 
 const languages: OptionType[] = [
   { label: 'Russian', value: 'ru' },
@@ -19,22 +17,37 @@ type Props = {
 
 export const Header = ({ isAuth = true, notification }: Props) => {
   return (
-    <header className={s.header}>
-      <Link className={s.logo} href={'/'}>
+    <header
+      className={
+        'flex h-[3.75rem] w-full items-center justify-between border-b border-[#333] px-[3.75rem]'
+      }
+    >
+      <Link className={'text-large font-semibold'} href={'/'}>
         Meetgram
       </Link>
-      <div className={s.inner}>
-        <div className={s.actions}>
+      <div className={'flex items-center justify-between gap-[2.25rem]'}>
+        <div className={'flex items-center justify-end gap-[3rem]'}>
           {isAuth && (
-            <div className={clsx(s.notification, notification && s.messageCounter)}>
-              <Notification />
+            <div className={'relative text-light-100'}>
+              <Notification
+                className={'fill-current transition-all duration-300 hover:fill-accent-500'}
+              />
+              {notification && (
+                <div
+                  className={
+                    'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
+                  }
+                >
+                  {notification}
+                </div>
+              )}
             </div>
           )}
           <Select defaultValue={'ru'} options={languages} />
         </div>
 
         {!isAuth && (
-          <div className={s.buttons}>
+          <div className={'flex gap-6'}>
             <Button variant={'text'}>Log in</Button>
             <Button variant={'primary'}>Sign up</Button>
           </div>

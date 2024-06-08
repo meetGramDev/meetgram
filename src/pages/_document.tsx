@@ -1,6 +1,8 @@
-import { Button } from '@/shared/ui/button/button'
 import { Head, Html, Main, NextScript } from 'next/document'
+import { Inter } from 'next/font/google'
 import Link from 'next/link'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Document() {
   return (
@@ -8,7 +10,7 @@ export default function Document() {
       <Head />
       <header
         className={
-          'flex items-center justify-space gap-5 w-full h-10 border-solid border-b-2 border-black'
+          'justify-space flex h-10 w-full items-center gap-5 border-b-2 border-solid border-black'
         }
       >
         <Link href={'/'}>Main</Link>
@@ -16,7 +18,7 @@ export default function Document() {
         <Link href={'/sign-up'}>Sign up</Link>
         <Link href={'/profile'}>Profile</Link>
       </header>
-      <body>
+      <body className={`${inter.className}`}>
         <Main />
         <NextScript />
       </body>
