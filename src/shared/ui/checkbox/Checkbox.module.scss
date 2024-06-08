@@ -5,11 +5,6 @@
 
 .buttonWrapper {
   cursor: pointer;
-  all: unset;
-
-  //display: flex;
-  //align-items: center;
-  //justify-content: center;
   border-radius: 50%;
 
   //&:hover:not(.disabled),
@@ -17,43 +12,55 @@
   //  box-shadow: 0 0 0 9px var(--dark-color-300);
   //  background-color: var(--dark-color-300);
   //}
-  &:hover {
+  //all: unset;
+  //display: flex;
+  //align-items: center;
+  //justify-content: center;
+  //&.left {
+  //  margin-left: -9px;
+  //}
+  //&:active {
+  //  outline: 9px solid var(--dark-color-100);
+  //}
+
+  &:hover:not(.disabled),
+  &:hover:not(.disabled) {
     box-shadow: 0 0 0 9px var(--dark-color-300);
     background-color: var(--dark-color-300);
   }
 
-  &:active {
+  &:active:not(.disabled),
+  &:active:not(.disabled) {
     box-shadow: 0 0 0 9px var(--dark-color-100);
     background-color: var(--dark-color-100);
   }
 
-  //&:focus-within {
-  //  box-shadow: 0 0 0 9px var(--dark-color-500);
-  //  background-color: var(--dark-color-500);
-  //}
-
-  //&.left {
-  //  margin-left: -9px;
-  //}
-
-  //&:active {
-  //  outline: 9px solid var(--dark-color-100);
-  //}
+  &:focus-within {
+    box-shadow: 0 0 0 9px var(--dark-color-500);
+    background-color: var(--dark-color-500);
+  }
+  &:disabled {
+    cursor: pointer;
+    box-shadow: 0 0 0 0px var(--dark-color-500);
+    background-color: var(--dark-color-500);
+  }
 }
 
 .root {
   cursor: pointer;
-
+  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 18px;
-  height: 18px;
-
-  //background-color: transparent;
+  width: 14px;
+  height: 14px;
   border: 2px solid var(--light-color-100);
   border-radius: 2px;
+  &:disabled {
+    border-color: var(--light-color-900);
+    //background-color: var(--light-color-700);
+  }
 
   //box-shadow: 0 2px 10px var(--color-dark-700);
   //
@@ -76,11 +83,11 @@
   //}
 }
 
-.indicator {
-  width: 18px;
-  height: 18px;
-  border-radius: 2px;
-}
+//.indicator {
+//  width: 18px;
+//  height: 18px;
+//  border-radius: 2px;
+//}
 
 .label {
   cursor: pointer;
@@ -88,13 +95,14 @@
   align-items: center;
   margin-left: 11px;
   width: max-content;
-  color: var(--light-color-100);
+  //color: var(--light-color-100);
 }
 
 .disabled {
   cursor: initial;
   //color: var(--dark-color-100);
-  border-color: var(--light-color-900);
+  //border-color: var(--light-color-900);
+  color: var(--light-color-900);
 }
 
 .checked:not(.disabled) {

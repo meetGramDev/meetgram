@@ -1,9 +1,8 @@
-import { FC } from 'react'
-
+import DisabledCheckbox from '@/shared/ui/checkbox/DisabledCheck'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 import { clsx } from 'clsx'
 
-import s from './checkbox.module.scss'
+import s from './Checkbox.module.scss'
 
 import Check from './Check'
 
@@ -18,21 +17,13 @@ export type CheckboxProps = {
   required?: boolean
 }
 
-export const Checkbox: FC<CheckboxProps> = ({
-  //поправить типизацию
-  checked,
-  className,
-  disabled,
-  id,
-  label,
-  onValueChange,
-  position,
-  required,
-}) => {
+export const Checkbox = (props: CheckboxProps) => {
+  const { checked, className, disabled, id, label, onValueChange, position, required, ...rest } =
+    props
+
   const classNames = {
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled, position === 'left' && s.left),
     container: clsx(s.innerContainer, className),
-    indicator: clsx(s.indicator, checked && s.checked, disabled && s.disabled),
     label: clsx(s.label, disabled && s.disabled),
     root: s.root,
   }
@@ -49,13 +40,16 @@ export const Checkbox: FC<CheckboxProps> = ({
           required={required}
         >
           {checked && (
-            <CheckboxRadix.Indicator className={classNames.indicator} forceMount>
-              <Check />
+            <CheckboxRadix.Indicator forceMount>
+              {disabled && <DisabledCheckbox />}
+              {checked && !disabled && <Check />}
             </CheckboxRadix.Indicator>
           )}
         </CheckboxRadix.Root>
       </div>
-      <div className={classNames.label}>{label}</div>
+      <label className={classNames.label} htmlFor={id}>
+        {label}
+      </label>
     </div>
   )
 }
