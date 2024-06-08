@@ -1,3 +1,4 @@
+import { Button } from '@/shared/ui/button/button'
 import { Head, Html, Main, NextScript } from 'next/document'
 import Link from 'next/link'
 
