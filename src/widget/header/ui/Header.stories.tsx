@@ -4,6 +4,9 @@ import { Header } from '@/widget/header/ui/Header'
 
 const meta = {
   component: Header,
+  parameters: {
+    layout: 'fullscreen',
+  },
   tags: ['autodocs'],
   title: 'Widget/Header',
 } satisfies Meta<typeof Header>
