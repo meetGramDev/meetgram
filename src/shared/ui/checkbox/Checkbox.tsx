@@ -1,9 +1,8 @@
+import { Check } from '@/shared/assets/icons/Check'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 import { clsx } from 'clsx'
 
 import s from './Checkbox.module.scss'
-
-import Check from './Check'
 
 export type CheckboxProps = {
   checked?: boolean
@@ -12,16 +11,14 @@ export type CheckboxProps = {
   id?: string
   label?: string
   onValueChange?: (checked: boolean) => void
-  position?: 'left'
   required?: boolean
 }
 
 export const Checkbox = (props: CheckboxProps) => {
-  const { checked, className, disabled, id, label, onValueChange, position, required, ...rest } =
-    props
+  const { checked, className, disabled, id, label, onValueChange, required, ...rest } = props
 
   const classNames = {
-    buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled, position === 'left' && s.left),
+    buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
     container: clsx(s.innerContainer, className),
     indicator: clsx(s.indicator, checked && s.checked, disabled && s.disabled),
     label: clsx(s.label, disabled && s.disabled),
