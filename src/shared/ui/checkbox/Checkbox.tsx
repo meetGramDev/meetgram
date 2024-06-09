@@ -1,4 +1,3 @@
-import DisabledCheckbox from '@/shared/ui/checkbox/DisabledCheck'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 import { clsx } from 'clsx'
 
@@ -24,6 +23,7 @@ export const Checkbox = (props: CheckboxProps) => {
   const classNames = {
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled, position === 'left' && s.left),
     container: clsx(s.innerContainer, className),
+    indicator: clsx(s.indicator, checked && s.checked, disabled && s.disabled),
     label: clsx(s.label, disabled && s.disabled),
     root: s.root,
   }
@@ -40,9 +40,8 @@ export const Checkbox = (props: CheckboxProps) => {
           required={required}
         >
           {checked && (
-            <CheckboxRadix.Indicator forceMount>
-              {disabled && <DisabledCheckbox />}
-              {checked && !disabled && <Check />}
+            <CheckboxRadix.Indicator className={classNames.indicator} forceMount>
+              {!disabled ? <Check /> : <Check fill={`var(--dark-color-100)`} />}
             </CheckboxRadix.Indicator>
           )}
         </CheckboxRadix.Root>

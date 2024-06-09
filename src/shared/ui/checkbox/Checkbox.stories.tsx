@@ -39,9 +39,17 @@ export const UnactiveChackboxWithoutLabel: Story = {
   },
 }
 
-export const DisabledCheckbox: Story = {
+export const DisabledActiveCheckbox: Story = {
   args: {
     checked: true,
+    disabled: true,
+    id: 'DisabledChackbox',
+    label: 'DisabledChackbox',
+  },
+}
+export const DisabledUnactiveCheckbox: Story = {
+  args: {
+    checked: false,
     disabled: true,
     id: 'DisabledChackbox',
     label: 'DisabledChackbox',
@@ -50,10 +58,12 @@ export const DisabledCheckbox: Story = {
 
 export const ChangingCheckbox = () => {
   const [checked, setChecked] = useState(false)
+  const [disabled, setDisabled] = useState(false)
 
   return (
     <Checkbox
       checked={checked}
+      disabled={disabled}
       id={'ChangingCheckbox'}
       label={'Check'}
       onValueChange={() => setChecked(!checked)}

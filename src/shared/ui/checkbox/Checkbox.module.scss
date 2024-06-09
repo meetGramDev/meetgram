@@ -7,22 +7,6 @@
   cursor: pointer;
   border-radius: 50%;
 
-  //&:hover:not(.disabled),
-  //&:hover:not(.disabled) {
-  //  box-shadow: 0 0 0 9px var(--dark-color-300);
-  //  background-color: var(--dark-color-300);
-  //}
-  //all: unset;
-  //display: flex;
-  //align-items: center;
-  //justify-content: center;
-  //&.left {
-  //  margin-left: -9px;
-  //}
-  //&:active {
-  //  outline: 9px solid var(--dark-color-100);
-  //}
-
   &:hover:not(.disabled),
   &:hover:not(.disabled) {
     box-shadow: 0 0 0 9px var(--dark-color-300);
@@ -42,7 +26,6 @@
   &:disabled {
     cursor: pointer;
     box-shadow: 0 0 0 0px var(--dark-color-500);
-    background-color: var(--dark-color-500);
   }
 }
 
@@ -59,35 +42,14 @@
   border-radius: 2px;
   &:disabled {
     border-color: var(--light-color-900);
-    //background-color: var(--light-color-700);
   }
-
-  //box-shadow: 0 2px 10px var(--color-dark-700);
-  //
-  //&:focus {
-  //  outline: none;
-  //}
-  //
-  //&:disabled {
-  //  cursor: initial;
-  //  //border-color: var(--color-dark-100);
-  //}
-
-  //&:hover {
-  //  outline: 9px solid var(--dark-color-300);
-  //  //border: 18px solid var(--dark-color-100);
-  //  //border-radius: 50%;
-  //}
-  //&:active {
-  //  outline: 9px solid var(--dark-color-100);
-  //}
 }
 
-//.indicator {
-//  width: 18px;
-//  height: 18px;
-//  border-radius: 2px;
-//}
+.indicator {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+}
 
 .label {
   cursor: pointer;
@@ -95,25 +57,18 @@
   align-items: center;
   margin-left: 11px;
   width: max-content;
-  //color: var(--light-color-100);
 }
 
 .disabled {
   cursor: initial;
-  //color: var(--dark-color-100);
-  //border-color: var(--light-color-900);
+
   color: var(--light-color-900);
 }
 
 .checked:not(.disabled) {
-  //background: var(--color-dark-900);
+  background-color: var(--dark-color-900);
 }
 
 .checked {
-  //background: var(--color-light-700);
+  background-color: var(--light-color-100);
 }
-
-//.label {
-//  color: var(--light-color-100);
-//  margin-left: 11px;
-//}
