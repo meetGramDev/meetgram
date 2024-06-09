@@ -5,18 +5,13 @@
 
   width: 380px;
   padding: 24px;
-
-  background: var(--dark-color-500);
-  border: 1px solid var(--dark-color-300);
-  border-radius: 2px;
 }
 
 .form {
-  @include flex(column, center, center, 15px);
+  @include flex(column, center, center, 18px);
 }
 
 .title {
-  //margin-bottom: 14px;
   font: var(--font-h1);
   text-align: center;
 }
