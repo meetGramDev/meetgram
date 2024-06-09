@@ -8,7 +8,7 @@ export default function Document() {
       <Head />
       <header
         className={
-          'flex items-center justify-space gap-5 w-full h-10 border-solid border-b-2 border-black'
+          'justify-space flex h-10 w-full items-center gap-5 border-b-2 border-solid border-black'
         }
       >
         <Link href={'/'}>Main</Link>

@@ -25,7 +25,7 @@ export const Checkbox = (props: CheckboxProps) => {
     container: clsx(s.innerContainer, className),
     indicator: clsx(s.indicator, checked && s.checked, disabled && s.disabled),
     label: clsx(s.label, disabled && s.disabled),
-    root: s.root,
+    root: clsx(s.root),
   }
 
   return (
