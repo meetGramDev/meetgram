@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, useEffect, useState } from 'react'
 
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { Eye } from '@/shared/assets/icons/Eye'
@@ -19,6 +19,16 @@ type Props = {
 export const Input = forwardRef<HTMLInputElement, Props>(
   ({ className, clearValue, disabled, error, id, label, type = 'text', value, ...rest }, ref) => {
     const [showPassword, setShowPassword] = useState(false)
+    const [shake, setShake] = useState(false)
+    const [isLongErrorMessage, setIsLongErrorMessage] = useState(false)
+
+    useEffect(() => {
+      if (error && error?.length > 51) {
+        setIsLongErrorMessage(true)
+      } else {
+        setIsLongErrorMessage(false)
+      }
+    }, [error])
 
     const classes = {
       closeIconButton: clsx(s.btn, s.closeIconButton),
@@ -28,8 +38,10 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         type === 'password' && s.password,
         type === 'number' && s.numberType,
         error && s.error,
+        shake && s.shake,
         value && s.active,
-        disabled && s.disabled
+        disabled && s.disabled,
+        isLongErrorMessage && s.isLongErrorMessage
       ),
       label: clsx(s.label, disabled && s.disabled),
       showPasswordButton: clsx(s.btn, s.showPasswordButton, disabled && s.disabled),
@@ -41,6 +53,19 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     }
 
     const finalType = type === 'password' && showPassword ? 'text' : type
+
+    useEffect(() => {
+      if (error) {
+        setShake(true)
+      }
+      const timer = setTimeout(() => {
+        setShake(false)
+      }, 500)
+
+      return () => {
+        clearTimeout(timer)
+      }
+    }, [error])
 
     return (
       <div className={classes.wrapper}>

@@ -1,0 +1,18 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  margin: 0 auto;
+  padding: 0 150px;
+}
+
+.title {
+  font: var(--font-h1);
+}
+
+.text {
+  font: var(--font-regular-small);
+  text-align: center;
+}
