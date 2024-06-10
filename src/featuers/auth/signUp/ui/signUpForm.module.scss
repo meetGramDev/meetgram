@@ -1,0 +1,36 @@
+@import '@/app/styles/mixins';
+
+.card {
+  @include flex(column, center, normal, 15px);
+
+  width: 380px;
+  padding: 24px;
+}
+
+.form {
+  @include flex(column, center, center, 18px);
+}
+
+.title {
+  font: var(--font-h1);
+  text-align: center;
+}
+
+.iconWrapper {
+  @include flex(row, center, center, 60px);
+
+  margin-bottom: 14px;
+}
+
+.icon {
+  width: 36px;
+  height: 36px;
+}
+
+.info {
+  font: var(--font-small);
+}
+
+.link {
+  text-decoration: none;
+}
