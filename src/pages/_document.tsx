@@ -1,8 +1,5 @@
 import { Head, Html, Main, NextScript } from 'next/document'
-import { Inter } from 'next/font/google'
 import Link from 'next/link'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Document() {
   return (
@@ -18,7 +15,7 @@ export default function Document() {
         <Link href={'/sign-up'}>Sign up</Link>
         <Link href={'/profile'}>Profile</Link>
       </header>
-      <body className={`${inter.className}`}>
+      <body>
         <Main />
         <NextScript />
       </body>

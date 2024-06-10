@@ -1,3 +1,11 @@
-export default function SignIn() {
-  return <div>SignIn</div>
+import { SignInForm } from '@/features/auth/signIn/ui'
+import { NextPageWithLayout } from '@/shared/types'
+import { getAuthLayout } from '@/widgets/layouts'
+
+const SignIn: NextPageWithLayout = () => {
+  return <SignInForm />
 }
+
+SignIn.getLayout = getAuthLayout
+
+export default SignIn
