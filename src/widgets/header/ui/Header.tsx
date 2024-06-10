@@ -1,5 +1,6 @@
 'use client'
 import { Notification } from '@/shared/assets/icons/Notification'
+import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { Button } from '@/shared/ui/button/button'
 import { OptionType } from '@/shared/ui/select/option'
 import { Select } from '@/shared/ui/select/select'
@@ -22,7 +23,7 @@ export const Header = ({ isAuth = true, notification }: Props) => {
         'flex h-[3.75rem] w-full items-center justify-between border-b border-[#333] px-[3.75rem]'
       }
     >
-      <Link className={'text-large font-semibold'} href={'/'}>
+      <Link className={'text-large font-semibold'} href={HOME}>
         Meetgram
       </Link>
       <div className={'flex items-center justify-between gap-[2.25rem]'}>
@@ -50,8 +51,12 @@ export const Header = ({ isAuth = true, notification }: Props) => {
 
         {!isAuth && (
           <div className={'flex gap-6'}>
-            <Button variant={'text'}>Log in</Button>
-            <Button variant={'primary'}>Sign up</Button>
+            <Button as={Link} href={SIGN_IN} variant={'link'}>
+              Log in
+            </Button>
+            <Button as={Link} href={SIGN_UP} variant={'primary'}>
+              Sign up
+            </Button>
           </div>
         )}
       </div>
