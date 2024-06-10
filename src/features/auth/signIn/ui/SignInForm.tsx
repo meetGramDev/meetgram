@@ -21,16 +21,16 @@ export const SignInForm = ({ onSubmit }: Props) => {
 
   return (
     <Card className={'min-w-[22.5rem] p-6 text-regular16 text-light-100'}>
+      <h2 className={'mb-3 text-center text-h1 font-bold'}>Sign In</h2>
+      <div className={'mb-6 flex justify-center gap-9'}>
+        <Button variant={'text'}>
+          <Image alt={'Login with google'} height={36} src={googleIcon} width={36} />
+        </Button>
+        <Button variant={'text'}>
+          <Image alt={'Login with github'} height={36} src={githubIcon} width={36} />
+        </Button>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={'mb-3 text-center text-h1 font-bold'}>Sign In</h2>
-        <div className={'mb-6 flex justify-center gap-9'}>
-          <Button variant={'text'}>
-            <Image alt={'Login with google'} height={36} src={googleIcon} width={36} />
-          </Button>
-          <Button variant={'text'}>
-            <Image alt={'Login with github'} height={36} src={githubIcon} width={36} />
-          </Button>
-        </div>
         <div className={'mb-9 flex flex-col gap-6'}>
           <Input
             error={errors.email?.message}
