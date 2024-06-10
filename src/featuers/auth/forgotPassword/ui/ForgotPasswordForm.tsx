@@ -13,7 +13,7 @@ export const ForgotPasswordForm = () => {
           Send Link
         </Button>
       </form>
-      <Button as={'link'} href={'#'} variant={'link'}>
+      <Button as={'Link'} href={'#'} variant={'link'}>
         Back to Sign In
       </Button>
     </Card>
