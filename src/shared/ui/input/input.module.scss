@@ -1,4 +1,4 @@
-@import '../../../app/styles/mixins';
+@import '@/app/styles/mixins';
 
 .wrapper {
   @include flex(column, center, flex-start);
@@ -7,6 +7,7 @@
 }
 
 .label {
+  font: var(--font-regular-small);
   color: var(--light-color-900);
 }
 
@@ -71,7 +72,9 @@
 
 .errorMessage {
   position: absolute;
+  bottom: -20px;
   left: 0;
+
   font-size: 14px;
   color: var(--danger-color-500);
 }
@@ -158,4 +161,35 @@
   cursor: initial;
   color: var(--dark-color-100);
   border-color: var(--dark-color-100);
+}
+
+.isLongErrorMessage {
+  margin-bottom: 26px;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-0.5px);
+  }
+
+  20%,
+  80% {
+    transform: translateX(1px);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translateX(-2px);
+  }
+
+  40%,
+  60% {
+    transform: translateX(2px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) both;
 }
