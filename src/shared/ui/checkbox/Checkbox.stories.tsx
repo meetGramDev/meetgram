@@ -17,6 +17,7 @@ export const ActiveCheckbox: Story = {
     checked: true,
     id: 'ActiveCheckbox',
     label: 'Check-box',
+    onValueChange: () => {},
   },
 }
 
@@ -25,17 +26,20 @@ export const InactiveChackbox: Story = {
     checked: false,
     id: 'UnactiveChackbox',
     label: 'Check-box',
+    onValueChange: () => {},
   },
 }
 
 export const ActiveCheckboxWithoutLabel: Story = {
   args: {
     checked: true,
+    onValueChange: () => {},
   },
 }
 export const InactiveCheckboxWithoutLabel: Story = {
   args: {
     checked: false,
+    onValueChange: () => {},
   },
 }
 
@@ -45,6 +49,7 @@ export const DisabledActiveCheckbox: Story = {
     disabled: true,
     id: 'DisabledChackbox',
     label: 'Disabled Active Checkbox',
+    onValueChange: () => {},
   },
 }
 export const DisabledInactiveCheckbox: Story = {
@@ -53,6 +58,7 @@ export const DisabledInactiveCheckbox: Story = {
     disabled: true,
     id: 'DisabledChackbox',
     label: 'Disabled Inactive Checkbox',
+    onValueChange: () => {},
   },
 }
 

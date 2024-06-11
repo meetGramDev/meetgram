@@ -3,9 +3,9 @@ import { Ref, SVGProps, forwardRef } from 'react'
 const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
     fill={'none'}
-    height={'18px'}
+    height={18}
     ref={ref}
-    width={'18px'}
+    width={18}
     xmlns={'http://www.w3.org/2000/svg'}
     {...props}
   >
