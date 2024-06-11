@@ -8,7 +8,7 @@ export const passwordConstraint = z
   .min(6, { message: 'Minimum number of characters 6' })
   .max(20, { message: 'Maximum number of characters 20' })
   .regex(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@\[\]^_`{|}~\\])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@\[\]^_`{|}~\\]{6,}$/,
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\]{6,}$/,
     'Password must contain a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
   )
 
