@@ -36,7 +36,7 @@ export const Checkbox = (props: CheckboxProps) => {
           onCheckedChange={onValueChange}
           required={required}
         >
-          <CheckboxRadix.Indicator className={classNames.indicator} forceMount>
+          <CheckboxRadix.Indicator className={classNames.indicator}>
             {!disabled ? <Check /> : <Check fill={`var(--dark-color-100)`} />}
           </CheckboxRadix.Indicator>
         </CheckboxRadix.Root>
