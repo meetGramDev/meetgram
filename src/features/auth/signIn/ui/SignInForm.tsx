@@ -1,4 +1,4 @@
-import { SignInFields, useSignIn } from '@/features/auth/signIn/model/useSignIn'
+import { SignInFields, useSignIn } from '@/features/auth/signIn/lib/useSignIn'
 import githubIcon from '@/shared/assets/icons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
