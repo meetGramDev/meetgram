@@ -5,17 +5,17 @@ import { clsx } from 'clsx'
 import s from './Checkbox.module.scss'
 
 export type CheckboxProps = {
-  checked?: boolean
+  checked: boolean
   className?: string
   disabled?: boolean
   id?: string
   label?: string
-  onValueChange?: (checked: boolean) => void
+  onValueChange: (checked: boolean) => void
   required?: boolean
 }
 
 export const Checkbox = (props: CheckboxProps) => {
-  const { checked, className, disabled, id, label, onValueChange, required, ...rest } = props
+  const { checked, className, disabled, id, label, onValueChange, required } = props
 
   const classNames = {
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
@@ -36,11 +36,9 @@ export const Checkbox = (props: CheckboxProps) => {
           onCheckedChange={onValueChange}
           required={required}
         >
-          {checked && (
-            <CheckboxRadix.Indicator className={classNames.indicator} forceMount>
-              {!disabled ? <Check /> : <Check fill={`var(--dark-color-100)`} />}
-            </CheckboxRadix.Indicator>
-          )}
+          <CheckboxRadix.Indicator className={classNames.indicator} forceMount>
+            {!disabled ? <Check /> : <Check fill={`var(--dark-color-100)`} />}
+          </CheckboxRadix.Indicator>
         </CheckboxRadix.Root>
       </div>
       <label className={classNames.label} htmlFor={id}>
