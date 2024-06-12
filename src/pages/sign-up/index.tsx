@@ -1,7 +1,9 @@
-import { SignUpForm } from '@/featuers/auth/signUp/ui'
-import { SignUpFormData } from '@/featuers/auth/signUp/ui/useSignUp'
+import { SignUpForm } from '@/features/auth/signUp/ui'
+import { SignUpFormData } from '@/features/auth/signUp/ui/useSignUp'
+import { NextPageWithLayout } from '@/shared/types'
+import { getAuthLayout } from '@/widgets/layouts'
 
-export default function SignUp() {
+const SignUp: NextPageWithLayout = () => {
   const onSubmit = (data: SignUpFormData) => {
     alert(JSON.stringify(data))
   }
@@ -12,3 +14,7 @@ export default function SignUp() {
     </div>
   )
 }
+
+SignUp.getLayout = getAuthLayout
+
+export default SignUp
