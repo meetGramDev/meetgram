@@ -1,4 +1,3 @@
-import { SignInFields, useSignIn } from '@/features/auth/signIn/lib/useSignIn'
 import githubIcon from '@/shared/assets/icons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
@@ -7,6 +6,8 @@ import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
 import Image from 'next/image'
 import Link from 'next/link'
+
+import { SignInFields, useSignIn } from '../lib'
 
 type Props = {
   onSubmit: (data: SignInFields) => void
