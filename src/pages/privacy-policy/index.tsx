@@ -1,23 +1,12 @@
 import { NextPageWithLayout } from '@/shared/types'
-import { Button } from '@/shared/ui/button/button'
+import { BackButton } from '@/shared/ui/backButton/BackButton'
 import { getAuthLayout } from '@/widgets/layouts'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 const PrivacyPolicy: NextPageWithLayout = () => {
-  const router = useRouter()
-
   return (
     <div className={'mx-16'}>
-      <Button
-        as={Link}
-        href={'/sign-up'}
-        onClick={() => router.back()}
-        style={{ color: 'var(--light-color-100)', fontWeight: 400 }}
-        variant={'link'}
-      >
-        &larr; Back to Sign Up
-      </Button>
+      <BackButton label={`${String.fromCharCode(8592)} Back to Sign Up`} />
+
       <div className={'flex flex-col gap-5 text-center text-light-100'}>
         <h2 className={'text-h1 font-bold'}>Privacy Policy</h2>
         <p className={'px-24 text-regular14'}>
