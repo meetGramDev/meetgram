@@ -1,6 +1,8 @@
 import type { NextPageWithLayout } from '@/shared/types'
 import type { AppProps } from 'next/app'
 
+import { StoreProvider } from '@/app/lib'
+
 import '@/app/styles/globals.scss'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
@@ -14,5 +16,5 @@ type AppPropsWithLayout = {
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? (page => page)
 
-  return getLayout(<Component {...pageProps} />)
+  return <StoreProvider>{getLayout(<Component {...pageProps} />)}</StoreProvider>
 }
