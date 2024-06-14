@@ -15,7 +15,7 @@ export type OptionType = {
    */
   textValue?: string
   /**
-   * The value given as data when submitted with a name
+   * The value given as data when submitted  a namewith
    */
   value: string
 }
