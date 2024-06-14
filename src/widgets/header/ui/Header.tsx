@@ -16,7 +16,7 @@ type Props = {
   notification?: number
 }
 
-export const Header = ({ isAuth = true, notification }: Props) => {
+export const Header = ({ isAuth = false, notification }: Props) => {
   return (
     <header
       className={

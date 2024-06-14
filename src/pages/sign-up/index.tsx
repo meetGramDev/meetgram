@@ -1,11 +1,22 @@
-import { SignUpForm } from '@/features/auth/signUp/ui'
-import { SignUpFormData } from '@/features/auth/signUp/ui/useSignUp'
+import { SignUpForm, SignUpFormData } from '@/features/auth/signUp'
+import { useSignUpMutation } from '@/features/auth/signUp/model/services/signUp.service'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 
 const SignUp: NextPageWithLayout = () => {
-  const onSubmit = (data: SignUpFormData) => {
-    alert(JSON.stringify(data))
+  const [signUp] = useSignUpMutation()
+
+  const onSubmit = ({ confirmPassword, ...data }: SignUpFormData) => {
+    const args = {
+      baseUrl: 'http://localhost:3000',
+      ...data,
+    }
+
+    signUp(args)
+      .unwrap()
+      .then(res => {
+        alert(JSON.stringify(res))
+      })
   }
 
   return (

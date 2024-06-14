@@ -1,10 +1,8 @@
-import { BASE_URL } from '@/shared/api'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { baseApi } from '@/shared/api'
 
 import { ArgsLogin } from './loginApiSlice.types'
 
-export const loginApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+export const loginApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     login: builder.mutation<any, ArgsLogin>({
       query: args => ({
@@ -14,8 +12,8 @@ export const loginApi = createApi({
       }),
     }),
   }),
-  reducerPath: 'loginApi',
-  tagTypes: ['Login'],
+  // reducerPath: 'loginApi',
+  // tagTypes: ['Login'],
 })
 
 export const { useLoginMutation } = loginApi

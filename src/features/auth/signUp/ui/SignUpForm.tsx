@@ -3,20 +3,21 @@ import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
+import { Checkbox } from '@/shared/ui/checkbox'
 import { Input } from '@/shared/ui/input/input'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import s from './signUpForm.module.scss'
 
-import { SignUpFormData, useSignUp } from './useSignUp'
+import { SignUpFormData, useSignUp } from '../lib/useSignUp'
 
 type Props = {
   onSubmit: (data: SignUpFormData) => void
 }
 
 export const SignUpForm = ({ onSubmit }: Props) => {
-  const { errors, handleSubmit, register } = useSignUp()
+  const { errors, handleSubmit, isDirty, isValid, register } = useSignUp()
 
   return (
     <Card className={s.card}>
@@ -30,7 +31,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
         </Button>
       </div>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <Input error={errors.username?.message} label={'Username'} {...register('username')} />
+        <Input error={errors.userName?.message} label={'Username'} {...register('userName')} />
         <Input error={errors.email?.message} label={'Email'} {...register('email')} />
         <Input
           error={errors.password?.message}
@@ -44,17 +45,20 @@ export const SignUpForm = ({ onSubmit }: Props) => {
           type={'password'}
           {...register('confirmPassword')}
         />
-        <span className={s.info}>
-          I agree to the{' '}
-          <Button as={Link} className={s.info} href={TERMS_OF_SERVICE} variant={'link'}>
-            Terms of Service
-          </Button>{' '}
-          and{' '}
-          <Button as={Link} className={s.info} href={PRIVACY_POLICY} variant={'link'}>
-            Privacy Policy
-          </Button>
-        </span>
-        <Button fullWidth type={'submit'}>
+        <div className={s.infoWrapper}>
+          <Checkbox {...register('isApproved')} />
+          <span className={s.info}>
+            I agree to the{' '}
+            <Button as={Link} className={s.info} href={TERMS_OF_SERVICE} variant={'link'}>
+              Terms of Service
+            </Button>{' '}
+            and{' '}
+            <Button as={Link} className={s.info} href={PRIVACY_POLICY} variant={'link'}>
+              Privacy Policy
+            </Button>
+          </span>
+        </div>
+        <Button disabled={!isDirty || !isValid} fullWidth type={'submit'}>
           Sign Up
         </Button>
       </form>

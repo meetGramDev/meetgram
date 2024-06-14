@@ -27,6 +27,10 @@
   height: 36px;
 }
 
+.infoWrapper {
+  display: flex;
+}
+
 .info {
   font: var(--font-small);
 }
