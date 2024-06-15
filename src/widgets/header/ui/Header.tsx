@@ -3,7 +3,7 @@ import { Notification } from '@/shared/assets/icons/Notification'
 import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { Button } from '@/shared/ui/button/button'
 import { OptionType } from '@/shared/ui/select/option'
-import { Select } from '@/shared/ui/select/select'
+import { LangSwitcher } from '@/widgets/langSwitcher'
 import Link from 'next/link'
 
 const languages: OptionType[] = [
@@ -46,7 +46,7 @@ export const Header = ({ isAuth = true, notification }: Props) => {
               </div>
             </Button>
           )}
-          <Select defaultValue={'ru'} options={languages} />
+          <LangSwitcher />
         </div>
 
         {!isAuth && (

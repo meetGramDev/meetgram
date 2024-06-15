@@ -1,11 +1,9 @@
 import React from 'react'
 
-import { Button } from '@/shared/ui/button/button'
 import { Option } from '@/shared/ui/select/option'
 import { Select } from '@/shared/ui/select/select'
+import clsx from 'clsx'
 import { useRouter } from 'next/router'
-
-import s from './i18n.module.scss'
 
 import { be } from '../../../../locales/be'
 import { en } from '../../../../locales/en'
@@ -13,7 +11,12 @@ import { es } from '../../../../locales/es'
 import { ru } from '../../../../locales/ru'
 import { uk } from '../../../../locales/uk'
 
-export const I18N = () => {
+type ProtoType = {
+  className?: string
+}
+
+export const LangSwitcher = (props: ProtoType) => {
+  const { className } = props
   const router = useRouter()
   const { asPath, locale, locales, pathname, push, query } = router
 
@@ -36,12 +39,9 @@ export const I18N = () => {
     push({ pathname, query }, asPath, { locale: e })
   }
 
+  /*todo add className as in card and rename component and delete everything div and button */
   return (
-    <div className={s.main}>
-      <Button variant={'primary'}>{t().button.Button}</Button>
-
-      <Button variant={'outlined'}>{t().button.Link}</Button>
-
+    <div className={clsx([className])}>
       <Select onValueChange={changeLanguage} placeholder={t().language}>
         {locales?.map((el, i) => (
           <Option key={i} value={el}>
