@@ -13,9 +13,9 @@ import s from './signUpForm.module.scss'
 import { SignUpFormData, useSignUp } from '../lib/useSignUp'
 
 type Props = {
-  emailError: null | string
+  emailError?: null | string
   onSubmit: (data: SignUpFormData) => void
-  userNameError: null | string
+  userNameError?: null | string
 }
 
 export const SignUpForm = ({ emailError, onSubmit, userNameError }: Props) => {
