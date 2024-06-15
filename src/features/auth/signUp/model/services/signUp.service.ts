@@ -1,7 +1,6 @@
 import { baseApi } from '@/shared/api'
 
 export type SignUpArgs = {
-  baseUrl: string
   email: string
   password: string
   userName: string

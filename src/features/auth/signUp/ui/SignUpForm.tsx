@@ -13,10 +13,12 @@ import s from './signUpForm.module.scss'
 import { SignUpFormData, useSignUp } from '../lib/useSignUp'
 
 type Props = {
+  emailError: null | string
   onSubmit: (data: SignUpFormData) => void
+  userNameError: null | string
 }
 
-export const SignUpForm = ({ onSubmit }: Props) => {
+export const SignUpForm = ({ emailError, onSubmit, userNameError }: Props) => {
   const { errors, handleSubmit, isDirty, isValid, register } = useSignUp()
 
   return (
@@ -31,8 +33,12 @@ export const SignUpForm = ({ onSubmit }: Props) => {
         </Button>
       </div>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <Input error={errors.userName?.message} label={'Username'} {...register('userName')} />
-        <Input error={errors.email?.message} label={'Email'} {...register('email')} />
+        <Input
+          error={errors.userName?.message || userNameError}
+          label={'Username'}
+          {...register('userName')}
+        />
+        <Input error={errors.email?.message || emailError} label={'Email'} {...register('email')} />
         <Input
           error={errors.password?.message}
           label={'Password'}
@@ -47,6 +53,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
         />
         <div className={s.infoWrapper}>
           <Checkbox {...register('isApproved')} />
+          {errors.isApproved?.message && <div>{errors.isApproved?.message}</div>}
           <span className={s.info}>
             I agree to the{' '}
             <Button as={Link} className={s.info} href={TERMS_OF_SERVICE} variant={'link'}>
