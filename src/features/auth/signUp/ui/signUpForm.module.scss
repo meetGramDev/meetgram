@@ -28,7 +28,10 @@
 }
 
 .infoWrapper {
+  position: relative;
   display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .info {
@@ -37,4 +40,13 @@
 
 .link {
   text-decoration: none;
+}
+
+.checkboxError {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+
+  font-size: 14px;
+  color: var(--danger-color-500);
 }

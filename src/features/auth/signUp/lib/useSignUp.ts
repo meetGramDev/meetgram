@@ -12,7 +12,9 @@ const signUpSchema = z
   .object({
     confirmPassword: passwordConstraint,
     email: emailConstraint,
-    isApproved: z.boolean(),
+    isApproved: z.boolean().refine(val => val, {
+      message: 'Please read and accept the terms and conditions',
+    }),
     password: passwordConstraint,
     userName: userNameConstraint,
   })
@@ -25,9 +27,11 @@ export type SignUpFormData = z.infer<typeof signUpSchema>
 
 export const useSignUp = () => {
   const {
+    control,
     formState: { errors, isDirty, isValid },
     handleSubmit,
     register,
+    setError,
   } = useForm<SignUpFormData>({
     defaultValues: {
       confirmPassword: '',
@@ -40,5 +44,5 @@ export const useSignUp = () => {
     resolver: zodResolver(signUpSchema),
   })
 
-  return { errors, handleSubmit, isDirty, isValid, register }
+  return { control, errors, handleSubmit, isDirty, isValid, register, setError }
 }
