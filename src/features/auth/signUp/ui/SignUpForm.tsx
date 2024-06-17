@@ -8,6 +8,7 @@ import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { Input } from '@/shared/ui/input/input'
+import { clsx } from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -23,6 +24,20 @@ export const SignUpForm = ({ onSubmit }: Props) => {
   const { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError } =
     useSignUp()
   const [signUp] = useSignUpMutation()
+
+  const isApprovedError = errors.isApproved?.message
+
+  const onCheckboxValueChange = (value: boolean, onChange: (value: boolean) => void) => {
+    if (!value) {
+      setError('isApproved', {
+        message: 'Please read and accept the terms and conditions',
+      })
+    }
+    if (value) {
+      clearErrors('isApproved')
+    }
+    onChange(value)
+  }
 
   const onSubmitHandler = (data: SignUpFormData) => {
     signUp({ ...data })
@@ -69,25 +84,16 @@ export const SignUpForm = ({ onSubmit }: Props) => {
             type={'password'}
             {...register('confirmPassword')}
           />
-          <div className={s.infoWrapper}>
+          <div className={clsx(s.infoWrapper, [isApprovedError && s.infoWrapperWithError])}>
             <Controller
               control={control}
               name={'isApproved'}
-              render={({ field: { onChange, value } }) => {
-                const onValueChange = (value: boolean) => {
-                  if (!value) {
-                    setError('isApproved', {
-                      message: 'Please read and accept the terms and conditions',
-                    })
-                  }
-                  if (value) {
-                    clearErrors('isApproved')
-                  }
-                  onChange(value)
-                }
-
-                return <Checkbox checked={value} onValueChange={onValueChange} />
-              }}
+              render={({ field: { onChange, value } }) => (
+                <Checkbox
+                  checked={value}
+                  onValueChange={() => onCheckboxValueChange(value, onChange)}
+                />
+              )}
             />
             <span className={s.info}>
               I agree to the{' '}
@@ -99,9 +105,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
                 Privacy Policy
               </Button>
             </span>
-            {errors.isApproved?.message && (
-              <div className={s.checkboxError}>{errors.isApproved?.message}</div>
-            )}
+            {isApprovedError && <div className={s.checkboxError}>{isApprovedError}</div>}
           </div>
           <Button disabled={!isDirty || !isValid} fullWidth type={'submit'}>
             Sign Up
