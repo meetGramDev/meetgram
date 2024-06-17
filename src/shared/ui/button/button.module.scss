@@ -19,6 +19,10 @@
   &.fullWidth {
     width: 100%;
   }
+
+  &:disabled {
+    cursor: initial;
+  }
 }
 
 .primary {
