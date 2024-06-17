@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Card from './Card'
+import { Card } from '@/shared/ui/card/Card'
 
 const meta: Meta<typeof Card> = {
   args: {},
