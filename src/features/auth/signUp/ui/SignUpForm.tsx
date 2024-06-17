@@ -1,5 +1,6 @@
 import { Controller } from 'react-hook-form'
 
+import { useSignUpMutation } from '@/features/auth/signUp'
 import githubIcon from '@/shared/assets/icons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
@@ -7,7 +8,6 @@ import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { Input } from '@/shared/ui/input/input'
-import { DevTool } from '@hookform/devtools'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -16,17 +16,31 @@ import s from './signUpForm.module.scss'
 import { SignUpFormData, useSignUp } from '../lib/useSignUp'
 
 type Props = {
-  emailError?: null | string
-  onSubmit: (data: SignUpFormData) => void
-  userNameError?: null | string
+  onSubmit: (data: SignUpFormData) => Promise<void>
 }
 
-export const SignUpForm = ({ emailError, onSubmit, userNameError }: Props) => {
-  const { control, errors, handleSubmit, isDirty, isValid, register, setError } = useSignUp()
+export const SignUpForm = ({ onSubmit }: Props) => {
+  const { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError } =
+    useSignUp()
+  const [signUp] = useSignUpMutation()
 
-  console.log('errors', errors)
+  const onSubmitHandler = (data: SignUpFormData) => {
+    signUp({ ...data })
+      .unwrap()
+      .then(() => {
+        alert(`We have sent a link to confirm your email to ${data.email}`)
+      })
+      .catch(err => {
+        const e = err?.data?.messages[0]
 
-  console.log('control', control)
+        if (e.field === 'email') {
+          setError('email', { message: e.message })
+        }
+        if (e.field === 'userName') {
+          setError('userName', { message: e.message })
+        }
+      })
+  }
 
   return (
     <>
@@ -40,17 +54,9 @@ export const SignUpForm = ({ emailError, onSubmit, userNameError }: Props) => {
             <Image alt={'githubIcon'} className={s.icon} src={githubIcon} />
           </Button>
         </div>
-        <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            error={errors.userName?.message || userNameError}
-            label={'Username'}
-            {...register('userName')}
-          />
-          <Input
-            error={errors.email?.message || emailError}
-            label={'Email'}
-            {...register('email')}
-          />
+        <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
+          <Input error={errors.userName?.message} label={'Username'} {...register('userName')} />
+          <Input error={errors.email?.message} label={'Email'} {...register('email')} />
           <Input
             error={errors.password?.message}
             label={'Password'}
@@ -73,6 +79,9 @@ export const SignUpForm = ({ emailError, onSubmit, userNameError }: Props) => {
                     setError('isApproved', {
                       message: 'Please read and accept the terms and conditions',
                     })
+                  }
+                  if (value) {
+                    clearErrors('isApproved')
                   }
                   onChange(value)
                 }
@@ -103,7 +112,6 @@ export const SignUpForm = ({ emailError, onSubmit, userNameError }: Props) => {
           Sign In
         </Button>
       </Card>
-      <DevTool control={control} />
     </>
   )
 }

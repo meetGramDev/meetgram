@@ -27,6 +27,7 @@ export type SignUpFormData = z.infer<typeof signUpSchema>
 
 export const useSignUp = () => {
   const {
+    clearErrors,
     control,
     formState: { errors, isDirty, isValid },
     handleSubmit,
@@ -44,5 +45,5 @@ export const useSignUp = () => {
     resolver: zodResolver(signUpSchema),
   })
 
-  return { control, errors, handleSubmit, isDirty, isValid, register, setError }
+  return { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError }
 }

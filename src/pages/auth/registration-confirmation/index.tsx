@@ -1,31 +1,79 @@
 import { useEffect } from 'react'
 
-import { useRegistrationConfirmationMutation } from '@/features/auth/registrationConfirmation/model/services/registration.service'
+import {
+  useRegistrationConfirmationMutation,
+  useRegistrationEmailResendingMutation,
+} from '@/features/auth/registrationConfirmation/model/services/registration.service'
+import SignInImg from '@/shared/assets/img/sign-up_bro.png'
+import Img from '@/shared/assets/img/time-management.png'
 import { SIGN_IN } from '@/shared/config/router'
 import { NextPageWithLayout } from '@/shared/types'
+import { Button } from '@/shared/ui/button/button'
 import { getAuthLayout } from '@/widgets/layouts'
+import Image from 'next/image'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/router'
+
+import s from './index.module.scss'
 
 const RegistrationConfirmation: NextPageWithLayout = () => {
-  const [registrationConfirmation] = useRegistrationConfirmationMutation()
+  const [registrationConfirmation, { error, isLoading }] = useRegistrationConfirmationMutation()
+  const [registrationEmailResending] = useRegistrationEmailResendingMutation()
   const params = useSearchParams()
-  const router = useRouter()
+
+  const resetVerificationLink = () => {
+    alert('Send')
+  }
+
+  const resendingEmailHandler = () => {
+    registrationEmailResending({ email: '' })
+  }
 
   useEffect(() => {
     const confirmationCode = params?.get('code')
 
     if (confirmationCode) {
-      registrationConfirmation({ confirmationCode }).then(res => {
-        return router.push(SIGN_IN)
-      })
+      registrationConfirmation({ confirmationCode })
+        .unwrap()
+        .then(res => {
+          console.log('res')
+        })
+        .catch(e => {
+          console.log('catch')
+        })
     }
   }, [params, registrationConfirmation])
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div>
-      <h2>Registration confirmation</h2>
-      {params?.get('code')}
+      {/* @ts-ignore*/}
+      {error?.data.statusCode === 400 ? (
+        <div className={s.root}>
+          <div className={s.textWrapper}>
+            <h2 className={s.title}>Email verification link expired</h2>
+            <div>
+              Looks like the verification link has expired. Not to worry, we can send the link again
+            </div>
+            <Button onClick={resetVerificationLink}>Resend verification link</Button>
+          </div>
+          <Image alt={'img'} className={s.img} src={Img} />
+        </div>
+      ) : (
+        <div className={s.root}>
+          <div className={s.textWrapper}>
+            <h2 className={s.title}>Congratulations!</h2>
+            <div>Your email has been confirmed</div>
+            <Button as={Link} href={SIGN_IN}>
+              Sign In
+            </Button>
+          </div>
+          <Image alt={'img'} className={s.img} src={SignInImg} />
+        </div>
+      )}
     </div>
   )
 }

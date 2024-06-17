@@ -4,6 +4,10 @@ type RegistrationConfirmationArgs = {
   confirmationCode: string
 }
 
+type RegistrationEmailResendingArgs = {
+  email: string
+}
+
 export const registrationConfirmationService = baseApi.injectEndpoints({
   endpoints: builder => ({
     registrationConfirmation: builder.mutation<void, RegistrationConfirmationArgs>({
@@ -13,7 +17,15 @@ export const registrationConfirmationService = baseApi.injectEndpoints({
         url: '/auth/registration-confirmation',
       }),
     }),
+    registrationEmailResending: builder.mutation<void, RegistrationEmailResendingArgs>({
+      query: args => ({
+        body: args,
+        method: 'POST',
+        url: '/auth/registration-email-resending',
+      }),
+    }),
   }),
 })
 
-export const { useRegistrationConfirmationMutation } = registrationConfirmationService
+export const { useRegistrationConfirmationMutation, useRegistrationEmailResendingMutation } =
+  registrationConfirmationService

@@ -1,10 +1,6 @@
 import { baseApi } from '@/shared/api'
 
-export type SignUpArgs = {
-  email: string
-  password: string
-  userName: string
-}
+import { SignUpArgs } from '../types/signUp'
 
 export const signUpService = baseApi.injectEndpoints({
   endpoints: builder => ({
