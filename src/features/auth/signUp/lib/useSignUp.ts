@@ -12,8 +12,11 @@ const signUpSchema = z
   .object({
     confirmPassword: passwordConstraint,
     email: emailConstraint,
+    isApproved: z.boolean().refine(val => val, {
+      message: 'Please read and accept the terms and conditions',
+    }),
     password: passwordConstraint,
-    username: userNameConstraint,
+    userName: userNameConstraint,
   })
   .refine(data => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -24,19 +27,23 @@ export type SignUpFormData = z.infer<typeof signUpSchema>
 
 export const useSignUp = () => {
   const {
-    formState: { errors },
+    clearErrors,
+    control,
+    formState: { errors, isDirty, isValid },
     handleSubmit,
     register,
+    setError,
   } = useForm<SignUpFormData>({
     defaultValues: {
       confirmPassword: '',
       email: '',
+      isApproved: false,
       password: '',
-      username: '',
+      userName: '',
     },
     mode: 'onTouched',
     resolver: zodResolver(signUpSchema),
   })
 
-  return { errors, handleSubmit, register }
+  return { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError }
 }
