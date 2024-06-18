@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const forgotPasswordSchema = z.object({
+  captchaToken: z.string().optional(),
   email: emailConstraint,
 })
 
@@ -15,6 +16,7 @@ export const useForgotPassword = () => {
     formState: { errors },
     handleSubmit,
     register,
+    setError,
   } = useForm<ForgotPasswordFormData>({
     defaultValues: {
       email: '',
@@ -23,5 +25,5 @@ export const useForgotPassword = () => {
     resolver: zodResolver(forgotPasswordSchema),
   })
 
-  return { errors, handleSubmit, register }
+  return { errors, handleSubmit, register, setError }
 }

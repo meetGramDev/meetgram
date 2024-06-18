@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { ForgotPasswordForm } from '@/featuers/auth/forgotPassword/ui/ForgotPasswordForm'
+import { ForgotPasswordForm } from '@/features/auth/forgotPassword/ui/ForgotPasswordForm'
 import { fn } from '@storybook/test'
 
 const meta = {

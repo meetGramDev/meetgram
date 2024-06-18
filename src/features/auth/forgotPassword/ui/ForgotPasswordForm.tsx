@@ -1,4 +1,5 @@
-import ReCAPTCHA from 'react-google-recaptcha'
+import { useRef } from 'react'
+import { ReCAPTCHA } from 'react-google-recaptcha'
 
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
@@ -19,23 +20,28 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
     btnLink: clsx(s.bntLink),
     button: clsx(s.button),
     card: clsx(s.card),
+    form: clsx(s.form),
     input: clsx(s.input),
+    recaptcha: clsx(s.captcha),
     text: clsx(s.text),
     title: clsx(s.title),
   }
 
-  const { errors, handleSubmit, register } = useForgotPassword()
+  const captchaRef = useRef<null | string>(null)
+
+  const { errors, handleSubmit, register, setError } = useForgotPassword()
 
   const siteKey = '6Le9h_IpAAAAAF6U0_jL6SNQKTXC_IuBTp-5ksOr'
 
-  const onChange = (value: any) => {
-    console.log('CaptchaValue', value)
-  }
+  // const onSubmitt = (event: any) => {
+  //   console.log('email', event)
+  //   console.log('token', captchaRef.current.token)
+  // }
 
   return (
     <Card className={classNames.card}>
       <h1 className={classNames.title}>Forgot Password</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form className={classNames.form} onSubmit={handleSubmit(onSubmit)}>
         <Input
           className={classNames.input}
           label={'Email'}
@@ -52,7 +58,17 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
         <Button as={Link} className={classNames.btnLink} href={'#'} variant={'link'}>
           Back to Sign In
         </Button>
-        <ReCAPTCHA lang={'en'} onSubmit={onChange} sitekey={siteKey} theme={'dark'} />
+        <div className={classNames.recaptcha}>
+          <ReCAPTCHA
+            hl={'en'}
+            onChange={token => {
+              // captchaRef.current = { token }
+              return { ...register('captchaToken') }
+            }}
+            sitekey={siteKey}
+            theme={'dark'}
+          />
+        </div>
       </form>
     </Card>
   )
