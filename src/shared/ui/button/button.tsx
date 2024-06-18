@@ -10,19 +10,20 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
   children: ReactNode
   className?: string
+  disabled?: boolean
   fullWidth?: boolean
   variant?: ButtonVariant
 } & ComponentPropsWithoutRef<T>
 
 export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
-  const { as, className, fullWidth, variant = 'primary', ...rest } = props
+  const { as, className, disabled = false, fullWidth, variant = 'primary', ...rest } = props
 
   const classNames = { root: clsx(fullWidth && s.fullWidth, s[variant], className) }
 
   const Component = as || 'button'
 
   return (
-    <Component className={classNames.root} {...rest}>
+    <Component className={classNames.root} disabled={disabled} {...rest}>
       {props.children}
     </Component>
   )

@@ -14,8 +14,10 @@ export const passwordConstraint = z
 
 export const userNameConstraint = z
   .string()
+  .trim()
   .min(6, { message: 'Minimum number of characters 6' })
   .max(30, { message: 'Maximum number of characters 30' })
+  .regex(/^[a-zA-Z0-9_-]*$/, { message: 'Wrong username' })
 
 export const passwordSignInConstraint = z
   .string()
