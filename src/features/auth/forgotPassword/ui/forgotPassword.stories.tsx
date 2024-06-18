@@ -18,3 +18,11 @@ export const Default: Story = {
     onSubmit: fn(),
   },
 }
+
+export const ReturnValue: Story = {
+  args: {
+    onSubmit: data => {
+      console.log(data)
+    },
+  },
+}

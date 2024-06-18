@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const forgotPasswordSchema = z.object({
-  captchaToken: z.string().optional(),
   email: emailConstraint,
 })
 
