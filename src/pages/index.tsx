@@ -1,9 +1,19 @@
+import { useEffect } from 'react'
+
+import { SIGN_IN } from '@/shared/config/router'
 import { Inter } from 'next/font/google'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.push(SIGN_IN)
+  }, [router])
+
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}

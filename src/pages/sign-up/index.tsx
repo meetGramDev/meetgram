@@ -1,11 +1,18 @@
-import { SignUpForm } from '@/features/auth/signUp/ui'
-import { SignUpFormData } from '@/features/auth/signUp/ui/useSignUp'
+import { useState } from 'react'
+
+import { SignUpForm, SignUpFormData, useSignUpMutation } from '@/features/auth/signUp'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 
 const SignUp: NextPageWithLayout = () => {
-  const onSubmit = (data: SignUpFormData) => {
-    alert(JSON.stringify(data))
+  // const [signUp] = useSignUpMutation()
+
+  const onSubmit = async ({ confirmPassword, isApproved, ...data }: SignUpFormData) => {
+    // signUp({ ...data })
+    //   .unwrap()
+    //   .then(() => {
+    //     alert(`We have sent a link to confirm your email to ${data.email}`)
+    //   })
   }
 
   return (

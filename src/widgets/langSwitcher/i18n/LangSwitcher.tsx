@@ -15,7 +15,7 @@ export const LangSwitcher = ({ className }: Props) => {
   const { asPath, locale, locales, pathname, push, query } = router
 
   function changeLanguage(e: string) {
-    /* push({ pathname, query }, asPath, { locale: e })*/
+    push({ pathname, query }, asPath, { locale: e })
   }
 
   /*todo add className as in card and rename component and delete everything div and button */
