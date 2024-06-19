@@ -10,7 +10,7 @@ import Link from 'next/link'
 
 import s from './forgotPassword.module.scss'
 
-import { ForgotPasswordFormData, useForgotPassword } from './useForgotPassword'
+import { ForgotPasswordFormData, useForgotPassword } from '../lib/useForgotPassword'
 
 type ForgotPasswordType = {
   onSubmit: (data: { token: null | string } & ForgotPasswordFormData) => void
