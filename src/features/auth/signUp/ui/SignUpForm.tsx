@@ -1,3 +1,4 @@
+import { Tr } from '@/hooks/useLangSwitcher'
 import githubIcon from '@/shared/assets/icons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
@@ -6,6 +7,7 @@ import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './signUpForm.module.scss'
 
@@ -16,11 +18,14 @@ type Props = {
 }
 
 export const SignUpForm = ({ onSubmit }: Props) => {
+  const { locale } = useRouter()
   const { errors, handleSubmit, register } = useSignUp()
+
+  const { sign_up } = Tr(locale)
 
   return (
     <Card className={s.card}>
-      <h3 className={s.title}>Sign Up</h3>
+      <h3 className={s.title}>{sign_up.sign_up}</h3>
       <div className={s.iconWrapper}>
         <Button variant={'text'}>
           <Image alt={'googleIcon'} className={s.icon} src={googleIcon} />
@@ -30,37 +35,41 @@ export const SignUpForm = ({ onSubmit }: Props) => {
         </Button>
       </div>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <Input error={errors.username?.message} label={'Username'} {...register('username')} />
-        <Input error={errors.email?.message} label={'Email'} {...register('email')} />
+        <Input
+          error={errors.username?.message}
+          label={sign_up.username}
+          {...register('username')}
+        />
+        <Input error={errors.email?.message} label={sign_up.email} {...register('email')} />
         <Input
           error={errors.password?.message}
-          label={'Password'}
+          label={sign_up.password}
           type={'password'}
           {...register('password')}
         />
         <Input
           error={errors.confirmPassword?.message}
-          label={'Password confirmation'}
+          label={sign_up.password_conf}
           type={'password'}
           {...register('confirmPassword')}
         />
         <span className={s.info}>
-          I agree to the{' '}
+          {sign_up.I_agree}{' '}
           <Button as={Link} className={s.info} href={TERMS_OF_SERVICE} variant={'link'}>
-            Terms of Service
+            {sign_up.term_serv}
           </Button>{' '}
-          and{' '}
+          {sign_up.and}{' '}
           <Button as={Link} className={s.info} href={PRIVACY_POLICY} variant={'link'}>
-            Privacy Policy
+            {sign_up.priv_policy}
           </Button>
         </span>
         <Button fullWidth type={'submit'}>
-          Sign Up
+          {sign_up.sign_up}
         </Button>
       </form>
-      <div style={{ textAlign: 'center' }}>Do you have an account?</div>
+      <div style={{ textAlign: 'center' }}>{sign_up.an_account}</div>
       <Button as={Link} className={s.link} href={SIGN_IN} variant={'link'}>
-        Sign In
+        {sign_up.sign_in}
       </Button>
     </Card>
   )
