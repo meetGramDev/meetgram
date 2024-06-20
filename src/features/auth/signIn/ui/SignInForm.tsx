@@ -1,10 +1,9 @@
-import githubIcon from '@/shared/assets/icons/github-icon.svg'
-import googleIcon from '@/shared/assets/icons/google-icon.svg'
+import { GithubBtn } from '@/features/auth/by-oauth/github'
+import { GoogleBtn } from '@/features/auth/by-oauth/google'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { SignInFields, useSignIn } from '../lib'
@@ -24,12 +23,8 @@ export const SignInForm = ({ onSubmit }: Props) => {
     <Card className={'min-w-[22.5rem] p-6 text-regular16 text-light-100'}>
       <h2 className={'mb-3 text-center text-h1 font-bold'}>Sign In</h2>
       <div className={'mb-6 flex justify-center gap-9'}>
-        <Button variant={'text'}>
-          <Image alt={'Login with google'} height={36} src={googleIcon} width={36} />
-        </Button>
-        <Button variant={'text'}>
-          <Image alt={'Login with github'} height={36} src={githubIcon} width={36} />
-        </Button>
+        <GoogleBtn />
+        <GithubBtn />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={'mb-9 flex flex-col gap-6'}>

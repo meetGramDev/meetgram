@@ -1,14 +1,13 @@
 import { Controller } from 'react-hook-form'
 
+import { GithubBtn } from '@/features/auth/by-oauth/github'
+import { GoogleBtn } from '@/features/auth/by-oauth/google'
 import { useSignUpMutation } from '@/features/auth/signUp'
-import githubIcon from '@/shared/assets/icons/github-icon.svg'
-import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
-import { Button } from '@/shared/ui/button/button'
+import { Button } from '@/shared/ui'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { Input } from '@/shared/ui/input/input'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import s from './signUpForm.module.scss'
@@ -47,12 +46,8 @@ export const SignUpForm = ({ onSubmit }: Props) => {
       <Card className={s.card}>
         <h3 className={s.title}>Sign Up</h3>
         <div className={s.iconWrapper}>
-          <Button variant={'text'}>
-            <Image alt={'googleIcon'} className={s.icon} src={googleIcon} />
-          </Button>
-          <Button variant={'text'}>
-            <Image alt={'githubIcon'} className={s.icon} src={githubIcon} />
-          </Button>
+          <GoogleBtn />
+          <GithubBtn />
         </div>
         <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
           <Input error={errors.userName?.message} label={'Username'} {...register('userName')} />

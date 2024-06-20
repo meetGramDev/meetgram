@@ -1,5 +1,5 @@
 import { useLoginMutation } from '@/entities/user'
-import { SignInForm } from '@/features/auth/signIn/ui'
+import { SignInForm } from '@/features/auth/signIn'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 
