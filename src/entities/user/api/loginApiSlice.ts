@@ -1,12 +1,12 @@
 import { baseApi } from '@/shared/api'
 
-import { ArgsLogin } from './loginApiSlice.types'
+import { ArgsLogin, SignInSuccessResponse } from './loginApiSlice.types'
 
 export const loginApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    login: builder.mutation<any, ArgsLogin>({
+    login: builder.mutation<SignInSuccessResponse, ArgsLogin>({
       query: args => ({
-        body: { args },
+        body: { ...args },
         method: 'POST',
         url: '/auth/login',
       }),

@@ -8,7 +8,6 @@ import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { Input } from '@/shared/ui/input/input'
-import { clsx } from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -24,7 +23,6 @@ export const SignUpForm = ({ onSubmit }: Props) => {
   const { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError } =
     useSignUp()
   const [signUp] = useSignUpMutation()
-  const isApprovedError = errors.isApproved?.message
 
   const onSubmitHandler = (data: SignUpFormData) => {
     signUp({ ...data })
@@ -71,7 +69,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
             type={'password'}
             {...register('confirmPassword')}
           />
-          <div className={clsx(s.infoWrapper, [isApprovedError && s.infoWrapperWithError])}>
+          <div className={s.infoWrapper}>
             <Controller
               control={control}
               name={'isApproved'}
@@ -101,7 +99,9 @@ export const SignUpForm = ({ onSubmit }: Props) => {
                 Privacy Policy
               </Button>
             </span>
-            {isApprovedError && <div className={s.checkboxError}>{isApprovedError}</div>}
+            {errors.isApproved?.message && (
+              <div className={s.checkboxError}>{errors.isApproved?.message}</div>
+            )}
           </div>
           <Button disabled={!isDirty || !isValid} fullWidth type={'submit'}>
             Sign Up

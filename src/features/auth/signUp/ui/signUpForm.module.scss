@@ -29,17 +29,9 @@
 
 .infoWrapper {
   position: relative;
-
   display: flex;
   justify-content: center;
-
   width: 100%;
-
-  transition: 0.3s;
-}
-
-.infoWrapperWithError {
-  margin-bottom: 12px;
 }
 
 .info {
@@ -52,7 +44,7 @@
 
 .checkboxError {
   position: absolute;
-  bottom: -26px;
+  bottom: -20px;
   left: 0;
 
   font-size: 14px;
