@@ -1,8 +1,6 @@
 import { Button } from '@/shared/ui/button/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/shared/ui/dialog/Dialog'
+import { Dialog } from '@/shared/ui/dialog/Dialog'
 import { Meta, StoryObj } from '@storybook/react'
-
-import s from './Dialog.module.scss'
 
 const meta = {
   component: Dialog,
@@ -16,56 +14,47 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     children: (
-      <>
-        <DialogTrigger asChild>
-          <Button variant={'primary'}>Click me</Button>
-        </DialogTrigger>
-        <DialogContent
-          description={'Lorem ipsum dolor sit amet, consectetur adipisicing elit.'}
-          title={'Title'}
-        ></DialogContent>
-      </>
+      <div style={{ margin: '18px 24px 54px 24px' }}>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+      </div>
     ),
+    title: 'Title',
+    trigger: <Button variant={'primary'}>Click</Button>,
   },
 }
 
 export const Failed: Story = {
   args: {
     children: (
-      <>
-        <div className={s.contentWidth}>
-          <DialogContent
-            description={'Transaction failed. Please, write to support'}
-            title={'Error'}
-          >
-            <div className={s.child}>
-              <Button className={s.button} variant={'primary'}>
-                Back to payment
-              </Button>
-            </div>
-          </DialogContent>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '376px' }}>
+        <div style={{ margin: '18px 0 54px 30px' }}>
+          Transaction failed. Please, write to support
         </div>
-      </>
+        <div style={{ margin: '0 24px 36px 24px' }}>
+          <Button style={{ width: '100%' }} variant={'primary'}>
+            Back to payment
+          </Button>
+        </div>
+      </div>
     ),
-    open: true,
+    title: 'Error',
+    trigger: <Button variant={'primary'}>Click</Button>,
   },
 }
 
 export const Success: Story = {
   args: {
     children: (
-      <>
-        <div className={s.contentWidth}>
-          <DialogContent description={`Payment was successful!`} title={'Success'}>
-            <div className={s.child}>
-              <Button className={s.button} variant={'primary'}>
-                OK
-              </Button>
-            </div>
-          </DialogContent>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '376px' }}>
+        <div style={{ margin: '18px 0 54px 24px' }}>Payment was successful!</div>
+        <div style={{ margin: '0 24px 36px 24px' }}>
+          <Button style={{ width: '100%' }} variant={'primary'}>
+            OK
+          </Button>
         </div>
-      </>
+      </div>
     ),
-    open: true,
+    title: 'Success',
+    trigger: <Button variant={'primary'}>Click</Button>,
   },
 }
