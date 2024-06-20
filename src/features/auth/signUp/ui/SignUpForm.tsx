@@ -24,20 +24,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
   const { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError } =
     useSignUp()
   const [signUp] = useSignUpMutation()
-
   const isApprovedError = errors.isApproved?.message
-
-  const onCheckboxValueChange = (value: boolean, onChange: (value: boolean) => void) => {
-    if (!value) {
-      setError('isApproved', {
-        message: 'Please read and accept the terms and conditions',
-      })
-    }
-    if (value) {
-      clearErrors('isApproved')
-    }
-    onChange(value)
-  }
 
   const onSubmitHandler = (data: SignUpFormData) => {
     signUp({ ...data })
@@ -88,12 +75,21 @@ export const SignUpForm = ({ onSubmit }: Props) => {
             <Controller
               control={control}
               name={'isApproved'}
-              render={({ field: { onChange, value } }) => (
-                <Checkbox
-                  checked={value}
-                  onValueChange={() => onCheckboxValueChange(value, onChange)}
-                />
-              )}
+              render={({ field: { onChange, value } }) => {
+                const onValueChange = (value: boolean) => {
+                  if (!value) {
+                    setError('isApproved', {
+                      message: 'Please read and accept the terms and conditions',
+                    })
+                  }
+                  if (value) {
+                    clearErrors('isApproved')
+                  }
+                  onChange(value)
+                }
+
+                return <Checkbox checked={value} onValueChange={onValueChange} />
+              }}
             />
             <span className={s.info}>
               I agree to the{' '}
