@@ -1,7 +1,7 @@
-import { loginApi } from '@/entities/user'
+import { baseApi } from '@/shared/api'
 import { type Action, type ThunkAction, combineSlices, configureStore } from '@reduxjs/toolkit'
 
-const rootReducer = combineSlices(loginApi)
+const rootReducer = combineSlices(baseApi)
 
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>
@@ -10,7 +10,7 @@ export const makeStore = () => {
   return configureStore({
     // and other useful features of `rtk-query`.
     middleware: getDefaultMiddleware => {
-      return getDefaultMiddleware().concat(loginApi.middleware)
+      return getDefaultMiddleware().concat(baseApi.middleware)
     },
     // Adding the api middleware enables caching, invalidation, polling,
     reducer: rootReducer,
