@@ -86,7 +86,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             {...rest}
           />
           {finalType === 'search' && value && (
-            // eslint-disable-next-line react/button-has-type
+            //eslint-disable-next-line
             <button className={classes.closeIconButton} onClick={clearValue}>
               <CloseIcon className={s.closeIcon} />
             </button>

@@ -9,7 +9,6 @@ const SignIn: NextPageWithLayout = () => {
   return (
     <SignInForm
       onSubmit={data => {
-        console.log(data)
         login(data)
           .unwrap()
           .then(res => console.log(res))
