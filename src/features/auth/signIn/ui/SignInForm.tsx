@@ -19,6 +19,7 @@ type Props = {
 export const SignInForm = ({ error, onSubmit }: Props) => {
   const {
     formState: { errors, isDirty, isValid },
+    getValues,
     handleSubmit,
     register,
     setError,
@@ -26,9 +27,13 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
 
   useEffect(() => {
     if (error) {
-      setError('root.serverError', { message: error })
+      let value: keyof SignInFields
+
+      for (value in getValues()) {
+        setError(value, { message: error })
+      }
     }
-  }, [error, setError])
+  }, [error, setError, getValues])
 
   return (
     <Card className={'min-w-[22.5rem] p-6 text-regular16 text-light-100'}>
@@ -63,13 +68,12 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
           <Link href={FORGOT_PASSWORD}>Forgot password</Link>
         </div>
         <div className={'flex flex-col items-center gap-4'}>
-          <Button fullWidth type={'submit'} variant={'primary'}>
+          <Button disabled={!isDirty || !isValid} fullWidth type={'submit'} variant={'primary'}>
             Sign In
           </Button>
           <p className={'text-regular16'}>Don&apos;t have an account?</p>
           <Button
             as={Link}
-            disabled={!isDirty || !isValid}
             href={SIGN_UP}
             style={{ fontWeight: 600, textDecoration: 'none' }}
             variant={'link'}
