@@ -1,19 +1,42 @@
-import { useLoginMutation } from '@/entities/user'
-import { SignInForm } from '@/features/auth/signIn'
+import { useState } from 'react'
+
+import {
+  SignInFields,
+  SignInForm,
+  isErrorWithMessage,
+  isFetchBaseQueryError,
+  useLoginMutation,
+} from '@/features/auth/signIn'
+import { ServerBadResponse } from '@/shared/api'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 
 const SignIn: NextPageWithLayout = () => {
-  const [login, { error, isError, isLoading }] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation()
+  const [error, setError] = useState('')
+
+  const handleSubmitForm = async function (data: SignInFields) {
+    try {
+      await login(data).unwrap()
+    } catch (error) {
+      if (isFetchBaseQueryError(error)) {
+        const errMsg =
+          'error' in error
+            ? error.error
+            : JSON.stringify((error.data as ServerBadResponse).messages)
+
+        setError(errMsg)
+      } else if (isErrorWithMessage(error)) {
+        setError(error.message)
+      }
+    }
+  }
 
   return (
     <SignInForm
+      error={error}
       onSubmit={data => {
-        console.log(data)
-        login(data)
-          .unwrap()
-          .then(res => console.log(res))
-          .catch(err => console.error(err))
+        handleSubmitForm(data)
       }}
     />
   )
