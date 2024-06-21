@@ -1,3 +1,4 @@
+import { Tr } from '@/hooks/useLangSwitcher'
 import githubIcon from '@/shared/assets/icons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
@@ -6,6 +7,7 @@ import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { SignInFields, useSignIn } from '../lib'
 
@@ -20,9 +22,12 @@ export const SignInForm = ({ onSubmit }: Props) => {
     register,
   } = useSignIn()
 
+  const locale = useRouter().locale
+  const { sign_in } = Tr(locale)
+
   return (
     <Card className={'min-w-[22.5rem] p-6 text-regular16 text-light-100'}>
-      <h2 className={'mb-3 text-center text-h1 font-bold'}>Sign In</h2>
+      <h2 className={'mb-3 text-center text-h1 font-bold'}>{sign_in.sign_in}</h2>
       <div className={'mb-6 flex justify-center gap-9'}>
         <Button variant={'text'}>
           <Image alt={'Login with google'} height={36} src={googleIcon} width={36} />
@@ -35,33 +40,33 @@ export const SignInForm = ({ onSubmit }: Props) => {
         <div className={'mb-9 flex flex-col gap-6'}>
           <Input
             error={errors.email?.message}
-            label={'Email'}
+            label={sign_in.email}
             placeholder={'example@email.com'}
             type={'text'}
             {...register('email')}
           />
           <Input
             error={errors.password?.message}
-            label={'Password'}
+            label={sign_in.password}
             type={'password'}
             {...register('password')}
           />
         </div>
         <div className={'mb-6 text-right text-regular14 capitalize text-light-900'}>
-          <Link href={FORGOT_PASSWORD}>Forgot password</Link>
+          <Link href={FORGOT_PASSWORD}>{sign_in.forgo_password}</Link>
         </div>
         <div className={'flex flex-col items-center gap-4'}>
           <Button fullWidth type={'submit'} variant={'primary'}>
-            Sign In
+            {sign_in.sign_in}
           </Button>
-          <p className={'text-regular16'}>Don&apos;t have an account?</p>
+          <p className={'text-regular16'}>{sign_in.an_account}</p>
           <Button
             as={Link}
             href={SIGN_UP}
             style={{ fontWeight: 600, textDecoration: 'none' }}
             variant={'link'}
           >
-            Sign Up
+            {sign_in.sign_up}
           </Button>
         </div>
       </form>

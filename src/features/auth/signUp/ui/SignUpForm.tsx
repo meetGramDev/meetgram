@@ -32,8 +32,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
     signUp({ ...data })
       .unwrap()
       .then(() => {
-        /*todo add new translate for alert*/
-        alert(`We have sent a link to confirm your email to ${data.email}`)
+        alert(`${sign_up.aler} ${data.email}`)
       })
       .catch(err => {
         const e = err?.data?.messages[0]
@@ -88,8 +87,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
                 const onValueChange = (value: boolean) => {
                   if (!value) {
                     setError('isApproved', {
-                      /*todo add new value massage for translate */
-                      message: 'Please read and accept the terms and conditions',
+                      message: sign_up.message,
                     })
                   }
                   if (value) {
