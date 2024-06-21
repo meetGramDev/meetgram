@@ -1,7 +1,6 @@
 import { Controller } from 'react-hook-form'
 
-import { GithubBtn } from '@/features/auth/by-oauth/github'
-import { GoogleBtn } from '@/features/auth/by-oauth/google'
+import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
 import { useSignUpMutation } from '@/features/auth/signUp'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
 import { Button } from '@/shared/ui'

@@ -17,6 +17,6 @@ export const googleLoginApi = baseApi.injectEndpoints({
 export const { useGoogleLoginMutation } = googleLoginApi
 
 type GoogleLoginResponseType = {
-  accessToken: 'string'
-  email: 'string'
+  accessToken: string
+  email: string
 }

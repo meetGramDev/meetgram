@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 
+import { updateEmail } from '@/entities/user'
+import { PROFILE } from '@/shared/config/router'
 import { CodeResponse, NonOAuthError, useGoogleLogin } from '@react-oauth/google'
+import { useRouter } from 'next/router'
 
 import { useGoogleLoginMutation } from '../api/googleLoginApiSlice'
 import { generateCryptoRandomState } from './generateCryptoRandomState'
@@ -12,6 +15,7 @@ import { generateCryptoRandomState } from './generateCryptoRandomState'
 export function useLoginGoogle() {
   const [state, setState] = useState('')
   const [getDataFromResourceServer] = useGoogleLoginMutation()
+  const router = useRouter()
 
   const login = useGoogleLogin({
     flow: 'auth-code',
@@ -24,14 +28,17 @@ export function useLoginGoogle() {
     onSuccess: async (codeResponse: CodeResponse) => {
       console.log('🟢 Success', codeResponse)
       if (state === codeResponse.state) {
-        localStorage.setItem('code', codeResponse.code)
         setState('')
         try {
           const resp = await getDataFromResourceServer(codeResponse.code)
 
-          // затем сохранить accessToken и емайл в стейте юзера
-          // и перенаправить на главную
-          console.log(resp)
+          if (!resp.data) {
+            throw new Error(resp.error as string)
+          }
+
+          localStorage.setItem('accessToken', JSON.stringify(resp.data.accessToken))
+          updateEmail(resp.data.email)
+          router.push(PROFILE)
         } catch (err) {
           console.log(err)
         }

@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 
-import { GithubBtn } from '@/features/auth/by-oauth/github'
-import { GoogleBtn } from '@/features/auth/by-oauth/google'
+import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
