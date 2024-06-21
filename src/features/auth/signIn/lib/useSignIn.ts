@@ -12,11 +12,11 @@ const signInSchema = z.object({
 export type SignInFields = z.infer<typeof signInSchema>
 
 export function useSignIn() {
-  const { formState, handleSubmit, register } = useForm<SignInFields>({
+  const { formState, handleSubmit, register, setError } = useForm<SignInFields>({
     defaultValues: { email: '', password: '' },
     mode: 'onTouched',
     resolver: zodResolver(signInSchema),
   })
 
-  return { formState, handleSubmit, register }
+  return { formState, handleSubmit, register, setError }
 }
