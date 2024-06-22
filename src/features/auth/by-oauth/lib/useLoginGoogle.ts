@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { setCredentials, setProvider } from '@/entities/user'
+import { ServerBadResponse } from '@/shared/api'
 import { PROFILE } from '@/shared/config/router'
+import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { CodeResponse, NonOAuthError, useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
@@ -37,8 +39,17 @@ export function useLoginGoogle() {
           dispatch(setCredentials({ accessToken: resp.accessToken }))
           dispatch(setProvider({ email: resp.email, provider: 'google' }))
           router.push(PROFILE)
-        } catch (err) {
-          console.log(err)
+        } catch (error) {
+          if (isFetchBaseQueryError(error)) {
+            const errMsg =
+              'error' in error
+                ? error.error
+                : JSON.stringify((error.data as ServerBadResponse).messages)
+
+            console.error(errMsg)
+          } else if (isErrorWithMessage(error)) {
+            console.error(error.message)
+          }
         }
       } else {
         console.warn('State mismatch. Possible CSRF attack')
