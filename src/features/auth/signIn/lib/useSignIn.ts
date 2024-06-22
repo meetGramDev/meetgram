@@ -14,7 +14,7 @@ export type SignInFields = z.infer<typeof signInSchema>
 export function useSignIn() {
   const { formState, getValues, handleSubmit, register, setError } = useForm<SignInFields>({
     defaultValues: { email: '', password: '' },
-    mode: 'onTouched',
+    mode: 'onBlur',
     reValidateMode: 'onChange',
     resolver: zodResolver(signInSchema),
   })
