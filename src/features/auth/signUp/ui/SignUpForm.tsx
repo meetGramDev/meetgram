@@ -41,8 +41,6 @@ export const SignUpForm = ({ onSubmit }: Props) => {
     signUp({ ...data })
       .unwrap()
       .then(() => {
-        /*todo check again */
-        alert(`${sign_up.aler} ${data.email}`)
         dispatch(authSliceActions.setEmail(data.email))
         setOpen(true)
       })
@@ -58,12 +56,12 @@ export const SignUpForm = ({ onSubmit }: Props) => {
       })
   }
 
-  const { sign_up } = Tr(locale)
+  const { signUpLang } = Tr(locale)
 
   return (
     <>
       <Card className={s.card}>
-        <h3 className={s.title}>{sign_up.sign_up}</h3>
+        <h3 className={s.title}>{signUpLang.signUp}</h3>
         <div className={s.iconWrapper}>
           <Button variant={'text'}>
             <Image alt={'googleIcon'} className={s.icon} src={googleIcon} />
@@ -75,19 +73,19 @@ export const SignUpForm = ({ onSubmit }: Props) => {
         <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
           <Input
             error={errors.userName?.message}
-            label={sign_up.username}
+            label={signUpLang.username}
             {...register('userName')}
           />
-          <Input error={errors.email?.message} label={sign_up.email} {...register('email')} />
+          <Input error={errors.email?.message} label={signUpLang.email} {...register('email')} />
           <Input
             error={errors.password?.message}
-            label={sign_up.password}
+            label={signUpLang.password}
             type={'password'}
             {...register('password')}
           />
           <Input
             error={errors.confirmPassword?.message}
-            label={sign_up.password_conf}
+            label={signUpLang.passwordConf}
             type={'password'}
             {...register('confirmPassword')}
           />
@@ -99,7 +97,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
                 const onValueChange = (value: boolean) => {
                   if (!value) {
                     setError('isApproved', {
-                      message: sign_up.message,
+                      message: signUpLang.message,
                     })
                   }
                   if (value) {
@@ -112,30 +110,33 @@ export const SignUpForm = ({ onSubmit }: Props) => {
               }}
             />
             <span className={s.info}>
-              {sign_up.I_agree}{' '}
+              {signUpLang.IAgree}{' '}
               <Button as={Link} className={s.info} href={TERMS_OF_SERVICE} variant={'link'}>
-                {sign_up.term_serv}
+                {signUpLang.termServ}
               </Button>{' '}
-              {sign_up.and}{' '}
+              {signUpLang.and}{' '}
               <Button as={Link} className={s.info} href={PRIVACY_POLICY} variant={'link'}>
-                {sign_up.priv_policy}
+                {signUpLang.privPolicy}
               </Button>
             </span>
             {isApprovedError && <div className={s.checkboxError}>{isApprovedError}</div>}
           </div>
           <Button disabled={!isDirty || !isValid} fullWidth type={'submit'}>
-            {sign_up.sign_up}
+            {signUpLang.signUp}
           </Button>
         </form>
-        <div style={{ textAlign: 'center' }}>{sign_up.an_account}</div>
+        <div style={{ textAlign: 'center' }}>{signUpLang.anAccount}</div>
         <Button as={Link} className={s.link} href={SIGN_IN} variant={'link'}>
-          {sign_up.sign_in}
+          {signUpLang.signIn}
         </Button>
       </Card>
       <>
         <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
           <div className={s.modalContent}>
-            <div>We have sent a link to confirm your email to {email}</div>
+            <div>
+              {signUpLang.aler}
+              {email}
+            </div>
             <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>
               Ok
             </Button>

@@ -23,11 +23,11 @@ export const SignInForm = ({ onSubmit }: Props) => {
   } = useSignIn()
 
   const locale = useRouter().locale
-  const { sign_in } = Tr(locale)
+  const { signInLang } = Tr(locale)
 
   return (
     <Card className={'min-w-[22.5rem] p-6 text-regular16 text-light-100'}>
-      <h2 className={'mb-3 text-center text-h1 font-bold'}>{sign_in.sign_in}</h2>
+      <h2 className={'mb-3 text-center text-h1 font-bold'}>{signInLang.signIn}</h2>
       <div className={'mb-6 flex justify-center gap-9'}>
         <Button variant={'text'}>
           <Image alt={'Login with google'} height={36} src={googleIcon} width={36} />
@@ -40,33 +40,33 @@ export const SignInForm = ({ onSubmit }: Props) => {
         <div className={'mb-9 flex flex-col gap-6'}>
           <Input
             error={errors.email?.message}
-            label={sign_in.email}
+            label={signInLang.email}
             placeholder={'example@email.com'}
             type={'text'}
             {...register('email')}
           />
           <Input
             error={errors.password?.message}
-            label={sign_in.password}
+            label={signInLang.password}
             type={'password'}
             {...register('password')}
           />
         </div>
         <div className={'mb-6 text-right text-regular14 capitalize text-light-900'}>
-          <Link href={FORGOT_PASSWORD}>{sign_in.forgo_password}</Link>
+          <Link href={FORGOT_PASSWORD}>{signInLang.forgoPassword}</Link>
         </div>
         <div className={'flex flex-col items-center gap-4'}>
           <Button fullWidth type={'submit'} variant={'primary'}>
-            {sign_in.sign_in}
+            {signInLang.signIn}
           </Button>
-          <p className={'text-regular16'}>{sign_in.an_account}</p>
+          <p className={'text-regular16'}>{signInLang.anAccount}</p>
           <Button
             as={Link}
             href={SIGN_UP}
             style={{ fontWeight: 600, textDecoration: 'none' }}
             variant={'link'}
           >
-            {sign_in.sign_up}
+            {signInLang.signUp}
           </Button>
         </div>
       </form>
