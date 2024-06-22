@@ -58,11 +58,9 @@ export const Header = ({ isAuth = false, notification }: Props) => {
         {!isAuth && (
           <div className={'flex gap-6'}>
             <Button as={Link} href={SIGN_IN} variant={'link'}>
-              {/*todo*/}
               {header.signIn}
             </Button>
             <Button as={Link} href={SIGN_UP} variant={'primary'}>
-              {/*todo*/}
               {header.signUp}
             </Button>
           </div>
