@@ -1,7 +1,15 @@
-export type UserDataPayload = {
+export type SetCredentialsPayload = {
+  accessToken: string
+}
+
+export type SetUserData = {
   email: string
   isBlocked: boolean
-  providers?: 'github' | 'google'
   userId: number
   userName: string
+}
+
+export type SetProviderPayload = {
+  email: string
+  provider: 'github' | 'google'
 }

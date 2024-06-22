@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { updateEmail } from '@/entities/user'
+import { setCredentials, setProvider } from '@/entities/user'
 import { PROFILE } from '@/shared/config/router'
 import { CodeResponse, NonOAuthError, useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
@@ -16,6 +17,7 @@ export function useLoginGoogle() {
   const [state, setState] = useState('')
   const [getDataFromResourceServer] = useGoogleLoginMutation()
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const login = useGoogleLogin({
     flow: 'auth-code',
@@ -30,14 +32,10 @@ export function useLoginGoogle() {
       if (state === codeResponse.state) {
         setState('')
         try {
-          const resp = await getDataFromResourceServer(codeResponse.code)
+          const resp = await getDataFromResourceServer(codeResponse.code).unwrap()
 
-          if (!resp.data) {
-            throw new Error(resp.error as string)
-          }
-
-          localStorage.setItem('accessToken', JSON.stringify(resp.data.accessToken))
-          updateEmail(resp.data.email)
+          dispatch(setCredentials({ accessToken: resp.accessToken }))
+          dispatch(setProvider({ email: resp.email, provider: 'google' }))
           router.push(PROFILE)
         } catch (err) {
           console.log(err)

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { updateEmail } from '@/entities/user'
+import { setCredentials, setProvider } from '@/entities/user'
 import { PROFILE, SIGN_IN } from '@/shared/config/router'
+import { useAppDispatch } from '@/shared/config/storeHooks'
 import { useRouter } from 'next/router'
 
 /**
@@ -12,6 +13,7 @@ import { useRouter } from 'next/router'
 export function useLoginGithub() {
   const router = useRouter()
   const [calledPush, setCalledPush] = useState(false)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -24,8 +26,8 @@ export function useLoginGithub() {
     }
 
     if (accessToken && email) {
-      localStorage.setItem('accessToken', JSON.stringify(accessToken))
-      updateEmail(email)
+      dispatch(setCredentials({ accessToken }))
+      dispatch(setProvider({ email, provider: 'github' }))
       router.push(PROFILE)
 
       setCalledPush(true)
@@ -34,5 +36,6 @@ export function useLoginGithub() {
 
       setCalledPush(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 }

@@ -1,14 +1,8 @@
 import { useState } from 'react'
 
-import {
-  SignInFields,
-  SignInForm,
-  isErrorWithMessage,
-  isFetchBaseQueryError,
-  useLoginMutation,
-} from '@/features/auth/signIn'
+import { SignInFields, SignInForm, useLoginMutation } from '@/features/auth/signIn'
 import { ServerBadResponse } from '@/shared/api'
-import { NextPageWithLayout } from '@/shared/types'
+import { NextPageWithLayout, isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 
 const SignIn: NextPageWithLayout = () => {
