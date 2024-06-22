@@ -1,17 +1,28 @@
 import { useState } from 'react'
 
+import { setCredentials } from '@/entities/user'
 import { SignInFields, SignInForm, useLoginMutation } from '@/features/auth/signIn'
 import { ServerBadResponse } from '@/shared/api'
+import { PROFILE } from '@/shared/config/router'
+import { useAppDispatch } from '@/shared/config/storeHooks'
 import { NextPageWithLayout, isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
+import { useRouter } from 'next/router'
 
 const SignIn: NextPageWithLayout = () => {
   const [login, { isLoading }] = useLoginMutation()
+  const router = useRouter()
+  const dispatch = useAppDispatch()
+
   const [error, setError] = useState('')
 
   const handleSubmitForm = async function (data: SignInFields) {
     try {
-      await login(data).unwrap()
+      const accessToken = await login(data).unwrap()
+
+      dispatch(setCredentials(accessToken))
+
+      router.push(PROFILE)
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         const errMsg =
