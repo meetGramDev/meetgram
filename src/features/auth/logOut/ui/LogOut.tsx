@@ -5,26 +5,19 @@ import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
 import { Button } from '@/shared/ui/button/button'
 import { Dialog } from '@/shared/ui/dialog'
+import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './logOut.module.scss'
 
 type Props = {
+  disabled?: boolean
   email: string
 }
 
-export const LogOut = ({ email }: Props) => {
+export const LogOut = ({ disabled, email }: Props) => {
   const [logout] = useLogOutMutation()
   const [open, setOpen] = useState(false)
-
-  const logoutHandler = () => {
-    logout()
-      .unwrap()
-      .catch(err => {
-        throw new Error(err.message)
-      })
-      .finally(() => setOpen(false))
-  }
 
   return (
     <Dialog
@@ -32,7 +25,11 @@ export const LogOut = ({ email }: Props) => {
       open={open}
       title={'Log Out'}
       trigger={
-        <Button className={s.buttonTrigger} variant={'text'}>
+        <Button
+          className={clsx(disabled && s.disabled, s.buttonTrigger)}
+          disabled={disabled}
+          variant={'text'}
+        >
           <LogOutIcon />
           Log Out
         </Button>
@@ -41,14 +38,14 @@ export const LogOut = ({ email }: Props) => {
       <div className={s.logOutContent}>
         <span className={s.contentText}>
           {/* eslint-disable-next-line react/no-unescaped-entities */}
-          Are you really want to log out of your account "{email}"?
+          Are you really want to log out of your account "<span className={s.email}>{email}</span>"?
         </span>
         <div className={s.contentButtons}>
           <Button
             as={Link}
             className={s.buttonWidth}
             href={SIGN_IN}
-            onClick={logoutHandler}
+            onClick={() => logout()}
             variant={'outlined'}
           >
             Yes
