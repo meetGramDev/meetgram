@@ -43,14 +43,14 @@ export const LogOut = ({ disabled, email }: Props) => {
         <div className={s.contentButtons}>
           <Button
             as={Link}
-            className={s.buttonWidth}
             href={SIGN_IN}
             onClick={() => logout()}
+            style={{ width: '6rem' }}
             variant={'outlined'}
           >
             Yes
           </Button>
-          <Button className={s.buttonWidth} onClick={() => setOpen(false)} variant={'primary'}>
+          <Button onClick={() => setOpen(false)} style={{ width: '6rem' }} variant={'primary'}>
             No
           </Button>
         </div>
