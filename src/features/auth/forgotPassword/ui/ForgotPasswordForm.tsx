@@ -35,8 +35,10 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
   const { errors, handleSubmit, register, setError } = useForgotPassword()
 
   const siteKey: string = process.env.captchaSiteKey
-    ? process.env.captchaSiteKey
-    : '6Le9h_IpAAAAAF6U0_jL6SNQKTXC_IuBTp-5ksOr'
+  // ? process.env.captchaSiteKey
+  // : '6Le9h_IpAAAAAF6U0_jL6SNQKTXC_IuBTp-5ksOr'
+
+  // const key = process.env.captchaSiteKey
 
   const onSubmitHandler = handleSubmit(data => {
     onSubmit({ email: data.email, token: token })

@@ -6,7 +6,12 @@ const ForgotPassword = () => {
   const [forgotPassword] = useForgotPasswordMutation()
 
   const onSubmit = (data: { token: null | string } & ForgotPasswordFormData) => {
-    forgotPassword({ ...data }).then(res => {
+    debugger
+    forgotPassword({
+      baseUrl: 'http://localhost:3000/',
+      email: data.email,
+      recaptcha: data.token,
+    }).then(res => {
       console.log(res)
     })
   }
