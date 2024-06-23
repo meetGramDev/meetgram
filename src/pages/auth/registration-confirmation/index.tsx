@@ -4,9 +4,11 @@ import {
   useRegistrationConfirmationMutation,
   useRegistrationEmailResendingMutation,
 } from '@/features/auth/registrationConfirmation/model/services/registration.service'
+import { getEmail } from '@/features/auth/signUp'
 import SignInImg from '@/shared/assets/img/sign-up_bro.png'
 import Img from '@/shared/assets/img/time-management.png'
 import { SIGN_IN } from '@/shared/config/router'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { NextPageWithLayout } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import { getAuthLayout } from '@/widgets/layouts'
@@ -20,13 +22,16 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
   const [registrationConfirmation, { error, isLoading }] = useRegistrationConfirmationMutation()
   const [registrationEmailResending] = useRegistrationEmailResendingMutation()
   const params = useSearchParams()
+  const email = useAppSelector(getEmail)
+
+  console.log(email)
 
   const resetVerificationLink = () => {
-    alert('Send')
-  }
-
-  const resendingEmailHandler = () => {
-    registrationEmailResending({ email: '' })
+    registrationEmailResending({ email })
+      .unwrap()
+      .then(() => {
+        alert('ok')
+      })
   }
 
   useEffect(() => {
@@ -35,10 +40,10 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
     if (confirmationCode) {
       registrationConfirmation({ confirmationCode })
         .unwrap()
-        .then(res => {
+        .then(() => {
           console.log('res')
         })
-        .catch(e => {
+        .catch(() => {
           console.log('catch')
         })
     }
@@ -50,7 +55,7 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
 
   return (
     <div>
-      {/* @ts-ignore*/}
+      {/* @ts-ignore */}
       {error?.data.statusCode === 400 ? (
         <div className={s.root}>
           <div className={s.textWrapper}>

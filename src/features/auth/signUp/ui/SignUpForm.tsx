@@ -1,13 +1,18 @@
+'use client'
+import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { useSignUpMutation } from '@/features/auth/signUp'
+import { authSliceActions, getEmail, useSignUpMutation } from '@/features/auth/signUp'
 import githubIcon from '@/shared/assets/icons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
+import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
+import { Dialog } from '@/shared/ui/dialog'
 import { Input } from '@/shared/ui/input/input'
+import { clsx } from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -23,12 +28,17 @@ export const SignUpForm = ({ onSubmit }: Props) => {
   const { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError } =
     useSignUp()
   const [signUp] = useSignUpMutation()
+  const email = useAppSelector(getEmail)
+  const dispatch = useAppDispatch()
+  const [open, setOpen] = useState(false)
+  const isApprovedError = errors.isApproved?.message
 
   const onSubmitHandler = (data: SignUpFormData) => {
     signUp({ ...data })
       .unwrap()
       .then(() => {
-        alert(`We have sent a link to confirm your email to ${data.email}`)
+        dispatch(authSliceActions.setEmail(data.email))
+        setOpen(true)
       })
       .catch(err => {
         const e = err?.data?.messages[0]
@@ -69,7 +79,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
             type={'password'}
             {...register('confirmPassword')}
           />
-          <div className={s.infoWrapper}>
+          <div className={clsx(s.infoWrapper, [isApprovedError && s.infoWrapperWithError])}>
             <Controller
               control={control}
               name={'isApproved'}
@@ -99,9 +109,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
                 Privacy Policy
               </Button>
             </span>
-            {errors.isApproved?.message && (
-              <div className={s.checkboxError}>{errors.isApproved?.message}</div>
-            )}
+            {isApprovedError && <div className={s.checkboxError}>{isApprovedError}</div>}
           </div>
           <Button disabled={!isDirty || !isValid} fullWidth type={'submit'}>
             Sign Up
@@ -112,6 +120,16 @@ export const SignUpForm = ({ onSubmit }: Props) => {
           Sign In
         </Button>
       </Card>
+      <>
+        <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
+          <div className={s.modalContent}>
+            <div>We have sent a link to confirm your email to {email}</div>
+            <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>
+              Ok
+            </Button>
+          </div>
+        </Dialog>
+      </>
     </>
   )
 }
