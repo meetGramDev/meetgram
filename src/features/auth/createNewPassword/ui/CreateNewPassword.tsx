@@ -21,8 +21,7 @@ export const CreateNewPassword = ({ onSubmit }: PropsType) => {
     title: clsx(s.title),
   }
 
-  const { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError } =
-    useCreateNewPassword()
+  const { errors, handleSubmit, register } = useCreateNewPassword()
 
   const createNewPasswordHandler = (data: CreateNewPasswordValues) => {
     alert(`password: ${data.password}, confirm password: ${data.confirmPassword}`)
