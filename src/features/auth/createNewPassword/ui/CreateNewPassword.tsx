@@ -2,7 +2,6 @@ import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
 import { clsx } from 'clsx'
-import { message } from 'memfs/lib/internal/errors'
 
 import s from './CreateNewPassword.module.scss'
 
