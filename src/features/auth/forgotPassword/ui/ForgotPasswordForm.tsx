@@ -34,9 +34,7 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
 
   const { errors, handleSubmit, register, setError } = useForgotPassword()
 
-  const siteKey: string = process.env.captchaSiteKey
-  // ? process.env.captchaSiteKey
-  // : '6Le9h_IpAAAAAF6U0_jL6SNQKTXC_IuBTp-5ksOr'
+  const siteKey = process.env.captchaSiteKey as string
 
   // const key = process.env.captchaSiteKey
 
@@ -76,12 +74,7 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
       </Button>
       {!sentLink && (
         <div className={classNames.recaptcha}>
-          <ReCAPTCHA
-            hl={'en'}
-            onChange={token => setToken(token)}
-            sitekey={siteKey}
-            theme={'dark'}
-          />
+          <ReCAPTCHA hl={'en'} onChange={setToken} sitekey={siteKey} theme={'dark'} />
         </div>
       )}
     </Card>
