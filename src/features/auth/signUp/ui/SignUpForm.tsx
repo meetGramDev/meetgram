@@ -1,8 +1,5 @@
-'use client'
-import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { authSliceActions, getEmail, useSignUpMutation } from '@/features/auth/signUp'
 import githubIcon from '@/shared/assets/icons/github-icon.svg'
 import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
@@ -15,6 +12,7 @@ import { Input } from '@/shared/ui/input/input'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './signUpForm.module.scss'
 
@@ -25,6 +23,8 @@ type Props = {
 }
 
 export const SignUpForm = ({ onSubmit }: Props) => {
+  const { locale } = useRouter()
+
   const { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError } =
     useSignUp()
   const [signUp] = useSignUpMutation()
@@ -52,10 +52,12 @@ export const SignUpForm = ({ onSubmit }: Props) => {
       })
   }
 
+  const { signUpLang } = Tr(locale)
+
   return (
     <>
       <Card className={s.card}>
-        <h3 className={s.title}>Sign Up</h3>
+        <h3 className={s.title}>{signUpLang.signUp}</h3>
         <div className={s.iconWrapper}>
           <Button variant={'text'}>
             <Image alt={'googleIcon'} className={s.icon} src={googleIcon} />
@@ -65,17 +67,21 @@ export const SignUpForm = ({ onSubmit }: Props) => {
           </Button>
         </div>
         <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
-          <Input error={errors.userName?.message} label={'Username'} {...register('userName')} />
-          <Input error={errors.email?.message} label={'Email'} {...register('email')} />
+          <Input
+            error={errors.userName?.message}
+            label={signUpLang.username}
+            {...register('userName')}
+          />
+          <Input error={errors.email?.message} label={signUpLang.email} {...register('email')} />
           <Input
             error={errors.password?.message}
-            label={'Password'}
+            label={signUpLang.password}
             type={'password'}
             {...register('password')}
           />
           <Input
             error={errors.confirmPassword?.message}
-            label={'Password confirmation'}
+            label={signUpLang.passwordConf}
             type={'password'}
             {...register('confirmPassword')}
           />
@@ -87,7 +93,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
                 const onValueChange = (value: boolean) => {
                   if (!value) {
                     setError('isApproved', {
-                      message: 'Please read and accept the terms and conditions',
+                      message: signUpLang.message,
                     })
                   }
                   if (value) {
@@ -100,30 +106,33 @@ export const SignUpForm = ({ onSubmit }: Props) => {
               }}
             />
             <span className={s.info}>
-              I agree to the{' '}
+              {signUpLang.IAgree}{' '}
               <Button as={Link} className={s.info} href={TERMS_OF_SERVICE} variant={'link'}>
-                Terms of Service
+                {signUpLang.termServ}
               </Button>{' '}
-              and{' '}
+              {signUpLang.and}{' '}
               <Button as={Link} className={s.info} href={PRIVACY_POLICY} variant={'link'}>
-                Privacy Policy
+                {signUpLang.privPolicy}
               </Button>
             </span>
             {isApprovedError && <div className={s.checkboxError}>{isApprovedError}</div>}
           </div>
           <Button disabled={!isDirty || !isValid} fullWidth type={'submit'}>
-            Sign Up
+            {signUpLang.signUp}
           </Button>
         </form>
-        <div style={{ textAlign: 'center' }}>Do you have an account?</div>
+        <div style={{ textAlign: 'center' }}>{signUpLang.anAccount}</div>
         <Button as={Link} className={s.link} href={SIGN_IN} variant={'link'}>
-          Sign In
+          {signUpLang.signIn}
         </Button>
       </Card>
       <>
         <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
           <div className={s.modalContent}>
-            <div>We have sent a link to confirm your email to {email}</div>
+            <div>
+              {signUpLang.aler}
+              {email}
+            </div>
             <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>
               Ok
             </Button>
