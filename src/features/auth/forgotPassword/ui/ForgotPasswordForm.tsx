@@ -69,7 +69,7 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
         </Button>
       </form>
 
-      <Button as={Link} className={classNames.btnLink} href={'#'} variant={'link'}>
+      <Button as={Link} className={classNames.btnLink} href={'/sign-in'} variant={'link'}>
         Back to Sign In
       </Button>
       {!sentLink && (
