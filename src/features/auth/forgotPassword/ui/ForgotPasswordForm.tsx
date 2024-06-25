@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 //eslint-disable-next-line
 import ReCAPTCHA from 'react-google-recaptcha'
 
+import { useForgotPasswordMutation } from '@/features/auth/forgotPassword'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
+import { Dialog } from '@/shared/ui/dialog'
 import { Input } from '@/shared/ui/input/input'
 import { clsx } from 'clsx'
 import Link from 'next/link'
@@ -18,7 +20,16 @@ type ForgotPasswordType = {
 
 export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
   const [token, setToken] = useState<null | string>(null)
-  const [sentLink, setSentLink] = useState<boolean>(false)
+
+  const [trigger, setTrigger] = useState<boolean>(false)
+
+  const [isSentLink, setIsSentLink] = useState(false)
+
+  const [email, setEmail] = useState('')
+
+  const [forgotPassword, { error }] = useForgotPasswordMutation()
+
+  const captchaRef = useRef()
 
   const classNames = {
     btnLink: clsx(s.bntLink),
@@ -36,11 +47,28 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
 
   const siteKey = process.env.captchaSiteKey as string
 
-  // const key = process.env.captchaSiteKey
-
   const onSubmitHandler = handleSubmit(data => {
-    onSubmit({ email: data.email, token: token })
-    data && token && setSentLink(true)
+    forgotPassword({
+      baseUrl: 'http://localhost:3000/',
+      email: data.email,
+      recaptcha: token as string,
+    })
+      .unwrap()
+      .then(() => {
+        setIsSentLink(true)
+        setTrigger(true)
+        setToken('')
+        captchaRef.current.reset()
+        setEmail(data.email)
+      })
+      .catch(error => {
+        captchaRef.current.reset()
+        const err = error?.data?.messages[0]
+
+        if (err.field === 'email') {
+          setError('email', { message: err.message, type: 'custom' })
+        }
+      })
   })
 
   return (
@@ -57,7 +85,7 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
         <div className={classNames.text}>
           Enter your email and we will send you further instruction
         </div>
-        {sentLink && (
+        {isSentLink && (
           <div className={classNames.hiddenText}>
             The link has been sent by email.
             <br />
@@ -65,18 +93,30 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
           </div>
         )}
         <Button className={classNames.button} fullWidth type={'submit'} variant={'primary'}>
-          {!sentLink ? 'Send Link' : 'Send Link Again'}
+          {!isSentLink ? 'Send Link' : 'Send Link Again'}
         </Button>
       </form>
 
       <Button as={Link} className={classNames.btnLink} href={'/sign-in'} variant={'link'}>
         Back to Sign In
       </Button>
-      {!sentLink && (
-        <div className={classNames.recaptcha}>
-          <ReCAPTCHA hl={'en'} onChange={setToken} sitekey={siteKey} theme={'dark'} />
-        </div>
-      )}
+
+      <div className={classNames.recaptcha}>
+        <ReCAPTCHA
+          hl={'en'}
+          onChange={setToken}
+          ref={captchaRef}
+          sitekey={siteKey}
+          theme={'dark'}
+        />
+      </div>
+
+      <Dialog onOpenChange={setTrigger} open={trigger} title={'Email sent'}>
+        <div>{`We have sent a link to confirm your email to ${email}`}</div>
+        <Button onClick={() => setTrigger(false)} variant={'primary'}>
+          OK
+        </Button>
+      </Dialog>
     </Card>
   )
 }
