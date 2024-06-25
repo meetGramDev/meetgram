@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { useLogOutMutation } from '@/features/auth/logOut/model/services/logOut.service'
 import { baseApi } from '@/shared/api'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
-import { useAppDispatch } from '@/shared/config/storeHooks'
+import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import { Dialog } from '@/shared/ui/dialog'
 import { clsx } from 'clsx'
@@ -18,28 +19,29 @@ type Props = {
 }
 
 export const LogOut = ({ disabled, email }: Props) => {
-  const [logout, { error }] = useLogOutMutation()
+  const [logout] = useLogOutMutation()
   const [open, setOpen] = useState(false)
+
   const router = useRouter()
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
 
-  const logOutHandler = () => {
-    logout()
-      .then(res => {
-        if ('data' in res) {
-          router.push(SIGN_IN)
-        } else if ('error' in res) {
-          const errorData = res.error
+  const handleLogOut = async () => {
+    try {
+      await logout().unwrap()
+      router.push(SIGN_IN)
+    } catch (err) {
+      if (isFetchBaseQueryError(err)) {
+        dispatch(baseApi.util?.resetApiState())
+        const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
 
-          if ('status' in errorData && errorData.status === 401) {
-            dispatch(baseApi.util?.resetApiState())
-            router.push(SIGN_IN)
-          } else {
-            console.error(errorData)
-          }
-        }
-      })
-      .finally(() => setOpen(false))
+        router.push(SIGN_IN)
+        console.error(errMsg, { variant: 'error' })
+      } else if (isErrorWithMessage(err)) {
+        console.error(err.message, { variant: 'error' })
+      }
+    } finally {
+      setOpen(false)
+    }
   }
 
   return (
@@ -64,7 +66,7 @@ export const LogOut = ({ disabled, email }: Props) => {
           Are you really want to log out of your account "<span className={s.email}>{email}</span>"?
         </span>
         <div className={s.contentButtons}>
-          <Button onClick={logOutHandler} style={{ width: '6rem' }} variant={'outlined'}>
+          <Button onClick={handleLogOut} style={{ width: '6rem' }} variant={'outlined'}>
             Yes
           </Button>
           <Button onClick={() => setOpen(false)} style={{ width: '6rem' }} variant={'primary'}>
