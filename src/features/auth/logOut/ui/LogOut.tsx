@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 
 import { useLogOutMutation } from '@/features/auth/logOut/model/services/logOut.service'
 import { baseApi } from '@/shared/api'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
+import { useAppDispatch } from '@/shared/config/storeHooks'
 import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import { Dialog } from '@/shared/ui/dialog'
@@ -23,7 +23,7 @@ export const LogOut = ({ disabled, email }: Props) => {
   const [open, setOpen] = useState(false)
 
   const router = useRouter()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const handleLogOut = async () => {
     try {
