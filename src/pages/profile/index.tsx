@@ -1,9 +1,9 @@
-import { LogOut } from '@/features/auth/logOut'
+import { useMeQuery } from '@/entities/user'
 
 export default function Profile() {
-  return (
-    <div>
-      <LogOut email={'dasdasdasdasdasda'} />
-    </div>
-  )
+  const { data } = useMeQuery()
+
+  console.log(data)
+
+  return <div>Profile</div>
 }
