@@ -1,10 +1,12 @@
 'use client'
+import { Tr } from '@/hooks/useLangSwitcher'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { Button } from '@/shared/ui/button/button'
 import { OptionType } from '@/shared/ui/select/option'
-import { Select } from '@/shared/ui/select/select'
+import { LangSwitcher } from '@/widgets/langSwitcher'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const languages: OptionType[] = [
   { label: 'Russian', value: 'ru' },
@@ -17,6 +19,10 @@ type Props = {
 }
 
 export const Header = ({ isAuth = false, notification }: Props) => {
+  const router = useRouter()
+
+  const { header } = Tr(router.locale)
+
   return (
     <header
       className={
@@ -46,16 +52,16 @@ export const Header = ({ isAuth = false, notification }: Props) => {
               </div>
             </Button>
           )}
-          <Select defaultValue={'ru'} options={languages} />
+          <LangSwitcher />
         </div>
 
         {!isAuth && (
           <div className={'flex gap-6'}>
             <Button as={Link} href={SIGN_IN} variant={'link'}>
-              Log in
+              {header.signIn}
             </Button>
             <Button as={Link} href={SIGN_UP} variant={'primary'}>
-              Sign up
+              {header.signUp}
             </Button>
           </div>
         )}

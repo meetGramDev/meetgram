@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { SignUpForm, SignUpFormData, useSignUpMutation } from '@/features/auth/signUp'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
