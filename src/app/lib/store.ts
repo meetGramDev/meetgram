@@ -1,10 +1,10 @@
-import { authSliceReducer } from '@/features/auth/signUp/model/slice/auth.slice'
 import { userSlice } from '@/entities/user'
+import { authSliceReducer } from '@/features/auth/signUp/model/slice/auth.slice'
 import { baseApi } from '@/shared/api'
 import { type Action, type ThunkAction, combineSlices, configureStore } from '@reduxjs/toolkit'
 
 const rootReducer = combineSlices(baseApi, userSlice, {
-  auth: authSliceReducer
+  auth: authSliceReducer,
 })
 
 // Infer the `RootState` type from the root reducer
