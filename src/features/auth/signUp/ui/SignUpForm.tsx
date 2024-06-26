@@ -2,19 +2,17 @@
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 
+import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
 import { authSliceActions, getEmail, useSignUpMutation } from '@/features/auth/signUp'
 import { Tr } from '@/hooks/useLangSwitcher'
-import githubIcon from '@/shared/assets/icons/github-icon.svg'
-import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
-import { Button } from '@/shared/ui/button/button'
+import { Button } from '@/shared/ui'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
 import { Dialog } from '@/shared/ui/dialog'
 import { Input } from '@/shared/ui/input/input'
 import { clsx } from 'clsx'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -63,12 +61,8 @@ export const SignUpForm = ({ onSubmit }: Props) => {
       <Card className={s.card}>
         <h3 className={s.title}>{signUpLang.signUp}</h3>
         <div className={s.iconWrapper}>
-          <Button variant={'text'}>
-            <Image alt={'googleIcon'} className={s.icon} src={googleIcon} />
-          </Button>
-          <Button variant={'text'}>
-            <Image alt={'githubIcon'} className={s.icon} src={githubIcon} />
-          </Button>
+          <GoogleBtn />
+          <GithubBtn />
         </div>
         <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
           <Input
