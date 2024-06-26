@@ -8,7 +8,7 @@ import s from './CreateNewPassword.module.scss'
 import { CreateNewPasswordValues, useCreateNewPassword } from '../lib/useCreateNewPassword'
 
 type PropsType = {
-  onSubmit: (data: any) => void
+  onSubmit: (data: { newPassword: string }) => void
 }
 
 export const CreateNewPassword = ({ onSubmit }: PropsType) => {
@@ -25,6 +25,7 @@ export const CreateNewPassword = ({ onSubmit }: PropsType) => {
 
   const createNewPasswordHandler = (data: CreateNewPasswordValues) => {
     alert(`password: ${data.password}, confirm password: ${data.confirmPassword}`)
+    onSubmit({ newPassword: data.password as string })
   }
 
   return (

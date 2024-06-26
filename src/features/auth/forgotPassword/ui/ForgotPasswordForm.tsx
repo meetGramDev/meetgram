@@ -112,10 +112,16 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
       </div>
 
       <Dialog onOpenChange={setTrigger} open={trigger} title={'Email sent'}>
-        <div>{`We have sent a link to confirm your email to ${email}`}</div>
-        <Button onClick={() => setTrigger(false)} variant={'primary'}>
-          OK
-        </Button>
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <span
+            style={{ maxWidth: '328px', textAlign: 'start' }}
+          >{`We have sent a link to confirm your email to ${email}`}</span>
+          <div>
+            <Button onClick={() => setTrigger(false)} variant={'primary'}>
+              OK
+            </Button>
+          </div>
+        </div>
       </Dialog>
     </Card>
   )
