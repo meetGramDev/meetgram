@@ -32,6 +32,9 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
       .then(() => {
         alert('ok')
       })
+      .catch(error => {
+        console.error(error.message)
+      })
   }
 
   useEffect(() => {

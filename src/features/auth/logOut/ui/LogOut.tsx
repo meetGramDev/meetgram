@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { useLogOutMutation } from '@/features/auth/logOut/model/services/logOut.service'
 import { baseApi } from '@/shared/api'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
@@ -12,6 +11,8 @@ import { clsx } from 'clsx'
 import { useRouter } from 'next/router'
 
 import s from './logOut.module.scss'
+
+import { useLogOutMutation } from '../model/services/logOut.service'
 
 type Props = {
   disabled?: boolean
@@ -66,10 +67,10 @@ export const LogOut = ({ disabled, email }: Props) => {
           Are you really want to log out of your account "<span className={s.email}>{email}</span>"?
         </span>
         <div className={s.contentButtons}>
-          <Button onClick={handleLogOut} style={{ width: '6rem' }} variant={'outlined'}>
+          <Button className={s.buttonWidth} onClick={handleLogOut} variant={'outlined'}>
             Yes
           </Button>
-          <Button onClick={() => setOpen(false)} style={{ width: '6rem' }} variant={'primary'}>
+          <Button className={s.buttonWidth} onClick={() => setOpen(false)} variant={'primary'}>
             No
           </Button>
         </div>
