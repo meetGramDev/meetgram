@@ -3,6 +3,10 @@ export const en = {
     Button: 'Button',
     Link: 'Link that looks like a button',
   },
+  errorSignUp: {
+    isApprovedMassage: 'Please read and accept the terms and conditions',
+    refineMassage: "Passwords don't match",
+  },
   header: {
     signIn: 'Sign In',
     signUp: 'Sign Up',
@@ -35,3 +39,6 @@ export const en = {
 }
 
 export type LenType = typeof en
+const { errorSignUp } = en
+
+export type ErrorSineUp = typeof errorSignUp

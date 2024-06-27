@@ -8,6 +8,26 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import { ErrorSineUp } from '../../../../../locales/en'
+
+/*todo this I redid*/
+const getSinUpSchema = (translate: ErrorSineUp) => {
+  return z
+    .object({
+      confirmPassword: passwordConstraint,
+      email: emailConstraint,
+      isApproved: z.boolean().refine(val => val, {
+        message: translate.isApprovedMassage,
+      }),
+      password: passwordConstraint,
+      userName: userNameConstraint,
+    })
+    .refine(data => data.password === data.confirmPassword, {
+      message: translate.refineMassage,
+      path: ['confirmPassword'],
+    })
+}
+
 const signUpSchema = z
   .object({
     confirmPassword: passwordConstraint,
@@ -25,7 +45,7 @@ const signUpSchema = z
 
 export type SignUpFormData = z.infer<typeof signUpSchema>
 
-export const useSignUp = () => {
+export const useSignUp = (translate: ErrorSineUp) => {
   const {
     clearErrors,
     control,
@@ -43,7 +63,7 @@ export const useSignUp = () => {
       userName: '',
     },
     mode: 'onTouched',
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(getSinUpSchema(translate)),
   })
 
   return {

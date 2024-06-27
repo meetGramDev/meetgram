@@ -5,6 +5,10 @@ export const es: LenType = {
     Button: 'Botón',
     Link: 'Enlace que parece un botón',
   },
+  errorSignUp: {
+    isApprovedMassage: 'Por favor, lee y acepta los términos y condiciones',
+    refineMassage: 'Las contraseñas no coinciden',
+  },
   header: {
     signIn: 'Iniciar sesión',
     signUp: 'Registrarse',

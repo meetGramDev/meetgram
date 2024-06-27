@@ -5,6 +5,10 @@ export const ru: LenType = {
     Button: 'Кнопка',
     Link: 'Ссылка, которая выглядит как кнопка',
   },
+  errorSignUp: {
+    isApprovedMassage: 'Пожалуйста, прочитайте и примите условия',
+    refineMassage: 'Пароли не совпадают',
+  },
   header: {
     signIn: 'Войти',
     signUp: 'Регистрация',

@@ -5,6 +5,10 @@ export const be: LenType = {
     Button: 'Кнопка',
     Link: 'Спасылка, якая выглядае як кнопка',
   },
+  errorSignUp: {
+    isApprovedMassage: 'Калі ласка, прачытайце і прыміце ўмовы',
+    refineMassage: 'Паролі не супадаюць',
+  },
   header: {
     signIn: 'Увайсці',
     signUp: 'Рэгістрацыя',

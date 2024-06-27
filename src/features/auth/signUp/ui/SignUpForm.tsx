@@ -26,8 +26,11 @@ type Props = {
   error?: ErrorType[]
   onSubmit: (data: SignUpFormData) => void
 }
-
+/*todo in this file was changing */
 export const SignUpForm = ({ error, onSubmit }: Props) => {
+  const { locale } = useRouter()
+
+  const { errorSignUp, signUpLang } = Tr(locale)
   const {
     clearErrors,
     control,
@@ -38,9 +41,8 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
     isValid,
     register,
     setError,
-  } = useSignUp()
-  const { locale } = useRouter()
-  const { signUpLang } = Tr(locale)
+  } = useSignUp(errorSignUp)
+  /*todo */
   const isApprovedError = errors.isApproved?.message
 
   useEffect(() => {
@@ -66,6 +68,7 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
           <GithubBtn />
         </div>
         <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+          {/*todo*/}
           <Input
             error={errors.userName?.message}
             label={signUpLang.username}

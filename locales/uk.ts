@@ -5,6 +5,10 @@ export const uk: LenType = {
     Button: 'Кнопка',
     Link: 'Посилання, що виглядає як кнопка',
   },
+  errorSignUp: {
+    isApprovedMassage: 'Будь ласка, прочитайте і прийміть умови та положення',
+    refineMassage: 'Паролі не збігаються',
+  },
   header: {
     signIn: 'Увійти',
     signUp: 'Реєстрація',
