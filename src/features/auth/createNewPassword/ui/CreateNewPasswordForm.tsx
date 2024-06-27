@@ -11,7 +11,7 @@ type PropsType = {
   onSubmit: (data: { newPassword: string }) => void
 }
 
-export const CreateNewPassword = ({ onSubmit }: PropsType) => {
+export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
   const classNames = {
     button: s.button,
     card: s.card,

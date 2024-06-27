@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { UseFormSetError } from 'react-hook-form'
 
 import { ForgotPasswordForm, useForgotPasswordMutation } from '@/features/auth/forgotPassword'
 import { ForgotPasswordFormData } from '@/features/auth/forgotPassword/lib/useForgotPassword'
@@ -10,10 +11,15 @@ import { getAuthLayout } from '@/widgets/layouts'
 const ForgotPassword = () => {
   const [trigger, setTrigger] = useState<boolean>(false)
   const [email, setEmail] = useState('')
-  const [forgotPassword, { error, isSuccess }] = useForgotPasswordMutation()
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
 
   const onSubmit = async (
-    data: { baseUrl?: string; token: Nullable<string> } & ForgotPasswordFormData
+    data: {
+      baseUrl?: string
+      setError: UseFormSetError<{ email: string }>
+      setIsSentLink: (value: boolean) => void
+      token: Nullable<string>
+    } & ForgotPasswordFormData
   ) => {
     setEmail(data.email)
 
@@ -22,15 +28,11 @@ const ForgotPassword = () => {
         baseUrl: data.baseUrl,
         email: data.email,
         recaptcha: data.token as string,
-      })
-        .unwrap()
-        .then(() => {
-          setTrigger(true)
-        })
-
-      if (isSuccess) {
-        debugger
-      }
+      }).unwrap()
+      // .then(() => {
+      setTrigger(true)
+      data.setIsSentLink(true)
+      // })
       // .then(() => {
       //   setIsSentLink(true)
       //   setTrigger(true)
@@ -46,8 +48,14 @@ const ForgotPassword = () => {
       //     setError('email', { message: err.message, type: 'custom' })
       //   }
       // })
-    } catch (e) {
-      console.log(e)
+    } catch (e: any) {
+      const err = e?.data?.messages.length !== 0 ? e?.data?.messages[0] : e?.data?.error
+
+      if (err.field === 'email') {
+        data.setError('email', { message: err.message, type: 'custom' })
+      } else if (err) {
+        data.setError('email', { message: err, type: 'custom' })
+      }
     }
   }
 

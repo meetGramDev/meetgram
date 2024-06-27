@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 //eslint-disable-next-line
 import ReCAPTCHA from 'react-google-recaptcha'
+import { UseFormSetError } from 'react-hook-form'
 
 import { Nullable } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
@@ -14,7 +15,14 @@ import s from './forgotPassword.module.scss'
 import { ForgotPasswordFormData, useForgotPassword } from '../lib/useForgotPassword'
 
 type ForgotPasswordType = {
-  onSubmit: (data: { baseUrl?: string; token: Nullable<string> } & ForgotPasswordFormData) => void
+  onSubmit: (
+    data: {
+      baseUrl?: string
+      setError: UseFormSetError<{ email: string }>
+      setIsSentLink: (value: boolean) => void
+      token: Nullable<string>
+    } & ForgotPasswordFormData
+  ) => void
 }
 
 export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
@@ -22,7 +30,7 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
 
   const [isSentLink, setIsSentLink] = useState(false)
 
-  const captchaRef = useRef()
+  const captchaRef = useRef<any>()
 
   const classNames = {
     btnLink: clsx(s.bntLink),
@@ -41,7 +49,14 @@ export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
   const siteKey = process.env.captchaSiteKey as string
 
   const onSubmitHandler = handleSubmit(data => {
-    onSubmit({ baseUrl: 'http://localhost:3000/', email: data.email, token })
+    onSubmit({
+      baseUrl: 'http://localhost:3000/',
+      email: data.email,
+      setError,
+      setIsSentLink,
+      token,
+    })
+    captchaRef?.current?.reset()
   })
 
   return (

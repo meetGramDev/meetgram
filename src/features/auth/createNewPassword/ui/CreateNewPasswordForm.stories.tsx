@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CreateNewPassword } from '@/features/auth/createNewPassword/ui/CreateNewPassword'
+import { CreateNewPasswordForm } from '@/features/auth/createNewPassword/ui/CreateNewPasswordForm'
 import { fn } from '@storybook/test'
 
 const meta = {
   args: {},
-  component: CreateNewPassword,
+  component: CreateNewPasswordForm,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  title: 'features/auth/CreateNewPassword',
-} satisfies Meta<typeof CreateNewPassword>
+  title: 'features/auth/CreateNewPasswordForm',
+} satisfies Meta<typeof CreateNewPasswordForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
