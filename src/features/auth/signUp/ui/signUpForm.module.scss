@@ -58,10 +58,3 @@
   font-size: 14px;
   color: var(--danger-color-500);
 }
-
-.modalContent {
-  @include flex(column, center, center, 1rem);
-
-  max-width: 380px;
-  padding: 0.7rem 1.5rem;
-}

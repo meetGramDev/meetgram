@@ -1,16 +1,13 @@
 'use client'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
-import { authSliceActions, getEmail, useSignUpMutation } from '@/features/auth/signUp'
 import { Tr } from '@/hooks/useLangSwitcher'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
-import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
-import { Dialog } from '@/shared/ui/dialog'
 import { Input } from '@/shared/ui/input/input'
 import { clsx } from 'clsx'
 import Link from 'next/link'
@@ -20,41 +17,45 @@ import s from './signUpForm.module.scss'
 
 import { SignUpFormData, useSignUp } from '../lib/useSignUp'
 
-type Props = {
-  onSubmit: (data: SignUpFormData) => Promise<void>
+type ErrorType = {
+  field: string
+  message: string
 }
 
-export const SignUpForm = ({ onSubmit }: Props) => {
-  const { locale } = useRouter()
+type Props = {
+  error?: ErrorType[]
+  onSubmit: (data: SignUpFormData) => void
+}
 
-  const { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError } =
-    useSignUp()
-  const [signUp] = useSignUpMutation()
-  const email = useAppSelector(getEmail)
-  const dispatch = useAppDispatch()
-  const [open, setOpen] = useState(false)
+export const SignUpForm = ({ error, onSubmit }: Props) => {
+  const {
+    clearErrors,
+    control,
+    errors,
+    getValues,
+    handleSubmit,
+    isDirty,
+    isValid,
+    register,
+    setError,
+  } = useSignUp()
+  const { locale } = useRouter()
+  const { signUpLang } = Tr(locale)
   const isApprovedError = errors.isApproved?.message
 
-  const onSubmitHandler = (data: SignUpFormData) => {
-    signUp({ ...data })
-      .unwrap()
-      .then(() => {
-        dispatch(authSliceActions.setEmail(data.email))
-        setOpen(true)
-      })
-      .catch(err => {
-        const e = err?.data?.messages[0]
+  useEffect(() => {
+    type fieldKeys = keyof SignUpFormData
 
-        if (e.field === 'email') {
-          setError('email', { message: e.message })
+    if (error) {
+      for (const e of error) {
+        for (const field in getValues()) {
+          if (e.field === field) {
+            setError(e.field as fieldKeys, { message: e.message })
+          }
         }
-        if (e.field === 'userName') {
-          setError('userName', { message: e.message })
-        }
-      })
-  }
-
-  const { signUpLang } = Tr(locale)
+      }
+    }
+  }, [error, setError, getValues])
 
   return (
     <>
@@ -64,7 +65,7 @@ export const SignUpForm = ({ onSubmit }: Props) => {
           <GoogleBtn />
           <GithubBtn />
         </div>
-        <form className={s.form} onSubmit={handleSubmit(onSubmitHandler)}>
+        <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
           <Input
             error={errors.userName?.message}
             label={signUpLang.username}
@@ -124,19 +125,6 @@ export const SignUpForm = ({ onSubmit }: Props) => {
           {signUpLang.signIn}
         </Button>
       </Card>
-      <>
-        <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
-          <div className={s.modalContent}>
-            <div>
-              {signUpLang.aler}
-              {email}
-            </div>
-            <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>
-              Ok
-            </Button>
-          </div>
-        </Dialog>
-      </>
     </>
   )
 }

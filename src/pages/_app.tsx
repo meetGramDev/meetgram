@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <StoreProvider>
-      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
         {getLayout(<Component {...pageProps} />)}
       </GoogleOAuthProvider>
     </StoreProvider>
