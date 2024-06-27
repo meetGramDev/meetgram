@@ -10,7 +10,7 @@ export const uk: LenType = {
     signUp: 'Реєстрація',
   },
   language: 'Ukraine',
-  signIn: {
+  signInLang: {
     anAccount: 'Немаєш акаунт?',
     email: 'Електронна пошта',
     forgoPassword: ' Забули пароль',
@@ -18,7 +18,7 @@ export const uk: LenType = {
     signIn: 'Увійти',
     signUp: 'Реєстрація',
   },
-  signUp: {
+  signUpLang: {
     IAgree: 'Я погоджуюсь з',
     aler: 'Ми відправили посилання для підтвердження вашої електронної пошти на',
     anAccount: 'У вас є акаунт?',

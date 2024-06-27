@@ -18,7 +18,7 @@ export const en = {
   },
   signUpLang: {
     IAgree: 'I agree to the',
-    aler: 'We have sent a link to confirm your email to',
+    aler: 'We have sent a link to confirm your email to ',
     anAccount: 'Do you have an account?',
     and: 'and',
     email: 'Email',

@@ -30,6 +30,7 @@ export const useSignUp = () => {
     clearErrors,
     control,
     formState: { errors, isDirty, isValid },
+    getValues,
     handleSubmit,
     register,
     setError,
@@ -45,5 +46,15 @@ export const useSignUp = () => {
     resolver: zodResolver(signUpSchema),
   })
 
-  return { clearErrors, control, errors, handleSubmit, isDirty, isValid, register, setError }
+  return {
+    clearErrors,
+    control,
+    errors,
+    getValues,
+    handleSubmit,
+    isDirty,
+    isValid,
+    register,
+    setError,
+  }
 }
