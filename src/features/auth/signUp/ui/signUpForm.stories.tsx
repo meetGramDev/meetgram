@@ -1,11 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { SignUpForm } from '@/features/auth/signUp/ui/SignUpForm'
+import { StoreDecorator } from '@/shared/config/storybook'
 import { fn } from '@storybook/test'
+
+import { SignUpForm } from './SignUpForm'
 
 const meta = {
   args: {},
   component: SignUpForm,
+  decorators: [StoreDecorator()],
+  parameters: {
+    layout: 'centered',
+  },
   tags: ['autodocs'],
   title: 'features/auth/SignUpForm',
 } satisfies Meta<typeof SignUpForm>
