@@ -31,6 +31,9 @@ const SignUp: NextPageWithLayout = () => {
     try {
       await signUp({ ...data }).unwrap()
       dispatch(authSliceActions.setEmail(data.email))
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('email', JSON.stringify(data.email))
+      }
       setOpen(true)
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
