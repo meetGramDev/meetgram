@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CreateNewPasswordForm } from '@/features/auth/createNewPassword/ui/CreateNewPasswordForm'
 import { fn } from '@storybook/test'
+
+import { CreateNewPasswordForm } from './CreateNewPasswordForm'
 
 const meta = {
   args: {},
