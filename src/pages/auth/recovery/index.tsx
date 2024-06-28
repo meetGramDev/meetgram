@@ -23,15 +23,17 @@ const Recovery = () => {
 
   useEffect(() => {
     if (confirmationCode !== null) {
-      window.localStorage.setItem(CONFIRMATION_CODE_LS_KEY, String(confirmationCode))
-      checkRecoveryCode({ recoveryCode: String(confirmationCode) })
-        .unwrap()
-        .then(() => {
-          return router.push(CREATE_NEW_PASSWORD)
-        })
-        .catch(e => {
-          console.log(e)
-        })
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(CONFIRMATION_CODE_LS_KEY, String(confirmationCode))
+        checkRecoveryCode({ recoveryCode: String(confirmationCode) })
+          .unwrap()
+          .then(() => {
+            return router.push(CREATE_NEW_PASSWORD)
+          })
+          .catch(e => {
+            console.log(e)
+          })
+      }
     }
   }, [confirmationCode, checkRecoveryCode, router])
 

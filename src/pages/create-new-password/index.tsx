@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import { CreateNewPasswordForm } from '@/features/auth/createNewPassword'
 import { useAddNewPasswordMutation } from '@/features/auth/forgotPassword/model/services/forgotPassword.service'
 import { SIGN_IN } from '@/shared/config/router'
@@ -7,22 +9,35 @@ import { useRouter } from 'next/router'
 
 const CreateNewPassword = () => {
   const [addNewPassword, {}] = useAddNewPasswordMutation()
-  const confirmationCode = window.localStorage.getItem(CONFIRMATION_CODE_LS_KEY)
+  const [confirmationCode, setConfirmationCode] = useState('')
+  // const confirmationCode = localStorage.getItem(CONFIRMATION_CODE_LS_KEY)
   const router = useRouter()
 
   const onSubmitHandler = async (data: { newPassword: string }) => {
     try {
       await addNewPassword({
         newPassword: data.newPassword,
-        recoveryCode: String(confirmationCode),
+        recoveryCode: confirmationCode,
       }).unwrap()
-      window.localStorage.removeItem(CONFIRMATION_CODE_LS_KEY)
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem(CONFIRMATION_CODE_LS_KEY)
+      }
 
       return router.push(SIGN_IN)
     } catch (e) {
       console.log(e)
     }
   }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const code = localStorage.getItem(CONFIRMATION_CODE_LS_KEY)
+
+      if (code) {
+        setConfirmationCode(code)
+      }
+    }
+  }, [])
 
   return <CreateNewPasswordForm onSubmit={onSubmitHandler} />
 }
