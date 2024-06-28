@@ -1,4 +1,5 @@
 export const {
+  CREATE_NEW_PASSWORD,
   FORGOT_PASSWORD,
   HOME,
   PRIVACY_POLICY,
@@ -7,6 +8,7 @@ export const {
   SIGN_UP,
   TERMS_OF_SERVICE,
 } = {
+  CREATE_NEW_PASSWORD: '/create-new-password',
   FORGOT_PASSWORD: '/forgot-password',
   HOME: '/',
   PRIVACY_POLICY: '/privacy-policy',

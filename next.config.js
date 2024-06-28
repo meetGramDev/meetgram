@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    captchaSiteKey: '6Le9h_IpAAAAAF6U0_jL6SNQKTXC_IuBTp-5ksOr',
+    captchaSiteKey: '6LeY2y0mAAAAANwI_paCWfoksCgBm1n2z9J0nwNQ',
   },
   i18n: {
     defaultLocale: 'en',
