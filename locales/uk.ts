@@ -5,9 +5,20 @@ export const uk: LenType = {
     Button: 'Кнопка',
     Link: 'Посилання, що виглядає як кнопка',
   },
-  errorSignUp: {
-    isApprovedMassage: 'Будь ласка, прочитайте і прийміть умови та положення',
-    refineMassage: 'Паролі не збігаються',
+  errorsTr: {
+    errorNewPassword: {
+      refineMessage: 'Паролі повинні збігатися',
+    },
+    errorSignUp: {
+      isApprovedMassage: 'Будь ласка, прочитайте і прийміть умови та положення',
+      refineMessage: 'Паролі не збігаються',
+    },
+    errorValidationFields: {
+      maxChar: 'Максимальна кількість символів',
+      minChar: 'Мінімальна кількість символів',
+      passContain: 'Пароль повинен містити',
+      wrongUsername: "Неправильне ім'я користувача",
+    },
   },
   header: {
     signIn: 'Увійти',

@@ -30,7 +30,7 @@ type Props = {
 export const SignUpForm = ({ error, onSubmit }: Props) => {
   const { locale } = useRouter()
 
-  const { errorSignUp, signUpLang } = Tr(locale)
+  const { errorsTr, signUpLang } = Tr(locale)
   const {
     clearErrors,
     control,
@@ -41,7 +41,7 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
     isValid,
     register,
     setError,
-  } = useSignUp(errorSignUp)
+  } = useSignUp(errorsTr)
   /*todo */
   const isApprovedError = errors.isApproved?.message
 

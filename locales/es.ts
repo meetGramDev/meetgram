@@ -5,9 +5,20 @@ export const es: LenType = {
     Button: 'Botón',
     Link: 'Enlace que parece un botón',
   },
-  errorSignUp: {
-    isApprovedMassage: 'Por favor, lee y acepta los términos y condiciones',
-    refineMassage: 'Las contraseñas no coinciden',
+  errorsTr: {
+    errorNewPassword: {
+      refineMessage: 'Las contraseñas deben coincidir',
+    },
+    errorSignUp: {
+      isApprovedMassage: 'Por favor, lee y acepta los términos y condiciones',
+      refineMessage: 'Las contraseñas no coinciden',
+    },
+    errorValidationFields: {
+      maxChar: 'Número máximo de caracteres',
+      minChar: 'Número mínimo de caracteres',
+      passContain: 'La contraseña debe contener',
+      wrongUsername: 'Nombre de usuario incorrecto',
+    },
   },
   header: {
     signIn: 'Iniciar sesión',

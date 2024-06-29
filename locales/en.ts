@@ -3,9 +3,20 @@ export const en = {
     Button: 'Button',
     Link: 'Link that looks like a button',
   },
-  errorSignUp: {
-    isApprovedMassage: 'Please read and accept the terms and conditions',
-    refineMassage: "Passwords don't match",
+  errorsTr: {
+    errorNewPassword: {
+      refineMessage: 'Passwords must match',
+    },
+    errorSignUp: {
+      isApprovedMassage: 'Please read and accept the terms and conditions',
+      refineMessage: "Passwords don't match",
+    },
+    errorValidationFields: {
+      maxChar: 'Maximum number of characters',
+      minChar: 'Minimum number of characters',
+      passContain: 'Password must contain',
+      wrongUsername: 'Wrong username',
+    },
   },
   header: {
     signIn: 'Sign In',
@@ -39,6 +50,9 @@ export const en = {
 }
 
 export type LenType = typeof en
-const { errorSignUp } = en
+const { errorsTr } = en
+const { errorSignUp, errorValidationFields } = errorsTr
 
+export type ErrorsTr = typeof errorsTr
 export type ErrorSineUp = typeof errorSignUp
+export type ErrorValidationFields = typeof errorValidationFields

@@ -2,50 +2,42 @@ import { useForm } from 'react-hook-form'
 
 import {
   emailConstraint,
-  passwordConstraint,
-  userNameConstraint,
+  getPasswordConstraint,
+  getUserNameConstraint,
 } from '@/shared/const/validationFields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { ErrorSineUp } from '../../../../../locales/en'
+import { ErrorsTr } from '../../../../../locales/en'
 
 /*todo this I redid*/
-const getSinUpSchema = (translate: ErrorSineUp) => {
+const getSinUpSchema = (errorTr: ErrorsTr | undefined = undefined) => {
+  const errorSignUp = errorTr?.errorSignUp
+  const errorValidationFields = errorTr?.errorValidationFields
+
   return z
     .object({
-      confirmPassword: passwordConstraint,
+      confirmPassword: getPasswordConstraint(errorValidationFields),
       email: emailConstraint,
       isApproved: z.boolean().refine(val => val, {
-        message: translate.isApprovedMassage,
+        message: errorSignUp
+          ? errorSignUp.isApprovedMassage
+          : 'Please read and accept the terms and conditions',
       }),
-      password: passwordConstraint,
-      userName: userNameConstraint,
+      password: getPasswordConstraint(errorValidationFields),
+      userName: getUserNameConstraint(errorValidationFields),
     })
     .refine(data => data.password === data.confirmPassword, {
-      message: translate.refineMassage,
+      message: errorSignUp ? errorSignUp.refineMessage : "Passwords don't match",
       path: ['confirmPassword'],
     })
 }
 
-const signUpSchema = z
-  .object({
-    confirmPassword: passwordConstraint,
-    email: emailConstraint,
-    isApproved: z.boolean().refine(val => val, {
-      message: 'Please read and accept the terms and conditions',
-    }),
-    password: passwordConstraint,
-    userName: userNameConstraint,
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  })
+const signUpSchema = getSinUpSchema()
 
 export type SignUpFormData = z.infer<typeof signUpSchema>
 
-export const useSignUp = (translate: ErrorSineUp) => {
+export const useSignUp = (errorsTr: ErrorsTr) => {
   const {
     clearErrors,
     control,
@@ -63,7 +55,7 @@ export const useSignUp = (translate: ErrorSineUp) => {
       userName: '',
     },
     mode: 'onTouched',
-    resolver: zodResolver(getSinUpSchema(translate)),
+    resolver: zodResolver(getSinUpSchema(errorsTr)),
   })
 
   return {

@@ -17,16 +17,15 @@ type Props = {
 }
 
 export const SignInForm = ({ error, onSubmit }: Props) => {
+  const locale = useRouter().locale
+  const { errorsTr, signInLang } = Tr(locale)
   const {
     formState: { errors, isDirty, isValid },
     getValues,
     handleSubmit,
     register,
     setError,
-  } = useSignIn()
-
-  const locale = useRouter().locale
-  const { signInLang } = Tr(locale)
+  } = useSignIn(errorsTr)
 
   useEffect(() => {
     if (error) {
@@ -47,17 +46,19 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={'mb-9 flex flex-col gap-6'}>
+          {/*todo label */}
           <Input
             error={errors.email?.message}
-            label={'Email'}
+            label={signInLang.email}
             placeholder={'example@email.com'}
             type={'text'}
             {...register('email')}
             aria-invalid={errors.email ? 'true' : 'false'}
           />
+          {/*todo label */}
           <Input
             error={errors.password?.message}
-            label={'Password'}
+            label={signInLang.password}
             type={'password'}
             {...register('password')}
             aria-invalid={errors.password ? 'true' : 'false'}

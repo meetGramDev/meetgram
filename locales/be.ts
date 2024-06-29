@@ -5,9 +5,20 @@ export const be: LenType = {
     Button: 'Кнопка',
     Link: 'Спасылка, якая выглядае як кнопка',
   },
-  errorSignUp: {
-    isApprovedMassage: 'Калі ласка, прачытайце і прыміце ўмовы',
-    refineMassage: 'Паролі не супадаюць',
+  errorsTr: {
+    errorNewPassword: {
+      refineMessage: 'Паролі павінны супадаць',
+    },
+    errorSignUp: {
+      isApprovedMassage: 'Калі ласка, прачытайце і прыміце ўмовы',
+      refineMessage: 'Паролі не супадаюць',
+    },
+    errorValidationFields: {
+      maxChar: 'Максімальная колькасць знакаў',
+      minChar: 'Мінімальная колькасць знакаў',
+      passContain: 'Пароль павінен утрымліваць',
+      wrongUsername: 'Няправільнае імя карыстальніка',
+    },
   },
   header: {
     signIn: 'Увайсці',

@@ -5,9 +5,20 @@ export const ru: LenType = {
     Button: 'Кнопка',
     Link: 'Ссылка, которая выглядит как кнопка',
   },
-  errorSignUp: {
-    isApprovedMassage: 'Пожалуйста, прочитайте и примите условия',
-    refineMassage: 'Пароли не совпадают',
+  errorsTr: {
+    errorNewPassword: {
+      refineMessage: 'Пароли должны совпадать',
+    },
+    errorSignUp: {
+      isApprovedMassage: 'Пожалуйста, прочитайте и примите условия',
+      refineMessage: 'Пароли не совпадают',
+    },
+    errorValidationFields: {
+      maxChar: 'Максимальное количество символов',
+      minChar: 'Минимальное количество символов',
+      passContain: 'Пароль должен содержать',
+      wrongUsername: 'Неправильное имя пользователя',
+    },
   },
   header: {
     signIn: 'Войти',
