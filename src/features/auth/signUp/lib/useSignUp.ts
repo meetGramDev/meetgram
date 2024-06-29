@@ -10,7 +10,6 @@ import { z } from 'zod'
 
 import { ErrorsTr } from '../../../../../locales/en'
 
-/*todo this I redid*/
 const getSinUpSchema = (errorTr: ErrorsTr | undefined = undefined) => {
   const errorSignUp = errorTr?.errorSignUp
   const errorValidationFields = errorTr?.errorValidationFields

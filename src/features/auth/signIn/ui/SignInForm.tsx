@@ -46,7 +46,6 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={'mb-9 flex flex-col gap-6'}>
-          {/*todo label */}
           <Input
             error={errors.email?.message}
             label={signInLang.email}
@@ -55,7 +54,6 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
             {...register('email')}
             aria-invalid={errors.email ? 'true' : 'false'}
           />
-          {/*todo label */}
           <Input
             error={errors.password?.message}
             label={signInLang.password}

@@ -1,7 +1,9 @@
+import { Tr } from '@/hooks/useLangSwitcher'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
 import { clsx } from 'clsx'
+import { useRouter } from 'next/router'
 
 import s from './CreateNewPassword.module.scss'
 
@@ -21,7 +23,10 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
     title: s.title,
   }
 
-  const { errors, handleSubmit, register } = useCreateNewPassword()
+  const { locale } = useRouter()
+  const { errorsTr } = Tr(locale)
+
+  const { errors, handleSubmit, register } = useCreateNewPassword(errorsTr)
 
   const createNewPasswordHandler = (data: CreateNewPasswordValues) => {
     alert(`password: ${data.password}, confirm password: ${data.confirmPassword}`)
