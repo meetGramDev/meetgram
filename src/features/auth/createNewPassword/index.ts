@@ -1,1 +1,1 @@
-export { CreateNewPassword } from './ui/CreateNewPassword'
+export { CreateNewPasswordForm } from './ui/./CreateNewPasswordForm'
