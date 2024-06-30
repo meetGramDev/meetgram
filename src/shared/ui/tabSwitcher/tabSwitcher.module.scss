@@ -20,23 +20,23 @@
     background-color 0.3s;
 
   &:focus-visible {
-    outline: 2px solid var(--accent-color-700);
+    outline: 2px solid var(--primary-color-700);
   }
 
   &[data-state='active'] {
-    color: var(--accent-color-500);
-    border-bottom-color: var(--accent-color-500);
+    color: var(--primary-color-500);
+    border-bottom-color: var(--primary-color-500);
   }
 
   &[data-state='active'][data-disabled] {
-    color: var(--accent-color-900);
-    border-bottom-color: var(--accent-color-900);
+    color: var(--primary-color-900);
+    border-bottom-color: var(--primary-color-900);
   }
 
   &:hover[data-state='active']:not([data-disabled]) {
-    color: var(--accent-color-500);
+    color: var(--primary-color-500);
     background: rgb(35 78 153 / 30%);
-    border-bottom-color: var(--accent-color-500);
+    border-bottom-color: var(--primary-color-500);
   }
 
   &:active[data-state='active']:not([data-disabled]) {
