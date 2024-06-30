@@ -30,7 +30,6 @@ const ForgotPassword = () => {
         recaptcha: data.token as string,
       }).unwrap()
 
-      // .then(() => {
       setTrigger(true)
       data.setIsSentLink(true)
     } catch (e: any) {

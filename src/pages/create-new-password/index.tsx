@@ -10,7 +10,6 @@ import { useRouter } from 'next/router'
 const CreateNewPassword = () => {
   const [addNewPassword, {}] = useAddNewPasswordMutation()
   const [confirmationCode, setConfirmationCode] = useState('')
-  // const confirmationCode = localStorage.getItem(CONFIRMATION_CODE_LS_KEY)
   const router = useRouter()
 
   const onSubmitHandler = async (data: { newPassword: string }) => {

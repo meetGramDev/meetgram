@@ -13,24 +13,19 @@ type PropsType = {
 
 export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
   const classNames = {
-    button: s.button,
-    card: s.card,
     passwordConfirmation: clsx(s.input, s.passwordConfirmation),
     passwordInput: clsx(s.input, s.passwordInput),
-    text: s.text,
-    title: s.title,
   }
 
   const { errors, handleSubmit, register } = useCreateNewPassword()
 
   const createNewPasswordHandler = (data: CreateNewPasswordValues) => {
-    alert(`password: ${data.password}, confirm password: ${data.confirmPassword}`)
-    onSubmit({ newPassword: data.password as string })
+    onSubmit({ newPassword: data.password })
   }
 
   return (
-    <Card className={classNames.card}>
-      <h1 className={classNames.title}>Create New Password</h1>
+    <Card className={s.card}>
+      <h1 className={s.title}>Create New Password</h1>
       <form onSubmit={handleSubmit(createNewPasswordHandler)}>
         <Input
           className={classNames.passwordInput}
@@ -46,8 +41,8 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
           type={'password'}
           {...register('confirmPassword')}
         />
-        <div className={classNames.text}>Your password must be between 6 and 20 characters</div>
-        <Button className={classNames.button} fullWidth variant={'primary'}>
+        <div className={s.text}>Your password must be between 6 and 20 characters</div>
+        <Button className={s.button} fullWidth variant={'primary'}>
           Create new password
         </Button>
       </form>
