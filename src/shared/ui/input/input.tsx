@@ -95,6 +95,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
               className={classes.showPasswordButton}
               disabled={disabled}
               onClick={togglePassword}
+              tabIndex={-1}
               type={'button'}
             >
               {showPassword ? (
