@@ -29,26 +29,12 @@ const ForgotPassword = () => {
         email: data.email,
         recaptcha: data.token as string,
       }).unwrap()
+
       // .then(() => {
       setTrigger(true)
       data.setIsSentLink(true)
-      // })
-      // .then(() => {
-      //   setIsSentLink(true)
-      //   setTrigger(true)
-      //   setToken('')
-      //   captchaRef.current.reset()
-      //   setEmail(data.email)
-      // })
-      // .catch(error => {
-      //   captchaRef.current.reset()
-      //   const err = error?.data?.messages[0]
-      //
-      //   if (err.field === 'email') {
-      //     setError('email', { message: err.message, type: 'custom' })
-      //   }
-      // })
     } catch (e: any) {
+      console.log(e)
       const err = e?.data?.messages.length !== 0 ? e?.data?.messages[0] : e?.data?.error
 
       if (err.field === 'email') {
