@@ -10,4 +10,4 @@ const SvgComponent = (props: React.SVGProps<SVGSVGElement>, ref: React.Ref<SVGSV
   </svg>
 )
 
-export const ArrowDown = React.forwardRef(SvgComponent)
+export const ArrowUp = React.forwardRef(SvgComponent)
