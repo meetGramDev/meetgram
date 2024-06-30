@@ -34,3 +34,18 @@ export const HasError: Story = {
     required: true,
   },
 }
+
+export const DateRange: Story = {
+  args: {
+    label: 'Select range',
+    selectRange: true,
+  },
+}
+
+export const DateRangeWithError: Story = {
+  args: {
+    error: 'Error, select current month or last month',
+    label: 'Select range',
+    selectRange: true,
+  },
+}
