@@ -28,12 +28,18 @@ type Props = {
    * By default, portals the content part into the body
    */
   portal?: HTMLElement
-  portalContainer?: HTMLElement | null
   required?: boolean
   /**
    * Uses to style the select button
    */
   rootClassName?: string
+  showArrow?: boolean
+  /**
+   * Renders a Select subtree in a different part of the DOM
+   * You can specify a DOM element by passing portal prop
+   * If true, it will be append to `document.body` by default
+   */
+  withPortal?: boolean
 } & SelectRadix.SelectProps
 type SelectComponent = React.ForwardRefExoticComponent<
   Props & React.RefAttributes<HTMLButtonElement>
@@ -52,6 +58,8 @@ export const Select: SelectComponent = forwardRef(
       portal,
       required,
       rootClassName,
+      showArrow = true,
+      withPortal = true,
       ...restProps
     },
     forwardRef
@@ -72,6 +80,19 @@ export const Select: SelectComponent = forwardRef(
     }
 
     const optionsToRender = children ? 'children' : 'options'
+    const contentToRender = (
+      <SelectRadix.Content className={classes.content} position={'popper'}>
+        <SelectRadix.Viewport>
+          {optionsToRender === 'children' && children}
+          {optionsToRender === 'options' &&
+            options?.map(o => (
+              <Option key={o.value} {...o}>
+                {o.label}
+              </Option>
+            ))}
+        </SelectRadix.Viewport>
+      </SelectRadix.Content>
+    )
 
     return (
       <>
@@ -88,24 +109,18 @@ export const Select: SelectComponent = forwardRef(
             ref={forwardRef}
           >
             <SelectRadix.Value placeholder={placeholder} />
-            <SelectRadix.Icon>
-              <ArrowDown className={classes.arrowDownIcon} />
-            </SelectRadix.Icon>
+            {showArrow && (
+              <SelectRadix.Icon>
+                <ArrowDown className={classes.arrowDownIcon} />
+              </SelectRadix.Icon>
+            )}
           </SelectRadix.Trigger>
 
-          <SelectRadix.Portal container={portal}>
-            <SelectRadix.Content className={classes.content} position={'popper'}>
-              <SelectRadix.Viewport>
-                {optionsToRender === 'children' && children}
-                {optionsToRender === 'options' &&
-                  options?.map(o => (
-                    <Option key={o.value} {...o}>
-                      {o.label}
-                    </Option>
-                  ))}
-              </SelectRadix.Viewport>
-            </SelectRadix.Content>
-          </SelectRadix.Portal>
+          {withPortal ? (
+            <SelectRadix.Portal container={portal}>{contentToRender}</SelectRadix.Portal>
+          ) : (
+            contentToRender
+          )}
           {error && <span className={classes.error}>{error}</span>}
         </SelectRadix.Root>
       </>
