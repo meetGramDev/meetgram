@@ -1,16 +1,17 @@
 import { useForm } from 'react-hook-form'
 
-import { emailConstraint, getPasswordSignInConstraint } from '@/shared/const/validationFields'
+import { getEmailConstraint, getPasswordSignInConstraint } from '@/shared/const/validationFields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { ErrorsTr } from '../../../../../locales/en'
+import { ErrorsTr } from '../../../../../public/locales/en'
 
 const getSignInSchema = (errorTr: ErrorsTr | undefined = undefined) => {
   const errorValidationFields = errorTr?.errorValidationFields
+  const errorEmail = errorTr?.errorEmail
 
   return z.object({
-    email: emailConstraint,
+    email: getEmailConstraint(errorEmail),
     password: getPasswordSignInConstraint(errorValidationFields),
   })
 }

@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
-import { Tr } from '@/hooks/useLangSwitcher'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
@@ -26,11 +26,10 @@ type Props = {
   error?: ErrorType[]
   onSubmit: (data: SignUpFormData) => void
 }
-/*todo in this file was changing */
 export const SignUpForm = ({ error, onSubmit }: Props) => {
   const { locale } = useRouter()
 
-  const { errorsTr, signUpLang } = Tr(locale)
+  const { errorsTr, signUpLang } = translate(locale)
   const {
     clearErrors,
     control,
@@ -42,7 +41,6 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
     register,
     setError,
   } = useSignUp(errorsTr)
-  /*todo */
   const isApprovedError = errors.isApproved?.message
 
   useEffect(() => {

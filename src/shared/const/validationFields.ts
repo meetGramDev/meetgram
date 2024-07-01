@@ -1,12 +1,16 @@
 import { z } from 'zod'
 
-import { ErrorValidationFields } from '../../../locales/en'
+import { ErrorEmail, ErrorValidationFields } from '../../../public/locales/en'
 
-export const emailConstraint = z.string().email()
 const maxChar = 'Maximum number of characters'
 const minChar = 'Minimum number of characters'
 const passContain = 'Password must contain'
 const wrongUsername = 'Wrong username'
+const errorEmail = 'Invalid email'
+
+export const getEmailConstraint = (errorEmail: ErrorEmail | undefined) => {
+  return z.string().email({ message: errorEmail ? errorEmail.InvalidEmail : errorEmail })
+}
 
 export const getPasswordConstraint = (errorValidationFields: ErrorValidationFields | undefined) => {
   return z

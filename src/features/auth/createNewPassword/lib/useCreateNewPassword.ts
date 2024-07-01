@@ -4,7 +4,7 @@ import { getPasswordConstraint } from '@/shared/const/validationFields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { ErrorsTr } from '../../../../../locales/en'
+import { ErrorsTr } from '../../../../../public/locales/en'
 
 const getCreateNewPasswordSchema = (errorTr: ErrorsTr | undefined = undefined) => {
   const errorValidationFields = errorTr?.errorValidationFields

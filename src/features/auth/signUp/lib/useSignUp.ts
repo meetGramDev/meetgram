@@ -1,23 +1,24 @@
 import { useForm } from 'react-hook-form'
 
 import {
-  emailConstraint,
+  getEmailConstraint,
   getPasswordConstraint,
   getUserNameConstraint,
 } from '@/shared/const/validationFields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { ErrorsTr } from '../../../../../locales/en'
+import { ErrorsTr } from '../../../../../public/locales/en'
 
 const getSinUpSchema = (errorTr: ErrorsTr | undefined = undefined) => {
   const errorSignUp = errorTr?.errorSignUp
   const errorValidationFields = errorTr?.errorValidationFields
+  const errorEmail = errorTr?.errorEmail
 
   return z
     .object({
       confirmPassword: getPasswordConstraint(errorValidationFields),
-      email: emailConstraint,
+      email: getEmailConstraint(errorEmail),
       isApproved: z.boolean().refine(val => val, {
         message: errorSignUp
           ? errorSignUp.isApprovedMassage

@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
-import { Tr } from '@/hooks/useLangSwitcher'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
@@ -18,7 +18,7 @@ type Props = {
 
 export const SignInForm = ({ error, onSubmit }: Props) => {
   const locale = useRouter().locale
-  const { errorsTr, signInLang } = Tr(locale)
+  const { errorsTr, signInLang } = translate(locale)
   const {
     formState: { errors, isDirty, isValid },
     getValues,
