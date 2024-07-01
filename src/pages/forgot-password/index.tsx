@@ -33,16 +33,20 @@ const ForgotPassword = () => {
       setTrigger(true)
       data.setIsSentLink(true)
     } catch (e: any) {
-      console.log(e)
-      const err = e?.data?.messages.length !== 0 ? e?.data?.messages[0] : e?.data?.error
+      let errorMessage: string | undefined
 
-      if (err.field === 'email') {
-        data.setError('email', { message: err.message, type: 'custom' })
-      } else if (err) {
-        data.setError('email', { message: err, type: 'custom' })
+      if (e.status === 400) {
+        errorMessage = e?.data?.messages[0].message
+      } else {
+        errorMessage = e.error
       }
+      data.setError('email', { message: errorMessage, type: 'custom' })
     }
   }
+
+  // if (isLoading) {
+  //   return <div>Loading ...</div>
+  // }
 
   return (
     <div>
