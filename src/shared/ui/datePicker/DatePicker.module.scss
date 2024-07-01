@@ -173,16 +173,19 @@
     color: var(--accent-color-100);
   }
 
-  &:global(.react-datepicker__day--weekend):not(:global(.react-datepicker__day--today)) {
-    color: var(--danger-color-300);
-  }
-
   &:not(
       :global(.react-datepicker__day--selected),
       :global(.react-datepicker__day--in-range)
     ):hover {
     background-color: var(--accent-color-700);
     border-radius: 100%;
+  }
+
+  &:global(.react-datepicker__day--weekend):not(
+      :global(.react-datepicker__day--today),
+      :global(.react-datepicker__day--outside-month)
+    ) {
+    color: var(--danger-color-300);
   }
 }
 
@@ -213,3 +216,54 @@
     color: var(--danger-color-500);
   }
 }
+
+/* custom header */
+.customHeaderContainer {
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-left: 0.8rem;
+
+  font: var(--font-regular-bold);
+  color: var(--light-color-100);
+  text-align: start;
+
+  & > div:first-child {
+    display: flex;
+    gap: 0.625rem;
+  }
+}
+
+.datePickerSelector {
+  padding: 0;
+  border: none;
+
+  &:hover {
+    color: var(--accent-color-100);
+  }
+}
+
+.monthSelector {
+  min-width: 6.5rem;
+  margin-top: 2px;
+}
+
+.yearSelector {
+  min-width: 3.75rem;
+}
+
+.changeMonthsBtn {
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+
+  color: var(--light-color-100);
+
+  background-color: var(--dark-color-100);
+  border-radius: 100%;
+}
+
+/* ====================== */
