@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import ReactDatePicker, { registerLocale } from 'react-datepicker'
 
 import { Calendar } from '@/shared/assets/icons/Calendar'
@@ -17,14 +16,6 @@ import s from './DatePicker.module.scss'
 
 registerLocale('ru-RU', ru)
 registerLocale('en-US', enUS)
-
-type Props = {
-  disabled?: boolean
-  error?: Nullable<string>
-  label?: string
-  required?: boolean
-  selectRange?: boolean
-}
 
 const years = range(1940, getYear(new Date()) + 1, 1)
 const months = {
@@ -60,10 +51,32 @@ const months = {
 
 type Locales = keyof typeof months
 
-export const DatePicker = ({ disabled, error, label, required, selectRange }: Props) => {
-  const [startDate, setStartDate] = useState<Date | undefined>(new Date())
-  const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+type Props = {
+  disabled?: boolean
+  endDate?: Date | undefined
+  error?: Nullable<string>
+  label?: string
+  onEndDateChange?: (date: Date | undefined) => void
+  onStartDateChange?: (date: Date | undefined) => void
+  required?: boolean
+  /**
+   * Toggle date selector in range
+   */
+  selectsRange?: boolean
+  startDate?: Date | undefined
+}
 
+export const DatePicker = ({
+  disabled,
+  endDate,
+  error,
+  label,
+  onEndDateChange,
+  onStartDateChange,
+  required,
+  selectsRange,
+  startDate,
+}: Props) => {
   const locale = navigator.language
   const localeMonths: Locales = locale.substring(0, 2) as Locales
 
@@ -85,10 +98,10 @@ export const DatePicker = ({ disabled, error, label, required, selectRange }: Pr
 
       const [start, end] = dates
 
-      setStartDate(start || undefined)
-      setEndDate(end || undefined)
+      onStartDateChange?.(start || undefined)
+      onEndDateChange?.(end || undefined)
     } else {
-      setStartDate(dates)
+      onStartDateChange?.(dates)
     }
   }
 
@@ -175,8 +188,8 @@ export const DatePicker = ({ disabled, error, label, required, selectRange }: Pr
           )
         }}
         selected={startDate}
-        selectsRange={selectRange || undefined}
-        shouldCloseOnSelect={!selectRange}
+        selectsRange={selectsRange || undefined}
+        shouldCloseOnSelect={!selectsRange}
         showIcon
         showPopperArrow={false}
         startDate={startDate}
