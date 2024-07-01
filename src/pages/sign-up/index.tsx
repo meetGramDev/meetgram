@@ -7,9 +7,9 @@ import {
   getEmail,
   useSignUpMutation,
 } from '@/features/auth/signUp'
-import { Tr } from '@/hooks/useLangSwitcher'
 import { ServerBadResponse } from '@/shared/api'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
+import { translate } from '@/shared/lib/langSwitcher'
 import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
@@ -25,7 +25,7 @@ const SignUp: NextPageWithLayout = () => {
   const dispatch = useAppDispatch()
   const [open, setOpen] = useState(false)
   const locale = useRouter().locale
-  const { signUpLang } = Tr(locale)
+  const { signUpLang } = translate(locale)
 
   const onSubmit = async ({ confirmPassword, isApproved, ...data }: SignUpFormData) => {
     try {

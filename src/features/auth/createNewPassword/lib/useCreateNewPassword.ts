@@ -1,22 +1,31 @@
 import { useForm } from 'react-hook-form'
 
-import { passwordConstraint } from '@/shared/const/validationFields'
+import { getPasswordConstraint } from '@/shared/const/validationFields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import { ErrorsTr } from '../../../../../public/locales/en'
+
+const getCreateNewPasswordSchema = (errorTr: ErrorsTr | undefined = undefined) => {
+  const errorValidationFields = errorTr?.errorValidationFields
+  const errorNewPassword = errorTr?.errorNewPassword
+
+  return z
+    .object({
+      confirmPassword: getPasswordConstraint(errorValidationFields),
+      password: getPasswordConstraint(errorValidationFields),
+    })
+    .refine(data => data.confirmPassword == data.password, {
+      message: errorNewPassword ? errorNewPassword.refineMessage : 'Passwords must match',
+      path: ['confirmPassword'],
+    })
+}
+
+const createNewPasswordSchema = getCreateNewPasswordSchema()
+
 export type CreateNewPasswordValues = z.infer<typeof createNewPasswordSchema>
 
-const createNewPasswordSchema = z
-  .object({
-    confirmPassword: passwordConstraint,
-    password: passwordConstraint,
-  })
-  .refine(data => data.confirmPassword == data.password, {
-    message: 'Passwords must match',
-    path: ['confirmPassword'],
-  })
-
-export const useCreateNewPassword = () => {
+export const useCreateNewPassword = (errorsTr: ErrorsTr) => {
   const {
     clearErrors,
     control,
@@ -30,7 +39,7 @@ export const useCreateNewPassword = () => {
       password: '',
     },
     mode: 'onTouched',
-    resolver: zodResolver(createNewPasswordSchema),
+    resolver: zodResolver(getCreateNewPasswordSchema(errorsTr)),
   })
 
   return {

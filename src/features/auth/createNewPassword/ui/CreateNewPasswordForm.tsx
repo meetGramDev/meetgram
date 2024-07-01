@@ -1,7 +1,9 @@
+import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
 import { clsx } from 'clsx'
+import { useRouter } from 'next/router'
 
 import s from './CreateNewPassword.module.scss'
 
@@ -21,7 +23,10 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
     title: s.title,
   }
 
-  const { errors, handleSubmit, register } = useCreateNewPassword()
+  const { locale } = useRouter()
+  const { createNewPasswordForm, errorsTr } = translate(locale)
+
+  const { errors, handleSubmit, register } = useCreateNewPassword(errorsTr)
 
   const createNewPasswordHandler = (data: CreateNewPasswordValues) => {
     alert(`password: ${data.password}, confirm password: ${data.confirmPassword}`)
@@ -30,11 +35,11 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
 
   return (
     <Card className={classNames.card}>
-      <h1 className={classNames.title}>Create New Password</h1>
+      <h1 className={classNames.title}>{createNewPasswordForm.createNewPassword}</h1>
       <form onSubmit={handleSubmit(createNewPasswordHandler)}>
         <Input
           className={classNames.passwordInput}
-          label={'New password'}
+          label={createNewPasswordForm.newPassword}
           type={'password'}
           {...register('password')}
           error={errors.password?.message}
@@ -42,13 +47,13 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
         <Input
           className={classNames.passwordConfirmation}
           error={errors.confirmPassword?.message}
-          label={'Password confirmation'}
+          label={createNewPasswordForm.passwordConfirmation}
           type={'password'}
           {...register('confirmPassword')}
         />
-        <div className={classNames.text}>Your password must be between 6 and 20 characters</div>
+        <div className={classNames.text}>{createNewPasswordForm.passwordTerm}</div>
         <Button className={classNames.button} fullWidth variant={'primary'}>
-          Create new password
+          {createNewPasswordForm.createNewPassword}
         </Button>
       </form>
     </Card>
