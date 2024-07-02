@@ -14,15 +14,14 @@ type ErrorType = {
 }
 
 const ForgotPassword = () => {
-  const [forgotPassword] = useForgotPasswordMutation()
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
   const [trigger, setTrigger] = useState<boolean>(false)
   const [email, setEmail] = useState('')
-  const [error, setError] = useState([])
+  const [error, setError] = useState<ErrorType[]>([])
 
   const onSubmit = async (
     data: {
       baseUrl?: string
-      // setError: UseFormSetError<{ email: string }>
       setIsSentLink: (value: boolean) => void
       token: Nullable<string>
     } & ForgotPasswordFormData
@@ -48,23 +47,21 @@ const ForgotPassword = () => {
 
           // Check if parsedError is a string
           if (typeof parsedError === 'string') {
-            setError([{ field: 'unknown', message: parsedError }])
+            setError([{ field: 'email', message: errMsg }])
           } else {
             setError(parsedError)
           }
         } catch (parseError) {
           console.error('Failed to parse error message:', parseError)
-          setError([{ field: 'unknown', message: 'An unknown error occurred' }])
+          setError([{ field: 'email', message: errMsg }])
         }
-
-        setError(JSON.parse(errMsg))
       }
     }
   }
 
-  // if (isLoading) {
-  //   return <div>Loading ...</div>
-  // }
+  if (isLoading) {
+    return <div>Loading ...</div>
+  }
 
   return (
     <div>

@@ -25,7 +25,6 @@ type ForgotPasswordType = {
   onSubmit: (
     data: {
       baseUrl?: string
-      // setError: UseFormSetError<{ email: string }>
       setIsSentLink: (value: boolean) => void
       token: Nullable<string>
     } & ForgotPasswordFormData
@@ -68,7 +67,6 @@ export const ForgotPasswordForm = ({ error, onSubmit }: ForgotPasswordType) => {
     onSubmit({
       baseUrl: 'http://localhost:3000/',
       email: data.email,
-      // setError,
       setIsSentLink,
       token,
     })
@@ -96,7 +94,13 @@ export const ForgotPasswordForm = ({ error, onSubmit }: ForgotPasswordType) => {
             If you do not receive an email send link again.
           </div>
         )}
-        <Button className={classNames.button} fullWidth type={'submit'} variant={'primary'}>
+        <Button
+          className={classNames.button}
+          disabled={token === null}
+          fullWidth
+          type={'submit'}
+          variant={'primary'}
+        >
           {!isSentLink ? 'Send Link' : 'Send Link Again'}
         </Button>
       </form>
