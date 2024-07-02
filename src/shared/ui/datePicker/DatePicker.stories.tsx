@@ -1,10 +1,15 @@
 import { useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 import { DatePicker } from './DatePicker'
 
 const meta = {
+  args: {
+    onStartDateChange: fn(),
+    startDate: new Date(),
+  },
   component: DatePicker,
   tags: ['autodocs'],
   title: 'shared/DatePicker',
@@ -18,10 +23,10 @@ export const Default: Story = {
     label: 'Date',
   },
 
-  render: args => {
-    const [startDate, setStartDate] = useState<Date | undefined>(new Date())
+  render: ({ onStartDateChange, startDate, ...args }) => {
+    const [start, setStart] = useState<Date | undefined>(new Date())
 
-    return <DatePicker onStartDateChange={setStartDate} startDate={startDate} {...args} />
+    return <DatePicker onStartDateChange={setStart} startDate={start} {...args} />
   },
 }
 
@@ -29,12 +34,6 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     label: 'Date of birth',
-  },
-
-  render: args => {
-    const [startDate, setStartDate] = useState<Date | undefined>(new Date())
-
-    return <DatePicker onStartDateChange={setStartDate} startDate={startDate} {...args} />
   },
 }
 
@@ -45,10 +44,10 @@ export const HasError: Story = {
     required: true,
   },
 
-  render: args => {
-    const [startDate, setStartDate] = useState<Date | undefined>(new Date())
+  render: ({ onStartDateChange, startDate, ...args }) => {
+    const [start, setStart] = useState<Date | undefined>(new Date())
 
-    return <DatePicker onStartDateChange={setStartDate} startDate={startDate} {...args} />
+    return <DatePicker onStartDateChange={setStart} startDate={start} {...args} />
   },
 }
 
@@ -58,16 +57,16 @@ export const DateRange: Story = {
     selectsRange: true,
   },
 
-  render: args => {
-    const [startDate, setStartDate] = useState<Date | undefined>(new Date())
-    const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+  render: ({ endDate, onEndDateChange, onStartDateChange, startDate, ...args }) => {
+    const [start, setStart] = useState<Date | undefined>(new Date())
+    const [end, setEnd] = useState<Date | undefined>(undefined)
 
     return (
       <DatePicker
-        endDate={endDate}
-        onEndDateChange={setEndDate}
-        onStartDateChange={setStartDate}
-        startDate={startDate}
+        endDate={end}
+        onEndDateChange={setEnd}
+        onStartDateChange={setStart}
+        startDate={start}
         {...args}
       />
     )
@@ -81,16 +80,16 @@ export const DateRangeWithError: Story = {
     selectsRange: true,
   },
 
-  render: args => {
-    const [startDate, setStartDate] = useState<Date | undefined>(new Date())
-    const [endDate, setEndDate] = useState<Date | undefined>(undefined)
+  render: ({ endDate, onEndDateChange, onStartDateChange, startDate, ...args }) => {
+    const [start, setStart] = useState<Date | undefined>(new Date())
+    const [end, setEnd] = useState<Date | undefined>(undefined)
 
     return (
       <DatePicker
-        endDate={endDate}
-        onEndDateChange={setEndDate}
-        onStartDateChange={setStartDate}
-        startDate={startDate}
+        endDate={end}
+        onEndDateChange={setEnd}
+        onStartDateChange={setStart}
+        startDate={start}
         {...args}
       />
     )

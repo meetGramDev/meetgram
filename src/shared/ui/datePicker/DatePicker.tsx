@@ -57,13 +57,13 @@ type Props = {
   error?: Nullable<string>
   label?: string
   onEndDateChange?: (date: Date | undefined) => void
-  onStartDateChange?: (date: Date | undefined) => void
+  onStartDateChange: (date: Date | undefined) => void
   required?: boolean
   /**
    * Toggle date selector in range
    */
   selectsRange?: boolean
-  startDate?: Date | undefined
+  startDate: Date | undefined
 }
 
 export const DatePicker = ({
@@ -85,7 +85,7 @@ export const DatePicker = ({
     label: clsx(s.label, required && s.required, disabled && s.dimmedLabel),
   }
 
-  const onRangeChange = (dates: [Date | null, Date | null] | Date | null) => {
+  const handleOnChange = (dates: [Date | null, Date | null] | Date | null) => {
     if (!dates) {
       return
     }
@@ -98,17 +98,16 @@ export const DatePicker = ({
 
       const [start, end] = dates
 
-      onStartDateChange?.(start || undefined)
+      onStartDateChange(start || undefined)
       onEndDateChange?.(end || undefined)
     } else {
-      onStartDateChange?.(dates)
+      onStartDateChange(dates)
     }
   }
 
   return (
     <div className={s.dateContainer}>
       <label className={classes.label}>{label}</label>
-      {/* @ts-ignore */}
       <ReactDatePicker
         calendarClassName={s.calendar}
         className={classes.hasError}
@@ -119,7 +118,7 @@ export const DatePicker = ({
         endDate={endDate}
         icon={<Calendar className={clsx(s.datePickerIcon, classes.hasError)} />}
         locale={locale}
-        onChange={onRangeChange}
+        onChange={handleOnChange}
         popperClassName={s.popper}
         renderCustomHeader={({
           changeMonth,
@@ -188,6 +187,8 @@ export const DatePicker = ({
           )
         }}
         selected={startDate}
+        /* Prop disables ts error */
+        selectsMultiple={undefined}
         selectsRange={selectsRange || undefined}
         shouldCloseOnSelect={!selectsRange}
         showIcon
