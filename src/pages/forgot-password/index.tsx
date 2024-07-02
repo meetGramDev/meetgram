@@ -1,22 +1,28 @@
 import { useState } from 'react'
-import { UseFormSetError } from 'react-hook-form'
 
 import { ForgotPasswordForm, useForgotPasswordMutation } from '@/features/auth/forgotPassword'
 import { ForgotPasswordFormData } from '@/features/auth/forgotPassword/lib/useForgotPassword'
-import { Nullable } from '@/shared/types'
+import { ServerBadResponse } from '@/shared/api'
+import { Nullable, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
 import { getAuthLayout } from '@/widgets/layouts'
 
+type ErrorType = {
+  field: string
+  message: string
+}
+
 const ForgotPassword = () => {
+  const [forgotPassword] = useForgotPasswordMutation()
   const [trigger, setTrigger] = useState<boolean>(false)
   const [email, setEmail] = useState('')
-  const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
+  const [error, setError] = useState([])
 
   const onSubmit = async (
     data: {
       baseUrl?: string
-      setError: UseFormSetError<{ email: string }>
+      // setError: UseFormSetError<{ email: string }>
       setIsSentLink: (value: boolean) => void
       token: Nullable<string>
     } & ForgotPasswordFormData
@@ -32,15 +38,27 @@ const ForgotPassword = () => {
 
       setTrigger(true)
       data.setIsSentLink(true)
-    } catch (e: any) {
-      let errorMessage: string | undefined
+    } catch (e) {
+      if (isFetchBaseQueryError(e)) {
+        const errMsg =
+          'error' in e ? e.error : JSON.stringify((e.data as ServerBadResponse).messages)
 
-      if (e.status === 400) {
-        errorMessage = e?.data?.messages[0].message
-      } else {
-        errorMessage = e.error
+        try {
+          const parsedError = JSON.parse(errMsg)
+
+          // Check if parsedError is a string
+          if (typeof parsedError === 'string') {
+            setError([{ field: 'unknown', message: parsedError }])
+          } else {
+            setError(parsedError)
+          }
+        } catch (parseError) {
+          console.error('Failed to parse error message:', parseError)
+          setError([{ field: 'unknown', message: 'An unknown error occurred' }])
+        }
+
+        setError(JSON.parse(errMsg))
       }
-      data.setError('email', { message: errorMessage, type: 'custom' })
     }
   }
 
@@ -50,7 +68,7 @@ const ForgotPassword = () => {
 
   return (
     <div>
-      <ForgotPasswordForm onSubmit={onSubmit} />
+      <ForgotPasswordForm error={error} onSubmit={onSubmit} />
       <Dialog onOpenChange={setTrigger} open={trigger} title={'Email sent'}>
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <span
