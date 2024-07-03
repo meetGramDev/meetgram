@@ -1,3 +1,4 @@
+import googleIcon from '@/shared/assets/icons/google-icon.svg'
 import { Button } from '@/shared/ui'
 import Image from 'next/image'
 
@@ -8,7 +9,7 @@ export const GoogleBtn = () => {
 
   return (
     <Button onClick={() => handleLogin()} variant={'text'}>
-      <Image alt={'Login with google'} height={36} src={'google-icon.svg'} width={36} />
+      <Image alt={'Login with google'} height={36} src={googleIcon} width={36} />
     </Button>
   )
 }

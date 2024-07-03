@@ -18,6 +18,8 @@ const SignIn: NextPageWithLayout = () => {
 
   const handleSubmitForm = async function (data: SignInFields) {
     try {
+      setError('')
+
       const accessToken = await login(data).unwrap()
 
       dispatch(setCredentials(accessToken))
