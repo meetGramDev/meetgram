@@ -6,6 +6,10 @@ import { fn } from '@storybook/test'
 import { TabSwitcher, TabType } from './TabSwitcher'
 
 const meta = {
+  args: {
+    onValueChange: fn(),
+    value: '',
+  },
   component: TabSwitcher,
   tags: ['autodocs'],
   title: 'shared/TabSwitcher',
@@ -21,8 +25,11 @@ const tabs: TabType[] = [
   { text: 'My Payments', value: 'myPayments' },
 ]
 
-// @ts-ignore
 export const TabSwitcherStory: Story = {
+  args: {
+    tabs: tabs,
+  },
+
   render: args => {
     const [activeTab, setActiveTab] = useState(tabs[0].value)
 
@@ -42,7 +49,6 @@ const tabsDisabled: TabType[] = [
 
 export const TabSwitcherStoryWithDisabledItem: Story = {
   args: {
-    onValueChange: fn(),
     tabs: tabsDisabled,
     value: tabsDisabled[0].value,
   },
@@ -56,7 +62,6 @@ const tabsDisabledActive: TabType[] = [
 
 export const TabSwitcherStoryWithDisabledActiveItem: Story = {
   args: {
-    onValueChange: fn(),
     tabs: tabsDisabledActive,
     value: tabsDisabledActive[0].value,
   },
