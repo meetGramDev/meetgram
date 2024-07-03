@@ -8,5 +8,6 @@ module.exports = {
         'ignoreAtRules': ['tailwind']
       }
     ],
+    'scss/double-slash-comment-whitespace-inside': 'never'
   }
 }
