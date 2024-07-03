@@ -18,42 +18,31 @@ type ErrorType = {
 }
 export type ForgotPasswordDataType = {
   baseUrl?: string
-  setIsSentLink: (value: boolean) => void
+  // setIsSentLink: (value: boolean) => void
   token: Nullable<string>
 } & ForgotPasswordFormData
 
 type ForgotPasswordType = {
   error?: ErrorType[]
+  isFormSended: boolean
   onSubmit: (data: ForgotPasswordDataType) => void
 }
 
-export const ForgotPasswordForm = ({ error, onSubmit }: ForgotPasswordType) => {
+export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPasswordType) => {
   const [token, setToken] = useState<null | string>(null)
-
-  const [isSentLink, setIsSentLink] = useState(false)
 
   const captchaRef = useRef<any>()
   const baseURL = 'http://localhost:3000/'
 
-  const classNames = {
-    btnLink: clsx(s.bntLink),
-    button: clsx(s.button),
-    card: clsx(s.card),
-    form: clsx(s.form),
-    hiddenText: s.hiddenText,
-    input: clsx(s.input),
-    recaptcha: clsx(s.captcha),
-    text: clsx(s.text),
-    title: clsx(s.title),
-  }
-
   const { errors, handleSubmit, register, setError } = useForgotPassword()
 
   useEffect(() => {
-    type fieldKeys = keyof ForgotPasswordFormData
+    // type fieldKeys = keyof ForgotPasswordFormData
+
     if (error) {
       for (const e of error) {
-        setError(`${e.field as fieldKeys}`, { message: e.message })
+        // const isSetError = e.field as fieldKeys) ? e.field : 'email'
+        setError('email', { message: e.message })
       }
     }
   }, [error, setError])
@@ -64,49 +53,46 @@ export const ForgotPasswordForm = ({ error, onSubmit }: ForgotPasswordType) => {
     onSubmit({
       baseUrl: baseURL,
       email: data.email,
-      setIsSentLink,
       token,
     })
     captchaRef?.current?.reset()
   })
 
   return (
-    <Card className={classNames.card}>
-      <h1 className={classNames.title}>Forgot Password</h1>
-      <form className={classNames.form} onSubmit={onSubmitHandler}>
+    <Card className={s.card}>
+      <h1 className={s.title}>Forgot Password</h1>
+      <form className={s.form} onSubmit={onSubmitHandler}>
         <Input
-          className={classNames.input}
+          className={s.input}
           label={'Email'}
           {...register('email')}
           error={errors.email?.message}
           placeholder={'Google@gmail.com'}
         />
-        <div className={classNames.text}>
-          Enter your email and we will send you further instruction
-        </div>
-        {isSentLink && (
-          <div className={classNames.hiddenText}>
+        <div className={s.text}>Enter your email and we will send you further instruction</div>
+        {isFormSended && (
+          <div className={s.hiddenText}>
             The link has been sent by email.
             <br />
             If you do not receive an email send link again.
           </div>
         )}
         <Button
-          className={classNames.button}
+          className={s.button}
           disabled={token === null}
           fullWidth
           type={'submit'}
           variant={'primary'}
         >
-          {!isSentLink ? 'Send Link' : 'Send Link Again'}
+          {!isFormSended ? 'Send Link' : 'Send Link Again'}
         </Button>
       </form>
 
-      <Button as={Link} className={classNames.btnLink} href={'/sign-in'} variant={'link'}>
+      <Button as={Link} className={s.bntLink} href={'/sign-in'} variant={'link'}>
         Back to Sign In
       </Button>
 
-      <div className={classNames.recaptcha}>
+      <div className={s.captcha}>
         <ReCAPTCHA
           hl={'en'}
           onChange={setToken}
