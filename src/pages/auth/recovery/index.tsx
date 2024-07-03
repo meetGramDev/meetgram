@@ -41,7 +41,7 @@ const Recovery = () => {
 
   return (
     <div>
-      {!checkIsFailed && <div>Processing ...</div>}
+      {!checkIsFailed && <div>... Check user data ...</div>}
       {checkIsFailed && (
         <div className={style.root}>
           <div className={style.textWrapper}>
