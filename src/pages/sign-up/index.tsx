@@ -10,6 +10,7 @@ import {
 import { Tr } from '@/hooks/useLangSwitcher'
 import { ServerBadResponse } from '@/shared/api'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
+import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
 import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
@@ -32,7 +33,7 @@ const SignUp: NextPageWithLayout = () => {
       await signUp({ ...data }).unwrap()
       dispatch(authSliceActions.setEmail(data.email))
       if (typeof window !== 'undefined') {
-        localStorage.setItem('email', JSON.stringify(data.email))
+        localStorage.setItem(EMAIL_FOR_RESEND_LS_KEY, data.email)
       }
       setOpen(true)
     } catch (error) {

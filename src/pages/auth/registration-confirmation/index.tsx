@@ -1,11 +1,8 @@
 import { useEffect } from 'react'
 
-import {
-  useRegistrationConfirmationMutation,
-  useRegistrationEmailResendingMutation,
-} from '@/features/auth/registrationConfirmation/model/services/registration.service'
+import { ResendEmailPage } from '@/features/auth/registrationConfirmation'
+import { useRegistrationConfirmationMutation } from '@/features/auth/registrationConfirmation/model/services/registration.service'
 import SignInImg from '@/shared/assets/img/sign-up_bro.png'
-import Img from '@/shared/assets/img/time-management.png'
 import { SIGN_IN } from '@/shared/config/router'
 import { NextPageWithLayout, isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
@@ -18,27 +15,7 @@ import s from './index.module.scss'
 
 const RegistrationConfirmation: NextPageWithLayout = () => {
   const [registrationConfirmation, { error, isLoading }] = useRegistrationConfirmationMutation()
-  const [registrationEmailResending] = useRegistrationEmailResendingMutation()
   const params = useSearchParams()
-
-  const resetVerificationLink = async () => {
-    const email = localStorage.getItem('email')
-
-    try {
-      email !== null && (await registrationEmailResending({ email }).unwrap())
-    } catch (err) {
-      if (isFetchBaseQueryError(err)) {
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('email')
-        }
-        const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
-
-        console.error(errMsg, { variant: 'error' })
-      } else if (isErrorWithMessage(err)) {
-        console.error(err.message, { variant: 'error' })
-      }
-    }
-  }
 
   useEffect(() => {
     const confirmationCode = params?.get('code')
@@ -46,8 +23,8 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
     if (confirmationCode) {
       registrationConfirmation({ confirmationCode })
         .unwrap()
-        .then(res => {
-          console.log(res)
+        .then(() => {
+          console.log('res')
         })
         .catch(err => {
           if (isFetchBaseQueryError(err)) {
@@ -68,17 +45,8 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
   return (
     <div>
       {/* @ts-ignore */}
-      {error && error.status === 400 ? (
-        <div className={s.root}>
-          <div className={s.textWrapper}>
-            <h2 className={s.title}>Email verification link expired</h2>
-            <div>
-              Looks like the verification link has expired. Not to worry, we can send the link again
-            </div>
-            <Button onClick={resetVerificationLink}>Resend verification link</Button>
-          </div>
-          <Image alt={'img'} className={s.img} src={Img} />
-        </div>
+      {error?.data.statusCode === 400 ? (
+        <ResendEmailPage />
       ) : (
         <div className={s.root}>
           <div className={s.textWrapper}>
