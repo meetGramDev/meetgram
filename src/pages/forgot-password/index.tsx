@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 import { ForgotPasswordForm, useForgotPasswordMutation } from '@/features/auth/forgotPassword'
-import { ForgotPasswordFormData } from '@/features/auth/forgotPassword/lib/useForgotPassword'
+import { ForgotPasswordDataType } from '@/features/auth/forgotPassword/ui/ForgotPasswordForm'
 import { ServerBadResponse } from '@/shared/api'
-import { Nullable, isFetchBaseQueryError } from '@/shared/types'
+import { isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
 import { getAuthLayout } from '@/widgets/layouts'
@@ -19,13 +19,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState<ErrorType[]>([])
 
-  const onSubmit = async (
-    data: {
-      baseUrl?: string
-      setIsSentLink: (value: boolean) => void
-      token: Nullable<string>
-    } & ForgotPasswordFormData
-  ) => {
+  const onSubmit = async (data: ForgotPasswordDataType) => {
     setEmail(data.email)
 
     try {
@@ -45,7 +39,6 @@ const ForgotPassword = () => {
         try {
           const parsedError = JSON.parse(errMsg)
 
-          // Check if parsedError is a string
           if (typeof parsedError === 'string') {
             setError([{ field: 'email', message: errMsg }])
           } else {

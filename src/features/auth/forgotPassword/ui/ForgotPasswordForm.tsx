@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 //eslint-disable-next-line
 import ReCAPTCHA from 'react-google-recaptcha'
-import { UseFormSetError } from 'react-hook-form'
-
-import { isError } from 'node:util'
 
 import { Nullable } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
@@ -19,16 +16,15 @@ type ErrorType = {
   field: string
   message: string
 }
+export type ForgotPasswordDataType = {
+  baseUrl?: string
+  setIsSentLink: (value: boolean) => void
+  token: Nullable<string>
+} & ForgotPasswordFormData
 
 type ForgotPasswordType = {
   error?: ErrorType[]
-  onSubmit: (
-    data: {
-      baseUrl?: string
-      setIsSentLink: (value: boolean) => void
-      token: Nullable<string>
-    } & ForgotPasswordFormData
-  ) => void
+  onSubmit: (data: ForgotPasswordDataType) => void
 }
 
 export const ForgotPasswordForm = ({ error, onSubmit }: ForgotPasswordType) => {
@@ -37,6 +33,7 @@ export const ForgotPasswordForm = ({ error, onSubmit }: ForgotPasswordType) => {
   const [isSentLink, setIsSentLink] = useState(false)
 
   const captchaRef = useRef<any>()
+  const baseURL = 'http://localhost:3000/'
 
   const classNames = {
     btnLink: clsx(s.bntLink),
@@ -65,7 +62,7 @@ export const ForgotPasswordForm = ({ error, onSubmit }: ForgotPasswordType) => {
 
   const onSubmitHandler = handleSubmit(data => {
     onSubmit({
-      baseUrl: 'http://localhost:3000/',
+      baseUrl: baseURL,
       email: data.email,
       setIsSentLink,
       token,
