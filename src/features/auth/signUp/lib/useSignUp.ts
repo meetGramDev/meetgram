@@ -42,7 +42,7 @@ export const useSignUp = () => {
       password: '',
       userName: '',
     },
-    mode: 'onTouched',
+    mode: 'onBlur',
     resolver: zodResolver(signUpSchema),
   })
 
