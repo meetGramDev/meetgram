@@ -13,7 +13,7 @@ export const TextArea = ({ label }: TextAreaType) => {
         </label>
       </div>
 
-      <textarea id={'text-area'} placeholder={'Text area'}></textarea>
+      <textarea className={s.textArea} id={'text-area'} placeholder={'Text area'}></textarea>
     </div>
   )
 }

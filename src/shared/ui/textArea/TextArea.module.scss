@@ -3,3 +3,10 @@
   line-height: var(--lh-m);
   color: var(--light-color-900);
 }
+
+.textArea {
+  box-sizing: border-box;
+  background-color: var(--dark-color-500);
+  border: 2px solid var(--dark-color-100);
+  border-radius: 2px;
+}
