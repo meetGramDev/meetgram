@@ -75,7 +75,11 @@ const ForgotPassword = () => {
             style={{ maxWidth: '328px', textAlign: 'start' }}
           >{`We have sent a link to confirm your email to ${email}`}</span>
           <div style={{ marginTop: '18px' }}>
-            <Button onClick={() => setTrigger(false)} variant={'primary'}>
+            <Button
+              className={s.dialogButton}
+              onClick={() => setTrigger(false)}
+              variant={'primary'}
+            >
               OK
             </Button>
           </div>
