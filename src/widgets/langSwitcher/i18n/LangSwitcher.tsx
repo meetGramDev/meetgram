@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Tr } from '@/hooks/useLangSwitcher'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Option } from '@/shared/ui/select/option'
 import { Select } from '@/shared/ui/select/select'
 import clsx from 'clsx'
@@ -21,10 +21,10 @@ export const LangSwitcher = ({ className }: Props) => {
   /*todo add className as in card and rename component and delete everything div and button */
   return (
     <div className={clsx([className])}>
-      <Select onValueChange={changeLanguage} placeholder={Tr(locale).language}>
+      <Select onValueChange={changeLanguage} placeholder={translate(locale).language}>
         {locales?.map((el, i) => (
           <Option key={i} value={el}>
-            {Tr(el).language}
+            {translate(el).language}
           </Option>
         ))}
       </Select>

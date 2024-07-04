@@ -1,7 +1,7 @@
 'use client'
-import { Tr } from '@/hooks/useLangSwitcher'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui/button/button'
 import { OptionType } from '@/shared/ui/select/option'
 import { LangSwitcher } from '@/widgets/langSwitcher'
@@ -21,7 +21,7 @@ type Props = {
 export const Header = ({ isAuth = false, notification }: Props) => {
   const router = useRouter()
 
-  const { header } = Tr(router.locale)
+  const { header } = translate(router.locale)
 
   return (
     <header
