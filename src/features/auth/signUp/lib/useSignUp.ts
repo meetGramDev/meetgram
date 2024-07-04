@@ -54,7 +54,8 @@ export const useSignUp = (errorsTr: ErrorsTr) => {
       password: '',
       userName: '',
     },
-    mode: 'onTouched',
+
+    mode: 'onBlur',
     resolver: zodResolver(getSinUpSchema(errorsTr)),
   })
 

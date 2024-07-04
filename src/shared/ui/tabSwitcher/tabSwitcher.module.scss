@@ -1,0 +1,65 @@
+.list {
+  display: flex;
+  width: 100%;
+}
+
+.tab {
+  cursor: pointer;
+
+  flex-grow: 1;
+
+  padding: 6px 24px;
+
+  color: var(--dark-color-100);
+
+  background: transparent;
+  border-bottom: 1px solid var(--dark-color-100);
+
+  transition:
+    color,
+    background-color 0.3s;
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color-700);
+  }
+
+  &[data-state='active'] {
+    color: var(--primary-color-500);
+    border-bottom-color: var(--primary-color-500);
+  }
+
+  &[data-state='active'][data-disabled] {
+    color: var(--primary-color-900);
+    border-bottom-color: var(--primary-color-900);
+  }
+
+  &:hover[data-state='active']:not([data-disabled]) {
+    color: var(--primary-color-500);
+    background: rgb(35 78 153 / 30%);
+    border-bottom-color: var(--primary-color-500);
+  }
+
+  &:active[data-state='active']:not([data-disabled]) {
+    background: rgb(115 165 255 / 30%);
+  }
+
+  &:hover:not([data-disabled]) {
+    color: var(--dark-color-100);
+    background: rgb(35 78 153 / 25%);
+    border-bottom-color: var(--dark-color-100);
+  }
+
+  &:active:not([data-disabled]) {
+    background: rgb(115 165 255 / 25%);
+  }
+
+  &[data-disabled] {
+    cursor: initial;
+    color: var(--dark-color-300);
+    border-color: var(--dark-color-300);
+  }
+}
+
+.text {
+  font: var(--font-h3);
+}
