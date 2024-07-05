@@ -1,41 +1,33 @@
 import { useEffect } from 'react'
 
-import { ResendEmailPage } from '@/features/auth/registrationConfirmation'
+import { ResendEmail } from '@/features/auth/registrationConfirmation'
 import { useRegistrationConfirmationMutation } from '@/features/auth/registrationConfirmation/model/services/registration.service'
-import SignInImg from '@/shared/assets/img/sign-up_bro.png'
-import { SIGN_IN } from '@/shared/config/router'
-import { NextPageWithLayout, isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
-import { Button } from '@/shared/ui/button/button'
+import { ConfirmEmail } from '@/features/auth/registrationConfirmation/ui/ConfirmEmail'
+import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
-import s from './index.module.scss'
-
 const RegistrationConfirmation: NextPageWithLayout = () => {
-  const [registrationConfirmation, { error, isLoading }] = useRegistrationConfirmationMutation()
+  const [registrationConfirmation, { error, isLoading, isSuccess }] =
+    useRegistrationConfirmationMutation()
   const params = useSearchParams()
 
   useEffect(() => {
-    const confirmationCode = params?.get('code')
+    const data = async () => {
+      const confirmationCode = params?.get('code')
 
-    if (confirmationCode) {
-      registrationConfirmation({ confirmationCode })
-        .unwrap()
-        .then(() => {
-          console.log('res')
-        })
-        .catch(err => {
-          if (isFetchBaseQueryError(err)) {
-            const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
+      try {
+        confirmationCode && (await registrationConfirmation({ confirmationCode }).unwrap())
+      } catch (err) {
+        if (isFetchBaseQueryError(err)) {
+          const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
 
-            console.error(errMsg, { variant: 'error' })
-          } else if (isErrorWithMessage(err)) {
-            console.error(err.message, { variant: 'error' })
-          }
-        })
+          console.error(errMsg, { variant: 'error' })
+        }
+      }
     }
+
+    data()
   }, [params, registrationConfirmation])
 
   if (isLoading) {
@@ -43,23 +35,10 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
   }
 
   return (
-    <div>
-      {/* @ts-ignore */}
-      {error?.data.statusCode === 400 ? (
-        <ResendEmailPage />
-      ) : (
-        <div className={s.root}>
-          <div className={s.textWrapper}>
-            <h2 className={s.title}>Congratulations!</h2>
-            <div>Your email has been confirmed</div>
-            <Button as={Link} href={SIGN_IN}>
-              Sign In
-            </Button>
-          </div>
-          <Image alt={'img'} className={s.img} src={SignInImg} />
-        </div>
-      )}
-    </div>
+    <>
+      {isSuccess && <ConfirmEmail />}
+      {error && <ResendEmail />}
+    </>
   )
 }
 

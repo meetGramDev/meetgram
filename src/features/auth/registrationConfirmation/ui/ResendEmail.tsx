@@ -4,7 +4,7 @@ import { useRegistrationEmailResendingMutation } from '@/features/auth/registrat
 import { Tr } from '@/hooks/useLangSwitcher'
 import Img from '@/shared/assets/img/time-management.png'
 import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
-import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
+import { isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
 import Image from 'next/image'
@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 
 import s from '@/pages/auth/registration-confirmation/index.module.scss'
 
-export const ResendEmailPage = () => {
+export const ResendEmail = () => {
   const [registrationEmailResending] = useRegistrationEmailResendingMutation()
   const [open, setOpen] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
@@ -27,16 +27,12 @@ export const ResendEmailPage = () => {
       email = localStorage.getItem(EMAIL_FOR_RESEND_LS_KEY)
     }
     try {
-      // email !== undefined &&
-      //   email !== null &&
       email && (await registrationEmailResending({ email }).unwrap())
     } catch (err) {
       if (isFetchBaseQueryError(err)) {
         const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
 
         console.error(errMsg, { variant: 'error' })
-      } else if (isErrorWithMessage(err)) {
-        console.error(err.message, { variant: 'error' })
       }
     }
   }
@@ -46,6 +42,11 @@ export const ResendEmailPage = () => {
 
     localEmail && setValue(localEmail)
   }, [])
+
+  const closeHandler = () => {
+    setOpen(false)
+    setIsDisabled(true)
+  }
 
   return (
     <div className={s.root}>
@@ -72,7 +73,7 @@ export const ResendEmailPage = () => {
           </div>
           <Button
             className={s.buttonWidth}
-            onClick={() => setIsDisabled(true)}
+            onClick={closeHandler}
             style={{ alignSelf: 'flex-end' }}
           >
             Ok

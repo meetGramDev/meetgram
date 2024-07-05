@@ -1,1 +1,2 @@
-export { ResendEmailPage } from './lib/ResendEmailPage'
+export { ConfirmEmail } from './ui/ConfirmEmail'
+export { ResendEmail } from './ui/ResendEmail'
