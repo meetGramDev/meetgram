@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
-import { Tr } from '@/hooks/useLangSwitcher'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui'
 import { Card } from '@/shared/ui/card'
 import { Checkbox } from '@/shared/ui/checkbox'
@@ -26,8 +26,10 @@ type Props = {
   error?: ErrorType[]
   onSubmit: (data: SignUpFormData) => void
 }
-
 export const SignUpForm = ({ error, onSubmit }: Props) => {
+  const { locale } = useRouter()
+
+  const { errorsTr, signUpLang } = translate(locale)
   const {
     clearErrors,
     control,
@@ -38,9 +40,7 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
     isValid,
     register,
     setError,
-  } = useSignUp()
-  const { locale } = useRouter()
-  const { signUpLang } = Tr(locale)
+  } = useSignUp(errorsTr)
   const isApprovedError = errors.isApproved?.message
 
   useEffect(() => {
@@ -66,6 +66,7 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
           <GithubBtn />
         </div>
         <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+          {/*todo*/}
           <Input
             error={errors.userName?.message}
             label={signUpLang.username}
