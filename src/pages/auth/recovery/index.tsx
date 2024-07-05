@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useCheckRecoveryCodeMutation } from '@/features/auth/forgotPassword/model/services/forgotPassword.service'
+import { useCheckRecoveryCodeMutation } from '@/features/auth/forgotPassword'
 import Img from '@/shared/assets/img/time-management.png'
 import { CREATE_NEW_PASSWORD, FORGOT_PASSWORD } from '@/shared/config/router'
 import { CONFIRMATION_CODE_LS_KEY } from '@/shared/const/consts'

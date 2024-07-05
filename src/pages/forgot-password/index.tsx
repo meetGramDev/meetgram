@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
-import { ForgotPasswordForm, useForgotPasswordMutation } from '@/features/auth/forgotPassword'
-import { ForgotPasswordDataType } from '@/features/auth/forgotPassword/ui/ForgotPasswordForm'
+import {
+  ForgotPasswordDataType,
+  ForgotPasswordForm,
+  useForgotPasswordMutation,
+} from '@/features/auth/forgotPassword'
 import { ServerBadResponse, ServerMessagesType } from '@/shared/api'
 import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
@@ -57,19 +60,11 @@ const ForgotPassword = () => {
         open={trigger}
         title={'Email sent'}
       >
-        <div
-          style={{
-            alignItems: 'end',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            padding: '30px 24px 36px 24px',
-          }}
-        >
+        <div className={s.dialogChildrenWrapper}>
           <span
-            style={{ maxWidth: '328px', textAlign: 'start' }}
+            className={s.dialogText}
           >{`We have sent a link to confirm your email to ${email}`}</span>
-          <div style={{ marginTop: '18px' }}>
+          <div className={s.dialogBtnWrap}>
             <Button
               className={s.dialogButton}
               onClick={() => setTrigger(false)}

@@ -21,7 +21,7 @@ export type ForgotPasswordDataType = {
   token: Nullable<string>
 } & ForgotPasswordFormData
 
-type ForgotPasswordType = {
+export type ForgotPasswordType = {
   error?: ServerMessagesType[]
   isFormSended: boolean
   onSubmit: (data: ForgotPasswordDataType) => void
@@ -65,17 +65,17 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
       <form className={s.form} onSubmit={onSubmitHandler}>
         <Input
           className={s.input}
-          label={'Email'}
+          label={forgoPasswordForm.email}
           {...register('email')}
           error={errors.email?.message}
           placeholder={'Google@gmail.com'}
         />
-        <div className={s.text}>Enter your email and we will send you further instruction</div>
+        <div className={s.text}>{forgoPasswordForm.enterEmail}</div>
         {isFormSended && (
           <div className={s.hiddenText}>
-            The link has been sent by email.
+            {forgoPasswordForm.linkSent}
             <br />
-            If you do not receive an email send link again.
+            {forgoPasswordForm.sendAgain}
           </div>
         )}
         <Button
@@ -85,12 +85,14 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
           type={'submit'}
           variant={'primary'}
         >
-          {!isFormSended ? 'Send Link' : 'Send Link Again'}
+          {!isFormSended
+            ? forgoPasswordForm.sendLink
+            : `${forgoPasswordForm.sendLink}${forgoPasswordForm.again}`}
         </Button>
       </form>
 
       <Button as={Link} className={s.bntLink} href={SIGN_IN} variant={'link'}>
-        Back to Sign In
+        {forgoPasswordForm.backSignIn}
       </Button>
 
       <div className={s.captcha}>
