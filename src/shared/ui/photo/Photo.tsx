@@ -1,6 +1,7 @@
 import { ComponentProps } from 'react'
 
 import { ImgOutline } from '@/shared/assets/icons/ImgOutline'
+import { DefinePropertyType } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import clsx from 'clsx'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
@@ -17,13 +18,26 @@ type RestProps = {
   src: StaticImport | string
 }
 
-type DefineRestProps<T extends PhotoType> = T extends 'fill' ? RestProps : Partial<RestProps>
+type DefineRestProps<T extends PhotoType> = T extends 'fill'
+  ? RestProps
+  : Partial<DefinePropertyType<RestProps, undefined>>
 
 type Props<T extends PhotoType = 'fill'> = {
   containerClassname?: string
   iconClassname?: string
+  iconContainerClassname?: string
+  /**
+   * Delete photo callback
+   */
   onDelete?: () => void
+  /**
+   * Define if component can be with or without photo src.
+   * @type PhotoType = "empty" | "fill"
+   */
   type?: T
+  /**
+   * Style of photo component.
+   */
   variant?: 'round' | 'square'
 } & DefineRestProps<T> &
   Omit<ComponentProps<typeof Image>, 'alt' | 'src'>
@@ -33,6 +47,7 @@ export const Photo = <T extends PhotoType = 'fill'>({
   className,
   containerClassname,
   iconClassname,
+  iconContainerClassname,
   onDelete,
   src = '',
   type = 'fill' as T,
@@ -42,7 +57,7 @@ export const Photo = <T extends PhotoType = 'fill'>({
   return (
     <div className={clsx(s.container, containerClassname)}>
       {type === 'empty' ? (
-        <div className={clsx(s.iconContainer, s[variant], containerClassname)}>
+        <div className={clsx(s.iconContainer, s[variant], iconContainerClassname)}>
           <ImgOutline className={clsx(s.icon, iconClassname)} />
         </div>
       ) : (
