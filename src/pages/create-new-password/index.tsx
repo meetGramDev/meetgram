@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { CreateNewPasswordForm } from '@/features/auth/createNewPassword'
+import { NewPasswordType } from '@/features/auth/createNewPassword/ui/CreateNewPasswordForm'
 import { useAddNewPasswordMutation } from '@/features/auth/forgotPassword/model/services/forgotPassword.service'
 import { SIGN_IN } from '@/shared/config/router'
 import { CONFIRMATION_CODE_LS_KEY } from '@/shared/const/consts'
@@ -12,7 +13,7 @@ const CreateNewPassword = () => {
   const [confirmationCode, setConfirmationCode] = useState('')
   const router = useRouter()
 
-  const onSubmitHandler = async (data: { newPassword: string }) => {
+  const onSubmitHandler = async (data: NewPasswordType) => {
     try {
       await addNewPassword({
         newPassword: data.newPassword,

@@ -2,52 +2,53 @@ import { useEffect, useRef, useState } from 'react'
 //eslint-disable-next-line
 import ReCAPTCHA from 'react-google-recaptcha'
 
+import { ServerMessagesType } from '@/shared/api'
+import { SIGN_IN } from '@/shared/config/router'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Nullable } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
-import { clsx } from 'clsx'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './forgotPassword.module.scss'
 
 import { ForgotPasswordFormData, useForgotPassword } from '../lib/useForgotPassword'
-type ErrorType = {
-  field: string
-  message: string
-}
+
 export type ForgotPasswordDataType = {
   baseUrl?: string
-  // setIsSentLink: (value: boolean) => void
   token: Nullable<string>
 } & ForgotPasswordFormData
 
 type ForgotPasswordType = {
-  error?: ErrorType[]
+  error?: ServerMessagesType[]
   isFormSended: boolean
   onSubmit: (data: ForgotPasswordDataType) => void
 }
 
 export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPasswordType) => {
+  const { locale } = useRouter()
   const [token, setToken] = useState<null | string>(null)
 
   const captchaRef = useRef<any>()
   const baseURL = 'http://localhost:3000/'
 
-  const { errors, handleSubmit, register, setError } = useForgotPassword()
+  const { errorsTr, forgoPasswordForm } = translate(locale)
+
+  const { errors, handleSubmit, isDirty, isValid, register, setError } = useForgotPassword({
+    InvalidEmail: errorsTr.errorEmail.InvalidEmail,
+  })
 
   useEffect(() => {
-    // type fieldKeys = keyof ForgotPasswordFormData
-
     if (error) {
       for (const e of error) {
-        // const isSetError = e.field as fieldKeys) ? e.field : 'email'
         setError('email', { message: e.message })
       }
     }
   }, [error, setError])
 
-  const siteKey = process.env.captchaSiteKey as string
+  const siteKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY_ID as string
 
   const onSubmitHandler = handleSubmit(data => {
     onSubmit({
@@ -60,7 +61,7 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
 
   return (
     <Card className={s.card}>
-      <h1 className={s.title}>Forgot Password</h1>
+      <h1 className={s.title}>{forgoPasswordForm.forgotPassword}</h1>
       <form className={s.form} onSubmit={onSubmitHandler}>
         <Input
           className={s.input}
@@ -79,7 +80,7 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
         )}
         <Button
           className={s.button}
-          disabled={token === null}
+          disabled={token === null || !isValid || !isDirty}
           fullWidth
           type={'submit'}
           variant={'primary'}
@@ -88,7 +89,7 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
         </Button>
       </form>
 
-      <Button as={Link} className={s.bntLink} href={'/sign-in'} variant={'link'}>
+      <Button as={Link} className={s.bntLink} href={SIGN_IN} variant={'link'}>
         Back to Sign In
       </Button>
 

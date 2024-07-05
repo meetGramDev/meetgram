@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { ForgotPasswordForm, useForgotPasswordMutation } from '@/features/auth/forgotPassword'
 import { ForgotPasswordDataType } from '@/features/auth/forgotPassword/ui/ForgotPasswordForm'
-import { ServerBadResponse } from '@/shared/api'
+import { ServerBadResponse, ServerMessagesType } from '@/shared/api'
 import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
@@ -10,17 +10,12 @@ import { getAuthLayout } from '@/widgets/layouts'
 
 import s from './index.module.scss'
 
-type ErrorType = {
-  field: string
-  message: string
-}
-
 const ForgotPassword = () => {
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
   const [trigger, setTrigger] = useState<boolean>(false)
   const [isFormSended, setIsFormSended] = useState<boolean>(false)
   const [email, setEmail] = useState('')
-  const [error, setError] = useState<ErrorType[]>([])
+  const [error, setError] = useState<ServerMessagesType[]>([])
 
   const onSubmit = async (data: ForgotPasswordDataType) => {
     setEmail(data.email)
