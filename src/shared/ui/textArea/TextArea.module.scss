@@ -1,3 +1,7 @@
+.wrapper {
+  position: relative;
+}
+
 .label {
   font: var(--font-regular-small);
   line-height: var(--lh-m);
@@ -9,4 +13,12 @@
   background-color: var(--dark-color-500);
   border: 2px solid var(--dark-color-100);
   border-radius: 2px;
+}
+
+.error {
+  position: absolute;
+
+  //top: 2px;
+  font: var(--font-regular-small);
+  color: var(--danger-color-500);
 }
