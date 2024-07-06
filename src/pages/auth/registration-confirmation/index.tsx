@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 
-import { ResendEmail } from '@/features/auth/registrationConfirmation'
-import { useRegistrationConfirmationMutation } from '@/features/auth/registrationConfirmation/model/services/registration.service'
+import {
+  ResendEmail,
+  useRegistrationConfirmationMutation,
+} from '@/features/auth/registrationConfirmation'
 import { ConfirmEmail } from '@/features/auth/registrationConfirmation/ui/ConfirmEmail'
 import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'

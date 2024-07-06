@@ -7,7 +7,6 @@ import {
   getEmail,
   useSignUpMutation,
 } from '@/features/auth/signUp'
-import { Tr } from '@/hooks/useLangSwitcher'
 import { ServerBadResponse } from '@/shared/api'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
@@ -26,7 +25,6 @@ const SignUp: NextPageWithLayout = () => {
   const dispatch = useAppDispatch()
   const [open, setOpen] = useState(false)
   const locale = useRouter().locale
-  const { signUpLang } = Tr(locale)
 
   const onSubmit = async ({ confirmPassword, isApproved, ...data }: SignUpFormData) => {
     try {
@@ -55,7 +53,7 @@ const SignUp: NextPageWithLayout = () => {
         <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
           <div className={s.modalContent}>
             <div>
-              {signUpLang.aler}
+              {locale}
               {email}
             </div>
             <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>

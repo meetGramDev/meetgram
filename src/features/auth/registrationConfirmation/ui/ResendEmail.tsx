@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-import { useRegistrationEmailResendingMutation } from '@/features/auth/registrationConfirmation/model/services/registration.service'
-import { Tr } from '@/hooks/useLangSwitcher'
 import Img from '@/shared/assets/img/time-management.png'
 import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
 import { isFetchBaseQueryError } from '@/shared/types'
@@ -10,21 +8,23 @@ import { Dialog } from '@/shared/ui/dialog'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import s from '@/pages/auth/registration-confirmation/index.module.scss'
+import s from './Confirmation.module.scss'
+
+import { useRegistrationEmailResendingMutation } from '../model/services/registration.service'
 
 export const ResendEmail = () => {
   const [registrationEmailResending] = useRegistrationEmailResendingMutation()
   const [open, setOpen] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
-  const [value, setValue] = useState('')
+  const [userEmail, setUserEmail] = useState('')
   const locale = useRouter().locale
-  const { signUpLang } = Tr(locale)
 
   const resetVerificationLink = async () => {
     let email
 
     if (typeof window !== 'undefined') {
       email = localStorage.getItem(EMAIL_FOR_RESEND_LS_KEY)
+      email && setUserEmail(email)
     }
     try {
       email && (await registrationEmailResending({ email }).unwrap())
@@ -36,12 +36,6 @@ export const ResendEmail = () => {
       }
     }
   }
-
-  useEffect(() => {
-    const localEmail = localStorage.getItem(EMAIL_FOR_RESEND_LS_KEY)
-
-    localEmail && setValue(localEmail)
-  }, [])
 
   const closeHandler = () => {
     setOpen(false)
@@ -68,14 +62,10 @@ export const ResendEmail = () => {
       >
         <div className={s.modalContent}>
           <div>
-            {signUpLang.aler}
-            {value}
+            {locale}
+            {userEmail}
           </div>
-          <Button
-            className={s.buttonWidth}
-            onClick={closeHandler}
-            style={{ alignSelf: 'flex-end' }}
-          >
+          <Button className={s.button} onClick={closeHandler}>
             Ok
           </Button>
         </div>

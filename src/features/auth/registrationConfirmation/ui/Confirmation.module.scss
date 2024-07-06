@@ -1,4 +1,4 @@
-@import 'src/app/styles/mixins';
+@import '@/app/styles/mixins';
 
 .root {
   @include flex(column, center, center, 20px);
@@ -23,6 +23,7 @@
   padding: 1rem 1.5rem;
 }
 
-.buttonWidth {
+.button {
+  align-self: flex-end;
   width: 6rem;
 }
