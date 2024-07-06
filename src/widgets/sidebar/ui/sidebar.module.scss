@@ -1,0 +1,38 @@
+.link {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-left: 60px;
+}
+
+.link:hover {
+  color: var(--light-color-900);
+}
+
+.link:active {
+  color: var(--light-color-700);
+}
+
+.border_in {
+  width: 220px;
+  border: 1px solid var(--dark-color-300);
+}
+
+.space {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.space_top_bottom {
+  margin-top: 60px;
+  margin-bottom: 180px;
+}
+
+.space_bottom {
+  margin-bottom: 110px;
+}
+
+.space_top {
+  margin-top: 72px;
+}
