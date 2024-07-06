@@ -25,7 +25,8 @@ export const uk: LenType = {
             passContain: 'Пароль повинен містити',
             wrongUsername: "Неправильне ім'я користувача",
         }
-    }, forgoPasswordForm: {
+    },
+    forgoPasswordForm: {
         again: ' Ще Раз',
         backSignIn: 'Повернутися до входу',
         email: 'Електронна пошта',
@@ -34,12 +35,21 @@ export const uk: LenType = {
         linkSent: 'Посилання було надіслано на електронну пошту.',
         sendAgain: 'Якщо ви не отримали листа, надіслати посилання ще раз',
         sendLink: 'Надіслати Посилання'
-    },
-    header: {
+    }, header: {
         signIn: 'Увійти',
         signUp: 'Реєстрація',
     },
     language: 'Ukraine',
+    sidebarTr: {
+        create: 'Створити',
+        favorites: 'Вибране',
+        home: 'Головна',
+        logOut: 'Вийти',
+        messenger: 'Повідомлення',
+        myProfile: 'Мій профіль',
+        search: 'Пошук',
+        statistics: 'Статистика',
+    },
     signInLang: {
         anAccount: 'Немаєш акаунт?',
         email: 'Електронна пошта',

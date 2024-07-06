@@ -26,7 +26,8 @@ export const ru: LenType = {
             passContain: 'Пароль должен содержать',
             wrongUsername: 'Неправильное имя пользователя',
         },
-    }, forgoPasswordForm: {
+    },
+    forgoPasswordForm: {
         again: ' Еще Раз',
         backSignIn: 'Вернуться ко входу',
         email: 'Электронная почта',
@@ -35,12 +36,21 @@ export const ru: LenType = {
         linkSent: 'Ссылка была отправлена по электронной почте.',
         sendAgain: 'Если вы не получили письмо, отправьте ссылку еще раз.',
         sendLink: 'Отправить Ссылку'
-    },
-    header: {
+    }, header: {
         signIn: 'Войти',
         signUp: 'Регистрация',
     },
     language: 'Russia',
+    sidebarTr: {
+        create: 'Создать',
+        favorites: 'Избранное',
+        home: 'Главная',
+        logOut: 'Выйти',
+        messenger: 'Сообщения',
+        myProfile: 'Мой профиль',
+        search: 'Поиск',
+        statistics: 'Статистика',
+    },
     signInLang: {
         anAccount: 'Нет аккаунта?',
         email: 'Электронная почта',
