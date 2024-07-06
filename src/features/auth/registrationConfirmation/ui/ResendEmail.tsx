@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import Img from '@/shared/assets/img/time-management.png'
 import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
+import { translate } from '@/shared/lib/langSwitcher'
 import { isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
@@ -18,6 +19,7 @@ export const ResendEmail = () => {
   const [isDisabled, setIsDisabled] = useState(false)
   const [userEmail, setUserEmail] = useState('')
   const locale = useRouter().locale
+  const { signUpLang } = translate(locale)
 
   const resetVerificationLink = async () => {
     let email
@@ -61,10 +63,9 @@ export const ResendEmail = () => {
         }
       >
         <div className={s.modalContent}>
-          <div>
-            {locale}
-            {userEmail}
-          </div>
+          <span>
+            {signUpLang.aler} <span>{userEmail}</span>
+          </span>
           <Button className={s.button} onClick={closeHandler}>
             Ok
           </Button>
