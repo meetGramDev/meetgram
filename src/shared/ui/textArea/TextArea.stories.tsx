@@ -67,7 +67,7 @@ export const TextAreaWithComponent = () => {
       disabled={disabled}
       fullWidth
       label={'Alter text'}
-      onChange={changeEventHandler}
+      onChange={e => changeEventHandler(e as string)}
       value={text}
     />
   )
