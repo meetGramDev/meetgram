@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 
 import {
+  ConfirmEmail,
   ResendEmail,
   useRegistrationConfirmationMutation,
 } from '@/features/auth/registrationConfirmation'
-import { ConfirmEmail } from '@/features/auth/registrationConfirmation/ui/ConfirmEmail'
 import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 import { useSearchParams } from 'next/navigation'
