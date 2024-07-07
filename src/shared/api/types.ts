@@ -1,4 +1,4 @@
-type ServerMessagesType = {
+export type ServerMessagesType = {
   field: string
   message: string
 }
