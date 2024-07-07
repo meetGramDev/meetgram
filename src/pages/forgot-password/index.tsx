@@ -54,12 +54,7 @@ const ForgotPassword = () => {
   return (
     <div>
       <ForgotPasswordForm error={error} isFormSended={isFormSended} onSubmit={onSubmit} />
-      <Dialog
-        className={s.dislogTitle}
-        onOpenChange={setTrigger}
-        open={trigger}
-        title={'Email sent'}
-      >
+      <Dialog onOpenChange={setTrigger} open={trigger} title={'Email sent'}>
         <div className={s.dialogChildrenWrapper}>
           <span
             className={s.dialogText}

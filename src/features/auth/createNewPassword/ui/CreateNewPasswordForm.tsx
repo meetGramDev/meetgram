@@ -17,7 +17,7 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
 
   const { createNewPasswordForm, errorsTr } = translate(locale)
 
-  const { errors, handleSubmit, register } = useCreateNewPassword(errorsTr)
+  const { errors, handleSubmit, isDirty, isValid, register } = useCreateNewPassword(errorsTr)
 
   return (
     <Card className={s.card}>
@@ -38,7 +38,7 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
           {...register('confirmPassword')}
         />
         <div className={s.text}>Your password must be between 6 and 20 characters</div>
-        <Button className={s.button} fullWidth variant={'primary'}>
+        <Button className={s.button} disabled={isDirty && !isValid} fullWidth variant={'primary'}>
           {createNewPasswordForm.createNewPassword}
         </Button>
       </form>
