@@ -1,12 +1,6 @@
 import { baseApi } from '@/shared/api'
 
-type RegistrationConfirmationArgs = {
-  confirmationCode: string
-}
-
-type RegistrationEmailResendingArgs = {
-  email: string
-}
+import { RegistrationConfirmationArgs, RegistrationEmailResendingArgs } from '../types/types'
 
 export const registrationConfirmationService = baseApi.injectEndpoints({
   endpoints: builder => ({

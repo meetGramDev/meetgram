@@ -5,6 +5,6 @@ export type ServerMessagesType = {
 
 export type ServerBadResponse = {
   error: string
-  messages: ServerMessagesType
+  messages: ServerMessagesType[] | any[] | string
   statusCode: number
 }

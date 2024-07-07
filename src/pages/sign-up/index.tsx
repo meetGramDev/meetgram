@@ -9,6 +9,7 @@ import {
 } from '@/features/auth/signUp'
 import { ServerBadResponse } from '@/shared/api'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
+import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
 import { translate } from '@/shared/lib/langSwitcher'
 import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
@@ -26,11 +27,13 @@ const SignUp: NextPageWithLayout = () => {
   const [open, setOpen] = useState(false)
   const locale = useRouter().locale
   const { signUpLang } = translate(locale)
-
   const onSubmit = async ({ confirmPassword, isApproved, ...data }: SignUpFormData) => {
     try {
       await signUp({ ...data }).unwrap()
       dispatch(authSliceActions.setEmail(data.email))
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(EMAIL_FOR_RESEND_LS_KEY, data.email)
+      }
       setOpen(true)
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
@@ -50,10 +53,9 @@ const SignUp: NextPageWithLayout = () => {
       <>
         <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
           <div className={s.modalContent}>
-            <div>
-              {signUpLang.aler}
-              {email}
-            </div>
+            <span>
+              {signUpLang.aler} <span>{email}</span>
+            </span>
             <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>
               Ok
             </Button>
