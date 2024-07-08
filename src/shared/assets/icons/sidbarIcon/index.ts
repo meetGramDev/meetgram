@@ -1,6 +1,6 @@
 import { HOME } from '@/shared/config/router'
 
-import { SidebarTr } from '../../../../public/locales/en'
+import { SidebarTr } from '../../../../../public/locales/en'
 import homePmg from './1_home/home2.png'
 import createPng from './2_create/create2.png'
 import myProfilePng from './3_my_profile/my_profile2.png'

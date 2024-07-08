@@ -1,38 +1,39 @@
 .link {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
   align-items: center;
-  padding-left: 60px;
-}
+  padding-left: 3.75rem;
+  
 
-.link:hover {
-  color: var(--light-color-900);
-}
+  &:hover {
+    color: var(--primary-color-100);
+  }
 
-.link:active {
-  color: var(--light-color-700);
+  &:active {
+    color: var(--primary-color-500);
+  }
 }
 
 .border_in {
-  width: 220px;
+  width: 13.75rem;
   border: 1px solid var(--dark-color-300);
 }
 
 .space {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .space_top_bottom {
-  margin-top: 60px;
-  margin-bottom: 180px;
+  margin-top: 3.75rem;
+  margin-bottom: 11.25rem;
 }
 
 .space_bottom {
-  margin-bottom: 110px;
+  margin-bottom: 6.875rem;
 }
 
 .space_top {
-  margin-top: 72px;
+  margin-top: 4.5rem;
 }

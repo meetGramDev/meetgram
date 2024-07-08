@@ -1,9 +1,10 @@
 import React from 'react'
 
-import { TypePng } from '@/widgets/sidebar/pmg'
 import Image from 'next/image'
 
 import s from './sidebarPng.module.scss'
+
+import { TypePng } from '../../../../shared/assets/icons/sidbarIcon'
 
 type TypeProps = {
   className?: string
