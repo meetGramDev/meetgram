@@ -13,7 +13,6 @@ type Props = {
   clearValue?: () => void
   error?: null | string
   label?: string
-  type?: 'number' | 'password' | 'search' | 'text'
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
@@ -95,6 +94,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
               className={classes.showPasswordButton}
               disabled={disabled}
               onClick={togglePassword}
+              tabIndex={-1}
               type={'button'}
             >
               {showPassword ? (

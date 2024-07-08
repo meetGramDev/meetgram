@@ -1,10 +1,10 @@
-type ServerMessagesType = {
+export type ServerMessagesType = {
   field: string
   message: string
 }
 
 export type ServerBadResponse = {
   error: string
-  messages: ServerMessagesType
+  messages: ServerMessagesType[] | any[] | string
   statusCode: number
 }

@@ -1,4 +1,4 @@
-@import 'src/app/styles/mixins';
+@import '@/app/styles/mixins';
 
 .root {
   @include flex(column, center, center, 20px);
@@ -14,4 +14,16 @@
 
 .title {
   font: var(--font-h1);
+}
+
+.modalContent {
+  @include flex(column, center, center, 1rem);
+
+  max-width: 380px;
+  padding: 1rem 1.5rem;
+}
+
+.button {
+  align-self: flex-end;
+  width: 6rem;
 }

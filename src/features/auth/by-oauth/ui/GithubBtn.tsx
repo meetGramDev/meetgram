@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/shared/api'
+import githubIcon from '@/shared/assets/icons/github-icon.svg'
 import { Button } from '@/shared/ui'
 import Image from 'next/image'
 
@@ -9,7 +9,7 @@ export const GithubBtn = () => {
 
   return (
     <Button onClick={handleLogin} variant={'text'}>
-      <Image alt={'Login with github'} height={36} src={'github-icon.svg'} width={36} />
+      <Image alt={'Login with github'} height={36} src={githubIcon} width={36} />
     </Button>
   )
 }

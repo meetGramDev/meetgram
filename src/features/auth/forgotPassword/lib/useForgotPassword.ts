@@ -1,18 +1,24 @@
 import { useForm } from 'react-hook-form'
 
-import { emailConstraint } from '@/shared/const/validationFields'
+import { getEmailConstraint } from '@/shared/const/validationFields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const forgotPasswordSchema = z.object({
-  email: emailConstraint,
-})
+import { ErrorEmail } from '../../../../../public/locales/en'
+
+const getForgotPasswordSchema = (errorEmail?: ErrorEmail) => {
+  return z.object({
+    email: getEmailConstraint(errorEmail),
+  })
+}
+
+const forgotPasswordSchema = getForgotPasswordSchema()
 
 export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>
 
-export const useForgotPassword = () => {
+export const useForgotPassword = (errorEmail: ErrorEmail) => {
   const {
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     handleSubmit,
     register,
     setError,
@@ -21,8 +27,8 @@ export const useForgotPassword = () => {
       email: '',
     },
     mode: 'onTouched',
-    resolver: zodResolver(forgotPasswordSchema),
+    resolver: zodResolver(getForgotPasswordSchema(errorEmail)),
   })
 
-  return { errors, handleSubmit, register, setError }
+  return { errors, handleSubmit, isDirty, isValid, register, setError }
 }

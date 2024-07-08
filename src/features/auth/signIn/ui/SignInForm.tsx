@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
-import { Tr } from '@/hooks/useLangSwitcher'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
@@ -17,16 +17,15 @@ type Props = {
 }
 
 export const SignInForm = ({ error, onSubmit }: Props) => {
+  const locale = useRouter().locale
+  const { errorsTr, signInLang } = translate(locale)
   const {
     formState: { errors, isDirty, isValid },
     getValues,
     handleSubmit,
     register,
     setError,
-  } = useSignIn()
-
-  const locale = useRouter().locale
-  const { signInLang } = Tr(locale)
+  } = useSignIn(errorsTr)
 
   useEffect(() => {
     if (error) {
@@ -49,15 +48,15 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
         <div className={'mb-9 flex flex-col gap-6'}>
           <Input
             error={errors.email?.message}
-            label={'Email'}
+            label={signInLang.email}
             placeholder={'example@email.com'}
-            type={'text'}
             {...register('email')}
             aria-invalid={errors.email ? 'true' : 'false'}
+            type={'email'}
           />
           <Input
             error={errors.password?.message}
-            label={'Password'}
+            label={signInLang.password}
             type={'password'}
             {...register('password')}
             aria-invalid={errors.password ? 'true' : 'false'}
