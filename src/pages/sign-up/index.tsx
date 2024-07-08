@@ -9,6 +9,7 @@ import {
 } from '@/features/auth/signUp'
 import { ServerBadResponse } from '@/shared/api'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
+import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
 import { translate } from '@/shared/lib/langSwitcher'
 import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
@@ -31,6 +32,9 @@ const SignUp: NextPageWithLayout = () => {
     try {
       await signUp({ ...data }).unwrap()
       dispatch(authSliceActions.setEmail(data.email))
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(EMAIL_FOR_RESEND_LS_KEY, data.email)
+      }
       setOpen(true)
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
@@ -45,21 +49,20 @@ const SignUp: NextPageWithLayout = () => {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
+    <div className={s.root}>
       <SignUpForm error={error} onSubmit={onSubmit} />
-      <>
-        <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
-          <div className={s.modalContent}>
-            <div>
-              {signUpLang.aler}
-              {email}
-            </div>
-            <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>
-              Ok
-            </Button>
+
+      <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
+        <div className={s.modalContent}>
+          <div>
+            {signUpLang.aler}
+            {email}
           </div>
-        </Dialog>
-      </>
+          <Button className={s.modalButton} onClick={() => setOpen(false)}>
+            Ok
+          </Button>
+        </div>
+      </Dialog>
     </div>
   )
 }

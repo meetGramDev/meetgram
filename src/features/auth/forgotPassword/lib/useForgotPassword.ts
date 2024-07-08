@@ -18,7 +18,7 @@ export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>
 
 export const useForgotPassword = (errorEmail: ErrorEmail) => {
   const {
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
     handleSubmit,
     register,
     setError,
@@ -30,5 +30,5 @@ export const useForgotPassword = (errorEmail: ErrorEmail) => {
     resolver: zodResolver(getForgotPasswordSchema(errorEmail)),
   })
 
-  return { errors, handleSubmit, register, setError }
+  return { errors, handleSubmit, isDirty, isValid, register, setError }
 }
