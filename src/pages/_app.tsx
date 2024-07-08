@@ -2,7 +2,7 @@ import type { NextPageWithLayout } from '@/shared/types'
 import type { AppProps } from 'next/app'
 
 import { StoreProvider } from '@/app/lib'
-import ErrorBoundary from '@/pages/error'
+import { ErrorBoundary } from '@/app/providers/ErrorBoundary'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import '@/app/styles/globals.scss'
