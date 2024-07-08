@@ -50,9 +50,9 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
             error={errors.email?.message}
             label={signInLang.email}
             placeholder={'example@email.com'}
-            type={'text'}
             {...register('email')}
             aria-invalid={errors.email ? 'true' : 'false'}
+            type={'email'}
           />
           <Input
             error={errors.password?.message}

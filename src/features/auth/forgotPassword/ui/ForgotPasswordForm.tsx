@@ -69,6 +69,7 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
           {...register('email')}
           error={errors.email?.message}
           placeholder={'Google@gmail.com'}
+          type={'email'}
         />
         <div className={s.text}>{forgoPasswordForm.enterEmail}</div>
         {isFormSended && (
