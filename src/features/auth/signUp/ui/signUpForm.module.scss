@@ -47,6 +47,7 @@
 }
 
 .link {
+  font-weight: var(--fw-600);
   text-decoration: none;
 }
 
@@ -57,4 +58,8 @@
 
   font-size: 14px;
   color: var(--danger-color-500);
+}
+
+.hasAccount {
+  text-align: center;
 }

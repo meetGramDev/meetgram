@@ -27,6 +27,7 @@ const SignUp: NextPageWithLayout = () => {
   const [open, setOpen] = useState(false)
   const locale = useRouter().locale
   const { signUpLang } = translate(locale)
+
   const onSubmit = async ({ confirmPassword, isApproved, ...data }: SignUpFormData) => {
     try {
       await signUp({ ...data }).unwrap()
@@ -48,20 +49,20 @@ const SignUp: NextPageWithLayout = () => {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
+    <div className={s.root}>
       <SignUpForm error={error} onSubmit={onSubmit} />
-      <>
-        <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
-          <div className={s.modalContent}>
-            <span>
-              {signUpLang.aler} <span>{email}</span>
-            </span>
-            <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>
-              Ok
-            </Button>
+
+      <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
+        <div className={s.modalContent}>
+          <div>
+            {signUpLang.aler}
+            {email}
           </div>
-        </Dialog>
-      </>
+          <Button className={s.modalButton} onClick={() => setOpen(false)}>
+            Ok
+          </Button>
+        </div>
+      </Dialog>
     </div>
   )
 }
