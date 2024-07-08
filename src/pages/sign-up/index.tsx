@@ -45,21 +45,20 @@ const SignUp: NextPageWithLayout = () => {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
+    <div className={s.root}>
       <SignUpForm error={error} onSubmit={onSubmit} />
-      <>
-        <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
-          <div className={s.modalContent}>
-            <div>
-              {signUpLang.aler}
-              {email}
-            </div>
-            <Button onClick={() => setOpen(false)} style={{ alignSelf: 'flex-end' }}>
-              Ok
-            </Button>
+
+      <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
+        <div className={s.modalContent}>
+          <div>
+            {signUpLang.aler}
+            {email}
           </div>
-        </Dialog>
-      </>
+          <Button className={s.modalButton} onClick={() => setOpen(false)}>
+            Ok
+          </Button>
+        </div>
+      </Dialog>
     </div>
   )
 }
