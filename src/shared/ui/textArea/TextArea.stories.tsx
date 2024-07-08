@@ -18,7 +18,6 @@ type Story = StoryObj<typeof meta>
 
 export const TextAreaType: Story = {
   args: {
-    fullWidth: false,
     label: 'About me',
     onChange: () => {},
     value: '',
@@ -28,7 +27,6 @@ export const TextAreaWithError: Story = {
   args: {
     disabled: false,
     error: 'Error text',
-    fullWidth: false,
     label: 'About me',
     onChange: () => {},
     value: '',
@@ -37,7 +35,6 @@ export const TextAreaWithError: Story = {
 
 export const TextAreaFullWidth: Story = {
   args: {
-    fullWidth: true,
     label: 'About me',
     onChange: () => {},
     value: '',
@@ -47,7 +44,6 @@ export const TextAreaFullWidth: Story = {
 export const TextAreaDisabled: Story = {
   args: {
     disabled: true,
-    fullWidth: false,
     label: 'About me',
     onChange: () => {},
     value: 'Hello',
@@ -65,7 +61,6 @@ export const TextAreaWithComponent = () => {
   return (
     <TextArea
       disabled={disabled}
-      fullWidth
       label={'Alter text'}
       onChange={e => changeEventHandler(e as string)}
       value={text}
