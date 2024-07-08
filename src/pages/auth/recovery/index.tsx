@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import { useCheckRecoveryCodeMutation } from '@/features/auth/forgotPassword/model/services/forgotPassword.service'
+import { useCheckRecoveryCodeMutation } from '@/features/auth/forgotPassword'
 import Img from '@/shared/assets/img/time-management.png'
 import { CREATE_NEW_PASSWORD, FORGOT_PASSWORD } from '@/shared/config/router'
 import { CONFIRMATION_CODE_LS_KEY } from '@/shared/const/consts'
@@ -14,8 +14,9 @@ import { useRouter } from 'next/router'
 import style from './index.module.scss'
 
 const Recovery = () => {
-  const params = useSearchParams()
   const [checkRecoveryCode, { isLoading }] = useCheckRecoveryCodeMutation()
+  const params = useSearchParams()
+  const [checkIsFailed, setCheckIsFailed] = useState(false)
 
   const router = useRouter()
 
@@ -28,32 +29,34 @@ const Recovery = () => {
         checkRecoveryCode({ recoveryCode: String(confirmationCode) })
           .unwrap()
           .then(() => {
-            return router.push(CREATE_NEW_PASSWORD)
+            router.push(CREATE_NEW_PASSWORD)
           })
           .catch(e => {
+            setCheckIsFailed(true)
             console.log(e)
           })
       }
     }
   }, [confirmationCode, checkRecoveryCode, router])
 
-  if (isLoading) {
-    return <div>... Loading ...</div>
-  }
-
   return (
-    <div className={style.root}>
-      <div className={style.textWrapper}>
-        <h2 className={style.title}>Email verification link expired</h2>
-        <div>
-          Looks like the verification link has expired. Not to worry, we can send the link again
+    <div>
+      {!checkIsFailed && <div>... Check user data ...</div>}
+      {checkIsFailed && (
+        <div className={style.root}>
+          <div className={style.textWrapper}>
+            <h2 className={style.title}>Email verification link expired</h2>
+            <div>
+              Looks like the verification link has expired. Not to worry, we can send the link again
+            </div>
+            <Button as={Link} href={FORGOT_PASSWORD}>
+              {' '}
+              Going to forgot password{' '}
+            </Button>
+          </div>
+          <Image alt={'img'} className={style.img} src={Img} />
         </div>
-        <Button as={Link} href={FORGOT_PASSWORD}>
-          {' '}
-          Going to forgot password{' '}
-        </Button>
-      </div>
-      <Image alt={'img'} className={style.img} src={Img} />
+      )}
     </div>
   )
 }
