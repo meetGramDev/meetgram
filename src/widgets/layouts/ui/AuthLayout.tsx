@@ -8,7 +8,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
-  const isMobile = useMediaQuery({ query: '(max-width: 480px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
 
   return (
     <div className={`min-h-[calc(100vh_-_3.75rem_-_72px)] space-y-9 pb-9 ${inter.className}`}>
