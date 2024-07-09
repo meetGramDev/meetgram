@@ -1,21 +1,63 @@
 import { RootState } from '@/app/lib'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { setCredentials } from '@/entities/user'
+import { StatusCode } from '@/shared/enum'
+import {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  createApi,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react'
 
 import { BASE_URL } from './baseUrl'
+import { RefreshTokenResponseType } from './types'
+
+const baseQuery = fetchBaseQuery({ baseUrl: BASE_URL })
+
+const baseQueryWithAuth = fetchBaseQuery({
+  baseUrl: BASE_URL,
+  credentials: 'include',
+  prepareHeaders: (headers, { getState }) => {
+    const accessToken = (getState() as RootState).user.accessToken
+
+    if (accessToken) {
+      headers.set('authorization', `Bearer ${accessToken}`)
+    }
+
+    return headers
+  },
+})
+const baseQueryWithReAuth: BaseQueryFn<FetchArgs | string, unknown, FetchBaseQueryError> = async (
+  args,
+  api,
+  extraOptions
+) => {
+  // try to make any request
+  let resp = await baseQueryWithAuth(args, api, extraOptions)
+
+  if (resp.error && resp.error.status === StatusCode.Unauthorized) {
+    // try to refresh an authorization token
+    resp = await baseQuery(
+      { credentials: 'include', method: 'POST', url: '/auth/update-tokens' },
+      api,
+      extraOptions
+    )
+
+    // if user still authorize on the server
+    if (resp.data) {
+      api.dispatch(setCredentials(resp.data as RefreshTokenResponseType))
+      // retry the initial query
+      resp = await baseQueryWithAuth(args, api, extraOptions)
+    }
+  } else {
+    // TODO otherwise logout user and dispatch logout
+  }
+
+  return resp
+}
 
 export const baseApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
-      const accessToken = (getState() as RootState).user.accessToken
-
-      if (accessToken) {
-        headers.set('authorization', `Bearer ${accessToken}`)
-      }
-
-      return headers
-    },
-  }),
+  baseQuery: baseQueryWithReAuth,
   endpoints: () => ({}),
   reducerPath: 'meetGramApi',
   tagTypes: ['login', 'auth'],
