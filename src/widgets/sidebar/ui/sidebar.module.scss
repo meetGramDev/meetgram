@@ -2,8 +2,12 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
+
   padding-left: 3.75rem;
-  
+
+  font-size: var(--fs-s);
+  font-weight: var(--fw-500);
+  line-height: var(--lh-m);
 
   &:hover {
     color: var(--primary-color-100);
@@ -14,26 +18,27 @@
   }
 }
 
-.border_in {
+
+.border {
   width: 13.75rem;
   border: 1px solid var(--dark-color-300);
 }
 
-.space {
+.gap {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.space_top_bottom {
+.gapTopAndBottom {
   margin-top: 3.75rem;
   margin-bottom: 11.25rem;
 }
 
-.space_bottom {
+.gapBottom {
   margin-bottom: 6.875rem;
 }
 
-.space_top {
+.gapTop {
   margin-top: 4.5rem;
 }
