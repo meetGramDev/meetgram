@@ -10,7 +10,7 @@ export type TabType = {
 
 type Props = {
   className?: string
-  onValueChange?: (value: string) => void
+  onValueChange: (value: string) => void
   tabs: TabType[]
   value: string
 }

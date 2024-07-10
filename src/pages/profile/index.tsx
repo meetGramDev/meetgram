@@ -1,7 +1,6 @@
 import { useMeQuery } from '@/entities/user'
-import { NextPageWithLayout } from '@/shared/types'
 
-const Profile: NextPageWithLayout = () => {
+const Profile = () => {
   const { data } = useMeQuery()
 
   console.log(data)
