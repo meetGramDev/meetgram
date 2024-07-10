@@ -1,26 +1,26 @@
 import { useState } from 'react'
-import { UseFormSetError } from 'react-hook-form'
 
-import { ForgotPasswordForm, useForgotPasswordMutation } from '@/features/auth/forgotPassword'
-import { ForgotPasswordFormData } from '@/features/auth/forgotPassword/lib/useForgotPassword'
-import { Nullable } from '@/shared/types'
+import {
+  ForgotPasswordDataType,
+  ForgotPasswordForm,
+  useForgotPasswordMutation,
+} from '@/features/auth/forgotPassword'
+import { ServerBadResponse, ServerMessagesType } from '@/shared/api'
+import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
 import { getAuthLayout } from '@/widgets/layouts'
 
-const ForgotPassword = () => {
-  const [trigger, setTrigger] = useState<boolean>(false)
-  const [email, setEmail] = useState('')
-  const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
+import s from './index.module.scss'
 
-  const onSubmit = async (
-    data: {
-      baseUrl?: string
-      setError: UseFormSetError<{ email: string }>
-      setIsSentLink: (value: boolean) => void
-      token: Nullable<string>
-    } & ForgotPasswordFormData
-  ) => {
+const ForgotPassword = () => {
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
+  const [trigger, setTrigger] = useState<boolean>(false)
+  const [isFormSended, setIsFormSended] = useState<boolean>(false)
+  const [email, setEmail] = useState('')
+  const [error, setError] = useState<ServerMessagesType[]>([])
+
+  const onSubmit = async (data: ForgotPasswordDataType) => {
     setEmail(data.email)
 
     try {
@@ -29,46 +29,42 @@ const ForgotPassword = () => {
         email: data.email,
         recaptcha: data.token as string,
       }).unwrap()
-      // .then(() => {
       setTrigger(true)
-      data.setIsSentLink(true)
-      // })
-      // .then(() => {
-      //   setIsSentLink(true)
-      //   setTrigger(true)
-      //   setToken('')
-      //   captchaRef.current.reset()
-      //   setEmail(data.email)
-      // })
-      // .catch(error => {
-      //   captchaRef.current.reset()
-      //   const err = error?.data?.messages[0]
-      //
-      //   if (err.field === 'email') {
-      //     setError('email', { message: err.message, type: 'custom' })
-      //   }
-      // })
-    } catch (e: any) {
-      const err = e?.data?.messages.length !== 0 ? e?.data?.messages[0] : e?.data?.error
+      setIsFormSended(true)
+    } catch (e) {
+      if (isFetchBaseQueryError(e)) {
+        const errMsg =
+          'error' in e ? e.error : JSON.stringify((e.data as ServerBadResponse).messages)
 
-      if (err.field === 'email') {
-        data.setError('email', { message: err.message, type: 'custom' })
-      } else if (err) {
-        data.setError('email', { message: err, type: 'custom' })
+        try {
+          setError(JSON.parse(errMsg))
+        } catch (parseError) {
+          setError([{ field: 'email', message: errMsg }])
+        }
+      } else if (isErrorWithMessage(e)) {
+        setError([{ field: 'email', message: e.message }])
       }
     }
   }
 
+  if (isLoading) {
+    return <div>Loading ...</div>
+  }
+
   return (
     <div>
-      <ForgotPasswordForm onSubmit={onSubmit} />
+      <ForgotPasswordForm error={error} isFormSended={isFormSended} onSubmit={onSubmit} />
       <Dialog onOpenChange={setTrigger} open={trigger} title={'Email sent'}>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div className={s.dialogChildrenWrapper}>
           <span
-            style={{ maxWidth: '328px', textAlign: 'start' }}
+            className={s.dialogText}
           >{`We have sent a link to confirm your email to ${email}`}</span>
-          <div>
-            <Button onClick={() => setTrigger(false)} variant={'primary'}>
+          <div className={s.dialogBtnWrap}>
+            <Button
+              className={s.dialogButton}
+              onClick={() => setTrigger(false)}
+              variant={'primary'}
+            >
               OK
             </Button>
           </div>
