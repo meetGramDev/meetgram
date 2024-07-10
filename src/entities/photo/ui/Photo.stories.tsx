@@ -10,7 +10,7 @@ import { Photo } from './Photo'
 const meta = {
   component: Photo,
   tags: ['autodocs'],
-  title: 'shared/Photo',
+  title: 'Entities/Photo',
 } satisfies Meta<typeof Photo>
 
 export default meta
