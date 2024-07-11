@@ -23,6 +23,9 @@ export const uk: LenType = {
             maxChar: 'Максимальна кількість символів',
             minChar: 'Мінімальна кількість символів',
             passContain: 'Пароль повинен містити',
+            wrongDateOfBirth: 'dd.mm.xxxx - формат дати',
+            wrongFirstName: `Неправильне Ім'я`,
+            wrongLastName: 'Неправильне Прізвище',
             wrongUsername: "Неправильне ім'я користувача",
         }
     }, forgoPasswordForm: {
