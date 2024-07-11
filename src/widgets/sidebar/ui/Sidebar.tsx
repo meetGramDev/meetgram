@@ -10,10 +10,9 @@ import s from './sidebar.module.scss'
 
 type TypeProps = {
   className?: string
-  pngSize?: number
 }
 
-export const Sidebar: React.FC = ({ className, pngSize }: TypeProps) => {
+export const Sidebar: React.FC = ({ className }: TypeProps) => {
   const { locale } = useRouter()
   const sidebarTr = translate(locale).sidebarTr
   const { bottom, middle, top } = getSidebarEl(sidebarTr)
