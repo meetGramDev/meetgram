@@ -5,6 +5,8 @@ import { cn } from '@/shared/lib/cn'
 import { Nullable } from '@/shared/types'
 import { Button, Dialog, Upload, UploadRef } from '@/shared/ui'
 
+import s from './UploadPhoto.module.scss'
+
 import { ErrorDialog } from './ErrorDialog'
 
 type Props = {}
@@ -36,11 +38,18 @@ export const UploadPhoto = ({}: Props) => {
     reader.readAsDataURL(file)
   }
 
+  const handleSendPhoto = () => {
+    // send photo to the server
+    console.log('Click Save btn')
+  }
+
   return (
     <div className={'flex h-full w-full flex-col items-center gap-6 text-center'}>
       <Photo type={'empty'} />
 
       <Dialog
+        className={s.dialog}
+        onOpenChange={open => !open && fileUrl && setFileUrl('')}
         title={'Add a Profile Photo'}
         trigger={
           <Button fullWidth variant={'outlined'}>
@@ -48,29 +57,42 @@ export const UploadPhoto = ({}: Props) => {
           </Button>
         }
       >
-        <div>
+        <div className={cn('mx-6 my-4 text-center', !fileUrl && 'md:mb-[4.5rem]')}>
           {isError && <ErrorDialog />}
           <div
             className={cn(
-              'mx-6 mb-9 mt-3 flex flex-col items-center justify-center gap-8 text-center md:mx-16 md:mb-12 lg:mx-32 lg:mb-16 lg:mt-6 lg:gap-16'
+              'mt-6 space-y-9 md:mx-32 md:space-y-14',
+              !fileUrl && 'md:first:mt-[4.5rem]'
             )}
           >
-            {fileUrl && (
-              <Photo
-                alt={'uploaded file preview'}
-                height={300}
-                src={fileUrl}
-                variant={'square'}
-                width={300}
-              />
-            )}
             <Upload onFileSelect={handleFileSelect} ref={uploadRef}>
               {!fileUrl && <Photo type={'empty'} variant={'square'} />}
             </Upload>
-            <Button fullWidth onClick={handleSelectFileClick} variant={'primary'}>
-              Select from computer
-            </Button>
+            {!fileUrl && (
+              <Button fullWidth onClick={handleSelectFileClick} variant={'primary'}>
+                Select from computer
+              </Button>
+            )}
           </div>
+
+          {fileUrl && (
+            <div className={'space-y-9'}>
+              <Photo
+                alt={'uploaded file preview'}
+                containerClassname={s.photo}
+                height={680}
+                src={fileUrl}
+                variant={'square'}
+                width={340}
+              />
+
+              <div className={'flex w-full justify-end'}>
+                <Button onClick={handleSendPhoto} variant={'primary'}>
+                  Save
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </Dialog>
     </div>

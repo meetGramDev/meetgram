@@ -6,7 +6,7 @@ export const ErrorDialog = ({ message }: Props) => {
   return (
     <p
       className={
-        'mx-6 mt-6 border border-danger-500 bg-danger-900 px-6 py-1 text-center text-regular14 text-light-100 md:text-regular16'
+        'border border-danger-500 bg-danger-900 px-6 py-1 text-center text-regular14 text-light-100 md:text-regular16'
       }
     >
       {message || 'No error ;)'}
