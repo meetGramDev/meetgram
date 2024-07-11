@@ -1,12 +1,11 @@
 .link {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
 
-    font-size: var(--fs-s);
-    font-weight: var(--fw-500);
-    line-height: var(--lh-m);
-
+  font-size: var(--fs-s);
+  font-weight: var(--fw-500);
+  line-height: var(--lh-m);
 
   &:hover {
     color: var(--primary-color-100);
@@ -23,28 +22,28 @@
 }
 
 .border {
-    display: flex;
-    flex-direction: column;
-    width: 13.75rem;
-    border: 1px solid var(--dark-color-300);
+  display: flex;
+  flex-direction: column;
+  width: 13.75rem;
+  border: 1px solid var(--dark-color-300);
 }
 
 .gap {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-self: flex-start;
 
-    margin-left: 60px;
+  margin-left: 60px;
 }
 
 .gapTopAndBottom {
-    margin-top: 3.75rem;
-    margin-bottom: 11.25rem;
+  margin-top: 3.75rem;
+  margin-bottom: 11.25rem;
 }
 
 .gapBottom {
-    margin-bottom: 6.875rem;
+  margin-bottom: 6.875rem;
 }
 
 .gapTop {
