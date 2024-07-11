@@ -21,33 +21,27 @@ export const Sidebar: React.FC = ({ className }: TypeProps) => {
     <aside className={s.border}>
       <div className={clsx(clsx(s.gap, s.gapTop), [className])}>
         {top.map((el, i) => (
-          <Link href={el.path} key={i} passHref>
-            <div className={s.link}>
-              <el.svg />
-              {el.name}
-            </div>
+          <Link className={s.link} href={el.path} key={i} passHref>
+            <el.svg />
+            {el.name}
           </Link>
         ))}
       </div>
 
       <div className={clsx(clsx(s.gap, s.gapTopAndBottom), [className])}>
         {middle.map((el, i) => (
-          <Link href={el.path} key={i} passHref>
-            <div className={clsx(s.link)}>
-              <el.svg />
-              {el.name}
-            </div>
+          <Link className={s.link} href={el.path} key={i} passHref>
+            <el.svg />
+            {el.name}
           </Link>
         ))}
       </div>
 
       <div className={clsx(clsx(s.gap, s.gapBottom), [className])}>
         {bottom.map((el, i) => (
-          <Link href={el.path} key={i} passHref>
-            <div className={s.link}>
-              <el.svg />
-              {el.name}
-            </div>
+          <Link className={s.link} href={el.path} key={i} passHref>
+            <el.svg />
+            {el.name}
           </Link>
         ))}
       </div>
