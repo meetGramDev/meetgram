@@ -8,7 +8,9 @@ const Profile = () => {
   const params = useSearchParams()
 
   const name = 'User Name'
-  const following = 2218
+  const following: number = 2218
+  const followers: number = 2358
+  const publications: number = 2764
 
   return (
     <div className={s.headerWrapper}>
@@ -19,13 +21,29 @@ const Profile = () => {
           <Button variant={'secondary'}>Profile Settings</Button>
         </div>
         <div>
-          <Button variant={'link'}>
+          <Button variant={'text'}>
             {following}
             <br />
             following
           </Button>
+          <Button variant={'text'}>
+            {followers}
+            <br />
+            followers
+          </Button>
+          <Button variant={'text'}>
+            {publications}
+            <br />
+            publications
+          </Button>
+        </div>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco <Button variant={'link'}>laboris nisi ut aliquip ex ea commodo consequat.</Button>
         </div>
       </div>
+      <div className={s.friendsWrapper}></div>
     </div>
   )
 }
