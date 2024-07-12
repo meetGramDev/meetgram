@@ -1,0 +1,14 @@
+@import 'src/app/styles/mixins';
+
+.button {
+  @include flex;
+
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  &:disabled {
+    cursor: initial;
+  }
+}
