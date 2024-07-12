@@ -11,8 +11,8 @@ export const photoApi = baseApi.injectEndpoints({
       }),
     }),
     uploadPhoto: builder.mutation<UploadPhotoResponseType, UploadPhotoArgsType>({
-      query: args => ({
-        body: args,
+      query: body => ({
+        body,
         method: 'POST',
         url: '/users/profile/avatar',
       }),

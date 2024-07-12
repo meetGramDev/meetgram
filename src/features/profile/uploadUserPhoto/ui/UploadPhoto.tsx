@@ -3,44 +3,99 @@ import { useRef, useState } from 'react'
 import { Photo, useDeletePhotoMutation, useUploadPhotoMutation } from '@/entities/photo'
 import { cn } from '@/shared/lib/cn'
 import { Nullable } from '@/shared/types'
-import { Button, Dialog, Upload, UploadRef } from '@/shared/ui'
+import { Button, Dialog, Dropzone, DropzoneRef } from '@/shared/ui'
 
 import s from './UploadPhoto.module.scss'
 
 import { ErrorDialog } from './ErrorDialog'
 
+const MIN_DIMENSION = 192
+
+type SelectedFileType = {
+  blob: Nullable<File>
+  height: number
+  src: string
+  width: number
+}
+
 type Props = {}
 
 export const UploadPhoto = ({}: Props) => {
-  const uploadRef = useRef<Nullable<UploadRef>>(null)
-  const [fileUrl, setFileUrl] = useState<string>('')
+  const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
+  const [file, setFile] = useState<SelectedFileType>({
+    blob: null,
+    height: 0,
+    src: '',
+    width: 0,
+  })
 
   const [upload] = useUploadPhotoMutation()
   const [remove] = useDeletePhotoMutation()
-  const isError = false
+  const [error, setError] = useState('')
+
+  const resetState = () => {
+    setFile({
+      blob: null,
+      height: 0,
+      src: '',
+      width: 0,
+    })
+    setError('')
+  }
+
+  const handleDialogClose = (open: boolean) => {
+    if (!open && file.src) {
+      resetState()
+    }
+  }
 
   const handleSelectFileClick = () => {
-    // refer the Upload's input element
-    uploadRef.current?.onSelectFile()
+    resetState()
+    // refer the Dropzone's input element
+    dropzoneRef.current?.onSelectFile()
   }
 
   const handleFileSelect = (file: File) => {
+    resetState()
+
+    setFile(state => ({ ...state, blob: file }))
+
     const reader = new FileReader()
 
-    reader.onload = function (e) {
-      const result = reader.result
+    reader.addEventListener('load', function (e) {
+      const resultSrc = reader.result
 
-      if (result && typeof result === 'string') {
-        setFileUrl(result)
+      if (resultSrc && typeof resultSrc === 'string') {
+        const imgEl = new Image()
+
+        imgEl.src = resultSrc
+
+        imgEl.addEventListener('load', function (e) {
+          const { height, naturalHeight, naturalWidth, width } = e.currentTarget as HTMLImageElement
+
+          if (naturalHeight < MIN_DIMENSION || naturalWidth < MIN_DIMENSION) {
+            setError('Image must be at least 192 x 192 pixels')
+
+            return
+          } else {
+            setFile(state => ({ ...state, height, src: resultSrc, width }))
+          }
+        })
       }
-    }
+    })
 
     reader.readAsDataURL(file)
   }
 
   const handleSendPhoto = () => {
-    // send photo to the server
-    console.log('Click Save btn')
+    if (!file.blob) {
+      return
+    }
+    const formData = new FormData()
+
+    formData.append('file', file.blob)
+
+    console.log('Click Save btn', formData.get('file'))
   }
 
   return (
@@ -49,7 +104,7 @@ export const UploadPhoto = ({}: Props) => {
 
       <Dialog
         className={s.dialog}
-        onOpenChange={open => !open && fileUrl && setFileUrl('')}
+        onOpenChange={handleDialogClose}
         title={'Add a Profile Photo'}
         trigger={
           <Button fullWidth variant={'outlined'}>
@@ -57,33 +112,35 @@ export const UploadPhoto = ({}: Props) => {
           </Button>
         }
       >
-        <div className={cn('mx-6 my-4 text-center', !fileUrl && 'md:mb-[4.5rem]')}>
-          {isError && <ErrorDialog />}
+        <div className={cn('mx-6 my-4 text-center', !file.src && 'md:mb-[4.5rem]')}>
+          {error && <ErrorDialog message={error} />}
           <div
             className={cn(
               'mt-6 space-y-9 md:mx-32 md:space-y-14',
-              !fileUrl && 'md:first:mt-[4.5rem]'
+              !file.src && 'md:first:mt-[4.5rem]'
             )}
           >
-            <Upload onFileSelect={handleFileSelect} ref={uploadRef}>
-              {!fileUrl && <Photo type={'empty'} variant={'square'} />}
-            </Upload>
-            {!fileUrl && (
-              <Button fullWidth onClick={handleSelectFileClick} variant={'primary'}>
-                Select from computer
-              </Button>
+            {!file.src && (
+              <>
+                <Dropzone onFileSelect={handleFileSelect} ref={dropzoneRef}>
+                  <Photo type={'empty'} variant={'square'} />
+                </Dropzone>
+                <Button fullWidth onClick={handleSelectFileClick} variant={'primary'}>
+                  Select from computer
+                </Button>
+              </>
             )}
           </div>
 
-          {fileUrl && (
+          {file.src && !error && (
             <div className={'space-y-9'}>
               <Photo
                 alt={'uploaded file preview'}
                 containerClassname={s.photo}
-                height={680}
-                src={fileUrl}
+                height={file.height}
+                src={file.src}
                 variant={'square'}
-                width={340}
+                width={file.width}
               />
 
               <div className={'flex w-full justify-end'}>

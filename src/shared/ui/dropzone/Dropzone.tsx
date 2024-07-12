@@ -9,10 +9,11 @@ import {
   useState,
 } from 'react'
 
+import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { cn } from '@/shared/lib/cn'
 import { Nullable } from '@/shared/types'
 
-export type UploadRef = {
+export type DropzoneRef = {
   onSelectFile: () => void
 }
 
@@ -34,13 +35,13 @@ type Props = {
 /**
  * A file upload wrapper
  */
-export const Upload = forwardRef<UploadRef, Props>(
-  ({ children, className, disabled, onFileSelect, overlay = true }, ref) => {
+export const Dropzone = forwardRef<DropzoneRef, Props>(
+  ({ children, className, disabled, onFileSelect, overlay = true }, innerRef) => {
     const inputRef = useRef<Nullable<HTMLInputElement>>(null)
     const id = useId()
     const [dropping, setDropping] = useState(false)
 
-    useImperativeHandle(ref, () => {
+    useImperativeHandle(innerRef, () => {
       return {
         // expose click event to the parent element
         onSelectFile() {
@@ -92,7 +93,7 @@ export const Upload = forwardRef<UploadRef, Props>(
 
     return (
       <div
-        className={cn('group relative z-10 text-[0]', className)}
+        className={cn('group relative z-10 flex h-full w-full', className)}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -100,9 +101,9 @@ export const Upload = forwardRef<UploadRef, Props>(
         {children}
         <label
           className={cn(
-            'pointer-events-none invisible absolute bottom-0 left-0 right-0 top-0 z-0 h-full w-full cursor-pointer bg-dark-100 opacity-0 duration-300 group-hover:opacity-30',
+            'pointer-events-none invisible absolute bottom-0 left-0 right-0 top-0 z-0 flex h-full w-full cursor-pointer items-center justify-center rounded-[3px] bg-dark-500 opacity-0 duration-300 group-hover:opacity-100',
             overlay && 'pointer-events-auto visible cursor-pointer',
-            dropping && 'pointer-events-auto visible opacity-30'
+            dropping && 'pointer-events-auto visible opacity-100'
           )}
           htmlFor={id}
         >
@@ -116,9 +117,14 @@ export const Upload = forwardRef<UploadRef, Props>(
             ref={inputRef}
             type={'file'}
           />
+
+          <LogOutIcon
+            className={cn('h-12 w-12 -rotate-90', dropping && 'animate-pulse')}
+            viewBox={'0 0 24 24'}
+          />
         </label>
       </div>
     )
   }
 )
-Upload.displayName = 'Upload'
+Dropzone.displayName = 'Dropzone'
