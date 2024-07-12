@@ -10,6 +10,7 @@ import {
 import { ServerBadResponse } from '@/shared/api'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
+import { useClientProgress } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui'
@@ -20,13 +21,15 @@ import { useRouter } from 'next/router'
 import s from './index.module.scss'
 
 const SignUp: NextPageWithLayout = () => {
-  const [signUp] = useSignUpMutation()
+  const [signUp, { isLoading }] = useSignUpMutation()
   const [error, setError] = useState([])
   const email = useAppSelector(getEmail)
   const dispatch = useAppDispatch()
   const [open, setOpen] = useState(false)
   const locale = useRouter().locale
   const { signUpLang } = translate(locale)
+
+  useClientProgress(isLoading)
 
   const onSubmit = async ({ confirmPassword, isApproved, ...data }: SignUpFormData) => {
     try {
@@ -55,8 +58,7 @@ const SignUp: NextPageWithLayout = () => {
       <Dialog onOpenChange={setOpen} open={open} title={'Email sent'}>
         <div className={s.modalContent}>
           <div>
-            {signUpLang.aler}
-            {email}
+            {signUpLang.aler} <strong>{email}</strong>
           </div>
           <Button className={s.modalButton} onClick={() => setOpen(false)}>
             Ok
