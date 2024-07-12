@@ -22,7 +22,10 @@ export const en = {
             maxChar: 'Maximum number of characters',
             minChar: 'Minimum number of characters',
             passContain: 'Password must contain',
-            wrongUsername: 'Wrong username',
+            wrongDateOfBirth: 'dd.mm.xxxx - date format',
+            wrongFirstName: 'Wrong First Name',
+            wrongLastName: 'Wrong Last Name',
+            wrongUsername: 'Wrong username'
         },
     },
     forgoPasswordForm: {
