@@ -1,5 +1,40 @@
-.headerWrapper {
+.profileWrapper {
+  display: inline-flex;
+}
+
+.sidebar {
+  width: 220px;
+  padding-left: 60px;
+}
+
+.scrollingWrapper {
+  display: block;
+}
+
+.personalInformation {
   display: flex;
+}
+
+.userTitleWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.userTitle {
+  font: var(--font-h1);
+}
+
+.buttonPublications {
+  margin-bottom: 23px;
+}
+
+.followingBtn {
+  margin-right: 100px;
+}
+
+.followersBtn {
+  margin-right: 88px;
 }
 
 .friendsWrapper {
