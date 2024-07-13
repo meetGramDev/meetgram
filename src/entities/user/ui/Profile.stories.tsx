@@ -1,4 +1,4 @@
-import Profile from '@/entities/user/ui/Profile'
+import { Profile } from '@/entities/user/ui/Profile'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

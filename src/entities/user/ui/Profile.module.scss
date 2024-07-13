@@ -1,27 +1,45 @@
 .profileWrapper {
-  display: inline-flex;
+  display: flex;
+  justify-content: center;
+  max-width: 1280px;
 }
 
 .sidebar {
   width: 220px;
-  padding-left: 60px;
+  max-width: 220px;
 }
 
 .scrollingWrapper {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  max-width: 972px;
+  margin-left: 24px;
+}
+
+.personalData {
+  display: flex;
+  margin-bottom: 48px;
 }
 
 .personalInformation {
   display: flex;
+  flex-direction: column;
+  max-width: 730px;
+  margin-left: 38px;
 }
 
-.userTitleWrapper {
+.personalPhoto {
+  width: 204px;
+  height: 204px;
+}
+
+.personalName {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1.25rem;
 }
 
-.userTitle {
+.personalUserName {
   font: var(--font-h1);
 }
 
@@ -39,4 +57,6 @@
 
 .friendsWrapper {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }

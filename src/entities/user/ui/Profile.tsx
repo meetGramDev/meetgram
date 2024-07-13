@@ -1,11 +1,14 @@
+import SignIn from '@/pages/sign-in'
 import { Button, Photo } from '@/shared/ui'
 import { getAuthLayout } from '@/widgets/layouts'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { disableValidation } from 'schema-utils'
 
 import s from './Profile.module.scss'
 
-const Profile = () => {
+import photo from '../../../shared/assets/img/photo-preview.png'
+
+export const Profile = () => {
   const params = useSearchParams()
 
   const name = 'User Name'
@@ -15,22 +18,24 @@ const Profile = () => {
 
   return (
     <div className={s.profileWrapper}>
-      <div className={s.sidebar}>Sidebars</div>
+      <div className={s.sidebar}>
+        <div>Sidebars</div>
+      </div>
       <div className={s.scrollingWrapper}>
-        <div className={s.personalInformation}>
-          {/*<Photo alt={'userPhoto'} src={'/'} />*/}
-          <div>
-            <div className={s.userTitleWrapper}>
-              <h1 className={s.userTitle}>{name}</h1>
+        <div className={s.personalData}>
+          <Photo alt={'userPhoto'} className={s.personalPhoto} src={photo} />
+          <div className={s.personalInformation}>
+            <div className={s.personalName}>
+              <h1 className={s.personalUserName}>{name}</h1>
               <Button variant={'secondary'}>Profile Settings</Button>
             </div>
             <div className={s.buttonPublications}>
-              <Button className={s.followingBtn} variant={'text'}>
+              <Button as={Link} className={s.followingBtn} href={'/'} variant={'text'}>
                 {following}
                 <br />
                 following
               </Button>
-              <Button className={s.followersBtn} variant={'text'}>
+              <Button as={Link} className={s.followersBtn} href={'/'} variant={'text'}>
                 {followers}
                 <br />
                 followers
@@ -42,19 +47,32 @@ const Profile = () => {
               </Button>
             </div>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco{' '}
-              <Button variant={'link'}>laboris nisi ut aliquip ex ea commodo consequat.</Button>
+              <p style={{ wordBreak: 'break-word' }}>
+                {publications} Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco{' '}
+                <Button variant={'link'}>laboris nisi ut aliquip ex ea commodo consequat. </Button>
+              </p>
             </div>
           </div>
         </div>
-        <div className={s.friendsWrapper}></div>
+        <div className={s.friendsWrapper}>
+          <Photo
+            alt={'UserPhoto'}
+            height={234}
+            src={photo}
+            style={{ margin: '12px' }}
+            width={228}
+          />
+          <Photo alt={'UserPhoto'} height={234} src={photo} width={228} />
+          <Photo alt={'UserPhoto'} height={234} src={photo} width={228} />
+          <Photo alt={'UserPhoto'} height={234} src={photo} width={228} />
+          <Photo alt={'UserPhoto'} height={234} src={photo} width={228} />
+          <Photo alt={'UserPhoto'} height={234} src={photo} width={228} />
+          <Photo alt={'UserPhoto'} height={234} src={photo} width={228} />
+          <Photo alt={'UserPhoto'} height={234} src={photo} width={228} />
+        </div>
       </div>
     </div>
   )
 }
-
-Profile.getLayout = getAuthLayout
-
-export default Profile

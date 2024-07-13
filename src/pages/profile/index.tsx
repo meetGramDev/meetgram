@@ -1,9 +1,17 @@
 import { useMeQuery } from '@/entities/user'
+import { Profile } from '@/entities/user/ui/Profile'
+import { getAuthLayout } from '@/widgets/layouts'
 
-export default function Profile() {
+function ProfilePage() {
   const { data } = useMeQuery()
 
-  console.log(data)
-
-  return <div>Profile</div>
+  return (
+    <div>
+      <Profile />
+    </div>
+  )
 }
+
+ProfilePage.getLayout = getAuthLayout
+
+export default ProfilePage
