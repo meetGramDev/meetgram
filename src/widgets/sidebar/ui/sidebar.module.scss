@@ -1,51 +1,51 @@
 .border {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+
   width: 13.75rem;
+
   border: 1px solid var(--dark-color-300);
+}
 
-  & div {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-self: flex-start;
+.item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-self: flex-start;
 
-    margin-left: 3.75rem;
+  margin-left: 3.75rem;
 
-    &:first-child {
-      margin-top: 4.5rem;
-    }
+  font-size: var(--fs-s);
+  font-weight: var(--fw-500);
+  line-height: var(--lh-m);
 
-    &:last-child {
-      margin-bottom: 6.875rem;
-    }
+  &:hover {
+    color: var(--primary-color-100);
+  }
 
-    &:nth-child(2) {
-      margin-top: 3.75rem;
-      margin-bottom: 11.25rem;
-    }
+  &:active {
+    color: var(--primary-color-500);
+  }
 
-    & a:link {
-      display: flex;
-      flex-direction: row;
-      gap: 0.5rem;
+  &:focus {
+    border-radius: 2px;
+    outline: 2px solid var(--primary-color-700);
+  }
 
-      font-size: var(--fs-s);
-      font-weight: var(--fw-500);
-      line-height: var(--lh-m);
+  &:first-child {
+    margin-top: 4.5rem;
+  }
 
-      &:hover {
-        color: var(--primary-color-100);
-      }
+  &:last-child {
+    margin-bottom: 6.875rem;
+  }
 
-      &:active {
-        color: var(--primary-color-500);
-      }
+  &:nth-child(5) {
+    margin-bottom: 3.75rem;
+  }
 
-      &:focus {
-        border-radius: 2px;
-        outline: 2px solid var(--primary-color-700);
-      }
-    }
+  &:nth-child(7) {
+    margin-bottom: 11.25rem;
   }
 }
