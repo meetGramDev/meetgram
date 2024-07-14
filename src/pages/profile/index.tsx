@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useMeQuery } from '@/entities/user'
 import { UploadPhoto } from '@/features/profile/uploadUserPhoto'
 

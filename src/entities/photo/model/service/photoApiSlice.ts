@@ -4,15 +4,18 @@ import { UploadPhotoArgsType, UploadPhotoResponseType } from '../types/photoServ
 
 export const photoApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    deletePhoto: builder.mutation<{ message: string }, any>({
+    deleteProfilePhoto: builder.mutation<{ message: string }, any>({
       query: () => ({
         method: 'DELETE',
         url: '/users/profile/avatar',
       }),
     }),
-    uploadPhoto: builder.mutation<UploadPhotoResponseType, UploadPhotoArgsType>({
+    uploadProfilePhoto: builder.mutation<UploadPhotoResponseType, UploadPhotoArgsType>({
       query: body => ({
-        body,
+        body: body.file,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
         method: 'POST',
         url: '/users/profile/avatar',
       }),
@@ -20,4 +23,4 @@ export const photoApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useDeletePhotoMutation, useUploadPhotoMutation } = photoApi
+export const { useDeleteProfilePhotoMutation, useUploadProfilePhotoMutation } = photoApi

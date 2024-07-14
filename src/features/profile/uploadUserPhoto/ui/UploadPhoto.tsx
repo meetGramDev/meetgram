@@ -1,6 +1,12 @@
+/* eslint-disable no-console */
 import { useState } from 'react'
 
-import { Photo, useDeletePhotoMutation, useUploadPhotoMutation } from '@/entities/photo'
+import {
+  Photo,
+  useDeleteProfilePhotoMutation,
+  useUploadProfilePhotoMutation,
+} from '@/entities/photo'
+import { useClientProgress } from '@/shared/lib'
 import { Button, Dialog } from '@/shared/ui'
 
 import s from './UploadPhoto.module.scss'
@@ -14,44 +20,65 @@ export interface UploadedPhotoType {
 }
 
 export const UploadPhoto = () => {
-  const [upload] = useUploadPhotoMutation()
-  const [remove] = useDeletePhotoMutation()
+  const [upload, { isError, isLoading: isUploadLoading, isSuccess }] =
+    useUploadProfilePhotoMutation()
+  const [remove, { isLoading: isRemoveLoading }] = useDeleteProfilePhotoMutation()
 
   const [avatar, setAvatar] = useState<UploadedPhotoType | undefined>(undefined)
   const [open, setOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  useClientProgress(isUploadLoading || isRemoveLoading)
 
   const handleDialogClose = (open: boolean) => setOpen(open)
 
-  const handleUploadPhoto = (file: File) => {
+  const handleUploadPhoto = async (file: File) => {
     const formData = new FormData()
 
     formData.append('file', file)
 
     console.log('Click Save btn', formData.get('file'))
 
-    const reader = new FileReader()
-
+    /*     const reader = new FileReader()
+    
     reader.addEventListener('load', function () {
       const src = reader.result
 
       if (src && typeof src === 'string') {
         setAvatar(state => ({ ...state, height: 192, src, width: 192 }))
       }
-    })
+      })
+      
+      reader.readAsDataURL(file) */
+    try {
+      const resp = await upload({ file: JSON.stringify(file) }).unwrap()
 
-    reader.readAsDataURL(file)
+      // if successful
+      if (isSuccess) {
+        const avatar = resp.avatars[0]
 
-    // if error
-    // setError("Error message")
-
-    // if successful
-    setOpen(false)
+        setAvatar({ height: avatar.height, src: avatar.url, width: avatar.width })
+        setOpen(false)
+      }
+    } catch (error) {
+      console.error(error)
+      // if error
+      if (isError) {
+        setError('Error message')
+      }
+    }
   }
 
-  const handleDeletePhoto = () => {
-    // remove()
-    setAvatar(undefined)
+  const handleDeletePhoto = async () => {
+    try {
+      const resp = await remove({}).unwrap()
+
+      console.log(resp)
+
+      setAvatar(undefined)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -79,7 +106,7 @@ export const UploadPhoto = () => {
           </Button>
         }
       >
-        <UploadPhotoForm onSend={handleUploadPhoto} />
+        <UploadPhotoForm onErrorMessage={error} onSend={handleUploadPhoto} />
       </Dialog>
     </div>
   )
