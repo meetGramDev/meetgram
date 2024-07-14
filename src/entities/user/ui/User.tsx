@@ -1,34 +1,25 @@
 import { Post } from '@/entities/post'
+import { UserResponseType } from '@/entities/user'
 import { Button, Photo } from '@/shared/ui'
 import { getAuthLayout } from '@/widgets/layouts'
+import { clsx } from 'clsx'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-
-export type Avatars = {
-  createdAt: string
-  fileSize: number
-  height: number
-  url: string
-  width: number
-}
-
-export type UserType = {
-  // aboutMe: string
-  // avatars: Avatars[]
-  // city: string
-  // createdAt: string
-  // dateOfBirth: string
-  // firstName: string
-  // id: number
-  // lastName: string
-  userName: string
-}
-
-import { clsx } from 'clsx'
 
 import s from './User.module.scss'
 
 import photo from '../../../shared/assets/img/photo-preview.png'
+
+type ProfileUserType = Omit<
+  UserResponseType,
+  'city' | 'createdAt' | 'dateOfBirth' | 'firstName' | 'lastName'
+>
+
+type UserPropsType = {
+  followers?: number
+  following?: number
+  publications?: number
+} & ProfileUserType
 
 const following: number = 2218
 const followers: number = 2358
@@ -156,7 +147,7 @@ const posts = [
   },
 ]
 
-export const User = ({ userName = 'User Name' }: UserType) => {
+export const User = ({ aboutMe, avatars, userName = 'User Name' }: UserPropsType) => {
   const params = useSearchParams()
 
   const classNames = {
@@ -172,7 +163,7 @@ export const User = ({ userName = 'User Name' }: UserType) => {
       {/*</div>*/}
       <div className={s.scrollingWrapper}>
         <div className={s.userData}>
-          <Photo alt={'userPhoto'} className={s.userPhoto} src={photo} />
+          <Photo alt={'userPhoto'} className={s.userPhoto} src={avatars[0].url} />
           <div className={s.userInformation}>
             <div className={s.userName}>
               <h1 className={s.userNameTitle}>{userName}</h1>
@@ -197,12 +188,7 @@ export const User = ({ userName = 'User Name' }: UserType) => {
               </Link>
             </div>
             <div>
-              <p style={{ wordBreak: 'break-word' }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco{' '}
-                <Button variant={'link'}>laboris nisi ut aliquip ex ea commodo consequat. </Button>
-              </p>
+              <p style={{ wordBreak: 'break-word' }}>{aboutMe}</p>
             </div>
           </div>
         </div>
