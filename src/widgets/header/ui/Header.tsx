@@ -3,15 +3,9 @@ import { Notification } from '@/shared/assets/icons/Notification'
 import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui/button/button'
-import { OptionType } from '@/shared/ui/select/option'
 import { LangSwitcher } from '@/widgets/langSwitcher'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
-const languages: OptionType[] = [
-  { label: 'Russian', value: 'ru' },
-  { label: 'English', value: 'en' },
-]
 
 type Props = {
   isAuth?: boolean

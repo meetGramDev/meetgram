@@ -1,0 +1,27 @@
+@import 'src/app/styles/mixins';
+
+.header {
+  @include flex(row, space-between, center);
+
+  width: 100vw;
+  padding: 1rem;
+  border-bottom: 1px solid var(--dark-color-300);
+}
+
+.title {
+  font: var(--font-h1);
+  font-weight: var(--fw-600);
+}
+
+.controls {
+  @include flex(row, center, center, 1rem);
+}
+
+.button {
+  color: var(--light-color-100);
+  transition: 0.3s;
+
+  &:active {
+    color: var(--primary-color-500);
+  }
+}

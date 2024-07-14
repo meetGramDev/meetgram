@@ -3,7 +3,7 @@
 .card {
   @include flex(column, center, normal, 15px);
 
-  width: 380px;
+  max-width: 380px;
   padding: 24px;
 }
 
