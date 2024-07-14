@@ -1,12 +1,6 @@
-import {
-  ComponentPropsWithoutRef,
-  ElementType,
-  ForwardRefExoticComponent,
-  ReactNode,
-  forwardRef,
-} from 'react'
+import { ComponentPropsWithoutRef, ElementType, ReactNode, forwardRef } from 'react'
 
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '@/shared/types'
+import { PolymorphicRef } from '@/shared/types'
 import clsx from 'clsx'
 
 import s from './button.module.scss'
@@ -22,11 +16,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   variant?: ButtonVariant
 } & ComponentPropsWithoutRef<T>
 
-type ButtonComponent<T extends ElementType = 'button'> = ForwardRefExoticComponent<
-  PolymorphicComponentPropsWithRef<T, ButtonProps<T>>
->
-
-export const Button: ButtonComponent = forwardRef(
+export const Button = forwardRef(
   <T extends ElementType = 'button'>(props: ButtonProps<T>, forwardRef?: PolymorphicRef<T>) => {
     const { as, className, disabled = false, fullWidth, variant = 'primary', ...rest } = props
 

@@ -11,18 +11,12 @@
   min-width: 12rem;
   height: 12rem;
   background-color: var(--dark-color-500);
-
-  & img {
-    object-fit: cover;
-  }
-
-  @media screen and (min-width: '600px') {
-    min-width: 14.25rem;
-    height: 14.25rem;
-  }
 }
 
 .round {
+  overflow: hidden;
+  aspect-ratio: 1;
+  object-fit: cover;
   border-radius: 100%;
 }
 
@@ -61,10 +55,3 @@
     background-color: var(--danger-color-700);
   }
 }
-
-/* Photo dialog */
-.dialog {
-  overflow-y: auto;
-}
-
-/* ============ */

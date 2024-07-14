@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { AddProfilePhotoDialog, Photo } from '@/entities/photo'
+import { Photo } from '@/entities/photo'
 import { cn } from '@/shared/lib/cn'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
@@ -8,29 +8,22 @@ import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 import s from './UploadPhoto.module.scss'
 
 import { UploadMessage } from './UploadMessage'
+import { UploadedPhotoType } from './UploadPhoto'
 
 const MIN_DIMENSION = 192
+const PREVIEW_DIMENSION = 300
 
-type SelectedFileType = {
+interface SelectedFileType extends UploadedPhotoType {
   blob: Nullable<File>
-  height: number
-  src: string
-  width: number
 }
 
 type Props = {
   onErrorMessage?: string
   onSend: (file: File) => void
   onSuccessMessage?: string
-  uploadedPhoto?: Omit<SelectedFileType, 'blob'>
 }
 
-export const UploadPhotoForm = ({
-  onErrorMessage,
-  onSend,
-  onSuccessMessage,
-  uploadedPhoto,
-}: Props) => {
+export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Props) => {
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
   const [file, setFile] = useState<SelectedFileType>({
     blob: null,
@@ -50,12 +43,6 @@ export const UploadPhotoForm = ({
     })
     setError('')
     setSuccess('')
-  }
-
-  const handleDialogClose = (open: boolean) => {
-    if (!open) {
-      resetState()
-    }
   }
 
   const handleSelectFileClick = () => {
@@ -105,54 +92,48 @@ export const UploadPhotoForm = ({
   }
 
   return (
-    <div className={'flex h-full w-full flex-col items-center gap-6 text-center'}>
-      <AddProfilePhotoDialog onDialogClose={handleDialogClose}>
-        <div className={cn('mx-6 my-4 text-center', !file.src && 'md:mb-[4.5rem]')}>
-          {(error || onErrorMessage) && (
-            <UploadMessage message={error || onErrorMessage} type={'error'} />
-          )}
-          {(success || onSuccessMessage) && (
-            <UploadMessage message={success || onSuccessMessage} type={'success'} />
-          )}
+    <div className={cn('mx-6 my-4 text-center', !file.src && 'md:mb-[4.5rem]')}>
+      {(error || onErrorMessage) && (
+        <UploadMessage message={error || onErrorMessage} type={'error'} />
+      )}
+      {(success || onSuccessMessage) && (
+        <UploadMessage message={success || onSuccessMessage} type={'success'} />
+      )}
 
-          <div
-            className={cn(
-              'mt-6 space-y-9 md:mx-32 md:space-y-14',
-              !file.src && 'md:first:mt-[4.5rem]'
-            )}
-          >
-            {!file.src && (
-              <>
-                <Dropzone onFileSelect={handleFileSelect} ref={dropzoneRef}>
-                  <Photo type={'empty'} variant={'square'} />
-                </Dropzone>
-                <Button fullWidth onClick={handleSelectFileClick} variant={'primary'}>
-                  Select from computer
-                </Button>
-              </>
-            )}
+      <div
+        className={cn('mt-6 space-y-9 md:mx-32 md:space-y-14', !file.src && 'md:first:mt-[4.5rem]')}
+      >
+        {!file.src && (
+          <div className={'flex flex-col items-center justify-center gap-9'}>
+            <Dropzone onFileSelect={handleFileSelect} ref={dropzoneRef}>
+              <Photo type={'empty'} variant={'square'} />
+            </Dropzone>
+            <Button fullWidth onClick={handleSelectFileClick} variant={'primary'}>
+              Select from computer
+            </Button>
           </div>
+        )}
+      </div>
 
-          {file.src && !error && (
-            <div className={'space-y-9'}>
-              <Photo
-                alt={'uploaded file preview'}
-                containerClassname={s.photo}
-                height={file.height}
-                src={file.src}
-                variant={'square'}
-                width={file.width}
-              />
-
-              <div className={'flex w-full justify-end'}>
-                <Button onClick={handleSaveClick} variant={'primary'}>
-                  Save
-                </Button>
-              </div>
-            </div>
-          )}
+      {file.src && !error && (
+        <div className={'space-y-9'}>
+          <div className={'relative'}>
+            <Photo
+              alt={'uploaded file preview'}
+              containerClassname={s.photo}
+              height={PREVIEW_DIMENSION}
+              src={file.src}
+              variant={'round'}
+              width={PREVIEW_DIMENSION}
+            />
+          </div>
+          <div className={'flex w-full justify-end'}>
+            <Button onClick={handleSaveClick} variant={'primary'}>
+              Save
+            </Button>
+          </div>
         </div>
-      </AddProfilePhotoDialog>
+      )}
     </div>
   )
 }

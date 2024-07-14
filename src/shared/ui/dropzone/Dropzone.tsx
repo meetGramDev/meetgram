@@ -93,7 +93,7 @@ export const Dropzone = forwardRef<DropzoneRef, Props>(
 
     return (
       <div
-        className={cn('group relative z-10 flex h-full w-full', className)}
+        className={cn('group relative z-10 flex h-max w-max', className)}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -101,7 +101,7 @@ export const Dropzone = forwardRef<DropzoneRef, Props>(
         {children}
         <label
           className={cn(
-            'pointer-events-none invisible absolute bottom-0 left-0 right-0 top-0 z-0 flex h-full w-full cursor-pointer items-center justify-center rounded-[3px] bg-dark-500 opacity-0 duration-300 group-hover:opacity-100',
+            'pointer-events-none invisible absolute inset-0 z-0 flex h-full w-full cursor-pointer items-center justify-center rounded-[3px] bg-dark-500 opacity-0 duration-300 group-hover:opacity-100',
             overlay && 'pointer-events-auto visible cursor-pointer',
             dropping && 'pointer-events-auto visible opacity-100'
           )}
