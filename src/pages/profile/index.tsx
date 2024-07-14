@@ -1,5 +1,5 @@
 import { useMeQuery } from '@/entities/user'
-import { Profile } from '@/entities/user/ui/Profile'
+import { User } from '@/entities/user/ui/User'
 import { getAuthLayout } from '@/widgets/layouts'
 
 function ProfilePage() {
@@ -7,7 +7,7 @@ function ProfilePage() {
 
   return (
     <div>
-      <Profile />
+      <User userName={'Alex'} />
     </div>
   )
 }

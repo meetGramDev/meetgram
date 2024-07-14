@@ -1,12 +1,8 @@
-.profileWrapper {
+.userWrapper {
+  position: relative;
   display: flex;
   justify-content: center;
   max-width: 1280px;
-}
-
-.sidebar {
-  width: 220px;
-  max-width: 220px;
 }
 
 .scrollingWrapper {
@@ -16,30 +12,30 @@
   margin-left: 24px;
 }
 
-.personalData {
+.userData {
   display: flex;
   margin-bottom: 48px;
 }
 
-.personalInformation {
+.userInformation {
   display: flex;
   flex-direction: column;
   max-width: 730px;
   margin-left: 38px;
 }
 
-.personalPhoto {
+.userPhoto {
   width: 204px;
   height: 204px;
 }
 
-.personalName {
+.userName {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1.25rem;
 }
 
-.personalUserName {
+.userNameTitle {
   font: var(--font-h1);
 }
 
@@ -47,16 +43,25 @@
   margin-bottom: 23px;
 }
 
-.followingBtn {
+.userLinks {
+  display: inline-block;
+  font: var(--font-regular-link);
+
+  & span {
+    font-weight: 700;
+  }
+}
+
+.userFollowing {
   margin-right: 100px;
 }
 
-.followersBtn {
+.userFollowers {
   margin-right: 88px;
 }
 
-.friendsWrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.userFriendsWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(234px, 1fr));
+  gap: 12px;
 }
