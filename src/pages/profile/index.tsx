@@ -1,22 +1,26 @@
 import { useMeQuery, useUserProfileQuery } from '@/entities/user'
 import { User } from '@/entities/user/ui/User'
+import { useClientProgress } from '@/shared/lib'
 import { getAuthLayout } from '@/widgets/layouts'
 
 function ProfilePage() {
   const { data } = useMeQuery()
-  const { data: userData } = useUserProfileQuery()
+  const { data: userData, isLoading: isProfileLoading } = useUserProfileQuery()
 
   console.log(userData)
 
+  useClientProgress(isProfileLoading)
+
   return (
     <div>
-      {/*<User*/}
-      {/*  aboutMe={userData.aboutMe}*/}
-      {/*  avatars={userData.avatars}*/}
-      {/*  id={userData?.id}*/}
-      {/*  userName={userData.userName}*/}
-      {/*/>*/}
-      Hello, profile
+      {userData && (
+        <User
+          aboutMe={userData?.aboutMe}
+          avatars={userData?.avatars}
+          id={userData?.id}
+          userName={userData?.userName}
+        />
+      )}
     </div>
   )
 }

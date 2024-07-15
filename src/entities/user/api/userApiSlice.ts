@@ -15,8 +15,14 @@ export const userApi = baseApi.injectEndpoints({
         url: '/auth/update-tokens',
       }),
     }),
+    userFollowingAndFollowers: builder.query<any, { userName: string }>({
+      query: arg => ({
+        method: 'GET',
+        url: `/users/${arg.userName}`,
+      }),
+    }),
     userProfile: builder.query<UserResponseType, void>({
-      query: () => ({
+      query: args => ({
         method: 'GET',
         url: '/users/profile',
       }),

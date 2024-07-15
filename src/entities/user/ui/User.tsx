@@ -8,6 +8,7 @@ import { useSearchParams } from 'next/navigation'
 
 import s from './User.module.scss'
 
+import notUserPhoto from '../../../shared/assets/img/not-photo-user.jpg'
 import photo from '../../../shared/assets/img/photo-preview.png'
 
 type ProfileUserType = Omit<
@@ -16,9 +17,9 @@ type ProfileUserType = Omit<
 >
 
 type UserPropsType = {
-  followers?: number
-  following?: number
-  publications?: number
+  followers?: null | number
+  following?: null | number
+  publications?: null | number
 } & ProfileUserType
 
 const following: number = 2218
@@ -150,10 +151,12 @@ const posts = [
 export const User = ({ aboutMe, avatars, userName = 'User Name' }: UserPropsType) => {
   const params = useSearchParams()
 
+  const userPhoto = Array.isArray(avatars.length) ? avatars[0]?.url : notUserPhoto
+
   const classNames = {
     followers: clsx(s.userLinks, s.userFollowers),
     following: clsx(s.userLinks, s.userFollowing),
-    publications: clsx(s.userLinks),
+    publications: clsx(s.userLinks, s.userPublications),
   }
 
   return (
@@ -163,7 +166,7 @@ export const User = ({ aboutMe, avatars, userName = 'User Name' }: UserPropsType
       {/*</div>*/}
       <div className={s.scrollingWrapper}>
         <div className={s.userData}>
-          <Photo alt={'userPhoto'} className={s.userPhoto} src={avatars[0].url} />
+          <Photo alt={'userPhoto'} className={s.userPhoto} src={userPhoto} />
           <div className={s.userInformation}>
             <div className={s.userName}>
               <h1 className={s.userNameTitle}>{userName}</h1>
@@ -188,7 +191,7 @@ export const User = ({ aboutMe, avatars, userName = 'User Name' }: UserPropsType
               </Link>
             </div>
             <div>
-              <p style={{ wordBreak: 'break-word' }}>{aboutMe}</p>
+              <p style={{ minWidth: '100%', wordBreak: 'break-word' }}>{aboutMe}</p>
             </div>
           </div>
         </div>
