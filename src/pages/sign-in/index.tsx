@@ -4,6 +4,7 @@ import { setCredentials } from '@/entities/user'
 import { SignInFields, SignInForm, useLoginMutation } from '@/features/auth/signIn'
 import { PROFILE } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
+import { useClientProgress } from '@/shared/lib'
 import {
   NextPageWithLayout,
   isErrorWithMessage,
@@ -19,6 +20,8 @@ const SignIn: NextPageWithLayout = () => {
   const dispatch = useAppDispatch()
 
   const [error, setError] = useState('')
+
+  useClientProgress(isLoading)
 
   const handleSubmitForm = async function (data: SignInFields) {
     try {
