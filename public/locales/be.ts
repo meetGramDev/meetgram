@@ -4,13 +4,13 @@ export const be: LenType = {
     button: {
         Button: 'Кнопка',
         Link: 'Спасылка, якая выглядае як кнопка',
-    }, createNewPasswordForm: {
+    },
+    createNewPasswordForm: {
         createNewPassword: 'Стварыць новы пароль',
         newPassword: 'Новы пароль',
         passwordConfirmation: 'Пацверджанне пароля',
         passwordTerm: 'Ваш пароль павінен быць ад 6 да 20 знакаў',
-    },
-    errorsTr: {
+    }, errorsTr: {
         errorEmail: {InvalidEmail: 'Няправільны электронны адрас'},
         errorNewPassword: {
             refineMessage: 'Паролі павінны супадаць',
@@ -23,6 +23,9 @@ export const be: LenType = {
             maxChar: 'Максімальная колькасць знакаў',
             minChar: 'Мінімальная колькасць знакаў',
             passContain: 'Пароль павінен утрымліваць',
+            wrongDateOfBirth: 'dd.mm.xxxx - фармат даты',
+            wrongFirstName: 'Недапушчальнае Імя',
+            wrongLastName: 'Недапушчальная Прозвішча',
             wrongUsername: 'Няправільнае імя карыстальніка',
         },
     },
@@ -41,6 +44,16 @@ export const be: LenType = {
         signUp: 'Рэгістрацыя',
     },
     language: 'Belarus',
+    sidebarTr: {
+        create: 'Стварыць',
+        favorites: 'Абранае',
+        home: 'Галоўная',
+        logOut: 'Выйсці',
+        messenger: 'Паведамленні',
+        myProfile: 'Мой профіль',
+        search: 'Пошук',
+        statistics: 'Статыстыка',
+    },
     signInLang: {
         anAccount: 'Няма ўліковага запісу?',
         email: 'Электронная пошта',

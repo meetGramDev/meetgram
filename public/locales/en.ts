@@ -22,7 +22,10 @@ export const en = {
             maxChar: 'Maximum number of characters',
             minChar: 'Minimum number of characters',
             passContain: 'Password must contain',
-            wrongUsername: 'Wrong username',
+            wrongDateOfBirth: 'dd.mm.xxxx - date format',
+            wrongFirstName: 'Wrong First Name',
+            wrongLastName: 'Wrong Last Name',
+            wrongUsername: 'Wrong username'
         },
     },
     forgoPasswordForm: {
@@ -40,6 +43,16 @@ export const en = {
         signUp: 'Sign Up',
     },
     language: 'English',
+    sidebarTr: {
+        create: 'Create',
+        favorites: 'Favorites',
+        home: 'Home',
+        logOut: 'Log Out',
+        messenger: 'Messenger',
+        myProfile: 'My Profile',
+        search: 'Search',
+        statistics: 'Statistics',
+    },
     signInLang: {
         anAccount: "Don't have an account?",
         email: 'Email',
@@ -67,10 +80,11 @@ export const en = {
 }
 
 export type LenType = typeof en
-const {errorsTr} = en
+const {errorsTr, sidebarTr} = en
 const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 
 export type ErrorsTr = typeof errorsTr
 export type ErrorSineUp = typeof errorSignUp
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
+export type SidebarTr = typeof sidebarTr

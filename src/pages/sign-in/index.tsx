@@ -5,7 +5,7 @@ import { SignInFields, SignInForm, useLoginMutation } from '@/features/auth/sign
 import { nextSessionApi } from '@/shared/api/_next-auth'
 import { PROFILE } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
-import { StatusCode } from '@/shared/enum'
+import { useClientProgress } from '@/shared/lib'
 import {
   NextPageWithLayout,
   isErrorWithMessage,
@@ -21,6 +21,8 @@ const SignIn: NextPageWithLayout = () => {
   const router = useRouter()
 
   const [error, setError] = useState('')
+
+  useClientProgress(isLoading)
 
   const handleSubmitForm = async function (data: SignInFields) {
     try {

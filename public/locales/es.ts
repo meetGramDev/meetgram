@@ -24,6 +24,9 @@ export const es: LenType = {
             maxChar: 'Número máximo de caracteres',
             minChar: 'Número mínimo de caracteres',
             passContain: 'La contraseña debe contener',
+            wrongDateOfBirth: 'dd.mm.xxxx - formato de fecha',
+            wrongFirstName: 'Nombre incorrecto',
+            wrongLastName: 'Apellido incorrecto',
             wrongUsername: 'Nombre de usuario incorrecto',
         },
     },
@@ -36,11 +39,21 @@ export const es: LenType = {
         linkSent: 'El enlace ha sido enviado por correo electrónico.',
         sendAgain: 'Si no recibes un correo electrónico, envía el enlace nuevamente.',
         sendLink: 'Enviar Enlace'
-    }, header: {
+    },
+    header: {
         signIn: 'Iniciar sesión',
         signUp: 'Registrarse',
+    }, language: 'Spanish',
+    sidebarTr: {
+        create: 'Crear',
+        favorites: 'Favoritos',
+        home: 'Inicio',
+        logOut: 'Cerrar sesión',
+        messenger: 'Mensajes',
+        myProfile: 'Mi perfil',
+        search: 'Buscar',
+        statistics: 'Estadísticas',
     },
-    language: 'Spanish',
     signInLang: {
         anAccount: '¿No tienes una cuenta?',
         email: 'Correo electrónico',

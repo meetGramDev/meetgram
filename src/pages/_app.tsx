@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import { StoreProvider } from '@/app/lib'
 import { AuthProvider } from '@/app/providers'
 import { ErrorBoundary } from '@/app/providers/ErrorBoundary'
+import { useProgressBar } from '@/shared/lib'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
 import '@/app/styles/globals.scss'
@@ -17,6 +18,8 @@ type AppPropsWithLayout = {
 } & AppProps
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  useProgressBar()
+
   const getLayout = Component.getLayout ?? (page => page)
 
   return (
