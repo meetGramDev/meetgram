@@ -1,5 +1,6 @@
 import { RootState } from '@/app/lib'
 import { setCredentials } from '@/entities/user'
+import { nextSessionApi } from '@/shared/api/_next-auth'
 import { StatusCode } from '@/shared/enum'
 import {
   BaseQueryFn,
@@ -45,9 +46,15 @@ const baseQueryWithReAuth: BaseQueryFn<FetchArgs | string, unknown, FetchBaseQue
 
     // if user still authorize on the server
     if (resp.data) {
-      api.dispatch(setCredentials(resp.data as RefreshTokenResponseType))
-      // retry the initial query
-      resp = await baseQueryWithAuth(args, api, extraOptions)
+      const { accessToken } = resp.data as RefreshTokenResponseType
+      const messageResp = await nextSessionApi.makeSession(accessToken)
+
+      if (messageResp.status === StatusCode.Success) {
+        api.dispatch(setCredentials({ accessToken }))
+
+        // retry the initial query
+        resp = await baseQueryWithAuth(args, api, extraOptions)
+      }
     }
   } else {
     // TODO otherwise logout user and dispatch logout
