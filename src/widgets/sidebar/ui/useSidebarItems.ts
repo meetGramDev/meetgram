@@ -9,12 +9,15 @@ import { MyProfileIcon } from '@/shared/assets/icons/MyProfile'
 import { Search } from '@/shared/assets/icons/Search'
 import { StatisticsIcon } from '@/shared/assets/icons/Statistics'
 import { HOME } from '@/shared/config/router'
-
-import { SidebarTr } from '../../../../public/locales/en'
+import { translate } from '@/shared/lib/langSwitcher'
+import { useRouter } from 'next/router'
 
 type SidebarEl = { name: string; path: string; svg: typeof LogOutIcon }
 
-export function GetSidebarItems(sidebarTr: SidebarTr) {
+export function useGetSidebarItems() {
+  const { locale } = useRouter()
+  const sidebarTr = translate(locale).sidebarTr
+
   return useMemo((): SidebarEl[] => {
     return [
       { name: sidebarTr.home, path: HOME, svg: HomeIcon },

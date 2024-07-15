@@ -1,10 +1,8 @@
 import React from 'react'
 
-import { translate } from '@/shared/lib/langSwitcher'
-import { GetSidebarItems } from '@/widgets/sidebar/ui/sidebarItems'
+import { useGetSidebarItems } from '@/widgets/sidebar/ui/useSidebarItems'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import s from './sidebar.module.scss'
 
@@ -13,12 +11,11 @@ type TypeProps = {
 }
 
 export const Sidebar: React.FC = ({ className }: TypeProps) => {
-  const { locale } = useRouter()
-  const sidebarTr = translate(locale).sidebarTr
+  const items = useGetSidebarItems()
 
   return (
     <aside className={clsx(s.border, [className])}>
-      {GetSidebarItems(sidebarTr).map((el, i) => (
+      {items.map((el, i) => (
         <Link className={s.item} href={el.path} key={i} passHref>
           <el.svg />
           {el.name}
