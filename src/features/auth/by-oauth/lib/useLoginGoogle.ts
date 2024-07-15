@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { setCredentials, setProvider } from '@/entities/user'
 import { ServerBadResponse } from '@/shared/api'
+import { nextSessionApi } from '@/shared/api/_next-auth'
 import { PROFILE } from '@/shared/config/router'
 import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { CodeResponse, NonOAuthError, useGoogleLogin } from '@react-oauth/google'
@@ -36,9 +37,11 @@ export function useLoginGoogle() {
         try {
           const resp = await getDataFromResourceServer(codeResponse.code).unwrap()
 
+          await nextSessionApi.makeSession(resp.accessToken)
+
           dispatch(setCredentials({ accessToken: resp.accessToken }))
           dispatch(setProvider({ email: resp.email, provider: 'google' }))
-          router.push(PROFILE)
+          router.push(router.locale + PROFILE)
         } catch (error) {
           if (isFetchBaseQueryError(error)) {
             const errMsg =

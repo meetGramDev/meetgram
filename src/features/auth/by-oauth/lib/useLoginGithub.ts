@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { setCredentials, setProvider } from '@/entities/user'
+import { setProvider } from '@/entities/user'
+import { nextSessionApi } from '@/shared/api/_next-auth'
 import { PROFILE, SIGN_IN } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
 import { useRouter } from 'next/router'
@@ -16,26 +17,30 @@ export function useLoginGithub() {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const accessToken = params.get('accessToken')
-    const email = params.get('email')
+    const authenticate = async function () {
+      const params = new URLSearchParams(window.location.search)
+      const accessToken = params.get('accessToken')
+      const email = params.get('email')
 
-    // fix Next error: abort fetching component for some route
-    if (calledPush) {
-      return
+      // fix Next error: abort fetching component for some route
+      if (calledPush) {
+        return
+      }
+
+      if (accessToken && email) {
+        await nextSessionApi.makeSession(accessToken)
+
+        dispatch(setProvider({ email, provider: 'github' }))
+        router.push(router.locale + PROFILE)
+
+        setCalledPush(true)
+      } else {
+        router.push(SIGN_IN)
+        setCalledPush(true)
+      }
     }
 
-    if (accessToken && email) {
-      dispatch(setCredentials({ accessToken }))
-      dispatch(setProvider({ email, provider: 'github' }))
-      router.push(PROFILE)
-
-      setCalledPush(true)
-    } else {
-      router.push(SIGN_IN)
-
-      setCalledPush(true)
-    }
+    authenticate()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 }
