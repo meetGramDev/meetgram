@@ -40,11 +40,21 @@ export const es: LenType = {
         linkSent: 'El enlace ha sido enviado por correo electrónico.',
         sendAgain: 'Si no recibes un correo electrónico, envía el enlace nuevamente.',
         sendLink: 'Enviar Enlace'
-    }, header: {
+    },
+    header: {
         signIn: 'Iniciar sesión',
         signUp: 'Registrarse',
+    }, language: 'Spanish',
+    sidebarTr: {
+        create: 'Crear',
+        favorites: 'Favoritos',
+        home: 'Inicio',
+        logOut: 'Cerrar sesión',
+        messenger: 'Mensajes',
+        myProfile: 'Mi perfil',
+        search: 'Buscar',
+        statistics: 'Estadísticas',
     },
-    language: 'Spanish',
     signInLang: {
         anAccount: '¿No tienes una cuenta?',
         email: 'Correo electrónico',
