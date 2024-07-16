@@ -17,14 +17,18 @@ export type Avatars = {
   width: number
 }
 
-export type UserResponseType = {
+export type UserResponseWithPosts = {
   aboutMe: string
   avatars: Avatars[]
   city: string
-  createdAt: string
   dateOfBirth: string
   firstName: string
+  followersCount: number
+  followingCount: number
   id: number
+  isFollowedBy: boolean
+  isFollowing: boolean
   lastName: string
+  publicationsCount: number
   userName: string
 }

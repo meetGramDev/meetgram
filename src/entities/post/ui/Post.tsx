@@ -8,6 +8,6 @@ type PostType = {
   width?: number
 }
 
-export const Post = ({ alt, height, src, width }: PostType) => {
+export const Post = ({ alt, height = 228, src, width = 234 }: PostType) => {
   return <Image alt={alt} height={height} src={src} width={width} />
 }
