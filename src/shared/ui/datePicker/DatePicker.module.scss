@@ -214,6 +214,7 @@
 
   &.dateInput input:not([disabled='']) {
     color: var(--danger-color-500);
+    border-color: var(--danger-color-500);
   }
 }
 

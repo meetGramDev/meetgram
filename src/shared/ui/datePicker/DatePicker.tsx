@@ -55,6 +55,7 @@ type Props = {
   disabled?: boolean
   endDate?: Date | undefined
   error?: Nullable<string>
+  inputClassName?: boolean
   label?: string
   onEndDateChange?: (date: Date | undefined) => void
   onStartDateChange: (date: Date | undefined) => void
@@ -70,6 +71,7 @@ export const DatePicker = ({
   disabled,
   endDate,
   error,
+  inputClassName,
   label,
   onEndDateChange,
   onStartDateChange,
@@ -111,7 +113,9 @@ export const DatePicker = ({
       <ReactDatePicker
         calendarClassName={s.calendar}
         className={classes.hasError}
-        customInput={<Input className={s.dateInput} error={error} />}
+        customInput={
+          <Input className={clsx(s.dateInput, inputClassName && s.hasError)} error={error} />
+        }
         dateFormat={'dd/MM/yyyy'}
         dayClassName={(date: Date) => s.day}
         disabled={disabled}
@@ -170,6 +174,7 @@ export const DatePicker = ({
                   className={s.changeMonthsBtn}
                   disabled={prevMonthButtonDisabled}
                   onClick={decreaseMonth}
+                  type={'button'}
                   variant={'text'}
                 >
                   {'<'}
@@ -178,6 +183,7 @@ export const DatePicker = ({
                   className={s.changeMonthsBtn}
                   disabled={nextMonthButtonDisabled}
                   onClick={increaseMonth}
+                  type={'button'}
                   variant={'text'}
                 >
                   {'>'}
