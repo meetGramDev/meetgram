@@ -1,7 +1,3 @@
-export type UploadPhotoArgsType = {
-  file: string
-}
-
 export interface Avatar {
   createdAt: string
   fileSize: number

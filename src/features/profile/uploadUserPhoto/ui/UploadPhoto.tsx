@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react'
 
 import {
@@ -15,16 +14,19 @@ import { UploadPhotoForm } from './UploadPhotoForm'
 
 export interface UploadedPhotoType {
   height: number
-  src: string
+  url: string
   width: number
 }
 
-export const UploadPhoto = () => {
-  const [upload, { isError, isLoading: isUploadLoading, isSuccess }] =
-    useUploadProfilePhotoMutation()
+type Props = {
+  profileAvatar?: UploadedPhotoType
+}
+
+export const UploadPhoto = ({ profileAvatar }: Props) => {
+  const [upload, { isLoading: isUploadLoading }] = useUploadProfilePhotoMutation()
   const [remove, { isLoading: isRemoveLoading }] = useDeleteProfilePhotoMutation()
 
-  const [avatar, setAvatar] = useState<UploadedPhotoType | undefined>(undefined)
+  const [avatar, setAvatar] = useState<UploadedPhotoType | undefined>(profileAvatar)
   const [open, setOpen] = useState(false)
   const [error, setError] = useState('')
 
@@ -37,43 +39,23 @@ export const UploadPhoto = () => {
 
     formData.append('file', file)
 
-    console.log('Click Save btn', formData.get('file'))
-
-    /*     const reader = new FileReader()
-    
-    reader.addEventListener('load', function () {
-      const src = reader.result
-
-      if (src && typeof src === 'string') {
-        setAvatar(state => ({ ...state, height: 192, src, width: 192 }))
-      }
-      })
-      
-      reader.readAsDataURL(file) */
     try {
-      const resp = await upload({ file: JSON.stringify(file) }).unwrap()
+      const resp = await upload(formData).unwrap()
 
-      // if successful
-      if (isSuccess) {
-        const avatar = resp.avatars[0]
+      const avatar = resp.avatars[0]
 
-        setAvatar({ height: avatar.height, src: avatar.url, width: avatar.width })
-        setOpen(false)
-      }
+      setAvatar({ height: avatar.height, url: avatar.url, width: avatar.width })
+      setOpen(false)
     } catch (error) {
       console.error(error)
-      // if error
-      if (isError) {
-        setError('Error message')
-      }
+
+      setError('Error message')
     }
   }
 
   const handleDeletePhoto = async () => {
     try {
-      const resp = await remove({}).unwrap()
-
-      console.log(resp)
+      await remove().unwrap()
 
       setAvatar(undefined)
     } catch (error) {
@@ -90,7 +72,8 @@ export const UploadPhoto = () => {
           alt={'Avatar'}
           height={avatar?.height}
           onDelete={handleDeletePhoto}
-          src={avatar.src}
+          priority
+          src={avatar.url}
           width={avatar?.width}
         />
       )}

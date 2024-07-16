@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { cn } from '@/shared/lib/cn'
@@ -12,6 +12,7 @@ import { UploadedPhotoType } from './UploadPhoto'
 
 const MIN_DIMENSION = 192
 const PREVIEW_DIMENSION = 300
+const MAX_FILE_SIZE = 10485760 // 10 MB in bytes
 
 interface SelectedFileType extends UploadedPhotoType {
   blob: Nullable<File>
@@ -28,7 +29,7 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
   const [file, setFile] = useState<SelectedFileType>({
     blob: null,
     height: 0,
-    src: '',
+    url: '',
     width: 0,
   })
   const [error, setError] = useState(() => onErrorMessage || '')
@@ -38,7 +39,7 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
     setFile({
       blob: null,
       height: 0,
-      src: '',
+      url: '',
       width: 0,
     })
     setError('')
@@ -58,7 +59,7 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
 
     const reader = new FileReader()
 
-    reader.addEventListener('load', function (e) {
+    reader.addEventListener('load', function () {
       const resultSrc = reader.result
 
       if (resultSrc && typeof resultSrc === 'string') {
@@ -74,11 +75,15 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
 
             return
           } else {
-            setFile(state => ({ ...state, height, src: resultSrc, width }))
+            setFile(state => ({ ...state, height, url: resultSrc, width }))
           }
         })
       }
     })
+
+    if (file.size > MAX_FILE_SIZE) {
+      setError(`The image size mustn't exceed 10 MB`)
+    }
 
     reader.readAsDataURL(file)
   }
@@ -92,7 +97,7 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
   }
 
   return (
-    <div className={cn('mx-6 my-4 text-center', !file.src && 'md:mb-[4.5rem]')}>
+    <div className={cn('mx-6 my-4 text-center', !file.url && 'md:mb-[4.5rem]')}>
       {(error || onErrorMessage) && (
         <UploadMessage message={error || onErrorMessage} type={'error'} />
       )}
@@ -101,9 +106,9 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
       )}
 
       <div
-        className={cn('mt-6 space-y-9 md:mx-32 md:space-y-14', !file.src && 'md:first:mt-[4.5rem]')}
+        className={cn('mt-6 space-y-9 md:mx-32 md:space-y-14', !file.url && 'md:first:mt-[4.5rem]')}
       >
-        {!file.src && (
+        {!file.url && (
           <div className={'flex flex-col items-center justify-center gap-9'}>
             <Dropzone onFileSelect={handleFileSelect} ref={dropzoneRef}>
               <Photo type={'empty'} variant={'square'} />
@@ -115,14 +120,15 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
         )}
       </div>
 
-      {file.src && !error && (
+      {file.url && !error && (
         <div className={'space-y-9'}>
           <div className={'relative'}>
             <Photo
               alt={'uploaded file preview'}
               containerClassname={s.photo}
               height={PREVIEW_DIMENSION}
-              src={file.src}
+              priority
+              src={file.url}
               variant={'round'}
               width={PREVIEW_DIMENSION}
             />

@@ -1,1 +1,1 @@
-export { UploadPhoto } from './ui/UploadPhoto'
+export { UploadPhoto, type UploadedPhotoType } from './ui/UploadPhoto'
