@@ -4,7 +4,7 @@ export const cities = [
   { label: 'Kyiv', value: 'Kyiv' },
   { label: 'Saint Petersburg', value: 'Saint Petersburg' },
   { label: 'Antalya', value: 'Antalya' },
-  { label: 'California', value: 'California' },
+  { label: 'Sacramento', value: 'Sacramento' },
   { label: 'Odessa', value: 'Odessa' },
   { label: 'Riga', value: 'Riga' },
 ]
