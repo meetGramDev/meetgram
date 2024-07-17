@@ -13,10 +13,14 @@ type Props = {
   clearValue?: () => void
   error?: null | string
   label?: string
+  required?: boolean
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
-  ({ className, clearValue, disabled, error, id, label, type = 'text', value, ...rest }, ref) => {
+  (
+    { className, clearValue, disabled, error, id, label, required, type = 'text', value, ...rest },
+    ref
+  ) => {
     const [showPassword, setShowPassword] = useState(false)
     const [shake, setShake] = useState(false)
     const [isLongErrorMessage, setIsLongErrorMessage] = useState(false)
@@ -71,6 +75,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         {label && (
           <label className={classes.label} htmlFor={id}>
             {label}
+            {required && <span className={s.star}>*</span>}
           </label>
         )}
         <div className={s.inputWrapper}>
