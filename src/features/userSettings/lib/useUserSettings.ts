@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 
+import { Profile } from '@/pages/profile/model/services/profile.service'
 import {
   getAboutMeConstraint,
   getFirstNameConstraint,
@@ -26,17 +27,18 @@ const userSettingsSchema = getUserSettingsSchema()
 
 export type UserSettingsFormData = z.infer<typeof userSettingsSchema>
 
-export const useUserSettings = (errorsTr: ErrorsTr) => {
+export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
   const {
+    control,
     formState: { errors, isValid },
     handleSubmit,
     register,
   } = useForm<UserSettingsFormData>({
     defaultValues: {
-      aboutMe: '',
-      firstName: '',
-      lastName: '',
-      userName: '',
+      aboutMe: data.aboutMe ?? '',
+      firstName: data.firstName ?? '',
+      lastName: data.lastName ?? '',
+      userName: data.userName ?? '',
     },
 
     mode: 'onBlur',
@@ -44,6 +46,7 @@ export const useUserSettings = (errorsTr: ErrorsTr) => {
   })
 
   return {
+    control,
     errors,
     handleSubmit,
     isValid,

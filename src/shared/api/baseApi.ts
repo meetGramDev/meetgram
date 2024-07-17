@@ -18,5 +18,5 @@ export const baseApi = createApi({
   }),
   endpoints: () => ({}),
   reducerPath: 'meetGramApi',
-  tagTypes: ['login', 'auth'],
+  tagTypes: ['login', 'auth', 'profile'],
 })

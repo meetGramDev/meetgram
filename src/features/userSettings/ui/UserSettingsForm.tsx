@@ -1,21 +1,25 @@
 import React, { useState } from 'react'
+import { Controller } from 'react-hook-form'
 
+import { Profile, useGetProfileQuery } from '@/pages/profile/model/services/profile.service'
 import { PRIVACY_POLICY } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
+import { DevTool } from '@hookform/devtools'
 import { useRouter } from 'next/router'
 
 import s from './UserSettings.module.scss'
 
 import { cities, countries } from '../lib/selectValues'
-// eslint-disable-next-line import/namespace
 import { UserSettingsFormData, useUserSettings } from '../lib/useUserSettings'
 
 type Props = {
+  data: Profile
   onSubmit: (data: UserSettingsFormData) => void
 }
 
-export const UserSettingsForm = ({ onSubmit }: Props) => {
+export const UserSettingsForm = ({ data, onSubmit }: Props) => {
+  // const { data, isLoading } = useGetProfileQuery()
   const [start, setStart] = useState<Date | undefined>(new Date(0o000))
   const [text, setText] = useState('')
 
@@ -23,7 +27,10 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
 
   const { errorsTr, signUpLang } = translate(locale)
 
-  const { errors, handleSubmit, isValid, register } = useUserSettings(errorsTr)
+  const { control, errors, handleSubmit, isValid, register } = useUserSettings(
+    errorsTr,
+    data as Profile
+  )
 
   const changeEventHandler = (message: string) => {
     setText(message)
@@ -45,6 +52,7 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
 
   return (
     <div>
+      <DevTool control={control} />
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <div className={s.fields}>
           <Input
@@ -111,18 +119,12 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
             />
           </div>
         </div>
-        <TextArea
-          label={'About me'}
-          onChange={e => changeEventHandler(e as string)}
-          placeholder={'Text-area'}
-          value={text}
-        />
-      </form>
-      <div className={s.button}>
+        <TextArea label={'About me'} onChange={e => changeEventHandler(e as string)} value={text} />
         <Button disabled={!isValid || !validAge(Number(start))} type={'submit'}>
           Save changes
         </Button>
-      </div>
+      </form>
+      <div className={s.button}></div>
     </div>
   )
 }
