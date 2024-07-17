@@ -65,7 +65,7 @@ export const es: LenType = {
     },
     signUpLang: {
         IAgree: 'Estoy de acuerdo con los',
-        aler: 'Hemos enviado un enlace para confirmar tu correo electrónico a',
+        aler: 'Hemos enviado un enlace para confirmar tu correo electrónico a ',
         anAccount: '¿Tienes una cuenta?',
         and: 'y',
         email: 'Correo electrónico',
