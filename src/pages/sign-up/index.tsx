@@ -7,12 +7,12 @@ import {
   getEmail,
   useSignUpMutation,
 } from '@/features/auth/signUp'
-import { ServerBadResponse } from '@/shared/api'
+import { ServerMessagesType } from '@/shared/api'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { EMAIL_FOR_RESEND_LS_KEY } from '@/shared/const/consts'
-import { useClientProgress } from '@/shared/lib'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
-import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
+import { NextPageWithLayout, isErrorServerMessagesType } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
 import { getAuthLayout } from '@/widgets/layouts'
@@ -22,7 +22,7 @@ import s from './index.module.scss'
 
 const SignUp: NextPageWithLayout = () => {
   const [signUp, { isLoading }] = useSignUpMutation()
-  const [error, setError] = useState([])
+  const [error, setError] = useState<ServerMessagesType[]>([])
   const email = useAppSelector(getEmail)
   const dispatch = useAppDispatch()
   const [open, setOpen] = useState(false)
@@ -40,13 +40,10 @@ const SignUp: NextPageWithLayout = () => {
       }
       setOpen(true)
     } catch (error) {
-      if (isFetchBaseQueryError(error)) {
-        const errMsg =
-          'error' in error
-            ? error.error
-            : JSON.stringify((error.data as ServerBadResponse).messages)
+      const err = serverErrorHandler(error)
 
-        setError(JSON.parse(errMsg))
+      if (isErrorServerMessagesType(err)) {
+        setError(err)
       }
     }
   }
