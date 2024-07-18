@@ -118,7 +118,6 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
         error={errors.aboutMe?.message}
         label={'About me'}
         placeholder={'Text-area'}
-        required={false}
         {...register('aboutMe', {
           onChange: e => changeEventHandler(e as string),
           required: false,
