@@ -4,10 +4,10 @@ import { AuthMeResponseType, RefreshTokenResponseType, UserResponseWithPosts } f
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    fullUserProfile: builder.query<UserResponseWithPosts, { userName: string }>({
-      query: args => ({
+    fullUserProfile: builder.query<UserResponseWithPosts, string>({
+      query: userName => ({
         method: 'GET',
-        url: `/users/${args.userName}`,
+        url: `/users/${userName}`,
       }),
     }),
     me: builder.query<AuthMeResponseType, void>({

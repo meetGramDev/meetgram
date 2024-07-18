@@ -1,38 +1,19 @@
-import { useCallback } from 'react'
-
-import { useFullUserProfileQuery, useMeQuery } from '@/entities/user'
+import { useMeQuery } from '@/entities/user'
+import { SelectCurrentUserName } from '@/entities/user/model/selectors/selectCurrentUser'
 import { User } from '@/entities/user/ui/User'
-import { useClientProgress } from '@/shared/lib'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { getAuthLayout } from '@/widgets/layouts'
 
 function ProfilePage() {
   const { data } = useMeQuery()
-
-  const { data: userData, isLoading: isFollowing } = useFullUserProfileQuery({
-    userName: data !== undefined ? data?.userName : '',
-  })
+  const userName = useAppSelector(SelectCurrentUserName)
 
   const onClickHandler = () => {
     alert('Profile settings clicked')
   }
 
-  useClientProgress(isFollowing)
-
   return (
-    <div>
-      {userData && (
-        <User
-          aboutMe={userData.aboutMe}
-          avatars={userData.avatars}
-          followersCount={userData.followersCount}
-          followingCount={userData.followingCount}
-          id={userData.id}
-          onProfileSettingsClicked={onClickHandler}
-          publicationsCount={userData.publicationsCount}
-          userName={userData.userName}
-        />
-      )}
-    </div>
+    <div>{userName && <User onProfileSettingsClicked={onClickHandler} userName={userName} />}</div>
   )
 }
 

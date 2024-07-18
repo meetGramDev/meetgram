@@ -12,13 +12,7 @@ type Story = StoryObj<typeof meta>
 
 export const UserPage: Story = {
   args: {
-    aboutMe: 'Грустненько',
-    avatars: [{ createdAt: '', fileSize: 1, height: 204, url: '', width: 204 }],
-    followersCount: 10,
-    followingCount: 10,
-    id: 1,
     onProfileSettingsClicked: () => {},
-    publicationsCount: 0,
     userName: 'User',
   },
 }
