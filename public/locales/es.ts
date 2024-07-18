@@ -24,7 +24,8 @@ export const es: LenType = {
             maxChar: 'Número máximo de caracteres',
             minChar: 'Número mínimo de caracteres',
             passContain: 'La contraseña debe contener',
-            wrongDateOfBirth: 'dd.mm.xxxx - formato de fecha',
+            requiredFields: 'Por favor, complete los campos obligatorios',
+            wrongDateOfBirth: `Un usuario menor de 13 años no puede crear un perfil`,
             wrongFirstName: 'Nombre incorrecto',
             wrongLastName: 'Apellido incorrecto',
             wrongUsername: 'Nombre de usuario incorrecto',
@@ -64,7 +65,7 @@ export const es: LenType = {
     },
     signUpLang: {
         IAgree: 'Estoy de acuerdo con los',
-        aler: 'Hemos enviado un enlace para confirmar tu correo electrónico a',
+        aler: 'Hemos enviado un enlace para confirmar tu correo electrónico a ',
         anAccount: '¿Tienes una cuenta?',
         and: 'y',
         email: 'Correo electrónico',
