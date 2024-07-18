@@ -22,7 +22,8 @@ export const en = {
             maxChar: 'Maximum number of characters',
             minChar: 'Minimum number of characters',
             passContain: 'Password must contain',
-            wrongDateOfBirth: 'dd.mm.xxxx - date format',
+            requiredFields: 'Please fill in required fields',
+            wrongDateOfBirth: 'A user under 13 cannot create a profile.',
             wrongFirstName: 'Wrong First Name',
             wrongLastName: 'Wrong Last Name',
             wrongUsername: 'Wrong username'
