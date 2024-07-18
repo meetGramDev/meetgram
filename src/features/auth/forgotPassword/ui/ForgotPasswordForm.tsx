@@ -48,8 +48,6 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
     }
   }, [error, setError])
 
-  const siteKey = process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY_ID as string
-
   const onSubmitHandler = handleSubmit(data => {
     onSubmit({
       baseUrl: baseURL,
@@ -101,7 +99,7 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
           hl={'en'}
           onChange={setToken}
           ref={captchaRef}
-          sitekey={siteKey}
+          sitekey={String(process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY_ID)}
           theme={'dark'}
         />
       </div>
