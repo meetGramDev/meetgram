@@ -43,86 +43,90 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
     return dateToCompare < pastDate
   }
 
+  const isDisabled = !isValid || !validAge(Number(start))
+
   return (
-    <div>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <div className={s.fields}>
-          <Input
-            error={errors.userName?.message}
-            label={signUpLang.username}
-            required
-            {...register('userName', {
-              required: true,
-            })}
-          />
-          <Input
-            error={errors.firstName?.message}
-            label={'First Name'}
-            required
-            type={'firstName'}
-            {...register('firstName', {
-              required: true,
-            })}
-          />
-          <Input
-            error={errors.lastName?.message}
-            label={'Last Name'}
-            required
-            type={'lastName'}
-            {...register('lastName', {
-              required: true,
-            })}
-          />
-          <div>
-            <DatePicker
-              inputClassName={!validAge(Number(start))}
-              label={'Date of birth'}
-              onStartDateChange={setStart}
-              required={false}
-              startDate={start}
-            />
-            {!validAge(Number(start)) && (
-              <span className={s.errorMessage}>
-                {errorsTr.errorValidationFields.wrongDateOfBirth}
-                <a className={s.errorLink} href={PRIVACY_POLICY}>
-                  {signUpLang.privPolicy}
-                </a>
-              </span>
-            )}
-          </div>
-        </div>
-        <div className={s.select}>
-          <div>
-            <Select
-              contentClassName={s.scrollSelect}
-              label={'Select your country'}
-              options={countries}
-              placeholder={'Country'}
-              rootClassName={s.selectWidth}
-            />
-          </div>
-          <div>
-            <Select
-              contentClassName={s.scrollSelect}
-              label={'Select your city'}
-              options={cities}
-              placeholder={'City'}
-              rootClassName={s.selectWidth}
-            />
-          </div>
-        </div>
-        <TextArea
-          label={'About me'}
-          onChange={e => changeEventHandler(e as string)}
-          placeholder={'Text-area'}
-          value={text}
+    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <div className={s.fields}>
+        <Input
+          error={errors.userName?.message}
+          label={signUpLang.username}
+          required
+          {...register('userName', {
+            required: true,
+          })}
         />
-      </form>
-      <div className={s.button}>
-        <Button disabled={!isValid || !validAge(Number(start))} type={'submit'}>
-          Save changes
-        </Button>
+        <Input
+          error={errors.firstName?.message}
+          label={'First Name'}
+          required
+          type={'firstName'}
+          {...register('firstName', {
+            required: true,
+          })}
+        />
+        <Input
+          error={errors.lastName?.message}
+          label={'Last Name'}
+          required
+          type={'lastName'}
+          {...register('lastName', {
+            required: true,
+          })}
+        />
+        <div>
+          <DatePicker
+            inputClassName={!validAge(Number(start))}
+            label={'Date of birth'}
+            onStartDateChange={setStart}
+            required={false}
+            startDate={start}
+            {...register('age', { required: false })}
+          />
+          {!validAge(Number(start)) && (
+            <span className={s.errorMessage}>
+              {errorsTr.errorValidationFields.wrongDateOfBirth}
+              <a className={s.errorLink} href={PRIVACY_POLICY}>
+                {signUpLang.privPolicy}
+              </a>
+            </span>
+          )}
+        </div>
       </div>
-    </div>
+      <div className={s.select}>
+        <div>
+          <Select
+            contentClassName={s.scrollSelect}
+            label={'Select your country'}
+            options={countries}
+            placeholder={'Country'}
+            rootClassName={s.selectWidth}
+            {...register('country', { required: false })}
+          />
+        </div>
+        <div>
+          <Select
+            contentClassName={s.scrollSelect}
+            label={'Select your city'}
+            options={cities}
+            placeholder={'City'}
+            rootClassName={s.selectWidth}
+            {...register('city', { required: false })}
+          />
+        </div>
+      </div>
+      <TextArea
+        error={errors.aboutMe?.message}
+        label={'About me'}
+        onChange={e => changeEventHandler(e as string)}
+        placeholder={'Text-area'}
+        required={false}
+        value={text}
+      />
+      <hr className={s.hr}></hr>
+      <Button className={s.button} disabled={isDisabled} type={'submit'}>
+        Save changes
+      </Button>
+    </form>
   )
 }

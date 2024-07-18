@@ -1,9 +1,11 @@
 import { useForm } from 'react-hook-form'
 
 import {
+  ageConstraint,
   getAboutMeConstraint,
   getFirstNameConstraint,
   getLastNameConstraint,
+  placesConstraint,
 } from '@/shared/const/userSettingsFields'
 import { getUserNameConstraint } from '@/shared/const/validationFields'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,6 +18,9 @@ const getUserSettingsSchema = (errorTr: ErrorsTr | undefined = undefined) => {
 
   return z.object({
     aboutMe: getAboutMeConstraint(errorValidationFields),
+    age: ageConstraint(),
+    city: placesConstraint(),
+    country: placesConstraint(),
     firstName: getFirstNameConstraint(errorValidationFields),
     lastName: getLastNameConstraint(errorValidationFields),
     userName: getUserNameConstraint(errorValidationFields),
@@ -34,6 +39,9 @@ export const useUserSettings = (errorsTr: ErrorsTr) => {
   } = useForm<UserSettingsFormData>({
     defaultValues: {
       aboutMe: '',
+      age: new Date(),
+      city: '',
+      country: '',
       firstName: '',
       lastName: '',
       userName: '',
