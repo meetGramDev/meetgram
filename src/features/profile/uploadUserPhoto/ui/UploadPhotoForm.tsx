@@ -7,8 +7,8 @@ import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
 import s from './UploadPhoto.module.scss'
 
+import { UploadedPhotoType } from '../types/types'
 import { UploadMessage } from './UploadMessage'
-import { UploadedPhotoType } from './UploadPhoto'
 
 const MIN_DIMENSION = 192
 const PREVIEW_DIMENSION = 300

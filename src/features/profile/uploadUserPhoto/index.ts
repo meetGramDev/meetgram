@@ -1,1 +1,2 @@
-export { UploadPhoto, type UploadedPhotoType } from './ui/UploadPhoto'
+export type * from './types/types'
+export { UploadPhoto } from './ui/UploadPhoto'

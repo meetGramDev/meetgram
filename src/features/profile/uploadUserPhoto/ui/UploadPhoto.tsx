@@ -10,13 +10,8 @@ import { Button, Dialog } from '@/shared/ui'
 
 import s from './UploadPhoto.module.scss'
 
+import { UploadedPhotoType } from '../types/types'
 import { UploadPhotoForm } from './UploadPhotoForm'
-
-export interface UploadedPhotoType {
-  height: number
-  url: string
-  width: number
-}
 
 type Props = {
   profileAvatar?: UploadedPhotoType

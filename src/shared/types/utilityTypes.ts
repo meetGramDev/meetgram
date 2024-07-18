@@ -1,6 +1,15 @@
 import { ComponentPropsWithRef, ElementType } from 'react'
 
 /**
+ * Change type of object properties
+ * @param K - original object type
+ * @param TypeOf - desirable type
+ */
+export type DefinePropertyType<K, TypeOf> = {
+  [P in keyof K]: TypeOf
+}
+
+/**
  * Utility type to extract the `ref` prop from a polymorphic component.
  *
  * {@link} https://www.benmvp.com/blog/forwarding-refs-polymorphic-react-component-typescript/
