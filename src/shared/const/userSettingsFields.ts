@@ -37,11 +37,3 @@ export const getAboutMeConstraint = (errorValidationFields: ErrorValidationField
     .min(0, { message: `${errorValidationFields ? errorValidationFields.minChar : minChar} 0` })
     .max(200, { message: `${errorValidationFields ? errorValidationFields.maxChar : maxChar} 200` })
 }
-
-export const placesConstraint = () => {
-  return z.string()
-}
-
-export const ageConstraint = () => {
-  return z.date()
-}

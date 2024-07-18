@@ -79,7 +79,6 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
             inputClassName={!validAge(Number(start))}
             label={'Date of birth'}
             onStartDateChange={setStart}
-            required={false}
             startDate={start}
             {...register('age', { required: false })}
           />
@@ -118,10 +117,12 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
       <TextArea
         error={errors.aboutMe?.message}
         label={'About me'}
-        onChange={e => changeEventHandler(e as string)}
         placeholder={'Text-area'}
         required={false}
-        value={text}
+        {...register('aboutMe', {
+          onChange: e => changeEventHandler(e as string),
+          required: false,
+        })}
       />
       <hr className={s.hr}></hr>
       <Button className={s.button} disabled={isDisabled} type={'submit'}>

@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useId } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, useId } from 'react'
 
 import { clsx } from 'clsx'
 
@@ -9,17 +9,12 @@ type TextAreaProps = {
   error?: string
   label: string
   name?: string
-  onChange: (value: string) => void
   rows?: number
-  value: string
+  value?: string
 } & ComponentPropsWithoutRef<'textarea'>
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ disabled, error, label, onChange, rows = 3, value, ...rest }, ref) => {
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-      onChange(e.currentTarget.value)
-    }
-
+  ({ disabled, error, label, rows = 3, value, ...rest }, ref) => {
     const id = useId()
 
     const classNames = {
@@ -43,7 +38,6 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
             className={classNames.textArea}
             disabled={disabled}
             id={id}
-            onChange={onChangeHandler}
             placeholder={'Text area'}
             ref={ref}
             rows={rows}
