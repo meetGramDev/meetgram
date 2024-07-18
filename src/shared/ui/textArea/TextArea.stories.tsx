@@ -48,9 +48,10 @@ export const TextAreaWithComponent = () => {
   const [disabled, setDisabled] = useState(false)
 
   const changeEventHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    // @ts-ignore
-    setText(event)
+    setText(event.currentTarget.value)
   }
 
-  return <TextArea disabled={disabled} label={'Alter text'} onChange={e => changeEventHandler(e)} />
+  return (
+    <TextArea disabled={disabled} label={'Alter text'} onChange={changeEventHandler} value={text} />
+  )
 }

@@ -17,17 +17,12 @@ type Props = {
 
 export const UserSettingsForm = ({ onSubmit }: Props) => {
   const [start, setStart] = useState<Date | undefined>(new Date(0o000))
-  const [text, setText] = useState('')
 
   const { locale } = useRouter()
 
   const { errorsTr, signUpLang } = translate(locale)
 
   const { errors, handleSubmit, isValid, register } = useUserSettings(errorsTr)
-
-  const changeEventHandler = (message: string) => {
-    setText(message)
-  }
 
   const validAge = (date: Date | number): boolean => {
     const timeMs = typeof date === 'number' ? date : date.getTime()
@@ -80,7 +75,7 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
             label={'Date of birth'}
             onStartDateChange={setStart}
             startDate={start}
-            {...register('age', { required: false })}
+            {...register('age')}
           />
           {!validAge(Number(start)) && (
             <span className={s.errorMessage}>
@@ -100,7 +95,7 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
             options={countries}
             placeholder={'Country'}
             rootClassName={s.selectWidth}
-            {...register('country', { required: false })}
+            {...register('country')}
           />
         </div>
         <div>
@@ -110,7 +105,7 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
             options={cities}
             placeholder={'City'}
             rootClassName={s.selectWidth}
-            {...register('city', { required: false })}
+            {...register('city')}
           />
         </div>
       </div>
@@ -118,10 +113,7 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
         error={errors.aboutMe?.message}
         label={'About me'}
         placeholder={'Text-area'}
-        {...register('aboutMe', {
-          onChange: e => changeEventHandler(e as string),
-          required: false,
-        })}
+        {...register('aboutMe')}
       />
       <hr className={s.hr}></hr>
       <Button className={s.button} disabled={isDisabled} type={'submit'}>
