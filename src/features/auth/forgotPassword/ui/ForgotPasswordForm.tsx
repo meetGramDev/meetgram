@@ -32,7 +32,6 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
   const [token, setToken] = useState<null | string>(null)
 
   const captchaRef = useRef<any>()
-  // const baseURL = 'http://localhost:3000/'
 
   const { errorsTr, forgoPasswordForm } = translate(locale)
 
