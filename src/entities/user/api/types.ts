@@ -4,7 +4,3 @@ export type AuthMeResponseType = {
   userId: number
   userName: string
 }
-
-export type RefreshTokenResponseType = {
-  accessToken: string
-}

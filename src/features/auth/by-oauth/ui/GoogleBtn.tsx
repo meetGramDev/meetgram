@@ -9,7 +9,7 @@ export const GoogleBtn = () => {
 
   return (
     <Button onClick={() => handleLogin()} variant={'text'}>
-      <Image alt={'Login with google'} height={36} src={googleIcon} width={36} />
+      <Image alt={'Login with google'} height={36} priority src={googleIcon} width={36} />
     </Button>
   )
 }
