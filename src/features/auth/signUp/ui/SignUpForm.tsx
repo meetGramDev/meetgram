@@ -116,8 +116,8 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
             <Button as={Link} className={s.info} href={PRIVACY_POLICY} variant={'link'}>
               {signUpLang.privPolicy}
             </Button>
+            {isApprovedError && <div className={s.checkboxError}>{isApprovedError}</div>}{' '}
           </span>
-          {isApprovedError && <div className={s.checkboxError}>{isApprovedError}</div>}
         </div>
         <Button disabled={!isDirty || !isValid} fullWidth type={'submit'}>
           {signUpLang.signUp}

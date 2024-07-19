@@ -1,0 +1,49 @@
+@import '@/app/styles/mixins';
+
+.form {
+  @include flex(column, center, center, 1.5rem);
+
+  width: 38.54vw;
+  padding-bottom: 1.5rem;
+}
+
+.errorMessage {
+  position: absolute;
+  font-size: 14px;
+  color: var(--danger-color-500);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 38.54vw;
+}
+
+.select {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.selectWidth {
+  width: 18.64vw;
+}
+
+.errorLink {
+  text-decoration: underline;
+}
+
+.scrollSelect {
+  scroll-behavior: smooth;
+  max-height: 6.8rem;
+}
+
+.hr {
+  width: inherit;
+  border-top: 1px solid var(--dark-color-300);
+}
+
+.button {
+  align-self: flex-end;
+}
