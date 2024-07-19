@@ -7,12 +7,9 @@ import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
 import s from './UploadPhoto.module.scss'
 
+import { MAX_FILE_SIZE, MIN_DIMENSION, PREVIEW_DIMENSION } from '../const/consts'
 import { UploadedPhotoType } from '../types/types'
 import { UploadMessage } from './UploadMessage'
-
-const MIN_DIMENSION = 192
-const PREVIEW_DIMENSION = 300
-const MAX_FILE_SIZE = 10485760 // 10 MB in bytes
 
 interface SelectedFileType extends UploadedPhotoType {
   blob: Nullable<File>
