@@ -19,7 +19,7 @@ export const ConfirmEmail = () => {
         <h2 className={s.title}>{t['Congratulations!']}</h2>
         <div>{t['Your email has been confirmed']}</div>
         <Button as={Link} href={SIGN_IN}>
-          Sign In
+          {t['Sign In']}
         </Button>
       </div>
       <Image alt={'img'} className={s.img} src={SignInImg} />
