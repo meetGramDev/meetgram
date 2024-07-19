@@ -51,7 +51,7 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
     const baseURL = window.location.origin
 
     onSubmit({
-      baseUrl: `${baseURL}/`,
+      baseUrl: `${baseURL}`,
       email: data.email,
       token,
     })
