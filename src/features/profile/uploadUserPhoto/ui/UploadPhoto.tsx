@@ -79,7 +79,7 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
         open={open}
         title={'Add a Profile Photo'}
         trigger={
-          <Button fullWidth variant={'outlined'}>
+          <Button className={s.button} fullWidth variant={'outlined'}>
             Add a profile photo
           </Button>
         }
