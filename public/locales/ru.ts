@@ -1,6 +1,10 @@
 import {LenType} from './en'
 
 export const ru: LenType = {
+    "Congratulations!": "Поздравляем!",
+    "Sign In": "Войти",
+    "Sign Up": "Регистрация",
+    "Your email has been confirmed": "Ваша электронная почта подтверждена",
     button: {
         Button: 'Кнопка',
         Link: 'Ссылка, которая выглядит как кнопка',
@@ -11,6 +15,7 @@ export const ru: LenType = {
         passwordConfirmation: 'Подтверждение пароля',
         passwordTerm: 'Ваш пароль должен быть от 6 до 20 символов',
     },
+
     errorsTr: {
         errorEmail: {InvalidEmail: 'Неправильный адрес электронной почты'},
         errorNewPassword: {
@@ -40,9 +45,6 @@ export const ru: LenType = {
         linkSent: 'Ссылка была отправлена по электронной почте.',
         sendAgain: 'Если вы не получили письмо, отправьте ссылку еще раз.',
         sendLink: 'Отправить Ссылку'
-    }, header: {
-        signIn: 'Войти',
-        signUp: 'Регистрация',
     },
     language: 'Russia',
     sidebarTr: {

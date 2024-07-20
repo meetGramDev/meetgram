@@ -1,6 +1,12 @@
 import {LenType} from './en'
 
 export const es: LenType = {
+    "Congratulations!": "¡Felicidades!",
+    "Sign In": "Iniciar sesión",
+
+
+    "Sign Up": "Registrarse",
+    "Your email has been confirmed": "Tu correo electrónico ha sido confirmado",
     button: {
         Button: 'Botón',
         Link: 'Enlace que parece un botón',
@@ -11,6 +17,7 @@ export const es: LenType = {
         passwordConfirmation: 'Confirmación de contraseña',
         passwordTerm: 'Tu contraseña debe tener entre 6 y 20 caracteres',
     },
+
     errorsTr: {
         errorEmail: {InvalidEmail: 'Correo electrónico no válido'},
         errorNewPassword: {
@@ -40,10 +47,6 @@ export const es: LenType = {
         linkSent: 'El enlace ha sido enviado por correo electrónico.',
         sendAgain: 'Si no recibes un correo electrónico, envía el enlace nuevamente.',
         sendLink: 'Enviar Enlace'
-    },
-    header: {
-        signIn: 'Iniciar sesión',
-        signUp: 'Registrarse',
     }, language: 'Spanish',
     sidebarTr: {
         create: 'Crear',

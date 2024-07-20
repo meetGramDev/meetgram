@@ -1,4 +1,8 @@
 export const en = {
+    "Congratulations!": "Congratulations!",
+    "Sign In": "Sign In",
+    "Sign Up": "Sign Up",
+    "Your email has been confirmed": "Your email has been confirmed",
     button: {
         Button: 'Button',
         Link: 'Link that looks like a button',
@@ -9,6 +13,7 @@ export const en = {
         passwordConfirmation: 'Password confirmation',
         passwordTerm: 'Your password must be between 6 and 20 characters',
     },
+
     errorsTr: {
         errorEmail: {InvalidEmail: 'Invalid email'},
         errorNewPassword: {
@@ -39,10 +44,7 @@ export const en = {
         sendAgain: 'If you do not receive an email send link again.',
         sendLink: 'Send Link'
     },
-    header: {
-        signIn: 'Sign In',
-        signUp: 'Sign Up',
-    },
+    
     language: 'English',
     sidebarTr: {
         create: 'Create',

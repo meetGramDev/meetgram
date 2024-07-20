@@ -13,9 +13,7 @@ type Props = {
 }
 
 export const Header = ({ isAuth = false, notification }: Props) => {
-  const router = useRouter()
-
-  const { header } = translate(router.locale)
+  const t = translate(useRouter().locale)
 
   return (
     <header
@@ -52,10 +50,10 @@ export const Header = ({ isAuth = false, notification }: Props) => {
         {!isAuth && (
           <div className={'flex gap-6'}>
             <Button as={Link} href={SIGN_IN} variant={'link'}>
-              {header.signIn}
+              {t['Sign In']}
             </Button>
             <Button as={Link} href={SIGN_UP} variant={'primary'}>
-              {header.signUp}
+              {t['Sign Up']}
             </Button>
           </div>
         )}
