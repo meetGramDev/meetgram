@@ -8,6 +8,7 @@ import {
 import { useClientProgress } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
+import { getMainLayout } from '@/widgets/layouts/ui/MainLayout'
 
 const SettingsPage: NextPageWithLayout = () => {
   const { data, isLoading } = useGetProfileQuery()
@@ -34,12 +35,12 @@ const SettingsPage: NextPageWithLayout = () => {
   }
 
   return (
-    <div>
+    <div style={{ padding: '30px' }}>
       <UserSettingsForm data={data} onSubmit={updateProfileData} />
     </div>
   )
 }
 
-SettingsPage.getLayout = getAuthLayout
+SettingsPage.getLayout = getMainLayout
 
 export default SettingsPage
