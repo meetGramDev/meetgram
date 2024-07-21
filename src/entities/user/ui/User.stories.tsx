@@ -14,7 +14,6 @@ type Story = StoryObj<typeof meta>
 
 export const UserPage: Story = {
   args: {
-    onProfileSettingsClicked: () => {},
     userName: 'Valera',
   },
 }

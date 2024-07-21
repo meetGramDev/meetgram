@@ -9,11 +9,7 @@ const ProfilePage: NextPageWithLayout = () => {
   const { data } = useMeQuery()
   const userName = useAppSelector(SelectCurrentUserName)
 
-  return (
-    <div style={{ margin: '40px 20px' }}>
-      {userName && <User userName={userName} />}
-    </div>
-  )
+  return <div style={{ margin: '40px 20px' }}>{userName && <User userName={userName} />}</div>
 }
 
 ProfilePage.getLayout = getMainLayout
