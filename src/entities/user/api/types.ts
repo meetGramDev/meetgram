@@ -1,4 +1,4 @@
-import { Avatar } from '@/entities/photo'
+import { Avatar } from '@/shared/types'
 
 export type AuthMeResponseType = {
   email: string
