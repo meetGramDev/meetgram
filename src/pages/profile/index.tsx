@@ -3,6 +3,7 @@ import { SelectCurrentUserName } from '@/entities/user/model/selectors/selectCur
 import { User } from '@/entities/user/ui/User'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { getAuthLayout } from '@/widgets/layouts'
+import { getMainLayout } from '@/widgets/layouts/ui/MainLayout'
 
 function ProfilePage() {
   const { data } = useMeQuery()
@@ -13,10 +14,12 @@ function ProfilePage() {
   }
 
   return (
-    <div>{userName && <User onProfileSettingsClicked={onClickHandler} userName={userName} />}</div>
+    <div style={{ margin: '40px 20px' }}>
+      {userName && <User onProfileSettingsClicked={onClickHandler} userName={userName} />}
+    </div>
   )
 }
 
-ProfilePage.getLayout = getAuthLayout
+ProfilePage.getLayout = getMainLayout
 
 export default ProfilePage
