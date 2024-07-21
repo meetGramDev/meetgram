@@ -32,7 +32,6 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
   const [token, setToken] = useState<null | string>(null)
 
   const captchaRef = useRef<any>()
-  const baseURL = 'http://localhost:3000/'
 
   const { errorsTr, forgoPasswordForm } = translate(locale)
 
@@ -49,8 +48,10 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
   }, [error, setError])
 
   const onSubmitHandler = handleSubmit(data => {
+    const baseURL = window.location.origin
+
     onSubmit({
-      baseUrl: baseURL,
+      baseUrl: `${baseURL}`,
       email: data.email,
       token,
     })

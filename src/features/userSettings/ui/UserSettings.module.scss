@@ -5,7 +5,6 @@
 
   width: 38.54vw;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--dark-color-300);
 }
 
 .errorMessage {
@@ -31,12 +30,6 @@
   width: 18.64vw;
 }
 
-.button {
-  display: flex;
-  justify-content: end;
-  margin-top: 1.5rem;
-}
-
 .errorLink {
   text-decoration: underline;
 }
@@ -44,4 +37,13 @@
 .scrollSelect {
   scroll-behavior: smooth;
   max-height: 6.8rem;
+}
+
+.hr {
+  width: inherit;
+  border-top: 1px solid var(--dark-color-300);
+}
+
+.button {
+  align-self: flex-end;
 }

@@ -1,6 +1,10 @@
 import {LenType} from './en'
 
 export const uk: LenType = {
+    "Congratulations!": "Вітаємо!",
+    "Sign In": "Увійти",
+    "Sign Up": "Реєстрація",
+    "Your email has been confirmed": "Вашу електронну пошту підтверджено",
     button: {
         Button: 'Кнопка',
         Link: 'Посилання, що виглядає як кнопка',
@@ -11,6 +15,8 @@ export const uk: LenType = {
         passwordConfirmation: 'Підтвердження пароля',
         passwordTerm: 'Ваш пароль повинен бути від 6 до 20 символів',
     },
+
+
     errorsTr: {
         errorEmail: {InvalidEmail: 'Неправильна електронна адреса'},
         errorNewPassword: {
@@ -39,10 +45,8 @@ export const uk: LenType = {
         linkSent: 'Посилання було надіслано на електронну пошту.',
         sendAgain: 'Якщо ви не отримали листа, надіслати посилання ще раз',
         sendLink: 'Надіслати Посилання'
-    }, header: {
-        signIn: 'Увійти',
-        signUp: 'Реєстрація',
     },
+    
     language: 'Ukraine',
     sidebarTr: {
         create: 'Створити',
