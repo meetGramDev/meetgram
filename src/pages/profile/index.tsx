@@ -3,15 +3,19 @@ import { SelectCurrentUserName } from '@/entities/user/model/selectors/selectCur
 import { User } from '@/entities/user/ui/User'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { NextPageWithLayout } from '@/shared/types'
-import { getAuthLayout } from '@/widgets/layouts'
+import { getMainLayout } from '@/widgets/layouts/ui/MainLayout'
 
-const Profile: NextPageWithLayout = () => {
+const ProfilePage: NextPageWithLayout = () => {
   const { data } = useMeQuery()
   const userName = useAppSelector(SelectCurrentUserName)
 
-  return <div>{userName && <User userName={userName} />}</div>
+  return (
+    <div style={{ margin: '40px 20px' }}>
+      {userName && <User userName={userName} />}
+    </div>
+  )
 }
 
-Profile.getLayout = getAuthLayout
+ProfilePage.getLayout = getMainLayout
 
-export default Profile
+export default ProfilePage
