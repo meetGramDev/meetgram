@@ -9,7 +9,6 @@ import { useRouter } from 'next/router'
 import s from './UserSettings.module.scss'
 
 import { cities, countries } from '../lib/selectValues'
-// eslint-disable-next-line import/namespace
 import { UserSettingsFormData, useUserSettings } from '../lib/useUserSettings'
 
 type Props = {
@@ -81,7 +80,7 @@ export const UserSettingsForm = ({ data, onSubmit }: Props) => {
             label={'Date of birth'}
             onStartDateChange={setStart}
             startDate={start}
-            {...register('age')}
+            {...register('dateOfBirth')}
           />
           {!validAge(Number(start)) && (
             <span className={s.errorMessage}>

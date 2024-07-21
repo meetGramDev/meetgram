@@ -17,9 +17,9 @@ const getUserSettingsSchema = (errorTr: ErrorsTr | undefined = undefined) => {
 
   return z.object({
     aboutMe: getAboutMeConstraint(errorValidationFields),
-    age: z.date(),
     city: z.string(),
     country: z.string(),
+    dateOfBirth: z.string(),
     firstName: getFirstNameConstraint(errorValidationFields),
     lastName: getLastNameConstraint(errorValidationFields),
     userName: getUserNameConstraint(errorValidationFields),
@@ -39,7 +39,7 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
   } = useForm<UserSettingsFormData>({
     defaultValues: {
       aboutMe: data.aboutMe ?? '',
-      age: new Date(),
+      dateOfBirth: data.dateOfBirth ?? '',
       firstName: data.firstName ?? '',
       lastName: data.lastName ?? '',
       userName: data.userName ?? '',

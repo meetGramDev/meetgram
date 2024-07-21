@@ -16,12 +16,14 @@ const SettingsPage: NextPageWithLayout = () => {
   useClientProgress(isLoading || updateProfileLoading)
 
   const updateProfileData = async (data: UserSettingsFormData) => {
-    const filteredData = Object.fromEntries(
-      Object.entries(data).filter(([_, value]) => Boolean(value))
-    )
+    // const filteredData = Object.fromEntries(
+    //   Object.entries(data).filter(([_, value]) => Boolean(value))
+    // )
+
+    console.log(data)
 
     try {
-      await updateProfile({ ...(filteredData as UpdateProfile) }).unwrap()
+      await updateProfile({ ...data }).unwrap()
     } catch (e) {
       console.log(e)
     }
