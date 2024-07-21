@@ -1,4 +1,4 @@
-import { UserResponseWithPosts, useFullUserProfileQuery } from '@/entities/user'
+import { useFullUserProfileQuery } from '@/entities/user'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { useClientProgress } from '@/shared/lib'
 import { Button, Photo } from '@/shared/ui'
@@ -12,13 +12,6 @@ type Props = {
   onProfileSettingsClicked: () => void
   userName: string
 }
-
-// type Props = {
-//   onProfileSettingsClicked: () => void
-// } & Omit<
-//   UserResponseWithPosts,
-//   'city' | 'createdAt' | 'dateOfBirth' | 'firstName' | 'isFollowedBy' | 'isFollowing' | 'lastName'
-// >
 
 export const User = ({ onProfileSettingsClicked, userName }: Props) => {
   const { data, isLoading } = useFullUserProfileQuery(userName || skipToken)
@@ -47,18 +40,18 @@ export const User = ({ onProfileSettingsClicked, userName }: Props) => {
             </div>
             <div className={s.buttonPublications}>
               <Link className={classNames.following} href={'#'}>
-                <span>{data?.followingCount}</span>
+                <span>{data ? data.followingCount : 0}</span>
                 <br />
                 Following
               </Link>
 
               <Link className={classNames.followers} href={'#'}>
-                <span>{data?.followersCount}</span>
+                <span>{data ? data.followersCount : 0}</span>
                 <br />
                 Followers
               </Link>
               <Link className={classNames.publications} href={'#'}>
-                <span>{data?.publicationsCount}</span>
+                <span>{data ? data.publicationsCount : 0}</span>
                 <br />
                 Publications
               </Link>
