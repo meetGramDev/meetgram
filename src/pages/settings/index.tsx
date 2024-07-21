@@ -36,7 +36,7 @@ const SettingsPage: NextPageWithLayout = () => {
 
   return (
     <div style={{ padding: '30px' }}>
-      <UserSettingsForm data={data} onSubmit={updateProfileData} />
+      <UserSettingsForm onSubmit={updateProfileData} />
     </div>
   )
 }

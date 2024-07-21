@@ -12,12 +12,12 @@ import { cities, countries } from '../lib/selectValues'
 import { UserSettingsFormData, useUserSettings } from '../lib/useUserSettings'
 
 type Props = {
-  data: Profile
+  // data: Profile
   onSubmit: (data: UserSettingsFormData) => void
 }
 
-export const UserSettingsForm = ({ data, onSubmit }: Props) => {
-  // const { data, isLoading } = useGetProfileQuery()
+export const UserSettingsForm = ({ onSubmit }: Props) => {
+  const { data, isLoading } = useGetProfileQuery()
   const [start, setStart] = useState<Date | undefined>(new Date(0o000))
 
   const { locale } = useRouter()

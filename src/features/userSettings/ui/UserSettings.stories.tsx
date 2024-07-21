@@ -5,26 +5,7 @@ import { StoreDecorator } from '@/shared/config/storybook'
 import { fn } from '@storybook/test'
 
 const meta = {
-  args: {
-    data: {
-      aboutMe: '',
-      avatars: {
-        // @ts-ignore
-        createdAt: '',
-        fileSize: 25,
-        height: 25,
-        url: '',
-        width: 25,
-      },
-      city: '',
-      createdAt: '',
-      dateOfBirth: '',
-      firstName: 'John',
-      id: 1,
-      lastName: 'Doe',
-      userName: 'John Doe username',
-    },
-  },
+  args: {},
   component: UserSettingsForm,
   decorators: [StoreDecorator()],
   parameters: {
