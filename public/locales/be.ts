@@ -1,7 +1,10 @@
 import {LenType} from './en'
 
 export const be: LenType = {
-    button: {
+    "Congratulations!": "Віншуем!",
+    "Sign In": "Увайсці",
+    "Sign Up": "Рэгістрацыя",
+    "Your email has been confirmed": "Ваша электронная пошта была пацверджана", button: {
         Button: 'Кнопка',
         Link: 'Спасылка, якая выглядае як кнопка',
     },
@@ -10,7 +13,8 @@ export const be: LenType = {
         newPassword: 'Новы пароль',
         passwordConfirmation: 'Пацверджанне пароля',
         passwordTerm: 'Ваш пароль павінен быць ад 6 да 20 знакаў',
-    }, errorsTr: {
+    },
+    errorsTr: {
         errorEmail: {InvalidEmail: 'Няправільны электронны адрас'},
         errorNewPassword: {
             refineMessage: 'Паролі павінны супадаць',
@@ -39,10 +43,6 @@ export const be: LenType = {
         linkSent: 'Спасылка была адпраўлена на электронную пошту.',
         sendAgain: 'Калі вы не атрымалі электронны ліст, адпраўце спасылку яшчэ раз.',
         sendLink: 'Адправіць Спасылку'
-    },
-    header: {
-        signIn: 'Увайсці',
-        signUp: 'Рэгістрацыя',
     },
     language: 'Belarus',
     sidebarTr: {

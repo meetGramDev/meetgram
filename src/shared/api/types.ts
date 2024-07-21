@@ -8,3 +8,7 @@ export type ServerBadResponse = {
   messages: ServerMessagesType[] | any[] | string
   statusCode: number
 }
+
+export type RefreshTokenResponseType = {
+  accessToken: string
+}
