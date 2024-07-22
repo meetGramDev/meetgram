@@ -37,23 +37,34 @@ const baseQueryWithReAuth: BaseQueryFn<FetchArgs | string, unknown, FetchBaseQue
   let resp = await baseQueryWithAuth(args, api, extraOptions)
 
   if (resp.error && resp.error.status === StatusCode.Unauthorized) {
-    // try to refresh an authorization token
-    resp = await baseQuery(
-      { credentials: 'include', method: 'POST', url: '/auth/update-tokens' },
-      api,
-      extraOptions
-    )
+    try {
+      // retrieve accessToken from cookie
+      const messageResp = await nextSessionApi.getSessionToken()
 
-    // if user still authorize on the server
-    if (resp.data) {
-      const { accessToken } = resp.data as RefreshTokenResponseType
-      const messageResp = await nextSessionApi.makeSession(accessToken)
+      const { accessToken } = messageResp.data as RefreshTokenResponseType
 
-      if (messageResp.status === StatusCode.Success) {
-        api.dispatch(setCredentials({ accessToken }))
+      api.dispatch(setCredentials({ accessToken }))
 
-        // retry the initial query
-        resp = await baseQueryWithAuth(args, api, extraOptions)
+      // retry the initial query
+      resp = await baseQueryWithAuth(args, api, extraOptions)
+    } catch (e) {
+      // try to refresh an authorization token
+      resp = await baseQuery(
+        { credentials: 'include', method: 'POST', url: '/auth/update-tokens' },
+        api,
+        extraOptions
+      )
+      // if user still authorize on the server
+      if (resp.data) {
+        const { accessToken } = resp.data as RefreshTokenResponseType
+        const messageResp = await nextSessionApi.makeSession(accessToken)
+
+        if (messageResp.status === StatusCode.Success) {
+          api.dispatch(setCredentials({ accessToken }))
+
+          // retry the initial query
+          resp = await baseQueryWithAuth(args, api, extraOptions)
+        }
       }
     }
   } else {

@@ -28,6 +28,8 @@ export async function middleware(req: NextRequest) {
   if (!isAuth && !isAuthRoute) {
     return NextResponse.redirect(new URL(SIGN_IN, req.url + req.nextUrl.locale))
   }
+
+  return NextResponse.next()
 }
 
 export const config = {

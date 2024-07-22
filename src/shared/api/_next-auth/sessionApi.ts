@@ -10,8 +10,12 @@ class NextSessionApi {
     this._instance = _instance
   }
 
+  public getSessionToken() {
+    return this._instance.get('/auth/session')
+  }
+
   public makeSession(credentials: string) {
-    return this._instance.post('auth/session', { credentials })
+    return this._instance.post('/auth/session', { credentials })
   }
 }
 
