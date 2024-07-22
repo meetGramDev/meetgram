@@ -9,7 +9,7 @@ export type RefreshTokenResponseType = {
   accessToken: string
 }
 
-export type Avatars = {
+export type Avatar = {
   createdAt: string
   fileSize: number
   height: number
@@ -19,7 +19,7 @@ export type Avatars = {
 
 export type UserResponseWithPosts = {
   aboutMe: string
-  avatars: Avatars[]
+  avatars: Avatar[]
   city: string
   dateOfBirth: string
   firstName: string

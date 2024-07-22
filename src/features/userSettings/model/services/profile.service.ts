@@ -1,33 +1,6 @@
 import { baseApi } from '@/shared/api'
 
-export type Profile = {
-  aboutMe: string
-  avatars: [
-    {
-      createdAt: string
-      fileSize: number
-      height: number
-      url: string
-      width: number
-    },
-  ]
-  city: string
-  createdAt: string
-  dateOfBirth: string
-  firstName: string
-  id: number
-  lastName: string
-  userName: string
-}
-
-export type UpdateProfile = {
-  aboutMe?: string
-  city?: string
-  dateOfBirth?: string
-  firstName: string
-  lastName: string
-  userName: string
-}
+import { Profile, UpdateProfileBody } from '../types/profileService'
 
 export const profileService = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -38,7 +11,7 @@ export const profileService = baseApi.injectEndpoints({
         url: '/users/profile',
       }),
     }),
-    updateProfile: builder.mutation<Profile, UpdateProfile>({
+    updateProfile: builder.mutation<Profile, UpdateProfileBody>({
       invalidatesTags: ['profile'],
       query: body => ({
         body,
