@@ -1,12 +1,14 @@
-import { useFullUserProfileQuery } from '@/entities/user'
+import { Photo } from '@/entities/photo'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { useClientProgress } from '@/shared/lib'
-import { Button, Photo } from '@/shared/ui'
+import { Button } from '@/shared/ui'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './User.module.scss'
+
+import { useFullUserProfileQuery } from '../api/userApiSlice'
 
 type Props = {
   onProfileSettingsClicked: () => void
