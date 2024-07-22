@@ -21,6 +21,12 @@ const nextConfig = {
         permanent: true,
         source: '/',
       },
+      {
+        destination: '/auth/:slug?',
+        permanent: true,
+        source:
+          '/:slug(sign-in|sign-up|create-new-password|forgot-password|recovery|registration-confirmation)',
+      },
     ]
   },
 }
