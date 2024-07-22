@@ -8,12 +8,12 @@ export const {
   SIGN_UP,
   TERMS_OF_SERVICE,
 } = {
-  CREATE_NEW_PASSWORD: '/create-new-password',
-  FORGOT_PASSWORD: '/forgot-password',
-  HOME: '/',
+  CREATE_NEW_PASSWORD: '/auth/create-new-password',
+  FORGOT_PASSWORD: '/auth/forgot-password',
+  HOME: '/profile',
   PRIVACY_POLICY: '/privacy-policy',
   PROFILE: '/profile',
-  SIGN_IN: '/sign-in',
-  SIGN_UP: '/sign-up',
+  SIGN_IN: '/auth/sign-in',
+  SIGN_UP: '/auth/sign-up',
   TERMS_OF_SERVICE: '/terms-of-service',
 } as const
