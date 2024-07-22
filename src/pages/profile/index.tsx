@@ -1,11 +1,8 @@
-import { useMeQuery } from '@/entities/user'
-import { SelectCurrentUserName } from '@/entities/user/model/selectors/selectCurrentUser'
-import { User } from '@/entities/user/ui/User'
+import { SelectCurrentUserName, User } from '@/entities/user'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { getAuthLayout } from '@/widgets/layouts'
 
-function ProfilePage() {
-  const { data } = useMeQuery()
+function Profile() {
   const userName = useAppSelector(SelectCurrentUserName)
 
   const onClickHandler = () => {
@@ -17,6 +14,6 @@ function ProfilePage() {
   )
 }
 
-ProfilePage.getLayout = getAuthLayout
+Profile.getLayout = getAuthLayout
 
-export default ProfilePage
+export default Profile
