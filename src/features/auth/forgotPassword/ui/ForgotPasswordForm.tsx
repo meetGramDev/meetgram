@@ -47,6 +47,11 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
     }
   }, [error, setError])
 
+  useEffect(() => {
+    captchaRef?.current?.reset()
+    debugger
+  }, [locale])
+
   const onSubmitHandler = handleSubmit(data => {
     const baseURL = window.location.origin
 
@@ -97,7 +102,7 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
 
       <div className={s.captcha}>
         <ReCAPTCHA
-          hl={'en'}
+          hl={locale}
           onChange={setToken}
           ref={captchaRef}
           sitekey={String(process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY_ID)}
