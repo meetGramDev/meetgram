@@ -97,7 +97,8 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
 
       <div className={s.captcha}>
         <ReCAPTCHA
-          hl={'en'}
+          hl={locale}
+          key={locale}
           onChange={setToken}
           ref={captchaRef}
           sitekey={String(process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY_ID)}
