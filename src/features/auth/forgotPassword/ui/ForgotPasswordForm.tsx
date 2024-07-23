@@ -47,11 +47,6 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
     }
   }, [error, setError])
 
-  useEffect(() => {
-    captchaRef?.current?.reset()
-    debugger
-  }, [locale])
-
   const onSubmitHandler = handleSubmit(data => {
     const baseURL = window.location.origin
 
