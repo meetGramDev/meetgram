@@ -18,7 +18,7 @@ type Props = {
 export const User = ({ onProfileSettingsClicked, userName }: Props) => {
   const { data, isLoading } = useFullUserProfileQuery(userName || skipToken)
 
-  const userPhoto = data?.avatars?.length ? data?.avatars[0]?.url : notUserPhoto
+  const userPhoto = data?.avatars.length ? data.avatars[0] : notUserPhoto
 
   const classNames = {
     followers: clsx(s.userLinks, s.userFollowers),
@@ -32,7 +32,17 @@ export const User = ({ onProfileSettingsClicked, userName }: Props) => {
     <div className={s.userWrapper}>
       <div className={s.scrollingWrapper}>
         <div className={s.userData}>
-          <Photo alt={'userPhoto'} className={s.userPhoto} src={userPhoto} />
+          <Photo
+            className={s.userPhoto}
+            {...('url' in userPhoto
+              ? {
+                  alt: 'user photo',
+                  height: userPhoto.height,
+                  src: userPhoto.url,
+                  width: userPhoto.width,
+                }
+              : { alt: 'blank avatar', src: userPhoto })}
+          />
           <div className={s.userInformation}>
             <div className={s.userName}>
               <h1 className={s.userNameTitle}>{userName}</h1>

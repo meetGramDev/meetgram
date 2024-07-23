@@ -18,8 +18,7 @@ export const ResendEmail = () => {
   const [open, setOpen] = useState(false)
   const [isDisabled, setIsDisabled] = useState(false)
   const [userEmail, setUserEmail] = useState('')
-  const locale = useRouter().locale
-  const { signUpLang } = translate(locale)
+  const tr = translate(useRouter().locale)
 
   const resetVerificationLink = async () => {
     let email
@@ -47,27 +46,31 @@ export const ResendEmail = () => {
   return (
     <div className={s.root}>
       <div className={s.textWrapper}>
-        <h2 className={s.title}>Email verification link expired</h2>
+        <h2>{tr['Email verification link expired']}</h2>
         <div>
-          Looks like the verification link has expired. Not to worry, we can send the link again
+          {
+            tr[
+              'Looks like the verification link has expired. Not to worry, we can send the link again'
+            ]
+          }
         </div>
       </div>
       <Dialog
         onOpenChange={setOpen}
         open={open}
-        title={'Email sent'}
+        title={tr['Email sent']}
         trigger={
           <Button disabled={isDisabled} onClick={resetVerificationLink}>
-            Resend verification link
+            {tr['Resend verification link']}
           </Button>
         }
       >
         <div className={s.modalContent}>
           <span>
-            {signUpLang.aler} <span>{userEmail}</span>
+            {tr['We have sent a link to confirm your email to']} <span>{userEmail}</span>
           </span>
           <Button className={s.button} onClick={closeHandler}>
-            Ok
+            {tr['Ok']}
           </Button>
         </div>
       </Dialog>
