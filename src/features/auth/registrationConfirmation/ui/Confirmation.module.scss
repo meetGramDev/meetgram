@@ -18,9 +18,7 @@
   & :nth-child(2) {
     text-indent: 0.32rem;
   }
-
 }
-
 
 .modalContent {
   @include flex(column, center, center, 1rem);
@@ -33,4 +31,3 @@
   align-self: flex-end;
   width: 6rem;
 }
-
