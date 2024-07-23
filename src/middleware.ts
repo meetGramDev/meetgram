@@ -26,6 +26,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - page redirected from github OAuth
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|github).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|github|terms-of-service|privacy-policy).*)',
   ],
 }
