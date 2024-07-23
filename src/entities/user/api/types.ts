@@ -1,4 +1,4 @@
-import { Avatar } from '@/shared/types'
+import type { Avatar } from '@/shared/types'
 
 export type AuthMeResponseType = {
   email: string
@@ -19,17 +19,9 @@ export interface UserProfileResponseType {
   userName: string
 }
 
-export type Avatars = {
-  createdAt: string
-  fileSize: number
-  height: number
-  url: string
-  width: number
-}
-
 export type UserResponseWithPosts = {
   aboutMe: string
-  avatars: Avatars[]
+  avatars: Avatar[]
   city: string
   dateOfBirth: string
   firstName: string
