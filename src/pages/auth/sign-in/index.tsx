@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { setCredentials } from '@/entities/user'
+import { setCredentials, useLazyMeQuery } from '@/entities/user'
 import { SignInFields, SignInForm, useLoginMutation } from '@/features/auth/signIn'
 import { nextSessionApi } from '@/shared/api/_next-auth'
 import { PROFILE } from '@/shared/config/router'

@@ -12,6 +12,7 @@ const initialState = {
     userId: null as Nullable<number>,
     userName: '',
   },
+  isAuth: false,
   providers: {
     github: null as Nullable<string>,
     google: null as Nullable<string>,
@@ -20,9 +21,14 @@ const initialState = {
 
 export const userSlice = createSlice({
   extraReducers: builder => {
-    builder.addMatcher(userApi.endpoints.me.matchFulfilled, (state, { payload }) => {
-      state.accountData = payload
-    })
+    builder
+      .addMatcher(userApi.endpoints.me.matchFulfilled, (state, { payload }) => {
+        state.accountData = payload
+        state.isAuth = true
+      })
+      .addMatcher(userApi.endpoints.me.matchRejected, (state, {}) => {
+        state.isAuth = false
+      })
   },
   initialState,
   name: 'user',
