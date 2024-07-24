@@ -5,13 +5,7 @@ import { getAuthLayout } from '@/widgets/layouts'
 function Profile() {
   const userName = useAppSelector(SelectCurrentUserName)
 
-  const onClickHandler = () => {
-    alert('Profile settings clicked')
-  }
-
-  return (
-    <div>{userName && <User onProfileSettingsClicked={onClickHandler} userName={userName} />}</div>
-  )
+  return <div>{userName && <User userName={userName} />}</div>
 }
 
 Profile.getLayout = getAuthLayout

@@ -1,5 +1,6 @@
 import { Photo } from '@/entities/photo'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
+import { PROFILE_SETTINGS } from '@/shared/config/router'
 import { useClientProgress } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import { skipToken } from '@reduxjs/toolkit/query'
@@ -11,7 +12,7 @@ import s from './User.module.scss'
 import { useFullUserProfileQuery } from '../api/userApiSlice'
 
 type Props = {
-  onProfileSettingsClicked: () => void
+  onProfileSettingsClicked?: () => void
   userName: string
 }
 
@@ -46,7 +47,12 @@ export const User = ({ onProfileSettingsClicked, userName }: Props) => {
           <div className={s.userInformation}>
             <div className={s.userName}>
               <h1 className={s.userNameTitle}>{userName}</h1>
-              <Button onClick={onProfileSettingsClicked} variant={'secondary'}>
+              <Button
+                as={Link}
+                href={PROFILE_SETTINGS}
+                onClick={onProfileSettingsClicked}
+                variant={'secondary'}
+              >
                 Profile Settings
               </Button>
             </div>
