@@ -1,22 +1,25 @@
-import { useFullUserProfileQuery } from '@/entities/user'
+import { Photo } from '@/entities/photo'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
-import { SETTINGS } from '@/shared/config/router'
+import { PROFILE_SETTINGS } from '@/shared/config/router'
 import { useClientProgress } from '@/shared/lib'
-import { Button, Photo } from '@/shared/ui'
+import { Button } from '@/shared/ui'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './User.module.scss'
 
+import { useFullUserProfileQuery } from '../api/userApiSlice'
+
 type Props = {
+  // onProfileSettingsClicked?: () => void
   userName: string
 }
 
 export const User = ({ userName }: Props) => {
   const { data, isLoading } = useFullUserProfileQuery(userName || skipToken)
 
-  const userPhoto = data?.avatars?.length ? data?.avatars[0]?.url : notUserPhoto
+  const userPhoto = data?.avatars.length ? data.avatars[0] : notUserPhoto
 
   const classNames = {
     followers: clsx(s.userLinks, s.userFollowers),
@@ -30,11 +33,26 @@ export const User = ({ userName }: Props) => {
     <div className={s.userWrapper}>
       <div className={s.scrollingWrapper}>
         <div className={s.userData}>
-          <Photo alt={'userPhoto'} className={s.userPhoto} src={userPhoto} />
+          <Photo
+            className={s.userPhoto}
+            {...('url' in userPhoto
+              ? {
+                  alt: 'user photo',
+                  height: userPhoto.height,
+                  src: userPhoto.url,
+                  width: userPhoto.width,
+                }
+              : { alt: 'blank avatar', src: userPhoto })}
+          />
           <div className={s.userInformation}>
             <div className={s.userName}>
               <h1 className={s.userNameTitle}>{userName}</h1>
-              <Button as={Link} href={SETTINGS} variant={'secondary'}>
+              <Button
+                as={Link}
+                href={PROFILE_SETTINGS}
+                // onClick={onProfileSettingsClicked}
+                variant={'secondary'}
+              >
                 Profile Settings
               </Button>
             </div>

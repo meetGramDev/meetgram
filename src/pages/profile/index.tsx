@@ -1,17 +1,23 @@
-import { useMeQuery } from '@/entities/user'
-import { SelectCurrentUserName } from '@/entities/user/model/selectors/selectCurrentUser'
-import { User } from '@/entities/user/ui/User'
+import { User, selectCurrentUserName } from '@/entities/user'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { NextPageWithLayout } from '@/shared/types'
 import { getMainLayout } from '@/widgets/layouts/ui/MainLayout'
 
-const ProfilePage: NextPageWithLayout = () => {
-  const { data } = useMeQuery()
-  const userName = useAppSelector(SelectCurrentUserName)
+import s from './index.module.scss'
 
-  return <div style={{ margin: '40px 20px' }}>{userName && <User userName={userName} />}</div>
+function Profile() {
+  const userName = useAppSelector(selectCurrentUserName)
+
+  const onClickHandler = () => {
+    alert('Profile settings clicked')
+  }
+
+  return (
+    <div className={s.root}>
+      {userName && <User onProfileSettingsClicked={onClickHandler} userName={userName} />}
+    </div>
+  )
 }
 
-ProfilePage.getLayout = getMainLayout
+Profile.getLayout = getMainLayout
 
-export default ProfilePage
+export default Profile

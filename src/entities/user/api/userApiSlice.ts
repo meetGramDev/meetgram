@@ -1,6 +1,6 @@
-import { baseApi } from '@/shared/api'
+import type { AuthMeResponseType, UserProfileResponseType, UserResponseWithPosts } from './types'
 
-import { AuthMeResponseType, RefreshTokenResponseType, UserResponseWithPosts } from './types'
+import { baseApi } from '@/shared/api'
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -10,19 +10,27 @@ export const userApi = baseApi.injectEndpoints({
         url: `/users/${userName}`,
       }),
     }),
+    getUserProfile: builder.query<UserProfileResponseType, void>({
+      query: () => ({
+        url: '/users/profile',
+      }),
+    }),
     me: builder.query<AuthMeResponseType, void>({
       query: () => ({
         url: '/auth/me',
       }),
     }),
-    refreshToken: builder.mutation<RefreshTokenResponseType, void>({
-      query: () => ({
-        method: 'POST',
-        url: '/auth/update-tokens',
-      }),
-    }),
   }),
 })
 
-export const { useFullUserProfileQuery, useLazyMeQuery, useMeQuery, useRefreshTokenMutation } =
-  userApi
+// Export hooks for usage in functional components
+export const {
+  useFullUserProfileQuery,
+  useGetUserProfileQuery,
+  useLazyMeQuery,
+  useMeQuery,
+  util: { getRunningQueriesThunk },
+} = userApi
+
+// export endpoints for use in SSR
+export const { getUserProfile } = userApi.endpoints

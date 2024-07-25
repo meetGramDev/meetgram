@@ -63,8 +63,8 @@ export const LogOut = ({ disabled, email }: Props) => {
     >
       <div className={s.logOutContent}>
         <span className={s.contentText}>
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          Are you really want to log out of your account "<span className={s.email}>{email}</span>"?
+          Are you really want to log out of your account &quot;
+          <span className={s.email}>{email}</span>&quot;?
         </span>
         <div className={s.contentButtons}>
           <Button className={s.buttonWidth} onClick={handleLogOut} variant={'outlined'}>

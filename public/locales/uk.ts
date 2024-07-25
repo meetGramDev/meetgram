@@ -2,8 +2,14 @@ import {LenType} from './en'
 
 export const uk: LenType = {
     "Congratulations!": "Вітаємо!",
+    "Email sent": "Лист відправлено",
+    "Email verification link expired": "Термін дії посилання завершився",
+    "Looks like the verification link has expired. Not to worry, we can send the link again": "Схоже, що термін дії посилання для підтвердження завершився. Не хвилюйтеся, ми можемо надіслати посилання знову",
+    "Ok": "Гаразд",
+    "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
+    "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
     "Your email has been confirmed": "Вашу електронну пошту підтверджено",
     button: {
         Button: 'Кнопка',
@@ -15,7 +21,6 @@ export const uk: LenType = {
         passwordConfirmation: 'Підтвердження пароля',
         passwordTerm: 'Ваш пароль повинен бути від 6 до 20 символів',
     },
-
 
     errorsTr: {
         errorEmail: {InvalidEmail: 'Неправильна електронна адреса'},
@@ -46,7 +51,7 @@ export const uk: LenType = {
         sendAgain: 'Якщо ви не отримали листа, надіслати посилання ще раз',
         sendLink: 'Надіслати Посилання'
     },
-    
+
     language: 'Ukraine',
     sidebarTr: {
         create: 'Створити',

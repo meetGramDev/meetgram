@@ -1,3 +1,5 @@
+import type { Avatar } from '@/shared/types'
+
 export type AuthMeResponseType = {
   email: string
   isBlocked: boolean
@@ -5,21 +7,21 @@ export type AuthMeResponseType = {
   userName: string
 }
 
-export type RefreshTokenResponseType = {
-  accessToken: string
-}
-
-export type Avatars = {
+export interface UserProfileResponseType {
+  aboutMe: string
+  avatars: Avatar[]
+  city: string
   createdAt: string
-  fileSize: number
-  height: number
-  url: string
-  width: number
+  dateOfBirth: string
+  firstName: string
+  id: number
+  lastName: string
+  userName: string
 }
 
 export type UserResponseWithPosts = {
   aboutMe: string
-  avatars: Avatars[]
+  avatars: Avatar[]
   city: string
   dateOfBirth: string
   firstName: string
