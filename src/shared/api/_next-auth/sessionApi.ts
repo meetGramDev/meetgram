@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios'
 
 const nextSessionInstance = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: process.env.NEXT_API_BASE_URL,
   withCredentials: true,
 })
 
