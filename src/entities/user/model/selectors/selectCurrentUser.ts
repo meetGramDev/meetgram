@@ -1,6 +1,6 @@
 import { RootState } from '@/app/lib'
 
-export const SelectCurrentUser = (state: RootState) => state.user.accountData
-export const SelectCurrentUserName = (state: RootState) => state.user.accountData.userName
-export const SelectIsUserAuth = (state: RootState) => state.user.isAuth
-export const SelectCurrentUserEmail = (state: RootState) => state.user.accountData.email
+export const selectCurrentUser = (state: RootState) => state.user.accountData
+export const selectCurrentUserName = (state: RootState) => state.user.accountData.userName
+export const selectIsUserAuth = (state: RootState) => state.user.isAuth
+export const selectCurrentUserEmail = (state: RootState) => state.user.accountData.email
