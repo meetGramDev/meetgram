@@ -1,13 +1,23 @@
-import { SelectCurrentUserName, User } from '@/entities/user'
+import { User, selectCurrentUserName } from '@/entities/user'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { getAuthLayout } from '@/widgets/layouts'
+import { getMainLayout } from '@/widgets/layouts/ui/MainLayout'
+
+import s from './index.module.scss'
 
 function Profile() {
-  const userName = useAppSelector(SelectCurrentUserName)
+  const userName = useAppSelector(selectCurrentUserName)
 
-  return <div>{userName && <User userName={userName} />}</div>
+  const onClickHandler = () => {
+    alert('Profile settings clicked')
+  }
+
+  return (
+    <div className={s.root}>
+      {userName && <User onProfileSettingsClicked={onClickHandler} userName={userName} />}
+    </div>
+  )
 }
 
-Profile.getLayout = getAuthLayout
+Profile.getLayout = getMainLayout
 
 export default Profile

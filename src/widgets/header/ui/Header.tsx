@@ -1,4 +1,4 @@
-import { SelectCurrentUserEmail } from '@/entities/user'
+import { selectCurrentUserEmail } from '@/entities/user'
 import { LogOut } from '@/features/auth/logOut'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
@@ -16,7 +16,7 @@ type Props = {
 
 export const Header = ({ isAuth = false, notification }: Props) => {
   const t = translate(useRouter().locale)
-  const email = useAppSelector(SelectCurrentUserEmail)
+  const email = useAppSelector(selectCurrentUserEmail)
 
   return (
     <header
