@@ -1,13 +1,11 @@
-import { UserSettingsForm } from '@/features/userSettings'
-import { UserSettingsFormData } from '@/features/userSettings/lib/useUserSettings'
 import {
-  UpdateProfile,
+  UserSettingsForm,
+  UserSettingsFormData,
   useGetProfileQuery,
   useUpdateProfileMutation,
-} from '@/pages/profile/model/services/profile.service'
+} from '@/features/userSettings'
 import { useClientProgress } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
-import { getAuthLayout } from '@/widgets/layouts'
 import { getMainLayout } from '@/widgets/layouts/ui/MainLayout'
 
 const SettingsPage: NextPageWithLayout = () => {

@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-import { Profile, useGetProfileQuery } from '@/pages/profile/model/services/profile.service'
 import { PRIVACY_POLICY } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
@@ -10,6 +9,8 @@ import s from './UserSettings.module.scss'
 
 import { cities, countries } from '../lib/selectValues'
 import { UserSettingsFormData, useUserSettings } from '../lib/useUserSettings'
+import { useGetProfileQuery } from '../model/services/profile.service'
+import { Profile } from '../model/types/profileService'
 
 type Props = {
   // data: Profile
@@ -85,6 +86,7 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
           {!validAge(Number(start)) && (
             <span className={s.errorMessage}>
               {errorsTr.errorValidationFields.wrongDateOfBirth}
+              &nbsp;
               <a className={s.errorLink} href={PRIVACY_POLICY}>
                 {signUpLang.privPolicy}
               </a>

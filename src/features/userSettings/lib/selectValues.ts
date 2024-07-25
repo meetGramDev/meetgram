@@ -1,6 +1,6 @@
 export const cities = [
   { label: 'Minsk', value: 'Minsk' },
-  { label: 'Moskow', value: 'Moskow' },
+  { label: 'Moscow', value: 'Moscow' },
   { label: 'Kyiv', value: 'Kyiv' },
   { label: 'Saint Petersburg', value: 'Saint Petersburg' },
   { label: 'Antalya', value: 'Antalya' },
