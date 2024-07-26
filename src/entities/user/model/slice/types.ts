@@ -8,8 +8,3 @@ export type SetUserData = {
   userId: number
   userName: string
 }
-
-export type SetProviderPayload = {
-  email: string
-  provider: 'github' | 'google'
-}

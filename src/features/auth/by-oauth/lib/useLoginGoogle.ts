@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 
-import { setCredentials, setProvider } from '@/entities/user'
 import { ServerBadResponse } from '@/shared/api'
-import { nextSessionApi } from '@/shared/api/_next-auth'
 import { PROFILE } from '@/shared/config/router'
 import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { CodeResponse, NonOAuthError, useGoogleLogin } from '@react-oauth/google'
@@ -18,9 +15,8 @@ import { generateCryptoRandomState } from './generateCryptoRandomState'
  */
 export function useLoginGoogle() {
   const [state, setState] = useState('')
-  const [getDataFromResourceServer] = useGoogleLoginMutation()
+  const [googleLogin] = useGoogleLoginMutation()
   const router = useRouter()
-  const dispatch = useDispatch()
 
   const login = useGoogleLogin({
     flow: 'auth-code',
@@ -35,13 +31,9 @@ export function useLoginGoogle() {
       if (state === codeResponse.state) {
         setState('')
         try {
-          const resp = await getDataFromResourceServer(codeResponse.code).unwrap()
+          await googleLogin(codeResponse.code).unwrap()
 
-          await nextSessionApi.makeSession(resp.accessToken)
-
-          dispatch(setCredentials({ accessToken: resp.accessToken }))
-          dispatch(setProvider({ email: resp.email, provider: 'google' }))
-          router.push(router.locale + PROFILE)
+          router.push(PROFILE, undefined, { locale: router.locale })
         } catch (error) {
           if (isFetchBaseQueryError(error)) {
             const errMsg =

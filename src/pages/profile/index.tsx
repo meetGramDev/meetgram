@@ -7,15 +7,7 @@ import s from './index.module.scss'
 function Profile() {
   const userName = useAppSelector(selectCurrentUserName)
 
-  const onClickHandler = () => {
-    alert('Profile settings clicked')
-  }
-
-  return (
-    <div className={s.root}>
-      {userName && <User onProfileSettingsClicked={onClickHandler} userName={userName} />}
-    </div>
-  )
+  return <div className={s.root}>{userName && <User userName={userName} />}</div>
 }
 
 Profile.getLayout = getMainLayout
