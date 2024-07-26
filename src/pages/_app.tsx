@@ -2,6 +2,7 @@ import type { NextPageWithLayout } from '@/shared/types'
 import type { AppProps } from 'next/app'
 
 import { StoreProvider } from '@/app/lib'
+import { AuthProvider } from '@/app/providers'
 import { ErrorBoundary } from '@/app/providers/ErrorBoundary'
 import { useProgressBar } from '@/shared/lib'
 import { ToastWrapper } from '@/shared/ui'
@@ -24,11 +25,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <StoreProvider>
-      <ToastWrapper>
-        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
-          <ErrorBoundary>{getLayout(<Component {...pageProps} />)}</ErrorBoundary>
-        </GoogleOAuthProvider>
-      </ToastWrapper>
+      <AuthProvider>
+        <ToastWrapper>
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
+            <ErrorBoundary>{getLayout(<Component {...pageProps} />)}</ErrorBoundary>
+          </GoogleOAuthProvider>
+        </ToastWrapper>
+      </AuthProvider>
     </StoreProvider>
   )
 }

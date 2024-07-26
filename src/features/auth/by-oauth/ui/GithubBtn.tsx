@@ -9,7 +9,7 @@ export const GithubBtn = () => {
 
   return (
     <Button onClick={handleLogin} variant={'text'}>
-      <Image alt={'Login with github'} height={36} src={githubIcon} width={36} />
+      <Image alt={'Login with github'} height={36} priority src={githubIcon} width={36} />
     </Button>
   )
 }

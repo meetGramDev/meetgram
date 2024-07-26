@@ -1,10 +1,8 @@
 import { useState } from 'react'
 
-import { setCredentials } from '@/entities/user'
 import { SignInFields, SignInForm, useLoginMutation } from '@/features/auth/signIn'
 import { ServerMessagesType } from '@/shared/api'
 import { PROFILE } from '@/shared/config/router'
-import { useAppDispatch } from '@/shared/config/storeHooks'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
@@ -13,7 +11,6 @@ import { useRouter } from 'next/router'
 const SignIn: NextPageWithLayout = () => {
   const [login, { isLoading }] = useLoginMutation()
   const router = useRouter()
-  const dispatch = useAppDispatch()
 
   const [error, setError] = useState<ServerMessagesType[] | string>('')
 
@@ -23,11 +20,9 @@ const SignIn: NextPageWithLayout = () => {
     try {
       setError('')
 
-      const accessToken = await login(data).unwrap()
+      await login(data).unwrap()
 
-      dispatch(setCredentials(accessToken))
-
-      router.push(PROFILE)
+      router.push(PROFILE, undefined, { locale: router.locale })
     } catch (error) {
       const err = serverErrorHandler(error)
 

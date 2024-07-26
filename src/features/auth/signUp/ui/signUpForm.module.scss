@@ -39,7 +39,7 @@
 }
 
 .infoWrapperWithError {
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
 
 .info {
@@ -53,7 +53,9 @@
 
 .checkboxError {
   position: absolute;
-  bottom: -28px;
+
+  /* bottom: -28px; */
+  bottom: -36px;
   left: 0;
 
   font-size: 14px;

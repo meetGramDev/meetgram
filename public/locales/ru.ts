@@ -1,6 +1,16 @@
 import {LenType} from './en'
 
 export const ru: LenType = {
+    "Congratulations!": "Поздравляем!",
+    "Email sent": "Письмо отправлено",
+    "Email verification link expired": "Срок действия ссылки истек",
+    "Looks like the verification link has expired. Not to worry, we can send the link again": "Похоже, что ссылка для подтверждения истекла. Не волнуйтесь, мы можем отправить ссылку снова",
+    "Ok": "Хорошо",
+    "Resend verification link": "Отправить ссылку для подтверждения еще раз",
+    "Sign In": "Войти",
+    "Sign Up": "Регистрация",
+    "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",
+    "Your email has been confirmed": "Ваша электронная почта подтверждена",
     button: {
         Button: 'Кнопка',
         Link: 'Ссылка, которая выглядит как кнопка',
@@ -40,9 +50,6 @@ export const ru: LenType = {
         linkSent: 'Ссылка была отправлена по электронной почте.',
         sendAgain: 'Если вы не получили письмо, отправьте ссылку еще раз.',
         sendLink: 'Отправить Ссылку'
-    }, header: {
-        signIn: 'Войти',
-        signUp: 'Регистрация',
     },
     language: 'Russia',
     sidebarTr: {

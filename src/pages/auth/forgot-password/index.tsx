@@ -25,7 +25,6 @@ const ForgotPassword = () => {
 
   const onSubmit = async (data: ForgotPasswordDataType) => {
     setEmail(data.email)
-
     try {
       await forgotPassword({
         baseUrl: data.baseUrl,

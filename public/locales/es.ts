@@ -1,6 +1,19 @@
 import {LenType} from './en'
 
 export const es: LenType = {
+    "Congratulations!": "¡Felicidades!",
+    "Email sent": "Correo enviado",
+
+
+    "Email verification link expired": "El enlace ha caducado",
+    "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
+    "Ok": "Ok",
+    "Resend verification link": "Reenviar enlace de verificación",
+
+    "Sign In": "Iniciar sesión",
+    "Sign Up": "Registrarse",
+    "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",
+    "Your email has been confirmed": "Tu correo electrónico ha sido confirmado",
     button: {
         Button: 'Botón',
         Link: 'Enlace que parece un botón',
@@ -40,10 +53,6 @@ export const es: LenType = {
         linkSent: 'El enlace ha sido enviado por correo electrónico.',
         sendAgain: 'Si no recibes un correo electrónico, envía el enlace nuevamente.',
         sendLink: 'Enviar Enlace'
-    },
-    header: {
-        signIn: 'Iniciar sesión',
-        signUp: 'Registrarse',
     }, language: 'Spanish',
     sidebarTr: {
         create: 'Crear',

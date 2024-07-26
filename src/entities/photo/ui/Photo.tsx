@@ -3,7 +3,7 @@ import { ComponentProps } from 'react'
 import { ImgOutline } from '@/shared/assets/icons/ImgOutline'
 import { DefinePropertyType } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
 
@@ -18,9 +18,9 @@ type RestProps = {
   src: StaticImport | string
 }
 
-type DefineRestProps<T extends PhotoType> = T extends 'fill'
-  ? RestProps
-  : Partial<DefinePropertyType<RestProps, undefined>>
+type DefineRestProps<T extends PhotoType> = T extends 'empty'
+  ? Partial<DefinePropertyType<RestProps, undefined>>
+  : RestProps
 
 type Props<T extends PhotoType = 'fill'> = {
   containerClassname?: string
@@ -32,7 +32,7 @@ type Props<T extends PhotoType = 'fill'> = {
   onDelete?: () => void
   /**
    * Define if component can be with or without photo src.
-   * @type PhotoType = "empty" | "fill"
+   * @type PhotoType = `empty` | `fill`. Default `fill`
    */
   type?: T
   /**
