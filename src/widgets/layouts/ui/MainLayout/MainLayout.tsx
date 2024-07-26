@@ -6,6 +6,7 @@ import { MobileHeader } from '@/widgets/mobileHeader'
 import { Sidebar } from '@/widgets/sidebar'
 import { Inter } from 'next/font/google'
 
+import s from './MainLayout.module.scss'
 const inter = Inter({ subsets: ['latin'] })
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
@@ -14,9 +15,9 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className={`min-h-[calc(100vh_-_3.75rem_-_72px)] pb-9 ${inter.className}`}>
       {isMobile ? <MobileHeader /> : <Header />}
-      <div style={{ display: 'flex' }}>
+      <div className={s.page}>
         <Sidebar />
-        <main className={'flex h-full items-start justify-center'}>{children}</main>
+        <main className={s.main}>{children}</main>
       </div>
     </div>
   )
