@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { UserProfileResponseType } from '@/entities/user'
+import { SignUpFormData } from '@/features/auth/signUp'
+import { ServerMessagesType } from '@/shared/api'
 import { PRIVACY_POLICY } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
@@ -14,17 +16,21 @@ import { UserSettingsFormData, useUserSettings } from '../lib/useUserSettings'
 
 type Props = {
   data: UserProfileResponseType
+  error?: ServerMessagesType[]
   onSubmit: (data: UserSettingsFormData) => void
 }
 
-export const UserSettingsForm = ({ data, onSubmit }: Props) => {
+export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   const [start, setStart] = useState<Date | undefined>(new Date(0o000))
 
   const { locale } = useRouter()
 
   const { errorsTr, signUpLang } = translate(locale)
 
-  const { control, errors, handleSubmit, isValid, register } = useUserSettings(errorsTr, data)
+  const { control, errors, getValues, handleSubmit, isValid, register, setError } = useUserSettings(
+    errorsTr,
+    data
+  )
 
   const validAge = (date: Date | number): boolean => {
     const timeMs = typeof date === 'number' ? date : date.getTime()
@@ -41,6 +47,21 @@ export const UserSettingsForm = ({ data, onSubmit }: Props) => {
   }
 
   const isDisabled = !isValid || !validAge(Number(start))
+
+  useEffect(() => {
+    type fieldKeys = keyof UserSettingsFormData
+
+    //Todo make function
+    if (error) {
+      for (const e of error) {
+        for (const field in getValues()) {
+          if (e.field === field) {
+            setError(e.field as fieldKeys, { message: e.message })
+          }
+        }
+      }
+    }
+  }, [error, setError, getValues])
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
@@ -83,6 +104,7 @@ export const UserSettingsForm = ({ data, onSubmit }: Props) => {
 
               return (
                 <DatePicker
+                  error={errors.dateOfBirth?.message}
                   inputClassName={!validAge(Number(start))}
                   label={'Date of birth'}
                   onStartDateChange={onChangeDate}

@@ -7,10 +7,13 @@ import {
   useGetProfileQuery,
   useUpdateProfileMutation,
 } from '@/features/userSettings'
-import { useClientProgress } from '@/shared/lib'
+import { ServerMessagesType } from '@/shared/api'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { isErrorServerMessagesType } from '@/shared/types'
 import { TabSwitcher } from '@/shared/ui'
 import { TabType } from '@/shared/ui/tabSwitcher/TabSwitcher'
 import { getMainLayout } from '@/widgets/layouts/ui/MainLayout/MainLayout'
+import { logger } from '@storybook/node-logger'
 
 import s from './index.module.scss'
 
@@ -25,6 +28,7 @@ function Settings() {
   const { data, isLoading } = useGetProfileQuery()
 
   const [activeTab, setActiveTab] = useState(tabs[0].value)
+  const [error, setError] = useState<ServerMessagesType[]>([])
 
   const profileAvatar: UploadedPhotoType | undefined =
     data && data.avatars.length !== 0
@@ -43,7 +47,11 @@ function Settings() {
     try {
       await updateProfile({ ...data }).unwrap()
     } catch (e) {
-      console.log(e)
+      const err = serverErrorHandler(e)
+
+      if (isErrorServerMessagesType(err)) {
+        setError(err)
+      }
     }
   }
 
@@ -58,7 +66,7 @@ function Settings() {
         <div>
           <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
         </div>
-        <UserSettingsForm data={data} onSubmit={updateProfileData} />
+        <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
       </div>
     </div>
   )

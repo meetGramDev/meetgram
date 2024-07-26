@@ -34,8 +34,10 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
   const {
     control,
     formState: { errors, isValid },
+    getValues,
     handleSubmit,
     register,
+    setError,
   } = useForm<UserSettingsFormData>({
     defaultValues: {
       aboutMe: data.aboutMe ?? '',
@@ -46,7 +48,6 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
       lastName: data.lastName ?? '',
       userName: data.userName ?? '',
     },
-
     mode: 'onBlur',
     resolver: zodResolver(getUserSettingsSchema(errorsTr)),
   })
@@ -54,8 +55,10 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
   return {
     control,
     errors,
+    getValues,
     handleSubmit,
     isValid,
     register,
+    setError,
   }
 }
