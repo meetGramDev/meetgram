@@ -17,6 +17,19 @@ export type Avatar = {
   width: number
 }
 
+export type UserProfileResponseType = {
+  aboutMe: string
+  avatars: Avatar[]
+  city: string
+  country: string
+  createdAt: string
+  dateOfBirth: string
+  firstName: string
+  id: number
+  lastName: string
+  userName: string
+}
+
 export type UserResponseWithPosts = {
   aboutMe: string
   avatars: Avatar[]

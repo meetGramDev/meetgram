@@ -39,6 +39,8 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
   } = useForm<UserSettingsFormData>({
     defaultValues: {
       aboutMe: data.aboutMe ?? '',
+      city: data.city ?? '',
+      country: data.country ?? '',
       dateOfBirth: data.dateOfBirth ?? '',
       firstName: data.firstName ?? '',
       lastName: data.lastName ?? '',

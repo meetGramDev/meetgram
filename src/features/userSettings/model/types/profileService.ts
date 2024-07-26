@@ -4,6 +4,7 @@ export type Profile = {
   aboutMe: string
   avatars: Avatar[]
   city: string
+  country: string
   createdAt: string
   dateOfBirth: string
   firstName: string

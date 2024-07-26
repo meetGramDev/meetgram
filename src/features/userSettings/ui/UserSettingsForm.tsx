@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { Controller } from 'react-hook-form'
 
+import { UserProfileResponseType } from '@/entities/user'
 import { PRIVACY_POLICY } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
@@ -9,26 +11,20 @@ import s from './UserSettings.module.scss'
 
 import { cities, countries } from '../lib/selectValues'
 import { UserSettingsFormData, useUserSettings } from '../lib/useUserSettings'
-import { useGetProfileQuery } from '../model/services/profile.service'
-import { Profile } from '../model/types/profileService'
 
 type Props = {
-  // data: Profile
+  data: UserProfileResponseType
   onSubmit: (data: UserSettingsFormData) => void
 }
 
-export const UserSettingsForm = ({ onSubmit }: Props) => {
-  const { data, isLoading } = useGetProfileQuery()
+export const UserSettingsForm = ({ data, onSubmit }: Props) => {
   const [start, setStart] = useState<Date | undefined>(new Date(0o000))
 
   const { locale } = useRouter()
 
   const { errorsTr, signUpLang } = translate(locale)
 
-  const { control, errors, handleSubmit, isValid, register } = useUserSettings(
-    errorsTr,
-    data as Profile
-  )
+  const { control, errors, handleSubmit, isValid, register } = useUserSettings(errorsTr, data)
 
   const validAge = (date: Date | number): boolean => {
     const timeMs = typeof date === 'number' ? date : date.getTime()
@@ -76,12 +72,26 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
           })}
         />
         <div>
-          <DatePicker
-            inputClassName={!validAge(Number(start))}
-            label={'Date of birth'}
-            onStartDateChange={setStart}
-            startDate={start}
-            {...register('dateOfBirth')}
+          <Controller
+            control={control}
+            name={'dateOfBirth'}
+            render={({ field: { onChange, value, ...field } }) => {
+              const onChangeDate = (e: Date | undefined) => {
+                onChange(e)
+                setStart(e)
+              }
+
+              return (
+                <DatePicker
+                  inputClassName={!validAge(Number(start))}
+                  label={'Date of birth'}
+                  onStartDateChange={onChangeDate}
+                  // @ts-ignore
+                  startDate={value}
+                  {...field}
+                />
+              )
+            }}
           />
           {!validAge(Number(start)) && (
             <span className={s.errorMessage}>
@@ -96,23 +106,39 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
       </div>
       <div className={s.select}>
         <div>
-          <Select
-            contentClassName={s.scrollSelect}
-            label={'Select your country'}
-            options={countries}
-            placeholder={'Country'}
-            rootClassName={s.selectWidth}
-            {...register('country')}
+          <Controller
+            control={control}
+            name={'country'}
+            render={({ field: { onChange, value, ...field } }) => (
+              <Select
+                contentClassName={s.scrollSelect}
+                label={'Select your country'}
+                onValueChange={onChange}
+                options={countries}
+                placeholder={'Country'}
+                rootClassName={s.selectWidth}
+                value={value}
+                {...field}
+              />
+            )}
           />
         </div>
         <div>
-          <Select
-            contentClassName={s.scrollSelect}
-            label={'Select your city'}
-            options={cities}
-            placeholder={'City'}
-            rootClassName={s.selectWidth}
-            {...register('city')}
+          <Controller
+            control={control}
+            name={'city'}
+            render={({ field: { onChange, value, ...field } }) => (
+              <Select
+                contentClassName={s.scrollSelect}
+                label={'Select your city'}
+                onValueChange={onChange}
+                options={cities}
+                placeholder={'City'}
+                rootClassName={s.selectWidth}
+                value={value}
+                {...field}
+              />
+            )}
           />
         </div>
       </div>

@@ -23,3 +23,4 @@ export const profileService = baseApi.injectEndpoints({
 })
 
 export const { useGetProfileQuery, useUpdateProfileMutation } = profileService
+export const { getProfile } = profileService.endpoints
