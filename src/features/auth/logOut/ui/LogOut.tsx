@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { baseApi } from '@/shared/api'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
@@ -29,10 +28,12 @@ export const LogOut = ({ disabled, email }: Props) => {
   const handleLogOut = async () => {
     try {
       await logout().unwrap()
-      router.push(SIGN_IN)
+
+      // router.prefetch(SIGN_IN, SIGN_IN, { locale: router.locale })
+      // router.push(SIGN_IN, SIGN_IN, { locale: router.locale })
+      router.reload()
     } catch (err) {
       if (isFetchBaseQueryError(err)) {
-        dispatch(baseApi.util?.resetApiState())
         const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
 
         router.push(SIGN_IN)

@@ -26,13 +26,23 @@ export const userSlice = createSlice({
         state.accountData = payload
         state.isAuth = true
       })
-      .addMatcher(userApi.endpoints.me.matchRejected, (state, {}) => {
+      .addMatcher(userApi.endpoints.me.matchRejected, state => {
         state.isAuth = false
+        state.accessToken = null
+        state.accountData = initialState.accountData
       })
   },
   initialState,
   name: 'user',
   reducers: {
+    /**
+     * Created to use in baseQueryWithReAuth in createApi
+     */
+    logoutUser(state) {
+      state.isAuth = false
+      state.accessToken = null
+      state.accountData = initialState.accountData
+    },
     setCredentials(state, { payload }: PayloadAction<SetCredentialsPayload>) {
       state.accessToken = payload.accessToken
     },
@@ -42,4 +52,4 @@ export const userSlice = createSlice({
   },
 })
 
-export const { setCredentials, setProvider } = userSlice.actions
+export const { logoutUser, setCredentials, setProvider } = userSlice.actions

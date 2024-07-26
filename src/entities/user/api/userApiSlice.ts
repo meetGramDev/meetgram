@@ -16,6 +16,7 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
     me: builder.query<AuthMeResponseType, void>({
+      providesTags: ['auth'],
       query: () => ({
         url: '/auth/me',
       }),
