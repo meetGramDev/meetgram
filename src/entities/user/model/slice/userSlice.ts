@@ -2,7 +2,7 @@ import { userApi } from '@/entities/user/api/userApiSlice'
 import { Nullable } from '@/shared/types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { SetCredentialsPayload, SetProviderPayload } from './types'
+import { SetCredentialsPayload } from './types'
 
 const initialState = {
   accessToken: null as Nullable<string>,
@@ -13,10 +13,6 @@ const initialState = {
     userName: '',
   },
   isAuth: false,
-  providers: {
-    github: null as Nullable<string>,
-    google: null as Nullable<string>,
-  },
 }
 
 export const userSlice = createSlice({
@@ -46,10 +42,7 @@ export const userSlice = createSlice({
     setCredentials(state, { payload }: PayloadAction<SetCredentialsPayload>) {
       state.accessToken = payload.accessToken
     },
-    setProvider(state, { payload }: PayloadAction<SetProviderPayload>) {
-      state.providers[payload.provider] = payload.email
-    },
   },
 })
 
-export const { logoutUser, setCredentials, setProvider } = userSlice.actions
+export const { logoutUser, setCredentials } = userSlice.actions

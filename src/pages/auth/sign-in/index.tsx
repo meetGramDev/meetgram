@@ -1,10 +1,7 @@
 import { useState } from 'react'
 
-import { setCredentials, useLazyMeQuery } from '@/entities/user'
 import { SignInFields, SignInForm, useLoginMutation } from '@/features/auth/signIn'
-import { nextSessionApi } from '@/shared/api/_next-auth'
 import { PROFILE } from '@/shared/config/router'
-import { useAppDispatch } from '@/shared/config/storeHooks'
 import { useClientProgress } from '@/shared/lib'
 import {
   NextPageWithLayout,
@@ -17,7 +14,6 @@ import { useRouter } from 'next/router'
 
 const SignIn: NextPageWithLayout = () => {
   const [login, { isLoading }] = useLoginMutation()
-  const dispatch = useAppDispatch()
   const router = useRouter()
 
   const [error, setError] = useState('')
@@ -28,12 +24,9 @@ const SignIn: NextPageWithLayout = () => {
     try {
       setError('')
 
-      const { accessToken } = await login(data).unwrap()
+      await login(data).unwrap()
 
-      await nextSessionApi.makeSession(accessToken)
-
-      dispatch(setCredentials({ accessToken }))
-      router.push(router.locale + PROFILE)
+      router.push(PROFILE, undefined, { locale: router.locale })
     } catch (error) {
       if (isFetchBaseQueryError(error)) {
         let errMsg: string = ''
