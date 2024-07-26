@@ -1,17 +1,17 @@
 'use client'
+import { selectIsUserAuth } from '@/entities/user'
 import { MoreIcon } from '@/shared/assets/icons/More'
 import { HOME } from '@/shared/config/router'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui'
 import { LangSwitcher } from '@/widgets/langSwitcher'
 import Link from 'next/link'
 
 import s from './mobileHeader.module.scss'
 
-type Props = {
-  isAuth?: boolean
-}
+export const MobileHeader = () => {
+  const isAuth = useAppSelector(selectIsUserAuth)
 
-export const MobileHeader = ({ isAuth = false }: Props) => {
   return (
     <header className={s.header}>
       <Link className={s.title} href={HOME}>
