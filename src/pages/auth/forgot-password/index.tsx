@@ -5,8 +5,9 @@ import {
   ForgotPasswordForm,
   useForgotPasswordMutation,
 } from '@/features/auth/forgotPassword'
-import { ServerBadResponse, ServerMessagesType } from '@/shared/api'
-import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
+import { ServerMessagesType } from '@/shared/api'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { isErrorMessageString, isErrorServerMessagesType } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
 import { getAuthLayout } from '@/widgets/layouts'
@@ -20,6 +21,8 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState<ServerMessagesType[]>([])
 
+  useClientProgress(isLoading)
+
   const onSubmit = async (data: ForgotPasswordDataType) => {
     setEmail(data.email)
     try {
@@ -31,23 +34,16 @@ const ForgotPassword = () => {
       setTrigger(true)
       setIsFormSended(true)
     } catch (e) {
-      if (isFetchBaseQueryError(e)) {
-        const errMsg =
-          'error' in e ? e.error : JSON.stringify((e.data as ServerBadResponse).messages)
+      const error = serverErrorHandler(e)
 
-        try {
-          setError(JSON.parse(errMsg))
-        } catch (parseError) {
-          setError([{ field: 'email', message: errMsg }])
-        }
-      } else if (isErrorWithMessage(e)) {
-        setError([{ field: 'email', message: e.message }])
+      if (isErrorServerMessagesType(error)) {
+        setError([{ field: 'email', message: error[0].message }])
+      }
+
+      if (isErrorMessageString(error)) {
+        setError([{ field: 'email', message: error }])
       }
     }
-  }
-
-  if (isLoading) {
-    return <div>Loading ...</div>
   }
 
   return (

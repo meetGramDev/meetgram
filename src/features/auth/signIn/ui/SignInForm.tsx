@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
+import { ServerMessagesType } from '@/shared/api'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
+import { isErrorMessageString } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
@@ -12,7 +14,7 @@ import { useRouter } from 'next/router'
 import { SignInFields, useSignIn } from '../lib/useSignIn'
 
 type Props = {
-  error?: string
+  error?: ServerMessagesType[] | string
   onSubmit: (data: SignInFields) => void
 }
 
@@ -28,11 +30,11 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
   } = useSignIn(errorsTr)
 
   useEffect(() => {
-    if (error) {
-      let value: keyof SignInFields
+    if (isErrorMessageString(error)) {
+      let field: keyof SignInFields
 
-      for (value in getValues()) {
-        setError(value, { message: error })
+      for (field in getValues()) {
+        setError(field, { message: error })
       }
     }
   }, [error, setError, getValues])
