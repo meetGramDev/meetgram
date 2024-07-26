@@ -1,5 +1,5 @@
 import { RootState } from '@/app/lib'
-import { setCredentials } from '@/entities/user'
+import { logoutUser, setCredentials } from '@/entities/user'
 import { nextSessionApi } from '@/shared/api/_next-auth'
 import { StatusCode } from '@/shared/enum'
 import {
@@ -65,10 +65,11 @@ const baseQueryWithReAuth: BaseQueryFn<FetchArgs | string, unknown, FetchBaseQue
           // retry the initial query
           resp = await baseQueryWithAuth(args, api, extraOptions)
         }
+      } else {
+        // Otherwise logout user and clear state
+        api.dispatch(logoutUser())
       }
     }
-  } else {
-    // TODO otherwise logout user and dispatch logout
   }
 
   return resp

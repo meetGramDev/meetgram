@@ -1,4 +1,4 @@
-import { ServerBadResponse } from '@/shared/api'
+import { ServerBadResponse, ServerMessagesType } from '@/shared/api'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 export function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
@@ -22,3 +22,9 @@ export function isServerBadResponseError(error: unknown): error is { data: Serve
     'statusCode' in (error.data as any)
   )
 }
+
+export const isErrorMessageString = (errMsg: unknown): errMsg is string =>
+  typeof errMsg === 'string'
+
+export const isErrorServerMessagesType = (error: unknown): error is ServerMessagesType[] =>
+  Array.isArray(error) && 'field' in (error[0] as any[])
