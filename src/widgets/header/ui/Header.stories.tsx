@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { StoreDecorator } from '@/shared/config/storybook'
 import { Header } from '@/widgets/header/ui/Header'
 
 const meta = {
   component: Header,
+  decorators: [StoreDecorator()],
   parameters: {
     layout: 'fullscreen',
   },
@@ -20,8 +22,4 @@ export const Default: Story = {
   },
 }
 
-export const NotAuthorized: Story = {
-  args: {
-    isAuth: false,
-  },
-}
+export const NotAuthorized: Story = {}
