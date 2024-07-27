@@ -1,6 +1,7 @@
 import { baseApi } from '@/shared/api'
 
-import { Profile, UpdateProfileBody } from '../types/profileService'
+import { UserSettingsFormData } from '../../lib/useUserSettings'
+import { Profile } from '../types/profileService'
 
 export const profileService = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -11,7 +12,7 @@ export const profileService = baseApi.injectEndpoints({
         url: '/users/profile',
       }),
     }),
-    updateProfile: builder.mutation<Profile, UpdateProfileBody>({
+    updateProfile: builder.mutation<Profile, UserSettingsFormData>({
       invalidatesTags: ['profile'],
       query: body => ({
         body,

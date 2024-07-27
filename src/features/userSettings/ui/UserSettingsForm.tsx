@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { UserProfileResponseType } from '@/entities/user'
+import { Profile } from '@/features/userSettings'
 import { ServerMessagesType } from '@/shared/api'
 import { PRIVACY_POLICY } from '@/shared/config/router'
+import { cities } from '@/shared/const/citiesData'
+import { countries } from '@/shared/const/countriesData'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
-import { DevTool } from '@hookform/devtools'
 import { useRouter } from 'next/router'
 
 import s from './UserSettings.module.scss'
 
-import { cities, countries } from '../lib/selectValues'
 import { UserSettingsFormData, useUserSettings } from '../lib/useUserSettings'
+import { validAge } from '../lib/validAge'
 
 type Props = {
-  data: UserProfileResponseType
+  data: Profile
   error?: ServerMessagesType[]
   onSubmit: (data: UserSettingsFormData) => void
 }
@@ -27,31 +28,15 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   const { errorsTr, signUpLang } = translate(locale)
 
-  const { control, errors, getValues, handleSubmit, isValid, register, setError } = useUserSettings(
-    errorsTr,
-    data
-  )
+  const { control, errors, getValues, handleSubmit, isDirty, isValid, register, setError } =
+    useUserSettings(errorsTr, data)
 
-  const validAge = (date: Date | number): boolean => {
-    const timeMs = typeof date === 'number' ? date : date.getTime()
-    const dateToCompare = new Date(timeMs)
-
-    const currentDate = new Date()
-    const pastDate = new Date(
-      currentDate.getFullYear() - 13,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    )
-
-    return dateToCompare < pastDate
-  }
-
-  const isDisabled = !isValid || !validAge(Number(start))
+  const isDisabled = !isValid || !isDirty || !validAge(Number(start))
 
   useEffect(() => {
     type fieldKeys = keyof UserSettingsFormData
 
-    //Todo make function
+    //Todo maybe make function
     if (error) {
       for (const e of error) {
         for (const field in getValues()) {
@@ -65,7 +50,6 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-      <DevTool control={control} />
       <div className={s.fields}>
         <Input
           error={errors.userName?.message}

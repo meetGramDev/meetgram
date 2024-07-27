@@ -1,4 +1,4 @@
-import type { AuthMeResponseType, UserProfileResponseType, UserResponseWithPosts } from './types'
+import type { AuthMeResponseType, UserResponseWithPosts } from './types'
 
 import { baseApi } from '@/shared/api'
 

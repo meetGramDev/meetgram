@@ -1,4 +1,6 @@
-export const cities = [
+import { OptionType } from '@/shared/ui/select/option'
+
+export const cities: OptionType[] = [
   { label: 'Minsk', value: 'Minsk' },
   { label: 'Moscow', value: 'Moscow' },
   { label: 'Kyiv', value: 'Kyiv' },
@@ -7,13 +9,4 @@ export const cities = [
   { label: 'Sacramento', value: 'Sacramento' },
   { label: 'Odessa', value: 'Odessa' },
   { label: 'Riga', value: 'Riga' },
-]
-
-export const countries = [
-  { label: 'Belarus', value: 'Belarus' },
-  { label: 'Russia', value: 'Russia' },
-  { label: 'Ukraine', value: 'Ukraine' },
-  { label: 'Turkey', value: 'Turkey' },
-  { label: 'USA', value: 'USA' },
-  { label: 'Latvia', value: 'Latvia' },
 ]

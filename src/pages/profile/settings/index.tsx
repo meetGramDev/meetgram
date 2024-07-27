@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { UploadPhoto, UploadedPhotoType } from '@/features/profile/uploadUserPhoto'
 import {
@@ -50,7 +51,8 @@ function Settings() {
         }
       }
 
-      await updateProfile({ ...(data as UserSettingsFormData) }).unwrap()
+      await updateProfile(data).unwrap()
+      toast.success('Profile has successfully updated')
     } catch (e) {
       const err = serverErrorHandler(e)
 

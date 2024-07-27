@@ -33,7 +33,7 @@ export type UserSettingsFormData = z.infer<typeof userSettingsSchema>
 export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
   const {
     control,
-    formState: { errors, isValid },
+    formState: { errors, isDirty, isValid },
     getValues,
     handleSubmit,
     register,
@@ -57,6 +57,7 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
     errors,
     getValues,
     handleSubmit,
+    isDirty,
     isValid,
     register,
     setError,
