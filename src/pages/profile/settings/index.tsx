@@ -13,7 +13,6 @@ import { isErrorServerMessagesType } from '@/shared/types'
 import { TabSwitcher } from '@/shared/ui'
 import { TabType } from '@/shared/ui/tabSwitcher/TabSwitcher'
 import { getMainLayout } from '@/widgets/layouts/ui/MainLayout/MainLayout'
-import { logger } from '@storybook/node-logger'
 
 import s from './index.module.scss'
 
@@ -45,7 +44,13 @@ function Settings() {
 
   const updateProfileData = async (data: UserSettingsFormData) => {
     try {
-      await updateProfile({ ...data }).unwrap()
+      for (const key in data) {
+        if (key === 'dateOfBirth' && data[key] === '') {
+          delete data[key]
+        }
+      }
+
+      await updateProfile({ ...(data as UserSettingsFormData) }).unwrap()
     } catch (e) {
       const err = serverErrorHandler(e)
 
