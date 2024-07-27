@@ -127,8 +127,8 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
           )}
         </div>
       </div>
-      <div className={s.select}>
-        <div>
+      <div className={s.locationSelects}>
+        <div className={s.selectWrapper}>
           <Controller
             control={control}
             name={'country'}
@@ -146,7 +146,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
             )}
           />
         </div>
-        <div>
+        <div className={s.selectWrapper}>
           <Controller
             control={control}
             name={'city'}

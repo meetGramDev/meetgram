@@ -3,7 +3,7 @@
 .form {
   @include flex(column, center, center, 1.5rem);
 
-  width: 38.54vw;
+  width: 45vw;
   padding-bottom: 1.5rem;
 }
 
@@ -17,17 +17,22 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 38.54vw;
+  width: 100%;
 }
 
-.select {
+.locationSelects {
   display: flex;
   flex-direction: row;
   gap: 1.5rem;
+  width: 100%;
+}
+
+.selectWrapper {
+  width: 100%;
 }
 
 .selectWidth {
-  width: 18.64vw;
+  width: 100%;
 }
 
 .errorLink {
