@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { UserProfileResponseType } from '@/entities/user'
-import { SignUpFormData } from '@/features/auth/signUp'
 import { ServerMessagesType } from '@/shared/api'
 import { PRIVACY_POLICY } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
+import { DevTool } from '@hookform/devtools'
 import { useRouter } from 'next/router'
 
 import s from './UserSettings.module.scss'
@@ -65,6 +65,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <DevTool control={control} />
       <div className={s.fields}>
         <Input
           error={errors.userName?.message}
@@ -164,12 +165,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
           />
         </div>
       </div>
-      <TextArea
-        error={errors.aboutMe?.message}
-        label={'About me'}
-        placeholder={'Text-area'}
-        {...register('aboutMe')}
-      />
+      <TextArea error={errors.aboutMe?.message} label={'About me'} {...register('aboutMe')} />
       <hr className={s.hr}></hr>
       <Button className={s.button} disabled={isDisabled} type={'submit'}>
         Save changes

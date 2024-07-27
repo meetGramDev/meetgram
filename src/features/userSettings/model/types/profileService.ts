@@ -16,7 +16,7 @@ export type Profile = {
 export type UpdateProfileBody = {
   aboutMe?: string
   city?: string
-  dateOfBirth?: string
+  dateOfBirth?: Date
   firstName: string
   lastName: string
   userName: string
