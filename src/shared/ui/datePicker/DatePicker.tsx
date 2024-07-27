@@ -79,7 +79,7 @@ export const DatePicker = ({
   selectsRange,
   startDate,
 }: Props) => {
-  const locale = navigator.language
+  const locale = 'en'
   const localeMonths: Locales = locale.substring(0, 2) as Locales
 
   const classes = {

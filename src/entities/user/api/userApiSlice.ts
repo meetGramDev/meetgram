@@ -1,4 +1,4 @@
-import type { AuthMeResponseType, UserProfileResponseType, UserResponseWithPosts } from './types'
+import type { AuthMeResponseType, UserResponseWithPosts } from './types'
 
 import { baseApi } from '@/shared/api'
 
@@ -8,11 +8,6 @@ export const userApi = baseApi.injectEndpoints({
       query: userName => ({
         method: 'GET',
         url: `/users/${userName}`,
-      }),
-    }),
-    getUserProfile: builder.query<UserProfileResponseType, void>({
-      query: () => ({
-        url: '/users/profile',
       }),
     }),
     me: builder.query<AuthMeResponseType, void>({
@@ -27,11 +22,7 @@ export const userApi = baseApi.injectEndpoints({
 // Export hooks for usage in functional components
 export const {
   useFullUserProfileQuery,
-  useGetUserProfileQuery,
   useLazyMeQuery,
   useMeQuery,
   util: { getRunningQueriesThunk },
 } = userApi
-
-// export endpoints for use in SSR
-export const { getUserProfile } = userApi.endpoints

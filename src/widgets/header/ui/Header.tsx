@@ -1,4 +1,4 @@
-import { selectCurrentUserEmail } from '@/entities/user'
+import { selectCurrentUserEmail, selectIsUserAuth } from '@/entities/user'
 import { LogOut } from '@/features/auth/logOut'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
@@ -10,13 +10,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 type Props = {
-  isAuth?: boolean
   notification?: number
 }
 
-export const Header = ({ isAuth = false, notification }: Props) => {
+export const Header = ({ notification }: Props) => {
   const t = translate(useRouter().locale)
   const email = useAppSelector(selectCurrentUserEmail)
+  const isAuth = useAppSelector(selectIsUserAuth)
 
   return (
     <header

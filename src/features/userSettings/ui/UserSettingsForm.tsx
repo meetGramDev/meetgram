@@ -1,44 +1,52 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Controller } from 'react-hook-form'
 
+import { Profile } from '@/features/userSettings'
+import { ServerMessagesType } from '@/shared/api'
 import { PRIVACY_POLICY } from '@/shared/config/router'
+import { cities } from '@/shared/const/citiesData'
+import { countries } from '@/shared/const/countriesData'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
 import s from './UserSettings.module.scss'
 
-import { cities, countries } from '../lib/selectValues'
-// eslint-disable-next-line import/namespace
 import { UserSettingsFormData, useUserSettings } from '../lib/useUserSettings'
+import { validAge } from '../lib/validAge'
 
 type Props = {
+  data: Profile
+  error?: ServerMessagesType[]
   onSubmit: (data: UserSettingsFormData) => void
 }
 
-export const UserSettingsForm = ({ onSubmit }: Props) => {
+export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   const [start, setStart] = useState<Date | undefined>(new Date(0o000))
 
   const { locale } = useRouter()
 
   const { errorsTr, signUpLang } = translate(locale)
 
-  const { errors, handleSubmit, isValid, register } = useUserSettings(errorsTr)
+  const { control, errors, getValues, handleSubmit, isDirty, isValid, register, setError } =
+    useUserSettings(errorsTr, data)
 
-  const validAge = (date: Date | number): boolean => {
-    const timeMs = typeof date === 'number' ? date : date.getTime()
-    const dateToCompare = new Date(timeMs)
+  const isDisabled = !isValid || !isDirty || !validAge(Number(start))
 
-    const currentDate = new Date()
-    const pastDate = new Date(
-      currentDate.getFullYear() - 13,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    )
+  useEffect(() => {
+    type fieldKeys = keyof UserSettingsFormData
 
-    return dateToCompare < pastDate
-  }
-
-  const isDisabled = !isValid || !validAge(Number(start))
+    //Todo maybe make function
+    if (error) {
+      for (const e of error) {
+        for (const field in getValues()) {
+          if (e.field === field) {
+            setError(e.field as fieldKeys, { message: e.message })
+          }
+        }
+      }
+    }
+  }, [error, setError, getValues])
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
@@ -70,16 +78,32 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
           })}
         />
         <div>
-          <DatePicker
-            inputClassName={!validAge(Number(start))}
-            label={'Date of birth'}
-            onStartDateChange={setStart}
-            startDate={start}
-            {...register('age')}
+          <Controller
+            control={control}
+            name={'dateOfBirth'}
+            render={({ field: { onChange, value, ...field } }) => {
+              const onChangeDate = (e: Date | undefined) => {
+                onChange(e)
+                setStart(e)
+              }
+
+              return (
+                <DatePicker
+                  // @ts-ignore
+                  error={errors.dateOfBirth?.message}
+                  inputClassName={!validAge(Number(start))}
+                  label={'Date of birth'}
+                  onStartDateChange={onChangeDate}
+                  startDate={value}
+                  {...field}
+                />
+              )
+            }}
           />
           {!validAge(Number(start)) && (
             <span className={s.errorMessage}>
               {errorsTr.errorValidationFields.wrongDateOfBirth}
+              &nbsp;
               <a className={s.errorLink} href={PRIVACY_POLICY}>
                 {signUpLang.privPolicy}
               </a>
@@ -87,34 +111,45 @@ export const UserSettingsForm = ({ onSubmit }: Props) => {
           )}
         </div>
       </div>
-      <div className={s.select}>
-        <div>
-          <Select
-            contentClassName={s.scrollSelect}
-            label={'Select your country'}
-            options={countries}
-            placeholder={'Country'}
-            rootClassName={s.selectWidth}
-            {...register('country')}
+      <div className={s.locationSelects}>
+        <div className={s.selectWrapper}>
+          <Controller
+            control={control}
+            name={'country'}
+            render={({ field: { onChange, value, ...field } }) => (
+              <Select
+                contentClassName={s.scrollSelect}
+                label={'Select your country'}
+                onValueChange={onChange}
+                options={countries}
+                placeholder={'Country'}
+                rootClassName={s.selectWidth}
+                value={value}
+                {...field}
+              />
+            )}
           />
         </div>
-        <div>
-          <Select
-            contentClassName={s.scrollSelect}
-            label={'Select your city'}
-            options={cities}
-            placeholder={'City'}
-            rootClassName={s.selectWidth}
-            {...register('city')}
+        <div className={s.selectWrapper}>
+          <Controller
+            control={control}
+            name={'city'}
+            render={({ field: { onChange, value, ...field } }) => (
+              <Select
+                contentClassName={s.scrollSelect}
+                label={'Select your city'}
+                onValueChange={onChange}
+                options={cities}
+                placeholder={'City'}
+                rootClassName={s.selectWidth}
+                value={value}
+                {...field}
+              />
+            )}
           />
         </div>
       </div>
-      <TextArea
-        error={errors.aboutMe?.message}
-        label={'About me'}
-        placeholder={'Text-area'}
-        {...register('aboutMe')}
-      />
+      <TextArea error={errors.aboutMe?.message} label={'About me'} {...register('aboutMe')} />
       <hr className={s.hr}></hr>
       <Button className={s.button} disabled={isDisabled} type={'submit'}>
         Save changes

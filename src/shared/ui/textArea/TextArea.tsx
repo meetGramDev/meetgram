@@ -38,7 +38,6 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
             className={classNames.textArea}
             disabled={disabled}
             id={id}
-            placeholder={'Text area'}
             ref={ref}
             rows={rows}
             value={value}
