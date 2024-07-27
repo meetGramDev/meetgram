@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:production": "npm run build",
+    "build:production": "env-cmd -f .env.production npm run build",
     "start": "next start",
     "format": "prettier --write src",
     "lint": "eslint \"**/*.{ts,tsx}\"",
@@ -27,6 +27,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
     "cookie": "^0.6.0",
+    "env-cmd": "^10.1.0",
     "i18n": "^0.15.1",
     "jose": "^5.6.3",
     "next": "13.5.6",
