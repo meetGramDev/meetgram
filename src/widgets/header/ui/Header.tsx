@@ -1,5 +1,4 @@
-import { selectCurrentUserEmail, selectIsUserAuth } from '@/entities/user'
-import { LogOut } from '@/features/auth/logOut'
+import { selectIsUserAuth } from '@/entities/user'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
@@ -15,7 +14,6 @@ type Props = {
 
 export const Header = ({ notification }: Props) => {
   const t = translate(useRouter().locale)
-  const email = useAppSelector(selectCurrentUserEmail)
   const isAuth = useAppSelector(selectIsUserAuth)
 
   return (
@@ -47,8 +45,6 @@ export const Header = ({ notification }: Props) => {
                   )}
                 </div>
               </Button>
-
-              <LogOut email={email} />
             </>
           )}
 
