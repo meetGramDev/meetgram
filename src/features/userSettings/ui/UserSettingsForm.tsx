@@ -104,7 +104,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
             <span className={s.errorMessage}>
               {errorsTr.errorValidationFields.wrongDateOfBirth}
               &nbsp;
-              <a className={s.errorLink} href={PRIVACY_POLICY}>
+              <a className={s.errorLink} href={PRIVACY_POLICY} rel={'noreferrer'} target={'_blank'}>
                 {signUpLang.privPolicy}
               </a>
             </span>

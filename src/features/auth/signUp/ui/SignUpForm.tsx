@@ -109,11 +109,23 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
           />
           <span className={s.info}>
             {signUpLang.IAgree}{' '}
-            <Button as={Link} className={s.info} href={TERMS_OF_SERVICE} variant={'link'}>
+            <Button
+              as={Link}
+              className={s.info}
+              href={TERMS_OF_SERVICE}
+              target={'_blank'}
+              variant={'link'}
+            >
               {signUpLang.termServ}
             </Button>{' '}
             {signUpLang.and}{' '}
-            <Button as={Link} className={s.info} href={PRIVACY_POLICY} variant={'link'}>
+            <Button
+              as={Link}
+              className={s.info}
+              href={PRIVACY_POLICY}
+              target={'_blank'}
+              variant={'link'}
+            >
               {signUpLang.privPolicy}
             </Button>
             {isApprovedError && <div className={s.checkboxError}>{isApprovedError}</div>}{' '}
