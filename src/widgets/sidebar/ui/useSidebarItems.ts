@@ -3,7 +3,6 @@ import { useMemo } from 'react'
 import { CreateIcon } from '@/shared/assets/icons/Create'
 import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
 import { HomeIcon } from '@/shared/assets/icons/Home'
-import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { MessengerIcon } from '@/shared/assets/icons/Messenger'
 import { MyProfileIcon } from '@/shared/assets/icons/MyProfile'
 import { Search } from '@/shared/assets/icons/Search'
@@ -12,13 +11,11 @@ import { HOME } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
 import { useRouter } from 'next/router'
 
-type SidebarEl = { name: string; path: string; svg: typeof LogOutIcon }
-
 export function useGetSidebarItems() {
   const { locale } = useRouter()
   const sidebarTr = translate(locale).sidebarTr
 
-  return useMemo((): SidebarEl[] => {
+  return useMemo(() => {
     return [
       { name: sidebarTr.home, path: HOME, svg: HomeIcon },
       { name: sidebarTr.create, path: '', svg: CreateIcon },
@@ -28,7 +25,6 @@ export function useGetSidebarItems() {
 
       { name: sidebarTr.favorites, path: '', svg: FavoritesIcon },
       { name: sidebarTr.statistics, path: '', svg: StatisticsIcon },
-      { name: sidebarTr.logOut, path: '', svg: LogOutIcon },
     ]
   }, [])
 }
