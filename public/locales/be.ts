@@ -1,18 +1,21 @@
+import {ByFlagIcon} from "@/shared/assets/icons/BY";
+
 import {LenType} from './en'
 
 export const be: LenType = {
     "Congratulations!": "Віншуем!",
     "Email sent": "Ліст адпраўлены",
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
-    "Looks like the verification link has expired. Not to worry, we can send the link again": "Падаецца, спасылка для пацверджання пратэрмінавана. Не хвалюйцеся, мы можам адправіць спасылку зноў", "Ok": "Добра",
-    "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
+    "Looks like the verification link has expired. Not to worry, we can send the link again": "Падаецца, спасылка для пацверджання пратэрмінавана. Не хвалюйцеся, мы можам адправіць спасылку зноў",
+    "Ok": "Добра", "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
     "Sign In": "Увайсці",
-    "Sign Up": "Рэгістрацыя", "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ",
-    "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
+    "Sign Up": "Рэгістрацыя",
+    "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ", "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
     button: {
         Button: 'Кнопка',
         Link: 'Спасылка, якая выглядае як кнопка',
     },
+    componentLang: ByFlagIcon,
     createNewPasswordForm: {
         createNewPassword: 'Стварыць новы пароль',
         newPassword: 'Новы пароль',

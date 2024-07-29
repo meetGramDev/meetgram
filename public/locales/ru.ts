@@ -1,3 +1,5 @@
+import {RuFlagIcon} from "@/shared/assets/icons/RU";
+
 import {LenType} from './en'
 
 export const ru: LenType = {
@@ -15,7 +17,7 @@ export const ru: LenType = {
         Button: 'Кнопка',
         Link: 'Ссылка, которая выглядит как кнопка',
     },
-    createNewPasswordForm: {
+    componentLang: RuFlagIcon, createNewPasswordForm: {
         createNewPassword: 'Создать новый пароль',
         newPassword: 'Новый пароль',
         passwordConfirmation: 'Подтверждение пароля',
