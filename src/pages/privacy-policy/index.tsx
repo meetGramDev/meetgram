@@ -5,7 +5,7 @@ import { getAuthLayout } from '@/widgets/layouts'
 const PrivacyPolicy: NextPageWithLayout = () => {
   return (
     <div className={'mx-16'}>
-      <BackButton label={`${String.fromCharCode(8592)} Back to Sign Up`} />
+      <BackButton label={`${String.fromCharCode(8592)} Go back`} />
 
       <div className={'flex flex-col gap-5 text-center text-light-100'}>
         <h2 className={'text-h1 font-bold'}>Privacy Policy</h2>

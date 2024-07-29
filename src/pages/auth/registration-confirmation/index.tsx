@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 import {
   ConfirmEmail,
   ResendEmail,
   useRegistrationConfirmationMutation,
 } from '@/features/auth/registrationConfirmation'
-import { NextPageWithLayout, isFetchBaseQueryError } from '@/shared/types'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { NextPageWithLayout, isErrorMessageString } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 import { useSearchParams } from 'next/navigation'
 
@@ -14,6 +16,8 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
     useRegistrationConfirmationMutation()
   const params = useSearchParams()
 
+  useClientProgress(isLoading)
+
   useEffect(() => {
     const data = async () => {
       const confirmationCode = params?.get('code')
@@ -21,20 +25,16 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
       try {
         confirmationCode && (await registrationConfirmation({ confirmationCode }).unwrap())
       } catch (err) {
-        if (isFetchBaseQueryError(err)) {
-          const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
+        const message = serverErrorHandler(err)
 
-          console.error(errMsg, { variant: 'error' })
+        if (isErrorMessageString(message)) {
+          toast.error(message)
         }
       }
     }
 
     data()
   }, [params, registrationConfirmation])
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
 
   return (
     <>

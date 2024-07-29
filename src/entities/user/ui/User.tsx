@@ -12,11 +12,10 @@ import s from './User.module.scss'
 import { useFullUserProfileQuery } from '../api/userApiSlice'
 
 type Props = {
-  onProfileSettingsClicked?: () => void
   userName: string
 }
 
-export const User = ({ onProfileSettingsClicked, userName }: Props) => {
+export const User = ({ userName }: Props) => {
   const { data, isLoading } = useFullUserProfileQuery(userName || skipToken)
 
   const userPhoto = data?.avatars.length ? data.avatars[0] : notUserPhoto
@@ -47,12 +46,7 @@ export const User = ({ onProfileSettingsClicked, userName }: Props) => {
           <div className={s.userInformation}>
             <div className={s.userName}>
               <h1 className={s.userNameTitle}>{userName}</h1>
-              <Button
-                as={Link}
-                href={PROFILE_SETTINGS}
-                onClick={onProfileSettingsClicked}
-                variant={'secondary'}
-              >
+              <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
                 Profile Settings
               </Button>
             </div>

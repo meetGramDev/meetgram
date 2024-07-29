@@ -36,6 +36,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       return res.status(401).send({ error: 'Unauthenticated' })
     }
   }
+
+  if (req.method === 'DELETE') {
+    res.setHeader(
+      'Set-Cookie',
+      cookies.serialize(SESSION_COOKIE_NAME, '', {
+        expires: new Date(0),
+        path: '/',
+      })
+    )
+
+    return res.status(200).json({ message: 'Success' })
+  }
 }
 
 type SessionResponse = { accessToken: string } | { error: string } | { message: string }

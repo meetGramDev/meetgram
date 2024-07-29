@@ -1,11 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { UserSettingsForm } from '@/features/userSettings'
 import { StoreDecorator } from '@/shared/config/storybook'
 import { fn } from '@storybook/test'
 
+import { UserSettingsForm } from './UserSettingsForm'
+
 const meta = {
-  args: {},
+  args: {
+    data: {
+      aboutMe: '',
+      avatars: [],
+      city: '',
+      country: 'Great Britain',
+      createdAt: '',
+      dateOfBirth: '',
+      firstName: 'John',
+      id: 1,
+      lastName: 'Doe',
+      userName: 'New user',
+    },
+    onSubmit: fn(),
+  },
   component: UserSettingsForm,
   decorators: [StoreDecorator()],
   parameters: {
@@ -18,8 +33,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-  args: {
-    onSubmit: fn(),
-  },
-}
+export const Default: Story = {}

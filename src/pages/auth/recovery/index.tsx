@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { useCheckRecoveryCodeMutation } from '@/features/auth/forgotPassword'
 import Img from '@/shared/assets/img/time-management.png'
 import { CREATE_NEW_PASSWORD, FORGOT_PASSWORD } from '@/shared/config/router'
 import { CONFIRMATION_CODE_LS_KEY } from '@/shared/const/consts'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { isErrorMessageString } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { getAuthLayout } from '@/widgets/layouts'
 import Image from 'next/image'
@@ -20,23 +23,34 @@ const Recovery = () => {
 
   const router = useRouter()
 
+  useClientProgress(isLoading)
+
   const confirmationCode = params?.get('code')
 
   useEffect(() => {
-    if (confirmationCode !== null) {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem(CONFIRMATION_CODE_LS_KEY, String(confirmationCode))
-        checkRecoveryCode({ recoveryCode: String(confirmationCode) })
-          .unwrap()
-          .then(() => {
+    const sendCode = async function () {
+      if (confirmationCode !== null) {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(CONFIRMATION_CODE_LS_KEY, String(confirmationCode))
+
+          try {
+            await checkRecoveryCode({ recoveryCode: String(confirmationCode) }).unwrap()
+
             router.push(CREATE_NEW_PASSWORD)
-          })
-          .catch(e => {
+          } catch (error) {
+            const e = serverErrorHandler(error)
+
             setCheckIsFailed(true)
-            console.log(e)
-          })
+
+            if (isErrorMessageString(e)) {
+              toast.error(e)
+            }
+          }
+        }
       }
     }
+
+    sendCode()
   }, [confirmationCode, checkRecoveryCode, router])
 
   return (

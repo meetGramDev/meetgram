@@ -10,10 +10,13 @@ class NextSessionApi {
     this._instance = _instance
   }
 
+  public deleteSession() {
+    return this._instance.delete('/auth/session')
+  }
+
   public getSessionToken() {
     return this._instance.get('/auth/session')
   }
-
   public makeSession(credentials: string) {
     return this._instance.post('/auth/session', { credentials })
   }
