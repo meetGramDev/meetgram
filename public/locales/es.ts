@@ -1,3 +1,5 @@
+import {EsFlagIcon} from "@/shared/assets/icons/ES";
+
 import {LenType} from './en'
 
 export const es: LenType = {
@@ -17,7 +19,7 @@ export const es: LenType = {
     button: {
         Button: 'Botón',
         Link: 'Enlace que parece un botón',
-    },
+    }, componentLang: EsFlagIcon,
     createNewPasswordForm: {
         createNewPassword: 'Crear nueva contraseña',
         newPassword: 'Nueva contraseña',

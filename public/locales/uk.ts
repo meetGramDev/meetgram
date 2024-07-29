@@ -1,3 +1,5 @@
+import {UaFlagIcon} from "@/shared/assets/icons/UA";
+
 import {LenType} from './en'
 
 export const uk: LenType = {
@@ -14,7 +16,7 @@ export const uk: LenType = {
     button: {
         Button: 'Кнопка',
         Link: 'Посилання, що виглядає як кнопка',
-    },
+    }, componentLang: UaFlagIcon,
     createNewPasswordForm: {
         createNewPassword: 'Створити новий пароль',
         newPassword: 'Новий пароль',

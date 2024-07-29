@@ -47,14 +47,11 @@ export const Header = ({ isAuth = false, notification }: Props) => {
                   )}
                 </div>
               </Button>
-
               <LogOut email={email} />
             </>
           )}
-
           <LangSwitcher />
         </div>
-
         {!isAuth && (
           <div className={'flex gap-6'}>
             <Button as={Link} href={SIGN_IN} variant={'link'}>
