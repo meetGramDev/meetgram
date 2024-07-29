@@ -1,3 +1,5 @@
+import {UsFlagIcon} from "@/shared/assets/icons/US";
+
 export const en = {
     "Congratulations!": "Congratulations!",
     "Email sent": "Email sent",
@@ -13,7 +15,7 @@ export const en = {
         Button: 'Button',
         Link: 'Link that looks like a button',
     },
-    createNewPasswordForm: {
+    componentLang: UsFlagIcon, createNewPasswordForm: {
         createNewPassword: 'Create New Password',
         newPassword: 'New password',
         passwordConfirmation: 'Password confirmation',
@@ -21,6 +23,7 @@ export const en = {
     },
 
     errorsTr: {
+
         errorEmail: {InvalidEmail: 'Invalid email'},
         errorNewPassword: {
             refineMessage: 'Passwords must match',
