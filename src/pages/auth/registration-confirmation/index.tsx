@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
@@ -15,15 +15,24 @@ const RegistrationConfirmation: NextPageWithLayout = () => {
   const [registrationConfirmation, { error, isLoading, isSuccess }] =
     useRegistrationConfirmationMutation()
   const params = useSearchParams()
+  const [isConfirmed, setIsConfirmed] = useState(false)
 
   useClientProgress(isLoading)
 
   useEffect(() => {
     const data = async () => {
+      if (isConfirmed) {
+        return
+      }
       const confirmationCode = params?.get('code')
 
       try {
-        confirmationCode && (await registrationConfirmation({ confirmationCode }).unwrap())
+        confirmationCode &&
+          (await registrationConfirmation({ confirmationCode })
+            .unwrap()
+            .then(() => {
+              setIsConfirmed(true)
+            }))
       } catch (err) {
         const message = serverErrorHandler(err)
 
