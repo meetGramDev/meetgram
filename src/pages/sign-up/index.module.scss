@@ -1,8 +1,0 @@
-@import 'src/app/styles/mixins';
-
-.modalContent {
-  @include flex(column, center, center, 1rem);
-
-  max-width: 380px;
-  padding: 1rem 1.5rem;
-}

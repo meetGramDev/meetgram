@@ -1,9 +1,13 @@
-import { useMeQuery } from '@/entities/user'
+import { User, selectCurrentUserName } from '@/entities/user'
+import { useAppSelector } from '@/shared/config/storeHooks'
+import { getMainLayout } from '@/widgets/layouts/ui/MainLayout/MainLayout'
 
-export default function Profile() {
-  const { data } = useMeQuery()
+function Profile() {
+  const userName = useAppSelector(selectCurrentUserName)
 
-  console.log(data)
-
-  return <div>Profile</div>
+  return <User userName={userName} />
 }
+
+Profile.getLayout = getMainLayout
+
+export default Profile

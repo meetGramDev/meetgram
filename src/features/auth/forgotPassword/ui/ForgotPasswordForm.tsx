@@ -1,100 +1,107 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 //eslint-disable-next-line
 import ReCAPTCHA from 'react-google-recaptcha'
-import { UseFormSetError } from 'react-hook-form'
 
+import { ServerMessagesType } from '@/shared/api'
+import { SIGN_IN } from '@/shared/config/router'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Nullable } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
-import { clsx } from 'clsx'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './forgotPassword.module.scss'
 
 import { ForgotPasswordFormData, useForgotPassword } from '../lib/useForgotPassword'
 
-type ForgotPasswordType = {
-  onSubmit: (
-    data: {
-      baseUrl?: string
-      setError: UseFormSetError<{ email: string }>
-      setIsSentLink: (value: boolean) => void
-      token: Nullable<string>
-    } & ForgotPasswordFormData
-  ) => void
+export type ForgotPasswordDataType = {
+  baseUrl?: string
+  token: Nullable<string>
+} & ForgotPasswordFormData
+
+export type ForgotPasswordType = {
+  error?: ServerMessagesType[]
+  isFormSended: boolean
+  onSubmit: (data: ForgotPasswordDataType) => void
 }
 
-export const ForgotPasswordForm = ({ onSubmit }: ForgotPasswordType) => {
+export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPasswordType) => {
+  const { locale } = useRouter()
   const [token, setToken] = useState<null | string>(null)
-
-  const [isSentLink, setIsSentLink] = useState(false)
 
   const captchaRef = useRef<any>()
 
-  const classNames = {
-    btnLink: clsx(s.bntLink),
-    button: clsx(s.button),
-    card: clsx(s.card),
-    form: clsx(s.form),
-    hiddenText: s.hiddenText,
-    input: clsx(s.input),
-    recaptcha: clsx(s.captcha),
-    text: clsx(s.text),
-    title: clsx(s.title),
-  }
+  const { errorsTr, forgoPasswordForm } = translate(locale)
 
-  const { errors, handleSubmit, register, setError } = useForgotPassword()
+  const { errors, handleSubmit, isDirty, isValid, register, setError } = useForgotPassword({
+    InvalidEmail: errorsTr.errorEmail.InvalidEmail,
+  })
 
-  const siteKey = process.env.captchaSiteKey as string
+  useEffect(() => {
+    if (error) {
+      for (const e of error) {
+        setError('email', { message: e.message })
+      }
+    }
+  }, [error, setError])
 
   const onSubmitHandler = handleSubmit(data => {
+    const baseURL = window.location.origin
+
     onSubmit({
-      baseUrl: 'http://localhost:3000/',
+      baseUrl: `${baseURL}`,
       email: data.email,
-      setError,
-      setIsSentLink,
       token,
     })
     captchaRef?.current?.reset()
   })
 
   return (
-    <Card className={classNames.card}>
-      <h1 className={classNames.title}>Forgot Password</h1>
-      <form className={classNames.form} onSubmit={onSubmitHandler}>
+    <Card className={s.card}>
+      <h1 className={s.title}>{forgoPasswordForm.forgotPassword}</h1>
+      <form className={s.form} onSubmit={onSubmitHandler}>
         <Input
-          className={classNames.input}
-          label={'Email'}
+          className={s.input}
+          label={forgoPasswordForm.email}
           {...register('email')}
           error={errors.email?.message}
           placeholder={'Google@gmail.com'}
+          type={'email'}
         />
-        <div className={classNames.text}>
-          Enter your email and we will send you further instruction
-        </div>
-        {isSentLink && (
-          <div className={classNames.hiddenText}>
-            The link has been sent by email.
+        <div className={s.text}>{forgoPasswordForm.enterEmail}</div>
+        {isFormSended && (
+          <div className={s.hiddenText}>
+            {forgoPasswordForm.linkSent}
             <br />
-            If you do not receive an email send link again.
+            {forgoPasswordForm.sendAgain}
           </div>
         )}
-        <Button className={classNames.button} fullWidth type={'submit'} variant={'primary'}>
-          {!isSentLink ? 'Send Link' : 'Send Link Again'}
+        <Button
+          className={s.button}
+          disabled={token === null || !isValid || !isDirty}
+          fullWidth
+          type={'submit'}
+          variant={'primary'}
+        >
+          {!isFormSended
+            ? forgoPasswordForm.sendLink
+            : `${forgoPasswordForm.sendLink}${forgoPasswordForm.again}`}
         </Button>
       </form>
 
-      <Button as={Link} className={classNames.btnLink} href={'/sign-in'} variant={'link'}>
-        Back to Sign In
+      <Button as={Link} className={s.bntLink} href={SIGN_IN} variant={'link'}>
+        {forgoPasswordForm.backSignIn}
       </Button>
 
-      <div className={classNames.recaptcha}>
+      <div className={s.captcha}>
         <ReCAPTCHA
-          hl={'en'}
+          hl={locale}
+          key={locale}
           onChange={setToken}
           ref={captchaRef}
-          sitekey={siteKey}
+          sitekey={String(process.env.NEXT_PUBLIC_GOOGLE_CAPTCHA_SITE_KEY_ID)}
           theme={'dark'}
         />
       </div>

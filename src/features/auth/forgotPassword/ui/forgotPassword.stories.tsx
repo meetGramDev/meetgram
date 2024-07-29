@@ -15,12 +15,14 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    isFormSended: false,
     onSubmit: fn(),
   },
 }
 
 export const ReturnValue: Story = {
   args: {
+    isFormSended: false,
     onSubmit: data => {
       console.log(data)
     },

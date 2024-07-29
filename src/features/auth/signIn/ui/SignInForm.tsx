@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
-import { Tr } from '@/hooks/useLangSwitcher'
+import { ServerMessagesType } from '@/shared/api'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
+import { translate } from '@/shared/lib/langSwitcher'
+import { isErrorMessageString } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
 import { Input } from '@/shared/ui/input/input'
@@ -12,28 +14,27 @@ import { useRouter } from 'next/router'
 import { SignInFields, useSignIn } from '../lib/useSignIn'
 
 type Props = {
-  error?: string
+  error?: ServerMessagesType[] | string
   onSubmit: (data: SignInFields) => void
 }
 
 export const SignInForm = ({ error, onSubmit }: Props) => {
+  const locale = useRouter().locale
+  const { errorsTr, signInLang } = translate(locale)
   const {
     formState: { errors, isDirty, isValid },
     getValues,
     handleSubmit,
     register,
     setError,
-  } = useSignIn()
-
-  const locale = useRouter().locale
-  const { signInLang } = Tr(locale)
+  } = useSignIn(errorsTr)
 
   useEffect(() => {
-    if (error) {
-      let value: keyof SignInFields
+    if (isErrorMessageString(error)) {
+      let field: keyof SignInFields
 
-      for (value in getValues()) {
-        setError(value, { message: error })
+      for (field in getValues()) {
+        setError(field, { message: error })
       }
     }
   }, [error, setError, getValues])
@@ -49,15 +50,14 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
         <div className={'mb-9 flex flex-col gap-6'}>
           <Input
             error={errors.email?.message}
-            label={'Email'}
-            placeholder={'example@email.com'}
-            type={'text'}
+            label={signInLang.email}
             {...register('email')}
             aria-invalid={errors.email ? 'true' : 'false'}
+            type={'email'}
           />
           <Input
             error={errors.password?.message}
-            label={'Password'}
+            label={signInLang.password}
             type={'password'}
             {...register('password')}
             aria-invalid={errors.password ? 'true' : 'false'}

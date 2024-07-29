@@ -3,7 +3,7 @@
 .card {
   @include flex(column, center, normal, 15px);
 
-  width: 380px;
+  max-width: 380px;
   padding: 24px;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .infoWrapperWithError {
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
 
 .info {
@@ -47,14 +47,21 @@
 }
 
 .link {
+  font-weight: var(--fw-600);
   text-decoration: none;
 }
 
 .checkboxError {
   position: absolute;
-  bottom: -28px;
+
+  /* bottom: -28px; */
+  bottom: -36px;
   left: 0;
 
   font-size: 14px;
   color: var(--danger-color-500);
+}
+
+.hasAccount {
+  text-align: center;
 }

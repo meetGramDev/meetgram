@@ -1,21 +1,28 @@
-import type { AuthMeResponseType, RefreshTokenResponseType } from './types'
+import type { AuthMeResponseType, UserResponseWithPosts } from './types'
 
 import { baseApi } from '@/shared/api'
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    me: builder.query<AuthMeResponseType, void>({
-      query: () => ({
-        url: '/auth/me',
+    fullUserProfile: builder.query<UserResponseWithPosts, string>({
+      query: userName => ({
+        method: 'GET',
+        url: `/users/${userName}`,
       }),
     }),
-    refreshToken: builder.mutation<RefreshTokenResponseType, void>({
+    me: builder.query<AuthMeResponseType, void>({
+      providesTags: ['auth', 'login'],
       query: () => ({
-        method: 'POST',
-        url: '/auth/update-tokens',
+        url: '/auth/me',
       }),
     }),
   }),
 })
 
-export const { useLazyMeQuery, useMeQuery, useRefreshTokenMutation } = userApi
+// Export hooks for usage in functional components
+export const {
+  useFullUserProfileQuery,
+  useLazyMeQuery,
+  useMeQuery,
+  util: { getRunningQueriesThunk },
+} = userApi

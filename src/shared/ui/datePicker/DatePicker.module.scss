@@ -66,7 +66,7 @@
   :global(.react-datepicker__quarter-text--today),
   :global(.react-datepicker__year-text--today) {
     font-weight: var(--fw-700);
-    color: var(--accent-color-500);
+    color: var(--primary-color-500);
   }
 
   :global(.react-datepicker__day--keyboard-selected),
@@ -76,7 +76,7 @@
     color: var(--light-color-100);
     background-color: transparent;
     border-radius: 100%;
-    outline: 2px solid var(--accent-color-300);
+    outline: 2px solid var(--primary-color-300);
   }
 }
 
@@ -133,31 +133,31 @@
   /* select range */
   & :global(.react-datepicker__day--in-range),
   & :global(.react-datepicker__day--in-selecting-range) {
-    background-color: var(--accent-color-900);
+    background-color: var(--primary-color-900);
     border-radius: 0;
 
     &:hover {
-      background-color: var(--accent-color-700);
+      background-color: var(--primary-color-700);
     }
   }
 
   & :global(.react-datepicker__day--range-start) {
-    background-color: var(--accent-color-900);
+    background-color: var(--primary-color-900);
     border-top-left-radius: 50%;
     border-bottom-left-radius: 50%;
 
     &:hover {
-      background-color: var(--accent-color-700);
+      background-color: var(--primary-color-700);
     }
   }
 
   & :global(.react-datepicker__day--range-end) {
-    background-color: var(--accent-color-900);
+    background-color: var(--primary-color-900);
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
 
     &:hover {
-      background-color: var(--accent-color-700);
+      background-color: var(--primary-color-700);
     }
   }
 
@@ -173,13 +173,13 @@
 
   &:not(:global(.react-datepicker__day--in-range)):focus,
   &:not(:global(.react-datepicker__day--in-range)):focus-visible {
-    background-color: var(--accent-color-900);
+    background-color: var(--primary-color-900);
     border-radius: 100%;
-    outline: 2px solid var(--accent-color-300);
+    outline: 2px solid var(--primary-color-300);
   }
 
   &:global(.react-datepicker__day--selected):not(:global(.react-datepicker__day--in-range)) {
-    background-color: var(--accent-color-900);
+    background-color: var(--primary-color-900);
     border-radius: 100%;
   }
 
@@ -188,14 +188,14 @@
   }
 
   &:global(.react-datepicker__day--today):hover {
-    color: var(--accent-color-100);
+    color: var(--primary-color-100);
   }
 
   &:not(
       :global(.react-datepicker__day--selected),
       :global(.react-datepicker__day--in-range)
     ):hover {
-    background-color: var(--accent-color-700);
+    background-color: var(--primary-color-700);
     border-radius: 100%;
   }
 
@@ -214,6 +214,7 @@
 
   &.dateInput input:not([disabled='']) {
     color: var(--danger-color-500);
+    border-color: var(--danger-color-500);
   }
 }
 
@@ -241,7 +242,7 @@
   border: none;
 
   &:hover {
-    color: var(--accent-color-100);
+    color: var(--primary-color-100);
   }
 }
 

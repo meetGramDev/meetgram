@@ -1,10 +1,12 @@
 import React from 'react'
+import { useMediaQuery } from 'react-responsive'
 
-import { Tr } from '@/hooks/useLangSwitcher'
+import { translate } from '@/shared/lib/langSwitcher'
 import { Option } from '@/shared/ui/select/option'
 import { Select } from '@/shared/ui/select/select'
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
+
+import s from './langSwitcher.module.scss'
 
 type Props = {
   className?: string
@@ -18,15 +20,32 @@ export const LangSwitcher = ({ className }: Props) => {
     push({ pathname, query }, asPath, { locale: e })
   }
 
-  /*todo add className as in card and rename component and delete everything div and button */
+  const Lang = translate(locale).componentLang
+
+  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
+
   return (
-    <div className={clsx([className])}>
-      <Select onValueChange={changeLanguage} placeholder={Tr(locale).language}>
-        {locales?.map((el, i) => (
-          <Option key={i} value={el}>
-            {Tr(el).language}
-          </Option>
-        ))}
+    <div className={className}>
+      <Select
+        onValueChange={changeLanguage}
+        placeholder={
+          <div className={s.row}>
+            <Lang /> {!isMobile && translate(locale).language}
+          </div>
+        }
+      >
+        {locales?.map((el, i) => {
+          const Lang = translate(el).componentLang
+
+          return (
+            <Option key={i} value={el}>
+              <div className={s.row}>
+                <Lang />
+                {!isMobile && translate(el).language}
+              </div>
+            </Option>
+          )
+        })}
       </Select>
     </div>
   )

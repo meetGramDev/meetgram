@@ -1,0 +1,82 @@
+.userWrapper {
+  position: relative;
+  display: flex;
+  max-width: 1280px;
+}
+
+.scrollingWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 972px;
+}
+
+.userData {
+  display: flex;
+  margin-bottom: 48px;
+}
+
+.userInformation {
+  display: flex;
+  flex-direction: column;
+
+  width: 730px;
+  max-width: 730px;
+  margin-left: 38px;
+}
+
+.userPhoto {
+  width: 204px;
+  height: 204px;
+}
+
+.userName {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.userNameTitle {
+  font: var(--font-h1);
+}
+
+.buttonPublications {
+  margin-bottom: 23px;
+}
+
+.userLinks {
+  display: inline-block;
+  font: var(--font-regular-link);
+
+  & span {
+    font-weight: 700;
+  }
+}
+
+.userFollowing {
+  margin-right: 100px;
+}
+
+.userFollowers {
+  margin-right: 88px;
+}
+
+.aboutMeText {
+  min-width: 100%;
+  word-break: break-word;
+}
+
+.userFriendsWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(234px, 1fr));
+  gap: 12px;
+}
+
+.withoutPost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 16px;
+
+  border-top: 2px solid var(--light-color-100);
+}
