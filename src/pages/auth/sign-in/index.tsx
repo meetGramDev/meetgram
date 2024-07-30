@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useLazyMeQuery, useMeQuery } from '@/entities/user'
 import { SignInFields, SignInForm, useLoginMutation } from '@/features/auth/signIn'
 import { ServerMessagesType } from '@/shared/api'
 import { PROFILE } from '@/shared/config/router'
@@ -10,6 +11,8 @@ import { useRouter } from 'next/router'
 
 const SignIn: NextPageWithLayout = () => {
   const [login, { isLoading }] = useLoginMutation()
+  const [getMe, meData] = useLazyMeQuery()
+
   const router = useRouter()
 
   const [error, setError] = useState<ServerMessagesType[] | string>('')
@@ -20,9 +23,22 @@ const SignIn: NextPageWithLayout = () => {
     try {
       setError('')
 
-      await login(data).unwrap()
+      await login(data)
+        .unwrap()
+        .then(async res => {
+          await getMe().then(resp => {
+            router.push(`${PROFILE}/${resp?.data?.userId}`, undefined, { locale: router.locale })
+          })
+        })
 
-      router.push(PROFILE, undefined, { locale: router.locale })
+      // .then(async res => {
+      //   const { data: dataMe } = await getMe()
+      //
+      //   // if (!dataMe) {
+      //   //   return
+      //   // }
+      //   router.push(`${PROFILE}/${dataMe.userId}`, undefined, { locale: router.locale })
+      // })
     } catch (error) {
       const err = serverErrorHandler(error)
 

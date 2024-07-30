@@ -11,9 +11,9 @@ export const {
 } = {
   CREATE_NEW_PASSWORD: '/auth/create-new-password',
   FORGOT_PASSWORD: '/auth/forgot-password',
-  HOME: '/profile/userId',
+  HOME: '/profile',
   PRIVACY_POLICY: '/privacy-policy',
-  PROFILE: '/profile/userId',
+  PROFILE: '/profile',
   PROFILE_SETTINGS: '/profile/settings',
   SIGN_IN: '/auth/sign-in',
   SIGN_UP: '/auth/sign-up',

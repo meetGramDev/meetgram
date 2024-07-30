@@ -9,8 +9,9 @@ function UserId() {
 
   const userId = router.query.userId
 
-  return <User userName={'userName'} />
+  return <User userName={userName} />
 }
 
 UserId.getLayout = getMainLayout
+
 export default UserId
