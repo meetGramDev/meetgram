@@ -21,12 +21,12 @@ export function useGetSidebarItems() {
     return [
       { name: sidebarTr.home, path: `${HOME}/${userId}`, svg: HomeIcon },
       { name: sidebarTr.create, path: '', svg: CreateIcon },
-      { name: sidebarTr.myProfile, path: '', svg: MyProfileIcon },
+      { name: sidebarTr.myProfile, path: `${HOME}/${userId}`, svg: MyProfileIcon },
       { name: sidebarTr.messenger, path: '', svg: MessengerIcon },
       { name: sidebarTr.search, path: '', svg: Search },
 
       { name: sidebarTr.favorites, path: '', svg: FavoritesIcon },
       { name: sidebarTr.statistics, path: '', svg: StatisticsIcon },
     ]
-  }, [])
+  }, [userId])
 }

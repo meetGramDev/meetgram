@@ -13,6 +13,7 @@ import { useRouter } from 'next/router'
 const SignIn: NextPageWithLayout = () => {
   const [login, { isLoading }] = useLoginMutation()
   const [getMe, meData] = useLazyMeQuery()
+  const userId = useAppSelector(state => state.user.accountData.userId)
 
   const router = useRouter()
 
