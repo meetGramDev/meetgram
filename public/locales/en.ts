@@ -47,11 +47,13 @@ export const en = {
         again: ' Again',
         backSignIn: 'Back to Sign In',
         email: 'Email',
-        enterEmail: 'Enter your email and we will send you further instruction',
+        emailSent: 'Email sent',
+        enterEmail: 'Enter your email address and we will send you further instruction',
         forgotPassword: 'Forgot Password',
         linkSent: 'The link has been sent by email.',
         sendAgain: 'If you do not receive an email send link again.',
-        sendLink: 'Send Link'
+        sendLink: 'Send Link',
+        sendLinkDialog: 'We have sent a link to confirm your email to',
     },
 
     language: 'English',

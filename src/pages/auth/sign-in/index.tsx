@@ -25,7 +25,9 @@ const SignIn: NextPageWithLayout = () => {
     try {
       setError('')
 
-      await login(data).unwrap()
+      await login(data)
+        .unwrap()
+        .then(async () => {})
       await getMe().unwrap()
     } catch (error) {
       const err = serverErrorHandler(error)
