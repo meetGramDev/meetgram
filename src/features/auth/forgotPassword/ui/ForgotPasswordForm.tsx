@@ -34,7 +34,6 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
   const captchaRef = useRef<any>()
 
   const { errorsTr, forgoPasswordForm } = translate(locale)
-
   const { errors, handleSubmit, isDirty, isValid, register, setError } = useForgotPassword({
     InvalidEmail: errorsTr.errorEmail.InvalidEmail,
   })
