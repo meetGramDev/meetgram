@@ -22,7 +22,6 @@ export const PostsListMobile = ({ images }: List) => {
     }
   }, [selectedImageIndex])
 
-  // @ts-ignore
   return (
     <div className={s.container}>
       <div className={clsx(s.postsList, showGallery && s.tape)}>
@@ -31,7 +30,9 @@ export const PostsListMobile = ({ images }: List) => {
             className={clsx(s.item, showGallery && s.tapeItem)}
             key={image.id}
             onClick={() => handleTouch(index)}
-            ref={el => (itemRefs.current[index] = el as HTMLDivElement)}
+            ref={el => {
+              itemRefs.current[index] = el
+            }}
           >
             <Post
               alt={`${image.alt}`}

@@ -8,13 +8,13 @@ import photo4 from '../../../../../shared/assets/img/photo4.png'
 import photo5 from '../../../../../shared/assets/img/photo5.png'
 import photo6 from '../../../../../shared/assets/img/photo6.png'
 import photo7 from '../../../../../shared/assets/img/photo7.png'
-import { PostsList } from './PostsList'
+import { PostsListDesktop } from './PostsListDesktop'
 
 const meta = {
-  component: PostsList,
+  component: PostsListDesktop,
   tags: ['autodocs'],
   title: 'features/posts/postsList/postsListDesktop',
-} satisfies Meta<typeof PostsList>
+} satisfies Meta<typeof PostsListDesktop>
 
 export default meta
 type Story = StoryObj<typeof meta>

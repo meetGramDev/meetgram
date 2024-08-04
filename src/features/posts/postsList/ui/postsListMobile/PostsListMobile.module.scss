@@ -11,7 +11,8 @@
 }
 
 .container {
-  padding: 10px;
+  max-width: min-content;
+  padding: 15px;
 }
 
 .postsList {
@@ -19,8 +20,6 @@
   grid-auto-rows: 6.75rem;
   grid-template-columns: repeat(3, 6.75rem);
   gap: 3px;
-
-  max-width: min-content;
 }
 
 .item {
@@ -38,7 +37,7 @@
 .tape {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
   animation: slide-in-left 0.1s;
 }
 
