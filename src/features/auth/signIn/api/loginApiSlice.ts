@@ -9,7 +9,6 @@ import { ArgsLogin, SignInSuccessResponse } from './types'
 export const loginApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     login: builder.mutation<string, ArgsLogin>({
-      invalidatesTags: ['login'],
       queryFn: async (_args, _queryApi, _extraOptions, baseQuery) => {
         const loginResp = await baseQuery({ body: _args, method: 'POST', url: '/auth/login' })
 

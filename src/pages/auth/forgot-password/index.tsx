@@ -7,7 +7,7 @@ import {
 } from '@/features/auth/forgotPassword'
 import { ServerMessagesType } from '@/shared/api'
 import { serverErrorHandler, translate, useClientProgress } from '@/shared/lib'
-import { isErrorMessageString, isErrorServerMessagesType } from '@/shared/types'
+import { NextPageWithLayout, isErrorMessageString, isErrorServerMessagesType } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
 import { getAuthLayout } from '@/widgets/layouts'
@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 
 import s from './index.module.scss'
 
-const ForgotPassword = () => {
+const ForgotPassword: NextPageWithLayout = () => {
   const { locale } = useRouter()
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
   const [trigger, setTrigger] = useState<boolean>(false)

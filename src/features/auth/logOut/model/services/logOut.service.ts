@@ -5,7 +5,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 export const logoutService = baseApi.injectEndpoints({
   endpoints: builder => ({
     logOut: builder.mutation<string, void>({
-      invalidatesTags: ['auth'],
+      invalidatesTags: ['logout'],
       queryFn: async (_args, _queryApi, _extraOptions, baseQuery) => {
         const logoutRes = await baseQuery({ method: 'POST', url: '/auth/logout' })
 
