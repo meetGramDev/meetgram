@@ -50,11 +50,13 @@ export const es: LenType = {
         again: ' Otra Vez',
         backSignIn: 'Volver a iniciar sesión',
         email: 'Correo electrónico',
+        emailSent: 'Correo enviado',
         enterEmail: 'Ingresa tu correo electrónico y te enviaremos más instrucciones',
         forgotPassword: '¿Olvidaste la contraseña?',
         linkSent: 'El enlace ha sido enviado por correo electrónico.',
         sendAgain: 'Si no recibes un correo electrónico, envía el enlace nuevamente.',
-        sendLink: 'Enviar Enlace'
+        sendLink: 'Enviar Enlace',
+        sendLinkDialog: 'Hemos enviado un enlace para confirmar tu correo electrónico a',
     }, language: 'Spanish',
     sidebarTr: {
         create: 'Crear',
