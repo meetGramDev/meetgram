@@ -19,7 +19,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const PostsComponent: Story = {
+export const PostsListDesktopComponent: Story = {
   args: {
     images: [
       { alt: 'User photo', id: '1', src: photo },
