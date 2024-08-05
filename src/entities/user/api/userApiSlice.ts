@@ -11,7 +11,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
     me: builder.query<AuthMeResponseType, void>({
-      providesTags: ['logout'],
       query: () => ({
         url: '/auth/me',
       }),
@@ -19,7 +18,6 @@ export const userApi = baseApi.injectEndpoints({
   }),
 })
 
-// Export hooks for usage in functional components
 export const {
   useFullUserProfileQuery,
   useLazyMeQuery,

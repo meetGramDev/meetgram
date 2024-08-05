@@ -1,12 +1,14 @@
+import { logoutUser } from '@/entities/user'
 import { baseApi } from '@/shared/api'
 import { nextSessionApi } from '@/shared/api/_next-auth'
+import { StatusCode } from '@/shared/enum'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 export const logoutService = baseApi.injectEndpoints({
   endpoints: builder => ({
     logOut: builder.mutation<string, void>({
-      invalidatesTags: ['logout'],
       queryFn: async (_args, _queryApi, _extraOptions, baseQuery) => {
+        debugger
         const logoutRes = await baseQuery({ method: 'POST', url: '/auth/logout' })
 
         if (logoutRes.error) {
@@ -15,14 +17,18 @@ export const logoutService = baseApi.injectEndpoints({
 
         const sessionRes = await nextSessionApi.deleteSession()
 
-        return sessionRes.data
-          ? { data: sessionRes.data.message }
-          : {
-              error: {
-                error: 'An error has occurred when logged out',
-                status: 'CUSTOM_ERROR',
-              } as FetchBaseQueryError,
-            }
+        if (sessionRes.status === StatusCode.BadRequest) {
+          return {
+            error: {
+              error: 'An error has occurred when logged out',
+              status: 'CUSTOM_ERROR',
+            } as FetchBaseQueryError,
+          }
+        }
+
+        _queryApi.dispatch(logoutUser())
+
+        return { data: sessionRes.data.message }
       },
     }),
   }),
