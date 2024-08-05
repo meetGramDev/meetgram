@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
+import { baseApi } from '@/shared/api'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
-import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
+import { serverErrorHandler } from '@/shared/lib'
 import { Button } from '@/shared/ui/button/button'
 import { Dialog } from '@/shared/ui/dialog'
 import { clsx } from 'clsx'
@@ -21,25 +23,26 @@ type Props = {
 export const LogOut = ({ disabled, email }: Props) => {
   const [logout] = useLogOutMutation()
   const [open, setOpen] = useState(false)
+  const dispatch = useAppDispatch()
 
   const router = useRouter()
-  const dispatch = useAppDispatch()
 
   const handleLogOut = async () => {
     try {
-      await logout().unwrap()
+      const resp = await logout().unwrap()
+
+      if (resp) {
+        dispatch(baseApi.util.resetApiState())
+        router.push(SIGN_IN, undefined, { locale: router.locale })
+      }
 
       // router.prefetch(SIGN_IN, SIGN_IN, { locale: router.locale })
-      // router.push(SIGN_IN, SIGN_IN, { locale: router.locale })
-      router.reload()
+      // router.reload()
     } catch (err) {
-      if (isFetchBaseQueryError(err)) {
-        const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
+      const message = serverErrorHandler(err)
 
-        router.push(SIGN_IN)
-        console.error(errMsg, { variant: 'error' })
-      } else if (isErrorWithMessage(err)) {
-        console.error(err.message, { variant: 'error' })
+      if (typeof message === 'string') {
+        toast.error(message)
       }
     } finally {
       setOpen(false)
