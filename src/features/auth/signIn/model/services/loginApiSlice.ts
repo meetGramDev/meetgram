@@ -4,7 +4,7 @@ import { nextSessionApi } from '@/shared/api/_next-auth'
 import { StatusCode } from '@/shared/enum'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
-import { ArgsLogin, SignInSuccessResponse } from './types'
+import { ArgsLogin, SignInSuccessResponse } from '../types/services'
 
 export const loginApi = baseApi.injectEndpoints({
   endpoints: builder => ({

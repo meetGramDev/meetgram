@@ -7,7 +7,7 @@ import { serverErrorHandler } from '@/shared/lib'
 import { CodeResponse, NonOAuthError, useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
-import { useGoogleLoginMutation } from '../api/googleLoginApiSlice'
+import { useGoogleLoginMutation } from '../model/services/googleLoginApiSlice'
 import { generateCryptoRandomState } from './generateCryptoRandomState'
 /**
  * Hook manages all necessary requests to auth with google
