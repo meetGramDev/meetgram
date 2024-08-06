@@ -1,6 +1,8 @@
 import {RuFlagIcon} from "@/shared/assets/icons/RU";
 
-import {LenType} from './en'
+import {LenType} from "./types";
+
+/*import {LenType} from './types'*/
 
 export const ru: LenType = {
     "Congratulations!": "Поздравляем!",

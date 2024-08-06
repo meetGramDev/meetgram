@@ -1,6 +1,7 @@
 import {EsFlagIcon} from "@/shared/assets/icons/ES";
 
-import {LenType} from './en'
+import {LenType} from "./types";
+
 
 export const es: LenType = {
     "Congratulations!": "¡Felicidades!",

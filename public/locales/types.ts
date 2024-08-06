@@ -1,8 +1,7 @@
 import {UsFlagIcon} from "@/shared/assets/icons/US";
 
-import {LenType} from "./types";
 
-export const en: LenType = {
+const type = {
     "Congratulations!": "Congratulations!",
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
@@ -95,12 +94,5 @@ export const en: LenType = {
     test: 'Lorem Ipsum is simply dummy text of the printing',
 }
 
-const {errorsTr, sidebarTr} = en
-const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
-
-
-export type ErrorsTr = typeof errorsTr
-export type ErrorValidationFields = typeof errorValidationFields
-export type ErrorEmail = typeof errorEmail
-
+export type LenType = typeof type
 

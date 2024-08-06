@@ -1,6 +1,8 @@
 import {ByFlagIcon} from "@/shared/assets/icons/BY";
 
-import {LenType} from './en'
+import {LenType} from "./types";
+
+/*import {LenType} from './types'*/
 
 export const be: LenType = {
     "Congratulations!": "Віншуем!",

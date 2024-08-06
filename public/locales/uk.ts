@@ -1,6 +1,8 @@
 import {UaFlagIcon} from "@/shared/assets/icons/UA";
 
-import {LenType} from './en'
+import {LenType} from "./types";
+
+/*import {LenType} from './types'*/
 
 export const uk: LenType = {
     "Congratulations!": "Вітаємо!",
