@@ -1,13 +1,14 @@
 .userWrapper {
   position: relative;
-  display: flex;
-  max-width: 1280px;
-}
 
-.scrollingWrapper {
+  overflow: scroll;
   display: flex;
   flex-direction: column;
-  max-width: 972px;
+
+  width: 100%;
+  max-width: 1540px;
+  height: calc(100vh - var(--header-height));
+  padding: 2rem 3.75rem 2rem 1.5rem;
 }
 
 .userData {
@@ -18,9 +19,7 @@
 .userInformation {
   display: flex;
   flex-direction: column;
-
-  width: 730px;
-  max-width: 730px;
+  width: 100%;
   margin-left: 38px;
 }
 
@@ -40,11 +39,15 @@
 }
 
 .buttonPublications {
-  margin-bottom: 23px;
+  display: flex;
+  gap: 100px;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin-bottom: 24px;
 }
 
 .userLinks {
-  display: inline-block;
   font: var(--font-regular-link);
 
   & span {
@@ -52,31 +55,14 @@
   }
 }
 
-.userFollowing {
-  margin-right: 100px;
-}
-
-.userFollowers {
-  margin-right: 88px;
-}
-
 .aboutMeText {
   min-width: 100%;
   word-break: break-word;
 }
 
-.userFriendsWrapper {
+.postsList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(234px, 1fr));
-  gap: 12px;
-}
-
-.withoutPost {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding-top: 16px;
-
-  border-top: 2px solid var(--light-color-100);
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  justify-items: center;
 }

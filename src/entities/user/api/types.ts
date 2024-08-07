@@ -1,3 +1,5 @@
+import { Profile } from '@/features/userSettings'
+
 export type AuthMeResponseType = {
   email: string
   isBlocked: boolean
@@ -17,18 +19,11 @@ export type Avatar = {
   width: number
 }
 
-export type UserResponseWithPosts = {
-  aboutMe: string
-  avatars: Avatar[]
-  city: string
-  dateOfBirth: string
-  firstName: string
+export type FullUserProfile = {
   followersCount: number
   followingCount: number
-  id: number
   isFollowedBy: boolean
   isFollowing: boolean
-  lastName: string
   publicationsCount: number
-  userName: string
-}
+  region: string
+} & Profile
