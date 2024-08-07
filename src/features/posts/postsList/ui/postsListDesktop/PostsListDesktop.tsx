@@ -1,20 +1,23 @@
 import { Post } from '@/entities/post/ui/Post'
+import { PublicPost } from '@/features/profile/addPost'
 
 import s from './PostsList.module.scss'
 
-import { List } from '../../model/types/postsList'
+type Props = {
+  posts: PublicPost[]
+}
 
-export const PostsListDesktop = ({ images }: List) => {
+export const PostsListDesktop = ({ posts }: Props) => {
   return (
     <div className={s.postsList}>
-      {images.map(image => (
-        <div className={s.item} key={image.id}>
+      {posts?.map(post => (
+        <div className={s.item} key={post.id}>
           <Post
-            alt={image.alt}
+            alt={'post'}
             className={s.image}
-            height={image.height}
-            src={image.src}
-            width={image.width}
+            height={post.images[0].height}
+            src={post.images[0].url}
+            width={post.images[0].width}
           />
         </div>
       ))}
