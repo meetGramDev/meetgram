@@ -6,7 +6,6 @@
   flex-direction: column;
 
   width: 100%;
-  max-width: 1540px;
   height: calc(100vh - var(--header-height));
   padding: 2rem 3.75rem 2rem 1.5rem;
 }
@@ -58,11 +57,4 @@
 .aboutMeText {
   min-width: 100%;
   word-break: break-word;
-}
-
-.postsList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
-  justify-items: center;
 }

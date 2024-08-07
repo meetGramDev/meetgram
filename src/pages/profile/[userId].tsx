@@ -23,7 +23,7 @@ function UserId(): NextPageWithLayout {
   }
 
   // @ts-ignore
-  return <User posts={publicPosts?.items} userData={userData} />
+  return <User posts={publicPosts ?? []} userData={userData} />
 }
 
 UserId.getLayout = getMainLayout
