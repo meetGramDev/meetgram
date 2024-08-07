@@ -37,7 +37,7 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
           type={'password'}
           {...register('confirmPassword')}
         />
-        <div className={s.text}>Your password must be between 6 and 20 characters</div>
+        <div className={s.text}>{createNewPasswordForm.passwordTerm}</div>
         <Button className={s.button} disabled={isDirty && !isValid} fullWidth variant={'primary'}>
           {createNewPasswordForm.createNewPassword}
         </Button>

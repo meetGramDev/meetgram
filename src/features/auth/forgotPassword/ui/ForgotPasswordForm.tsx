@@ -47,7 +47,7 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
   }, [error, setError])
 
   const onSubmitHandler = handleSubmit(data => {
-    const baseURL = window.location.origin
+    const baseURL = window.location.origin + '/' + (locale || '') + '/'
 
     onSubmit({
       baseUrl: `${baseURL}`,
