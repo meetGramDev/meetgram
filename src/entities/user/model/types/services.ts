@@ -20,6 +20,7 @@ export type Avatar = {
 }
 
 export type FullUserProfile = {
+  createdAt?: string
   followersCount: number
   followingCount: number
   isFollowedBy: boolean
