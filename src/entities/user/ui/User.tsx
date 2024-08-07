@@ -18,8 +18,6 @@ type Props = {
 export const User = ({ posts, userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
 
-  console.log(userData)
-
   return (
     <div className={s.userWrapper}>
       <div className={s.userData}>
