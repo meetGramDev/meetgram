@@ -3,11 +3,12 @@ import Image from 'next/image'
 
 type PostType = {
   alt: string
+  className?: string
   height?: number
   src: StaticImport | string
   width?: number
 }
 
-export const Post = ({ alt, height = 228, src, width = 234 }: PostType) => {
-  return <Image alt={alt} height={height} src={src} width={width} />
+export const Post = ({ alt, className, height = 228, src, width = 234 }: PostType) => {
+  return <Image alt={alt} className={className} height={height} src={src} width={width} />
 }
