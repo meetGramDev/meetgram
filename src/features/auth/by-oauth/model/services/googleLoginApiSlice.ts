@@ -7,7 +7,6 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 export const googleLoginApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     googleLogin: builder.mutation<string, string>({
-      invalidatesTags: ['login'],
       queryFn: async (_arg, _queryApi, _extraOptions, baseQuery) => {
         const googleResp = await baseQuery({
           body: { code: _arg },

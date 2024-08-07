@@ -10,7 +10,7 @@ import {
 } from '@/features/userSettings'
 import { ServerMessagesType } from '@/shared/api'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
-import { isErrorServerMessagesType } from '@/shared/types'
+import { NextPageWithLayout, isErrorServerMessagesType } from '@/shared/types'
 import { TabSwitcher } from '@/shared/ui'
 import { TabType } from '@/shared/ui/tabSwitcher/TabSwitcher'
 import { getMainLayout } from '@/widgets/layouts/ui/MainLayout/MainLayout'
@@ -24,7 +24,7 @@ const tabs: TabType[] = [
   { text: 'My Payments', value: 'myPayments' },
 ]
 
-function Settings() {
+const Settings: NextPageWithLayout = () => {
   const { data, isLoading } = useGetProfileQuery()
 
   const [activeTab, setActiveTab] = useState(tabs[0].value)

@@ -1,5 +1,5 @@
-export * from './api/types'
-export * from './api/userApiSlice'
 export * from './model/selectors/selectCurrentUser'
+export { useFullUserProfileQuery } from './model/services/userApiSlice'
 export * from './model/slice/userSlice'
+export * from './model/types/services'
 export { User } from './ui/User'

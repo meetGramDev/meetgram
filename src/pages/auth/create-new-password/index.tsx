@@ -5,10 +5,11 @@ import { CreateNewPasswordValues } from '@/features/auth/createNewPassword/lib/u
 import { useAddNewPasswordMutation } from '@/features/auth/forgotPassword/model/services/forgotPassword.service'
 import { SIGN_IN } from '@/shared/config/router'
 import { CONFIRMATION_CODE_LS_KEY } from '@/shared/const/consts'
+import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 import { useRouter } from 'next/router'
 
-const CreateNewPassword = () => {
+const CreateNewPassword: NextPageWithLayout = () => {
   const [addNewPassword, {}] = useAddNewPasswordMutation()
   const [confirmationCode, setConfirmationCode] = useState('')
   const router = useRouter()
