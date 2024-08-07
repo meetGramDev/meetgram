@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 import s from './User.module.scss'
 
-import { useFullUserProfileQuery } from '../api/userApiSlice'
+import { useFullUserProfileQuery } from '../model/services/userApiSlice'
 
 type Props = {
   userName: string

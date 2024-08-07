@@ -1,4 +1,4 @@
-import type { AuthMeResponseType, UserResponseWithPosts } from './types'
+import type { AuthMeResponseType, UserResponseWithPosts } from '../types/services'
 
 import { baseApi } from '@/shared/api'
 
@@ -11,7 +11,6 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
     me: builder.query<AuthMeResponseType, void>({
-      providesTags: ['auth', 'login'],
       query: () => ({
         url: '/auth/me',
       }),
@@ -19,7 +18,6 @@ export const userApi = baseApi.injectEndpoints({
   }),
 })
 
-// Export hooks for usage in functional components
 export const {
   useFullUserProfileQuery,
   useLazyMeQuery,

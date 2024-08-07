@@ -6,7 +6,7 @@ import Img from '@/shared/assets/img/time-management.png'
 import { CREATE_NEW_PASSWORD, FORGOT_PASSWORD } from '@/shared/config/router'
 import { CONFIRMATION_CODE_LS_KEY } from '@/shared/const/consts'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
-import { isErrorMessageString } from '@/shared/types'
+import { NextPageWithLayout, isErrorMessageString } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { getAuthLayout } from '@/widgets/layouts'
 import Image from 'next/image'
@@ -16,7 +16,7 @@ import { useRouter } from 'next/router'
 
 import style from './index.module.scss'
 
-const Recovery = () => {
+const Recovery: NextPageWithLayout = () => {
   const [checkRecoveryCode, { isLoading }] = useCheckRecoveryCodeMutation()
   const params = useSearchParams()
   const [checkIsFailed, setCheckIsFailed] = useState(false)
