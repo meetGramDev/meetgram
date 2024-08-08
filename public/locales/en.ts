@@ -1,4 +1,4 @@
-import {UsFlagIcon} from "@/shared/assets/icons/US";
+import { UsFlagIcon } from "@/shared/assets/icons/US";
 
 export const en = {
     "Congratulations!": "Congratulations!",
@@ -58,6 +58,10 @@ export const en = {
     },
 
     language: 'English',
+    policies: {
+        "Privacy Policy": "Privacy Policy",
+        "Terms Of Service": "Terms Of Service",
+    },
     sidebarTr: {
         create: 'Create',
         favorites: 'Favorites',
@@ -91,7 +95,7 @@ export const en = {
         termServ: 'Terms of Service',
         username: 'Username',
     },
-    test: 'Lorem Ipsum is simply dummy text of the printing',
+    test: 'Lorem Ipsum is simply dummy text of the printing'
 }
 
 export type LenType = typeof en

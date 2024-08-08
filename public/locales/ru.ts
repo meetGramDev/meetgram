@@ -1,6 +1,6 @@
-import {RuFlagIcon} from "@/shared/assets/icons/RU";
+import { RuFlagIcon } from "@/shared/assets/icons/RU";
 
-import {LenType} from './en'
+import { LenType } from './en';
 
 export const ru: LenType = {
     "Congratulations!": "Поздравляем!",
@@ -17,13 +17,13 @@ export const ru: LenType = {
         Button: 'Кнопка',
         Link: 'Ссылка, которая выглядит как кнопка',
     },
-    componentLang: RuFlagIcon, createNewPasswordForm: {
+    componentLang: RuFlagIcon,
+    createNewPasswordForm: {
         createNewPassword: 'Создать новый пароль',
         newPassword: 'Новый пароль',
         passwordConfirmation: 'Подтверждение пароля',
         passwordTerm: 'Ваш пароль должен быть от 6 до 20 символов',
-    },
-    errorsTr: {
+    }, errorsTr: {
         errorEmail: {InvalidEmail: 'Неправильный адрес электронной почты'},
         errorNewPassword: {
             refineMessage: 'Пароли должны совпадать',
@@ -56,6 +56,10 @@ export const ru: LenType = {
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
     },
     language: 'Russia',
+    policies: {
+        "Privacy Policy": "Политика конфиденциальности",
+        "Terms Of Service": "Условия использования",
+    },
     sidebarTr: {
         create: 'Создать',
         favorites: 'Избранное',

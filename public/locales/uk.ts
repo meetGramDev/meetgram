@@ -1,6 +1,6 @@
-import {UaFlagIcon} from "@/shared/assets/icons/UA";
+import { UaFlagIcon } from "@/shared/assets/icons/UA";
 
-import {LenType} from './en'
+import { LenType } from './en';
 
 export const uk: LenType = {
     "Congratulations!": "Вітаємо!",
@@ -57,6 +57,10 @@ export const uk: LenType = {
     },
 
     language: 'Ukraine',
+    policies: {
+        "Privacy Policy": "Політика конфіденційності",
+        "Terms Of Service": "Умови використання",
+    },
     sidebarTr: {
         create: 'Створити',
         favorites: 'Вибране',

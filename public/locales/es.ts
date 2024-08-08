@@ -1,6 +1,6 @@
-import {EsFlagIcon} from "@/shared/assets/icons/ES";
+import { EsFlagIcon } from "@/shared/assets/icons/ES";
 
-import {LenType} from './en'
+import { LenType } from './en';
 
 export const es: LenType = {
     "Congratulations!": "¡Felicidades!",
@@ -57,6 +57,10 @@ export const es: LenType = {
         sendLink: 'Enviar Enlace',
         sendLinkDialog: 'Hemos enviado un enlace para confirmar tu correo electrónico a',
     }, language: 'Spanish',
+    policies: {
+        "Privacy Policy": "Política de Privacidad",
+        "Terms Of Service": "Condiciones de uso",
+    },
     sidebarTr: {
         create: 'Crear',
         favorites: 'Favoritos',
