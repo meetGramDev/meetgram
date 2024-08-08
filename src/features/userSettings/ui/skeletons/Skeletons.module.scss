@@ -1,0 +1,53 @@
+@import '@/app/styles/mixins';
+
+.formWrapper {
+  @include flex(column, center, center, 1.5rem);
+
+  width: 45vw;
+  padding-bottom: 1.5rem;
+}
+
+.fieldWrapper {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.labelSkeleton {
+  @include skeleton-animation;
+
+  width: 40%;
+  height: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.inputSkeleton {
+  @include skeleton-animation;
+
+  width: 100%;
+  height: 3rem;
+}
+
+.textareaSkeleton {
+  @include skeleton-animation;
+
+  height: 5rem;
+}
+
+.selectsWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 0.8rem;
+  width: 100%;
+
+  & .labelSkeleton {
+    grid-row: 1 / 2;
+  }
+}
+
+.photoSkeleton {
+  @include skeleton-animation;
+
+  width: 100%;
+  height: 2.25rem;
+  border-radius: 2px;
+}
