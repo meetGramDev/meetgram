@@ -1,6 +1,8 @@
 import {RuFlagIcon} from "@/shared/assets/icons/RU";
 
-import {LenType} from './en'
+import {LenType} from "./en";
+
+/*import {LenType} from './types'*/
 
 export const ru: LenType = {
     "Congratulations!": "Поздравляем!",
@@ -55,7 +57,7 @@ export const ru: LenType = {
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
     },
-    language: 'Russia',
+    language: 'Russian',
     sidebarTr: {
         create: 'Создать',
         favorites: 'Избранное',

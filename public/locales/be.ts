@@ -1,6 +1,6 @@
 import {ByFlagIcon} from "@/shared/assets/icons/BY";
 
-import {LenType} from './en'
+import {LenType} from "./en";
 
 export const be: LenType = {
     "Congratulations!": "Віншуем!",
@@ -54,7 +54,7 @@ export const be: LenType = {
         sendLink: 'Адправіць Спасылку',
         sendLinkDialog: 'Мы адправілі спасылку для пацверджання вашай электроннай пошты на',
     },
-    language: 'Belarus',
+    language: 'Belarusian',
     sidebarTr: {
         create: 'Стварыць',
         favorites: 'Абранае',
