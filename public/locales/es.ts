@@ -6,9 +6,8 @@ import {LenType} from "./en";
 export const es: LenType = {
     "Congratulations!": "¡Felicidades!",
     "Email sent": "Correo enviado",
-
-
     "Email verification link expired": "El enlace ha caducado",
+
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
     "Ok": "Ok",
     "Resend verification link": "Reenviar enlace de verificación",

@@ -15,6 +15,7 @@ export const en = {
     button: {
         Button: 'Button',
         Link: 'Link that looks like a button',
+
     },
     componentLang: UsFlagIcon, createNewPasswordForm: {
         createNewPassword: 'Create New Password',
