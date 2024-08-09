@@ -8,7 +8,6 @@ export const logoutService = baseApi.injectEndpoints({
   endpoints: builder => ({
     logOut: builder.mutation<string, void>({
       queryFn: async (_args, _queryApi, _extraOptions, baseQuery) => {
-        debugger
         const logoutRes = await baseQuery({ method: 'POST', url: '/auth/logout' })
 
         if (logoutRes.error) {

@@ -56,7 +56,7 @@ export const uk: LenType = {
         sendLinkDialog: 'Ми відправили посилання для підтвердження вашої електронної пошти на',
     },
 
-    language: 'Ukraine',
+    language: 'Українська',
     policies: {
         "Privacy Policy": "Політика конфіденційності",
         "Terms Of Service": "Умови використання",
