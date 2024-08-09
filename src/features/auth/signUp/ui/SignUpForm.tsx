@@ -1,10 +1,10 @@
-'use client'
 import { useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
 import { ServerMessagesType } from '@/shared/api'
 import { PRIVACY_POLICY, SIGN_IN, TERMS_OF_SERVICE } from '@/shared/config/router'
+import { useChangeZodErrorLang } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui'
 import { Card } from '@/shared/ui/card'
@@ -38,6 +38,8 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
     isValid,
     register,
     setError,
+    touchedFields,
+    trigger,
   } = useSignUp(errorsTr)
 
   const isApprovedError = errors.isApproved?.message
@@ -55,6 +57,8 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
       }
     }
   }, [error, setError, getValues])
+
+  useChangeZodErrorLang(touchedFields, key => trigger(key))
 
   return (
     <Card className={s.card}>
@@ -91,7 +95,7 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
           <Controller
             control={control}
             name={'isApproved'}
-            render={({ field: { onChange, value } }) => {
+            render={({ field: { onChange, value, ...rest } }) => {
               const onValueChange = (value: boolean) => {
                 if (!value) {
                   setError('isApproved', {
@@ -104,7 +108,7 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
                 onChange(value)
               }
 
-              return <Checkbox checked={value} onValueChange={onValueChange} />
+              return <Checkbox checked={value} onValueChange={onValueChange} {...rest} />
             }}
           />
           <span className={s.info}>
