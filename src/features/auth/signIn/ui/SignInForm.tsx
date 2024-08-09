@@ -41,7 +41,7 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
     }
   }, [error, setError, getValues])
 
-  useChangeZodErrorLang(touchedFields, key => trigger(key), [locale || 'en'])
+  useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName), [locale || 'en'])
 
   return (
     <Card className={'min-w-[22.5rem] p-6 text-regular16 text-light-100'}>

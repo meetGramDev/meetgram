@@ -58,7 +58,7 @@ export const SignUpForm = ({ error, onSubmit }: Props) => {
     }
   }, [error, setError, getValues])
 
-  useChangeZodErrorLang(touchedFields, key => trigger(key))
+  useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName))
 
   return (
     <Card className={s.card}>
