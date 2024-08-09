@@ -56,7 +56,7 @@ export const es: LenType = {
         sendAgain: 'Si no recibes un correo electrónico, envía el enlace nuevamente.',
         sendLink: 'Enviar Enlace',
         sendLinkDialog: 'Hemos enviado un enlace para confirmar tu correo electrónico a',
-    }, language: 'Spanish',
+    }, language: 'Español',
     policies: {
         "Privacy Policy": "Política de Privacidad",
         "Terms Of Service": "Condiciones de uso",

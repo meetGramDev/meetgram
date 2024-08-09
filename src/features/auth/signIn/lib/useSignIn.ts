@@ -6,7 +6,7 @@ import { z } from 'zod'
 
 import { ErrorsTr } from '../../../../../public/locales/en'
 
-const getSignInSchema = (errorTr: ErrorsTr | undefined = undefined) => {
+const getSignInSchema = (errorTr?: ErrorsTr) => {
   const errorValidationFields = errorTr?.errorValidationFields
   const errorEmail = errorTr?.errorEmail
 
@@ -21,12 +21,14 @@ const signInSchema = getSignInSchema()
 export type SignInFields = z.infer<typeof signInSchema>
 
 export function useSignIn(errorsTr: ErrorsTr) {
-  const { formState, getValues, handleSubmit, register, setError } = useForm<SignInFields>({
-    defaultValues: { email: '', password: '' },
-    mode: 'onBlur',
-    reValidateMode: 'onChange',
-    resolver: zodResolver(getSignInSchema(errorsTr)),
-  })
+  const { formState, getValues, handleSubmit, register, setError, trigger } = useForm<SignInFields>(
+    {
+      defaultValues: { email: '', password: '' },
+      mode: 'onBlur',
+      reValidateMode: 'onChange',
+      resolver: zodResolver(getSignInSchema(errorsTr)),
+    }
+  )
 
-  return { formState, getValues, handleSubmit, register, setError }
+  return { formState, getValues, handleSubmit, register, setError, trigger }
 }

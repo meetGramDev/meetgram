@@ -1,3 +1,4 @@
+import { useChangeZodErrorLang } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Button } from '@/shared/ui/button/button'
 import { Card } from '@/shared/ui/card'
@@ -17,7 +18,10 @@ export const CreateNewPasswordForm = ({ onSubmit }: PropsType) => {
 
   const { createNewPasswordForm, errorsTr } = translate(locale)
 
-  const { errors, handleSubmit, isDirty, isValid, register } = useCreateNewPassword(errorsTr)
+  const { errors, handleSubmit, isDirty, isValid, register, touchedFields, trigger } =
+    useCreateNewPassword(errorsTr)
+
+  useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName))
 
   return (
     <Card className={s.card}>

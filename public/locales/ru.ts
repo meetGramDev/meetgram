@@ -55,7 +55,7 @@ export const ru: LenType = {
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
     },
-    language: 'Russia',
+    language: 'Русский',
     policies: {
         "Privacy Policy": "Политика конфиденциальности",
         "Terms Of Service": "Условия использования",
