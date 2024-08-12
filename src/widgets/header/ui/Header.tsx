@@ -14,7 +14,9 @@ type Props = {
 
 export const Header = ({ notification }: Props) => {
   const router = useRouter()
+
   const t = translate(router.locale)
+  /*  const { t } = useTranslate()*/
 
   const isAuth = useAppSelector(selectIsUserAuth)
 
