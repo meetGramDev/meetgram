@@ -1,5 +1,6 @@
 import { RuFlagIcon } from "@/shared/assets/icons/RU";
 
+
 import { LenType } from './en';
 
 export const ru: LenType = {
@@ -55,11 +56,12 @@ export const ru: LenType = {
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
     },
+
     language: 'Русский',
     policies: {
         "Privacy Policy": "Политика конфиденциальности",
         "Terms Of Service": "Условия использования",
-    },
+
     sidebarTr: {
         create: 'Создать',
         favorites: 'Избранное',

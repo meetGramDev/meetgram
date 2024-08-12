@@ -1,5 +1,6 @@
 import { EsFlagIcon } from "@/shared/assets/icons/ES";
 
+
 import { LenType } from './en';
 
 export const es: LenType = {
