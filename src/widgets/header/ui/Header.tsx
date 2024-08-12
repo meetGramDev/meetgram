@@ -12,7 +12,10 @@ type Props = {
 }
 
 export const Header = ({ notification }: Props) => {
-  /* const t = translate(useRouter().locale)*/
+
+  const router = useRouter()
+  const t = translate(router.locale)
+
   const isAuth = useAppSelector(selectIsUserAuth)
 
   const t = useTranslate()
@@ -52,7 +55,7 @@ export const Header = ({ notification }: Props) => {
           <LangSwitcher />
         </div>
 
-        {!isAuth && (
+        {!router.pathname.startsWith('/auth') && !isAuth && (
           <div className={'flex gap-6'}>
             <Button as={Link} href={SIGN_IN} variant={'link'}>
               {t('Sign In')}

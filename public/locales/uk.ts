@@ -1,8 +1,8 @@
-import {UaFlagIcon} from "@/shared/assets/icons/UA";
+import { UaFlagIcon } from "@/shared/assets/icons/UA";
 
-import {LenType} from "./en";
 
-/*import {LenType} from './types'*/
+import { LenType } from './en';
+
 
 export const uk: LenType = {
     "Congratulations!": "Вітаємо!",
@@ -58,7 +58,13 @@ export const uk: LenType = {
         sendLinkDialog: 'Ми відправили посилання для підтвердження вашої електронної пошти на',
     },
 
-    language: 'Ukrainian',
+
+    language: 'Українська',
+    policies: {
+        "Privacy Policy": "Політика конфіденційності",
+        "Terms Of Service": "Умови використання",
+    },
+
     sidebarTr: {
         create: 'Створити',
         favorites: 'Вибране',

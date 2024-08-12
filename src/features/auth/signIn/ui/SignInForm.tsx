@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
 import { ServerMessagesType } from '@/shared/api'
 import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
+import { useChangeZodErrorLang } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { isErrorMessageString } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
@@ -22,11 +23,12 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
   const locale = useRouter().locale
   const { errorsTr, signInLang } = translate(locale)
   const {
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, touchedFields },
     getValues,
     handleSubmit,
     register,
     setError,
+    trigger,
   } = useSignIn(errorsTr)
 
   useEffect(() => {
@@ -38,6 +40,8 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
       }
     }
   }, [error, setError, getValues])
+
+  useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName), [locale || 'en'])
 
   return (
     <Card className={'min-w-[22.5rem] p-6 text-regular16 text-light-100'}>

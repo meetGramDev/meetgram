@@ -29,10 +29,11 @@ export const useCreateNewPassword = (errorsTr: ErrorsTr) => {
   const {
     clearErrors,
     control,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, touchedFields },
     handleSubmit,
     register,
     setError,
+    trigger,
   } = useForm<CreateNewPasswordValues>({
     defaultValues: {
       confirmPassword: '',
@@ -51,5 +52,7 @@ export const useCreateNewPassword = (errorsTr: ErrorsTr) => {
     isValid,
     register,
     setError,
+    touchedFields,
+    trigger,
   }
 }

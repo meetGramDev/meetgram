@@ -35,15 +35,8 @@ export const LogOut = ({ disabled, email }: Props) => {
         dispatch(baseApi.util.resetApiState())
         router.push(SIGN_IN, undefined, { locale: router.locale })
       }
-
-      // router.prefetch(SIGN_IN, SIGN_IN, { locale: router.locale })
-      // router.reload()
     } catch (err) {
       const message = serverErrorHandler(err)
-
-      if (typeof message === 'string') {
-        toast.error(message)
-      }
     } finally {
       setOpen(false)
     }
