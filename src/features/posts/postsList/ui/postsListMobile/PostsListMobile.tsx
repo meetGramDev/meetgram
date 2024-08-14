@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Post } from '@/entities/post'
+import { PublicPost } from '@/features/profile/addPost'
 import { clsx } from 'clsx'
 
 import s from './PostsListMobile.module.scss'
 
-import { List } from '../../model/types/postsList'
+type Props = {
+  posts: PublicPost[]
+}
 
-export const PostsListMobile = ({ images }: List) => {
+export const PostsListMobile = ({ posts }: Props) => {
   const [showGallery, setShowGallery] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0)
   const itemRefs = useRef<(HTMLDivElement | null)[]>([])
@@ -25,21 +28,21 @@ export const PostsListMobile = ({ images }: List) => {
   return (
     <div className={s.container}>
       <div className={clsx(s.postsList, showGallery && s.tape)}>
-        {images.map((image, index) => (
+        {posts?.map((post, index) => (
           <div
             className={clsx(s.item, showGallery && s.tapeItem)}
-            key={image.id}
+            key={post.id}
             onClick={() => handleTouch(index)}
             ref={el => {
               itemRefs.current[index] = el
             }}
           >
             <Post
-              alt={`${image.alt}`}
+              alt={'post'}
               className={s.image}
-              height={image.height}
-              src={image.src}
-              width={image.width}
+              height={post.images[0].height}
+              src={post.images[0].url}
+              width={post.images[0].width}
             />
           </div>
         ))}
