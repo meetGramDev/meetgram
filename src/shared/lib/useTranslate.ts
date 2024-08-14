@@ -9,10 +9,9 @@ import { uk } from '../../../public/locales/uk'
 
 export const useTranslate = () => {
   const { locale } = useRouter()
-  /*const language = locale || 'en'*/
+
   const lang = switcher(locale)
 
-  /*keyof LenType*/
   function t(phrase: any = '') {
     return lang[phrase as keyof LenType] || phrase
   }
