@@ -13,11 +13,11 @@ export const useTranslate = () => {
   const lang = switcher(locale)
 
   /*keyof LenType*/
-  function t(phrase: keyof LenType) {
-    return lang[phrase] || phrase
+  function t(phrase: any = '') {
+    return lang[phrase as keyof LenType] || phrase
   }
 
-  return { t }
+  return t
 }
 
 function switcher(language: string | undefined): LenType {
