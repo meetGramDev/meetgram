@@ -5,7 +5,7 @@ import { useCheckRecoveryCodeMutation } from '@/features/auth/forgotPassword'
 import Img from '@/shared/assets/img/time-management.png'
 import { CREATE_NEW_PASSWORD, FORGOT_PASSWORD } from '@/shared/config/router'
 import { CONFIRMATION_CODE_LS_KEY } from '@/shared/const/consts'
-import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { serverErrorHandler, translate, useClientProgress } from '@/shared/lib'
 import { NextPageWithLayout, isErrorMessageString } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { getAuthLayout } from '@/widgets/layouts'
@@ -22,6 +22,7 @@ const Recovery: NextPageWithLayout = () => {
   const [checkIsFailed, setCheckIsFailed] = useState(false)
 
   const router = useRouter()
+  const t = translate(router.locale)
 
   useClientProgress(isLoading)
 
@@ -59,13 +60,17 @@ const Recovery: NextPageWithLayout = () => {
       {checkIsFailed && (
         <div className={style.root}>
           <div className={style.textWrapper}>
-            <h2 className={style.title}>Email verification link expired</h2>
+            <h2 className={style.title}> {t['Email verification link expired']}</h2>
             <div>
-              Looks like the verification link has expired. Not to worry, we can send the link again
+              {
+                t[
+                  'Looks like the verification link has expired. Not to worry, we can send the link again'
+                ]
+              }
             </div>
             <Button as={Link} href={FORGOT_PASSWORD}>
               {' '}
-              Going to forgot password{' '}
+              {t.forgoPasswordForm.forgotPassword}{' '}
             </Button>
           </div>
           <Image alt={'img'} className={style.img} src={Img} />

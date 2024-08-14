@@ -2,7 +2,7 @@ import { selectIsUserAuth } from '@/entities/user'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { translate } from '@/shared/lib/langSwitcher'
+import { translate } from '@/shared/lib'
 import { Button } from '@/shared/ui/button/button'
 import { LangSwitcher } from '@/widgets/langSwitcher'
 import Link from 'next/link'
@@ -13,7 +13,9 @@ type Props = {
 }
 
 export const Header = ({ notification }: Props) => {
-  const t = translate(useRouter().locale)
+  const router = useRouter()
+  const t = translate(router.locale)
+
   const isAuth = useAppSelector(selectIsUserAuth)
 
   return (
@@ -51,7 +53,7 @@ export const Header = ({ notification }: Props) => {
           <LangSwitcher />
         </div>
 
-        {!isAuth && (
+        {!router.pathname.startsWith('/auth') && !isAuth && (
           <div className={'flex gap-6'}>
             <Button as={Link} href={SIGN_IN} variant={'link'}>
               {t['Sign In']}

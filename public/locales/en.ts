@@ -1,4 +1,5 @@
-import {UsFlagIcon} from "@/shared/assets/icons/US";
+import { UsFlagIcon } from "@/shared/assets/icons/US";
+
 
 export const en = {
     "Congratulations!": "Congratulations!",
@@ -14,6 +15,7 @@ export const en = {
     button: {
         Button: 'Button',
         Link: 'Link that looks like a button',
+
     },
     componentLang: UsFlagIcon, createNewPasswordForm: {
         createNewPassword: 'Create New Password',
@@ -57,6 +59,10 @@ export const en = {
     },
 
     language: 'English',
+    policies: {
+        "Privacy Policy": "Privacy Policy",
+        "Terms Of Service": "Terms Of Service",
+    },
     sidebarTr: {
         create: 'Create',
         favorites: 'Favorites',
@@ -90,15 +96,17 @@ export const en = {
         termServ: 'Terms of Service',
         username: 'Username',
     },
-    test: 'Lorem Ipsum is simply dummy text of the printing',
+    test: 'Lorem Ipsum is simply dummy text of the printing'
 }
 
-export type LenType = typeof en
 const {errorsTr, sidebarTr} = en
 const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 
+
 export type ErrorsTr = typeof errorsTr
-export type ErrorSineUp = typeof errorSignUp
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
-export type SidebarTr = typeof sidebarTr
+
+export type LenType = typeof en
+
+

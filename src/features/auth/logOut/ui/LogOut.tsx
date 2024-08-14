@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { toast } from 'react-toastify'
 
 import { baseApi } from '@/shared/api'
+import { nextSessionApi } from '@/shared/api/_next-auth'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
@@ -35,14 +35,11 @@ export const LogOut = ({ disabled, email }: Props) => {
         dispatch(baseApi.util.resetApiState())
         router.push(SIGN_IN, undefined, { locale: router.locale })
       }
-
-      // router.prefetch(SIGN_IN, SIGN_IN, { locale: router.locale })
-      // router.reload()
     } catch (err) {
       const message = serverErrorHandler(err)
 
-      if (typeof message === 'string') {
-        toast.error(message)
+      if (message) {
+        await nextSessionApi.deleteSession()
       }
     } finally {
       setOpen(false)

@@ -1,13 +1,13 @@
-import {EsFlagIcon} from "@/shared/assets/icons/ES";
+import { EsFlagIcon } from "@/shared/assets/icons/ES";
 
-import {LenType} from './en'
+
+import { LenType } from './en';
 
 export const es: LenType = {
     "Congratulations!": "¡Felicidades!",
     "Email sent": "Correo enviado",
-
-
     "Email verification link expired": "El enlace ha caducado",
+
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
     "Ok": "Ok",
     "Resend verification link": "Reenviar enlace de verificación",
@@ -57,7 +57,11 @@ export const es: LenType = {
         sendAgain: 'Si no recibes un correo electrónico, envía el enlace nuevamente.',
         sendLink: 'Enviar Enlace',
         sendLinkDialog: 'Hemos enviado un enlace para confirmar tu correo electrónico a',
-    }, language: 'Spanish',
+    }, language: 'Español',
+    policies: {
+        "Privacy Policy": "Política de Privacidad",
+        "Terms Of Service": "Condiciones de uso",
+    },
     sidebarTr: {
         create: 'Crear',
         favorites: 'Favoritos',
