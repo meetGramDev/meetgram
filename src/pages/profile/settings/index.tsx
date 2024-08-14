@@ -3,6 +3,8 @@ import { toast } from 'react-toastify'
 
 import { UploadPhoto, UploadedPhotoType } from '@/features/profile/uploadUserPhoto'
 import {
+  FormSkeleton,
+  PhotoSkeleton,
   UserSettingsForm,
   UserSettingsFormData,
   useGetProfileQuery,
@@ -25,7 +27,7 @@ const tabs: TabType[] = [
 ]
 
 const Settings: NextPageWithLayout = () => {
-  const { data, isLoading } = useGetProfileQuery()
+  const { data, isLoading: getProfileLoading } = useGetProfileQuery()
 
   const [activeTab, setActiveTab] = useState(tabs[0].value)
   const [error, setError] = useState<ServerMessagesType[]>([])
@@ -41,7 +43,7 @@ const Settings: NextPageWithLayout = () => {
 
   const [updateProfile, { isLoading: updateProfileLoading }] = useUpdateProfileMutation()
 
-  useClientProgress(isLoading || updateProfileLoading)
+  useClientProgress(getProfileLoading || updateProfileLoading)
 
   const updateProfileData = async (data: UserSettingsFormData) => {
     try {
@@ -62,18 +64,25 @@ const Settings: NextPageWithLayout = () => {
     }
   }
 
-  if (!data?.id) {
-    return <div>Loading...</div>
-  }
-
   return (
     <div>
       <TabSwitcher onValueChange={setActiveTab} tabs={tabs} value={activeTab} />
       <div className={s.settingsWrapper}>
-        <div>
-          <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
-        </div>
-        <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
+        {data && !getProfileLoading ? (
+          <>
+            <div>
+              <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
+            </div>
+            <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
+          </>
+        ) : (
+          <>
+            <div>
+              <PhotoSkeleton />
+            </div>
+            <FormSkeleton />
+          </>
+        )}
       </div>
     </div>
   )

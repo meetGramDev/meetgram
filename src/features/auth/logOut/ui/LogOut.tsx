@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { toast } from 'react-toastify'
 
 import { baseApi } from '@/shared/api'
+import { nextSessionApi } from '@/shared/api/_next-auth'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
@@ -37,6 +37,10 @@ export const LogOut = ({ disabled, email }: Props) => {
       }
     } catch (err) {
       const message = serverErrorHandler(err)
+
+      if (message) {
+        await nextSessionApi.deleteSession()
+      }
     } finally {
       setOpen(false)
     }

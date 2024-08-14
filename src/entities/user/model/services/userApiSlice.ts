@@ -1,10 +1,10 @@
-import type { AuthMeResponseType, UserResponseWithPosts } from '@/entities/user'
+import type { AuthMeResponseType, FullUserProfile } from '../types/services'
 
 import { baseApi } from '@/shared/api'
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    fullUserProfile: builder.query<UserResponseWithPosts, string>({
+    fullUserProfile: builder.query<FullUserProfile, string>({
       query: userName => ({
         method: 'GET',
         url: `/users/${userName}`,
