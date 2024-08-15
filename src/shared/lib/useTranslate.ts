@@ -9,17 +9,17 @@ import { uk } from '../../../public/locales/uk'
 
 export const useTranslate = () => {
   const { locale } = useRouter()
-  const language = locale || 'en'
-  const lang: LenType = switcher(language)
 
-  function t(phrase: keyof LenType) {
-    return lang[phrase] || phrase
+  const lang = switcher(locale)
+
+  function t(phrase: any = '') {
+    return lang[phrase as keyof LenType] || phrase
   }
 
   return t
 }
 
-function switcher(language: string): LenType {
+function switcher(language: string | undefined): LenType {
   switch (language) {
     case 'be':
       return be
