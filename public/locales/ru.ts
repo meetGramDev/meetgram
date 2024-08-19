@@ -1,6 +1,6 @@
-import { RuFlagIcon } from "@/shared/assets/icons/RU";
+import {RuFlagIcon} from "@/shared/assets/icons/RU";
 
-import { LenType } from './en';
+import {LenType} from './en';
 
 export const ru: LenType = {
     "Congratulations!": "Поздравляем!",
@@ -55,11 +55,13 @@ export const ru: LenType = {
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
     },
-    language: 'Russia',
+
+    language: 'Русский',
     policies: {
         "Privacy Policy": "Политика конфиденциальности",
         "Terms Of Service": "Условия использования",
     },
+
     sidebarTr: {
         create: 'Создать',
         favorites: 'Избранное',
@@ -95,3 +97,4 @@ export const ru: LenType = {
     },
     test: 'Lorem Ipsum — это просто текст-«рыба» в полиграфии',
 }
+

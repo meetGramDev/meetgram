@@ -8,11 +8,11 @@ const passContain = 'Password must contain'
 const wrongUsername = 'Wrong username'
 const errorEmail = 'Invalid email'
 
-export const getEmailConstraint = (errorEmail: ErrorEmail | undefined) => {
+export const getEmailConstraint = (errorEmail?: ErrorEmail) => {
   return z.string().email({ message: errorEmail ? errorEmail.InvalidEmail : errorEmail })
 }
 
-export const getPasswordConstraint = (errorValidationFields: ErrorValidationFields | undefined) => {
+export const getPasswordConstraint = (errorValidationFields?: ErrorValidationFields) => {
   return z
     .string()
     .trim()
@@ -21,13 +21,14 @@ export const getPasswordConstraint = (errorValidationFields: ErrorValidationFiel
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\]{6,}$/,
       errorValidationFields
-        ? errorValidationFields.passContain
+        ? errorValidationFields.passContain +
+            ' a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
         : passContain +
             ' a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
     )
 }
 
-export const getUserNameConstraint = (errorValidationFields: ErrorValidationFields | undefined) => {
+export const getUserNameConstraint = (errorValidationFields?: ErrorValidationFields) => {
   return z
     .string()
     .trim()
@@ -38,9 +39,7 @@ export const getUserNameConstraint = (errorValidationFields: ErrorValidationFiel
     })
 }
 
-export const getPasswordSignInConstraint = (
-  errorValidationFields: ErrorValidationFields | undefined
-) => {
+export const getPasswordSignInConstraint = (errorValidationFields?: ErrorValidationFields) => {
   return z
     .string()
     .trim()

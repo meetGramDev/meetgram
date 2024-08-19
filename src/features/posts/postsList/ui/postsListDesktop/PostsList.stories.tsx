@@ -1,13 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import photo from '../../../../../shared/assets/img/photo-preview.png'
-import photo1 from '../../../../../shared/assets/img/photo1.jpg'
-import photo2 from '../../../../../shared/assets/img/photo2.png'
-import photo3 from '../../../../../shared/assets/img/photo3.png'
-import photo4 from '../../../../../shared/assets/img/photo4.png'
-import photo5 from '../../../../../shared/assets/img/photo5.png'
-import photo6 from '../../../../../shared/assets/img/photo6.png'
-import photo7 from '../../../../../shared/assets/img/photo7.png'
 import { PostsListDesktop } from './PostsListDesktop'
 
 const meta = {
@@ -19,17 +11,33 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const post = {
+  avatarOwner:
+    'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/trainee-instagram-api/Image/2c568b8b-25b1-457d-9a15-67d97f446ae4_users/590/avatar/0fce4d56-f8bb-44ea-9ba5-97f072865d98-images-192x192',
+  createdAt: '2024-08-07T14:49:21.967Z',
+  description: '',
+  id: 1297,
+  images: [
+    {
+      createdAt: '2024-08-07T14:49:21.309Z',
+      fileSize: 122982,
+      height: 1440,
+      uploadId: '66b38971c35c67dec5f39afd',
+      url: 'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/trainee-instagram-api/Image/2cd4022e-8399-4050-a67c-fa3ec9ce170d_users/590/post/dd74fd82-31f3-4a21-acd2-3ba59ac10952-images-1440x1440',
+      width: 1440,
+    },
+  ],
+  isLiked: false,
+  likesCount: 0,
+  location: '',
+  owner: { firstName: 'John', lastName: 'Doe' },
+  ownerId: 590,
+  updatedAt: '2024-08-07T14:49:21.967Z',
+  userName: 'Sartoruis',
+}
+
 export const PostsListDesktopComponent: Story = {
   args: {
-    images: [
-      { alt: 'User photo', id: '1', src: photo },
-      { alt: 'User photo', id: '2', src: photo1 },
-      { alt: 'User photo', id: '3', src: photo2 },
-      { alt: 'User photo', id: '4', src: photo3 },
-      { alt: 'User photo', id: '5', src: photo4 },
-      { alt: 'User photo', id: '6', src: photo5 },
-      { alt: 'User photo', id: '7', src: photo6 },
-      { alt: 'User photo', id: '8', src: photo7 },
-    ],
+    posts: [post, post, post, post, post, post, post, post],
   },
 }

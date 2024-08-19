@@ -1,5 +1,6 @@
 import { UsFlagIcon } from "@/shared/assets/icons/US";
 
+
 export const en = {
     "Congratulations!": "Congratulations!",
     "Email sent": "Email sent",
@@ -98,12 +99,14 @@ export const en = {
     test: 'Lorem Ipsum is simply dummy text of the printing'
 }
 
-export type LenType = typeof en
 const {errorsTr, sidebarTr} = en
 const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 
+
 export type ErrorsTr = typeof errorsTr
-export type ErrorSineUp = typeof errorSignUp
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
-export type SidebarTr = typeof sidebarTr
+
+export type LenType = typeof en
+
+
