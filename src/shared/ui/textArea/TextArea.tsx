@@ -7,7 +7,7 @@ import s from './TextArea.module.scss'
 type TextAreaProps = {
   cols?: number
   error?: string
-  label: string
+  label?: string
   name?: string
   rows?: number
   value?: string

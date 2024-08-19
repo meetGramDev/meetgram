@@ -1,7 +1,7 @@
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
 
-type PostType = {
+export type PostType = {
   alt: string
   className?: string
   height?: number

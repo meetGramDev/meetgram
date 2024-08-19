@@ -5,6 +5,7 @@ import * as RadixModal from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
 
 import s from './Dialog.module.scss'
+
 export type Props = {
   className?: string
   title?: string
