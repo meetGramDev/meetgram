@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { Post } from '@/entities/post'
+import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
 import { Heart } from '@/shared/assets/icons/Heart'
@@ -13,9 +14,8 @@ import Link from 'next/link'
 
 import s from './PostView.module.scss'
 
-import notPhoto from '../../../shared/assets/img/not-photo-user.jpg'
-import { PostViewType } from '../lib/types/postViewTypes'
-import { PostViewSelect } from './postViewSelect/ui/PostViewSelect'
+import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
+import { PostViewType } from '../model/types/postViewTypes'
 
 export const PostView = ({
   avatarOwner,
@@ -99,7 +99,7 @@ export const PostView = ({
           )}
           <span className={s.date}>{dateOfCreate}</span>
         </div>
-        <div className={s.addCommentField}>
+        <div className={s.commentContainer}>
           <TextArea
             className={s.commentTextArea}
             maxLength={500}

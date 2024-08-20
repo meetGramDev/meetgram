@@ -8,7 +8,7 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  title: 'entities/postViewSelect',
+  title: 'features/posts/postViewSelect',
 } satisfies Meta<typeof PostViewSelect>
 
 export default meta

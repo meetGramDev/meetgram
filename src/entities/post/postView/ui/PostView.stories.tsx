@@ -4,9 +4,9 @@ import { Post } from '@/entities/post'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 
-import beach from '../../../shared/assets/img/beach.png'
-import photo from '../../../shared/assets/img/photo-preview.png'
-import someDude from '../../../shared/assets/img/photo6.png'
+import beach from '../../../../shared/assets/img/beach.png'
+import photo from '../../../../shared/assets/img/photo-preview.png'
+import someDude from '../../../../shared/assets/img/photo6.png'
 import { PostView } from './PostView'
 
 const meta = {
@@ -25,7 +25,7 @@ const meta = {
   },
   component: PostView,
   tags: ['autodocs'],
-  title: 'entities/postView',
+  title: 'entities/post/postView',
 } satisfies Meta<typeof PostView>
 
 export default meta

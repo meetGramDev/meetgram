@@ -1,5 +1,6 @@
-import { PostType } from '@/entities/post/ui/Post'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
+
+import { PostType } from '../../../ui/Post'
 
 export type PostViewType = {
   avatarOwner: StaticImport | string
