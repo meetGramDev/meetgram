@@ -102,9 +102,10 @@ export const PostView = ({
         <div className={s.commentContainer}>
           <TextArea
             className={s.commentTextArea}
+            label={!value && 'Add a Comment...'}
+            labelClassName={s.label}
             maxLength={500}
             onChange={changeTextAreaHandler}
-            placeholder={'Add a Comment...'}
             value={value}
           />
           <Button className={s.publishButton} variant={'text'}>

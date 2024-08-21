@@ -7,19 +7,20 @@ import s from './TextArea.module.scss'
 type TextAreaProps = {
   cols?: number
   error?: string
-  label?: string
+  label?: boolean | string
+  labelClassName?: string
   name?: string
   rows?: number
   value?: string
 } & ComponentPropsWithoutRef<'textarea'>
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ disabled, error, label, rows = 3, value, ...rest }, ref) => {
+  ({ disabled, error, label, labelClassName, rows = 3, value, ...rest }, ref) => {
     const id = useId()
 
     const classNames = {
       errorMessage: clsx(s.label, error && s.error),
-      label: clsx(s.label, disabled && s.disabled),
+      label: clsx(s.label, disabled && s.disabled, labelClassName),
       textArea: clsx(s.textArea, error && s.error, disabled && s.disabled),
       textAreaWrapper: s.textAreaWrapper,
       wrapperComponent: clsx(s.wrapper),
@@ -27,11 +28,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 
     return (
       <div className={classNames.wrapperComponent}>
-        <div>
-          <label className={classNames.label} htmlFor={id}>
-            {label}
-          </label>
-        </div>
+        <label className={classNames.label} htmlFor={id}>
+          {label}
+        </label>
 
         <div className={classNames.textAreaWrapper}>
           <textarea

@@ -140,6 +140,12 @@
   border-top: 1px solid var(--dark-color-100);
 }
 
+.label {
+  position: absolute;
+  padding: 1.12rem 0 0 1.8rem;
+  font: var(--font-regular-small);
+}
+
 .commentTextArea {
   resize: none;
   scrollbar-width: none;
@@ -152,28 +158,12 @@
 
   background-color: transparent;
 
-  &::placeholder {
-    padding: 1.12rem 0 0 1rem;
-  }
-
   &::-webkit-scrollbar {
     display: none;
-  }
-  /* stylelint-disable-next-line selector-no-vendor-prefix */
-  &::-moz-placeholder {
-    padding: 1.12rem 0 0 1rem;
   }
 
   &:focus {
     outline: none;
-
-    &::placeholder {
-      color: transparent;
-    }
-  }
-  /* stylelint-disable-next-line selector-no-vendor-prefix */
-  &:focus::-moz-placeholder {
-    color: transparent;
   }
 }
 
