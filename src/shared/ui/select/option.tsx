@@ -1,7 +1,9 @@
-import React, { forwardRef } from 'react'
+import { ElementRef, forwardRef } from 'react'
 
 import { cn } from '@/shared/lib/cn'
 import * as SelectRadix from '@radix-ui/react-select'
+
+import s from './option.module.scss'
 
 export type OptionType = {
   disabled?: boolean
@@ -20,14 +22,10 @@ export type OptionType = {
   value: string
 }
 
-type OptionComponent = React.ForwardRefExoticComponent<
-  React.RefAttributes<HTMLDivElement> & SelectRadix.SelectItemProps
->
-
-export const Option: OptionComponent = forwardRef(
+export const Option = forwardRef<ElementRef<typeof SelectRadix.Item>, SelectRadix.SelectItemProps>(
   ({ children, className, ...props }, forwardedRef) => {
     return (
-      <SelectRadix.Item className={cn('select-item')} {...props} ref={forwardedRef}>
+      <SelectRadix.Item className={cn(s.item, className)} {...props} ref={forwardedRef}>
         <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
       </SelectRadix.Item>
     )
