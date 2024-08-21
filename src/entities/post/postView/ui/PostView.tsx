@@ -29,6 +29,7 @@ export const PostView = ({
   postLikesCount,
   userName,
 }: PostViewType) => {
+  debugger
   const [isLiked, setIsLiked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false)
   const [value, setValue] = useState('')
