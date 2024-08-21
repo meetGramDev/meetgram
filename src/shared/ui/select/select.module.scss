@@ -1,0 +1,175 @@
+@use './variables';
+
+.trigger {
+  position: relative;
+
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: variables.$select-paddings;
+
+  font: var(--font-regular);
+  color: var(--light-color-100);
+
+  background-color: var(--dark-color-500);
+  border: 1px solid var(--dark-color-100);
+  border-radius: 2px;
+
+  transition: all 0.3s;
+
+  &:hover {
+    color: var(--light-color-900);
+  }
+
+  &:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  &:focus-visible {
+    outline-color: var(--primary-color-500);
+    outline-width: 2px;
+    outline-offset: 0;
+  }
+
+  &[data-disabled] {
+    pointer-events: none;
+  }
+
+  &[data-placeholder] {
+    color: var(--light-color-100);
+
+    &:hover {
+      color: var(--light-color-900);
+    }
+
+    &[data-disabled] {
+      color: var(--dark-color-100);
+    }
+  }
+
+  &[data-state='open'] {
+    box-shadow: variables.$select-outline-shadow;
+  }
+
+  &.hasError {
+    border: 1px solid var(--danger-color-300);
+  }
+}
+
+.arrowDownIcon {
+  fill: var(--light-color-100);
+  transition: 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: transform;
+
+  .trigger[data-state='open'] & {
+    transform: rotate(180deg);
+  }
+}
+
+.content {
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+
+  background-color: var(--dark-color-500);
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+
+  &[data-state='open'] {
+    box-shadow: variables.$select-outline-shadow;
+  }
+}
+
+.label {
+  display: block;
+  font: var(--font-regular-small);
+  color: var(--light-color-100);
+
+  &.required::after {
+    content: '*';
+    margin-left: 0.125rem;
+    color: #ef4444;
+  }
+}
+
+.error {
+  position: absolute;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  color: var(--danger-color-300);
+}
+
+$scrollbar-size: 10px;
+
+.scrollAreaRoot,
+.scrollAreaViewport {
+  width: 100%;
+  max-height: var(--radix-select-content-available-height);
+}
+
+.scrollAreaRoot {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.scrollAreaViewport {
+  border-radius: inherit;
+}
+
+.scrollbar {
+  /* disable browser handling of all panning and zooming gestures on touch devices */
+  touch-action: none;
+
+  /* ensures no selection */
+  user-select: none;
+
+  display: flex;
+
+  width: $scrollbar-size;
+  padding: 4px 2px;
+
+  background: var(--dark-color-500);
+
+  transition: background 160ms ease-out;
+
+  &[data-orientation='vertical'] {
+    width: $scrollbar-size;
+  }
+
+  &:hover {
+    background-color: var(--dark-color-900);
+  }
+}
+
+.scrollbarThumb {
+  position: relative;
+
+  flex: 1;
+
+  background: var(--dark-color-100);
+  border-radius: 50px;
+
+  transition: background 160ms ease-out;
+
+  /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+    min-width: 44px;
+    height: 100%;
+    min-height: 44px;
+  }
+
+  &:hover {
+    background-color: var(--light-color-900);
+  }
+}
