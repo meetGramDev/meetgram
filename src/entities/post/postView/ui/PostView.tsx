@@ -29,7 +29,6 @@ export const PostView = ({
   postLikesCount,
   userName,
 }: PostViewType) => {
-  debugger
   const [isLiked, setIsLiked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false)
   const [value, setValue] = useState('')
@@ -46,7 +45,7 @@ export const PostView = ({
   return (
     <Dialog className={s.container} onOpenChange={isOpen} open={open}>
       <div className={s.post}>
-        <Post alt={post.alt} className={s.post} src={post.src} />
+        <Post alt={'post'} className={s.post} src={post.src} />
       </div>
       <div className={s.content}>
         <Button className={s.iconClose} variant={'text'}>
@@ -55,11 +54,11 @@ export const PostView = ({
         <div className={s.title}>
           <Link className={s.userData} href={'#'}>
             {
-              <Photo
-                alt={'Owner avatar'}
-                className={s.avatar}
-                src={avatarOwner !== '' ? avatarOwner : notPhoto}
-              />
+              // <Photo
+              //   alt={'Owner avatar'}
+              //   className={s.avatar}
+              //   src={avatarOwner !== '' ? avatarOwner : notPhoto}
+              // />
             }
             {userName}
           </Link>
