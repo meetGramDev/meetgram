@@ -36,10 +36,9 @@ const UserId: NextPageWithLayout = () => {
     params: { pageSize: PAGE_SIZE },
   })
 
-  useClientProgress(publicPostsFetching || userProfileLoading)
+  useClientProgress(publicPostsFetching)
 
   const handleFetchNextPosts = useCallback(() => {
-    console.log('Fetching next posts...')
     if (publicPosts?.items && publicPosts.items.length >= PAGE_SIZE) {
       setEndCursorPostId(publicPosts?.items.at(-1)?.id)
     }
