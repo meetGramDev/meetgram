@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 
 import { useGetPublicPostsQuery } from '@/entities/post'
 import { User, selectCurrentUserName, useFullUserProfileQuery } from '@/entities/user'
+import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { useClientProgress } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
@@ -44,17 +45,10 @@ const UserId: NextPageWithLayout = () => {
     }
   }, [publicPosts?.items])
 
-  if (userProfileLoading || !userData?.id) {
-    return (
-      <div>
-        <Loader />
-      </div>
-    )
-  }
-
   return (
     <div className={'h-full'}>
-      <User userData={userData} />
+      {!userProfileLoading && userData ? <User userData={userData} /> : <UserSkeleton />}
+
       {!publicPostsLoading && publicPosts && publicPosts.items.length !== 0 ? (
         <>
           <PostsList fetchNextPosts={handleFetchNextPosts} posts={publicPosts?.items} />
