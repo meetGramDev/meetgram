@@ -1,6 +1,6 @@
 import { baseApi } from '@/shared/api'
 
-import { CreatePost, GetPublicPostsResponse, UploadImageResponse } from '../types/addPostTypes'
+import { CreatePost, UploadImageResponse } from '../types/addPostTypes'
 
 export const addPostService = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -19,19 +19,7 @@ export const addPostService = baseApi.injectEndpoints({
         url: '/posts',
       }),
     }),
-    // getPosts: builder.query<any, any>({
-    //   query: username => ({
-    //     url: `/posts/${username}`,
-    //   }),
-    // }),
-    getPublicPosts: builder.query<GetPublicPostsResponse[], string>({
-      providesTags: ['post'],
-      query: id => ({
-        url: `/public-posts/user/${id}`,
-      }),
-    }),
   }),
 })
 
-export const { useAddImagesMutation, useCreatePostMutation, useGetPublicPostsQuery } =
-  addPostService
+export const { useAddImagesMutation, useCreatePostMutation } = addPostService
