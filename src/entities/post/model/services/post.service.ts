@@ -6,7 +6,10 @@ export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getPublicPosts: builder.query<GetPublicPostsResponse, GerPublicPostsRequest>({
       forceRefetch: ({ currentArg, previousArg }) => {
-        return currentArg !== previousArg
+        return (
+          currentArg?.endCursorPostId !== previousArg?.endCursorPostId ||
+          currentArg?.params !== previousArg?.params
+        )
       },
       merge: (currentCacheData, responseData) => {
         currentCacheData.items.push(...responseData.items)
