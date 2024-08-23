@@ -12,43 +12,51 @@ type Props = {
 
 export const PostsListDesktop = ({ posts }: Props) => {
   const [open, isOpen] = useState<boolean>(false)
+  const [postUser, setPost] = useState<PublicPost | null>(null)
+
+  // if (!open) {
+  //   setPost(null)
+  // }
 
   return (
     <div className={s.postsList}>
       {posts?.map(post => {
-        const postCount: PostType = {
-          alt: 'post',
-          src: post.images[0].url,
-        }
-
         return (
-          <div className={s.item} key={post.id} onClick={() => isOpen(true)}>
+          <div
+            className={s.item}
+            key={post.id}
+            onClick={() => {
+              isOpen(true)
+              setPost(post)
+            }}
+          >
             <Post
               alt={'post'}
               className={s.image}
+              // width={post.images[0].width}
               // height={post.images[0].height}
               src={post.images[0].url}
-              // width={post.images[0].width}
             />
-            <PostView
-              avatarOwner={post.avatarOwner}
-              id={post.id}
-              isFollowing={post.isLiked}
-              isOpen={isOpen}
-              open={open}
-              ownerId={post.ownerId}
-              post={{
-                alt: 'post',
-                className: s.image,
-                height: post.images[0].height,
-                src: post.images[0].url,
-                width: post.images[0].width,
-              }}
-              postCreate={new Date()}
-              postId={post.id}
-              postLikesCount={post.likesCount}
-              userName={post.userName}
-            />
+            {postUser && (
+              <PostView
+                {...postUser}
+                // avatarOwner={post.avatarOwner}
+                // id={post.id}
+                isFollowing={false}
+                isOpen={isOpen}
+                open={open}
+                // ownerId={post.ownerId}
+                post={{
+                  alt: 'post',
+                  className: s.image,
+                  src: postUser.images[0].url,
+                }}
+                postCreate={new Date()}
+                postId={postUser.id}
+                postLikesCount={postUser.likesCount}
+                // userName={post.userName}
+              />
+            )}
           </div>
         )
       })}
