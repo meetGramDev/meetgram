@@ -54,11 +54,13 @@ export const PostView = ({
         <div className={s.title}>
           <Link className={s.userData} href={'#'}>
             {
-              // <Photo
-              //   alt={'Owner avatar'}
-              //   className={s.avatar}
-              //   src={avatarOwner !== '' ? avatarOwner : notPhoto}
-              // />
+              <Photo
+                alt={'Owner avatar'}
+                className={s.avatar}
+                height={36}
+                src={avatarOwner !== '' ? avatarOwner : notPhoto}
+                width={36}
+              />
             }
             {userName}
           </Link>
