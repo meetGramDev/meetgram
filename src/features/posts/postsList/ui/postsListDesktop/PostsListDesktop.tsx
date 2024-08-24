@@ -14,10 +14,6 @@ export const PostsListDesktop = ({ posts }: Props) => {
   const [open, isOpen] = useState<boolean>(false)
   const [postUser, setPost] = useState<PublicPost | null>(null)
 
-  // if (!open) {
-  //   setPost(null)
-  // }
-
   return (
     <div className={s.postsList}>
       {posts?.map(post => {
@@ -26,7 +22,7 @@ export const PostsListDesktop = ({ posts }: Props) => {
             className={s.item}
             key={post.id}
             onClick={() => {
-              isOpen(true)
+              isOpen(!open)
               setPost(post)
             }}
           >
@@ -34,18 +30,16 @@ export const PostsListDesktop = ({ posts }: Props) => {
               alt={'post'}
               className={s.image}
               // width={post.images[0].width}
+
               // height={post.images[0].height}
               src={post.images[0].url}
             />
-            {postUser && (
+            {!!postUser && (
               <PostView
                 {...postUser}
-                // avatarOwner={post.avatarOwner}
-                // id={post.id}
                 isFollowing={false}
                 isOpen={isOpen}
                 open={open}
-                // ownerId={post.ownerId}
                 post={{
                   alt: 'post',
                   className: s.image,
@@ -54,7 +48,6 @@ export const PostsListDesktop = ({ posts }: Props) => {
                 postCreate={new Date()}
                 postId={postUser.id}
                 postLikesCount={postUser.likesCount}
-                // userName={post.userName}
               />
             )}
           </div>
