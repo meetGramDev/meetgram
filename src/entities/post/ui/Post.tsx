@@ -11,6 +11,6 @@ export type PostType = {
   width?: number
 }
 
-export const Post = memo(({ alt, className, height = 228, src, width = 234 }: PostType) => {
+export const Post = ({ alt, className, height = 228, src, width = 234 }: PostType) => {
   return <Image alt={alt} className={className} height={height} src={src} width={width} />
-})
+}
