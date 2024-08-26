@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { Post } from '@/entities/post'
+import { PostView } from '@/entities/post/postView'
 import { PublicPost } from '@/features/profile/addPost'
 import { clsx } from 'clsx'
 

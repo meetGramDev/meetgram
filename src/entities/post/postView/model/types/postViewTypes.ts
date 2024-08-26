@@ -4,7 +4,6 @@ import { PostType } from '../../../ui/Post'
 
 export type PostViewType = {
   avatarOwner: StaticImport | string
-  id: number
   isFollowing: boolean
   isOpen: (open: boolean) => void
   open: boolean
@@ -13,5 +12,6 @@ export type PostViewType = {
   postCreate: Date
   postId: number
   postLikesCount: number
+  userId: number
   userName: string
 }

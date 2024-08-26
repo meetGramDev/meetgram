@@ -12,7 +12,6 @@ import { PostView } from './PostView'
 const meta = {
   args: {
     avatarOwner: photo,
-    id: 1,
     isFollowing: false,
     isOpen: fn(),
     open: false,
@@ -21,6 +20,7 @@ const meta = {
     postCreate: new Date(),
     postId: 1,
     postLikesCount: 5,
+    userId: 1,
     userName: 'Petya',
   },
   component: PostView,
@@ -58,12 +58,12 @@ export const PostsViewFromSomeDude: Story = {
         <PostView
           {...args}
           avatarOwner={''}
-          id={2}
           isOpen={setOpen}
           open={open}
           post={{ alt: 'Post', src: someDude }}
           postCreate={new Date()}
           postId={1}
+          userId={2}
           userName={'SomeDude'}
         />
       </>

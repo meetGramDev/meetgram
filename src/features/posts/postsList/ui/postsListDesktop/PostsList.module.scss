@@ -6,6 +6,8 @@
 }
 
 .item {
+  cursor: pointer;
+
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -15,6 +17,11 @@
   height: 17.25rem;
 
   border-radius: 2px;
+
+  &:hover {
+    outline: 1px solid var(--primary-color-500);
+    transition: all 0.5s ease-in-out;
+  }
 }
 
 .image {
