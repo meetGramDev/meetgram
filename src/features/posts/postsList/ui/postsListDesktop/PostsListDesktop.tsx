@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 import { PostView } from '@/entities/post/postView'
 import { Post, PostType } from '@/entities/post/ui/Post'
@@ -11,8 +11,8 @@ type Props = {
 }
 
 export const PostsListDesktop = ({ posts }: Props) => {
-  const [open, isOpen] = useState<boolean>(false)
-  const [postUser, setPost] = useState<PublicPost | null>(null)
+  const [openPost, setOpenPost] = useState<boolean>(false)
+  const [currentPost, setCurrentPost] = useState<PublicPost | null>(null)
 
   return (
     <div className={s.postsList}>
@@ -21,38 +21,36 @@ export const PostsListDesktop = ({ posts }: Props) => {
           <div
             className={s.item}
             key={post.id}
-            onClick={() => {
-              isOpen(!open)
-              setPost(post)
+            onClick={e => {
+              if (e.currentTarget) {
+                setOpenPost(true)
+                setCurrentPost(post)
+              }
             }}
           >
-            <Post
-              alt={'post'}
-              className={s.image}
-              // width={post.images[0].width}
-
-              // height={post.images[0].height}
-              src={post.images[0].url}
-            />
-            {!!postUser && (
-              <PostView
-                {...postUser}
-                isFollowing={false}
-                isOpen={isOpen}
-                open={open}
-                post={{
-                  alt: 'post',
-                  className: s.image,
-                  src: postUser.images[0].url,
-                }}
-                postCreate={new Date()}
-                postId={postUser.id}
-                postLikesCount={postUser.likesCount}
-              />
-            )}
+            <Post alt={'post'} className={s.image} src={post.images[0].url} />
           </div>
         )
       })}
+      {currentPost && (
+        <PostView
+          avatarOwner={currentPost.avatarOwner}
+          isFollowing={false}
+          isOpen={setOpenPost}
+          open={openPost}
+          ownerId={currentPost.ownerId}
+          post={{
+            alt: 'post',
+            className: s.image,
+            src: currentPost.images[0].url,
+          }}
+          postCreate={new Date()}
+          postId={currentPost.id}
+          postLikesCount={currentPost.likesCount}
+          userId={currentPost.ownerId}
+          userName={currentPost.userName}
+        />
+      )}
     </div>
   )
 }
