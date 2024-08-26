@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { PostView } from '@/entities/post/postView'
 import { Post, PostType } from '@/entities/post/ui/Post'
@@ -14,6 +14,11 @@ export const PostsListDesktop = ({ posts }: Props) => {
   const [openPost, setOpenPost] = useState<boolean>(false)
   const [currentPost, setCurrentPost] = useState<PublicPost | null>(null)
 
+  const currentPostHandler = (post: PublicPost) => {
+    setOpenPost(true)
+    setCurrentPost(post)
+  }
+
   return (
     <div className={s.postsList}>
       {posts?.map(post => {
@@ -21,11 +26,8 @@ export const PostsListDesktop = ({ posts }: Props) => {
           <div
             className={s.item}
             key={post.id}
-            onClick={e => {
-              if (e.currentTarget) {
-                setOpenPost(true)
-                setCurrentPost(post)
-              }
+            onClick={() => {
+              currentPostHandler(post)
             }}
           >
             <Post alt={'post'} className={s.image} src={post.images[0].url} />

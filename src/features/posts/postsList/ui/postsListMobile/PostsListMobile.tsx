@@ -19,8 +19,6 @@ export const PostsListMobile = ({ posts }: Props) => {
     setSelectedImageIndex(index)
     setShowGallery(true)
   }
-  const [openPost, setOpenPost] = useState<boolean>(false)
-  const [currentPost, setCurrentPost] = useState<PublicPost | null>(null)
 
   useEffect(() => {
     if (selectedImageIndex ?? itemRefs.current[selectedImageIndex]) {
@@ -49,25 +47,6 @@ export const PostsListMobile = ({ posts }: Props) => {
             />
           </div>
         ))}
-        {currentPost && (
-          <PostView
-            avatarOwner={currentPost.avatarOwner}
-            isFollowing={false}
-            isOpen={setOpenPost}
-            open={openPost}
-            ownerId={currentPost.ownerId}
-            post={{
-              alt: 'post',
-              className: s.image,
-              src: currentPost.images[0].url,
-            }}
-            postCreate={new Date()}
-            postId={currentPost.id}
-            postLikesCount={currentPost.likesCount}
-            userId={currentPost.ownerId}
-            userName={currentPost.userName}
-          />
-        )}
       </div>
     </div>
   )

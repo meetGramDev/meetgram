@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactNode, memo, useState } from 'react'
+import { ChangeEvent, ReactNode, memo, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { Post } from '@/entities/post'
@@ -17,7 +17,7 @@ import s from './PostView.module.scss'
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
 import { PostViewType } from '../model/types/postViewTypes'
 
-export const PostView = React.memo(
+export const PostView = memo(
   ({
     avatarOwner,
     isFollowing,
@@ -46,22 +46,22 @@ export const PostView = React.memo(
 
     return (
       <Dialog className={s.container} onOpenChange={isOpen} open={open}>
-        <div className={s.post}>{<Post alt={'post'} className={s.post} src={post.src} />}</div>
+        <div className={s.post}>
+          <Post alt={'post'} className={s.post} src={post.src} />
+        </div>
         <div className={s.content}>
           <Button className={s.iconClose} variant={'text'}>
             <CloseIcon onClick={() => isOpen(false)} />
           </Button>
           <div className={s.title}>
             <Link className={s.userData} href={'#'}>
-              {
-                <Photo
-                  alt={'Owner avatar'}
-                  className={s.avatar}
-                  height={36}
-                  src={avatarOwner !== '' ? avatarOwner : notPhoto}
-                  width={36}
-                />
-              }
+              <Photo
+                alt={'Owner avatar'}
+                className={s.avatar}
+                height={36}
+                src={avatarOwner || notPhoto}
+                width={36}
+              />
               {userName}
             </Link>
             <div>
