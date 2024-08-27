@@ -31,6 +31,7 @@ export const PostsList = ({ skipFetchingPosts, userId }: Props) => {
     data: publicPosts,
     isFetching: publicPostsFetching,
     isLoading: publicPostsLoading,
+    isSuccess: publicPostsSuccess,
   } = useGetPublicPostsQuery(
     {
       endCursorPostId,
@@ -42,10 +43,19 @@ export const PostsList = ({ skipFetchingPosts, userId }: Props) => {
 
   return (
     <>
-      {isMobile ? (
-        <PostsListMobile posts={publicPosts?.items || []} />
-      ) : (
-        <PostsListDesktop posts={publicPosts?.items || []} />
+      {publicPostsSuccess && (
+        <>
+          {isMobile ? (
+            <PostsListMobile posts={publicPosts.items} />
+          ) : (
+            <PostsListDesktop posts={publicPosts.items} />
+          )}
+        </>
+      )}
+      {publicPosts && publicPosts.items.length === 0 && (
+        <p className={'w-full text-center leading-loose'}>
+          No posts yet <br />
+        </p>
       )}
 
       {!publicPostsLoading && scroll > 0 && (
