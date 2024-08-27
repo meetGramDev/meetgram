@@ -89,7 +89,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
               return (
                 <DatePicker
-                  // @ts-ignore
+                  // @ts-ignore // TODO
                   error={errors.dateOfBirth?.message}
                   inputClassName={!validAge(Number(start))}
                   label={'Date of birth'}
