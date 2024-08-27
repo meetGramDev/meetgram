@@ -5,7 +5,8 @@ import {
   useDeleteProfilePhotoMutation,
   useUploadProfilePhotoMutation,
 } from '@/entities/photo'
-import { useClientProgress } from '@/shared/lib'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { isErrorServerMessagesType } from '@/shared/types'
 import { Button, Dialog } from '@/shared/ui'
 
 import s from './UploadPhoto.module.scss'
@@ -42,9 +43,15 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
       setAvatar({ height: avatar.height, url: avatar.url, width: avatar.width })
       setOpenUpload(false)
     } catch (error) {
-      console.error(error)
+      const message = serverErrorHandler(error)
 
-      setError('Error message')
+      if (typeof message === 'string') {
+        setError(message)
+      }
+
+      if (isErrorServerMessagesType(message)) {
+        setError(`Error in ${message[0].field}: ${message[0].message}`)
+      }
     }
   }
 
