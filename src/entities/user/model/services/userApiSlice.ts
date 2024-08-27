@@ -5,6 +5,7 @@ import { baseApi } from '@/shared/api'
 export const userApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     fullUserProfile: builder.query<FullUserProfile, string>({
+      providesTags: ['profile'],
       query: userName => ({
         method: 'GET',
         url: `/users/${userName}`,
