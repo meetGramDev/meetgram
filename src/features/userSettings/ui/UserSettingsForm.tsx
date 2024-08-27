@@ -26,7 +26,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   const { locale } = useRouter()
 
-  const { errorsTr, signUpLang } = translate(locale)
+  const { errorsTr, policies, signUpLang } = translate(locale)
 
   const { control, errors, getValues, handleSubmit, isDirty, isValid, register, setError } =
     useUserSettings(errorsTr, data)
@@ -105,7 +105,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
               {errorsTr.errorValidationFields.wrongDateOfBirth}
               &nbsp;
               <a className={s.errorLink} href={PRIVACY_POLICY} rel={'noreferrer'} target={'_blank'}>
-                {signUpLang.privPolicy}
+                {policies['Privacy Policy']}
               </a>
             </span>
           )}
