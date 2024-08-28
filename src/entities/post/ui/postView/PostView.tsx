@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode, memo, useState } from 'react'
+import { ChangeEvent, memo, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { Post } from '@/entities/post'
@@ -15,7 +15,7 @@ import Link from 'next/link'
 import s from './PostView.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
-import { PostViewType } from '../model/types/postViewTypes'
+import { PostViewType } from '../../model/types/postViewTypes'
 
 export const PostView = memo(
   ({

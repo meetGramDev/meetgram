@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 import { PostView } from '../types/addPostTypes'
 
@@ -13,7 +13,7 @@ const initialState = {
   postView: PostView.IMAGE,
 }
 
-const addPostSlice = createSlice({
+export const addPostSlice = createSlice({
   initialState,
   name: 'addPost',
   reducers: {
@@ -30,4 +30,3 @@ const addPostSlice = createSlice({
 })
 
 export const { addImage, setOpenModal, setPostView } = addPostSlice.actions
-export const addPostReducer = addPostSlice.reducer

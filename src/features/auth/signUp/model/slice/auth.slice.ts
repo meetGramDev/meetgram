@@ -12,4 +12,4 @@ export const authSlice = createSlice({
   },
 })
 
-export const { actions: authSliceActions, reducer: authSliceReducer } = authSlice
+export const { actions: authSliceActions } = authSlice

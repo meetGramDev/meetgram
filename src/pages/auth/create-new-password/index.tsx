@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { CreateNewPasswordForm } from '@/features/auth/createNewPassword'
 import { CreateNewPasswordValues } from '@/features/auth/createNewPassword/lib/useCreateNewPassword'
 import { useAddNewPasswordMutation } from '@/features/auth/forgotPassword/model/services/forgotPassword.service'
 import { SIGN_IN } from '@/shared/config/router'
 import { CONFIRMATION_CODE_LS_KEY } from '@/shared/const/consts'
+import { serverErrorHandler } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 import { useRouter } from 'next/router'
@@ -26,7 +28,13 @@ const CreateNewPassword: NextPageWithLayout = () => {
 
       return router.push(SIGN_IN)
     } catch (e) {
-      console.log(e)
+      const message = serverErrorHandler(e)
+
+      if (typeof message === 'string') {
+        toast.error(message)
+      } else {
+        console.error(message)
+      }
     }
   }
 

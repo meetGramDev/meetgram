@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
-import { PostView } from '@/entities/post/postView'
-import { Post, PostType } from '@/entities/post/ui/Post'
-import { PublicPost } from '@/features/profile/addPost'
+import { Post, PostView, PublicPost } from '@/entities/post'
 
 import s from './PostsList.module.scss'
 
