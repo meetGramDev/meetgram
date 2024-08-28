@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { Post, PostView, PublicPost } from '@/entities/post'
+import { EditPostDialog } from '@/features/posts/editPost'
 
 import s from './PostsList.module.scss'
 
@@ -10,9 +11,15 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
   const [openPost, setOpenPost] = useState<boolean>(false)
   const [currentPost, setCurrentPost] = useState<PublicPost | null>(null)
 
+  const [openEdit, setOpenEdit] = useState(false)
+
   const currentPostHandler = (post: PublicPost) => {
     setOpenPost(true)
     setCurrentPost(post)
+  }
+
+  const handleOnEditPost = () => {
+    setOpenEdit(true)
   }
 
   return (
@@ -34,10 +41,18 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
         <PostView
           isFollowing={isFollowing}
           isOpen={setOpenPost}
-          onEdit={() => {}}
+          onEdit={handleOnEditPost}
           open={openPost}
           post={currentPost}
           userId={userId}
+        />
+      )}
+
+      {currentPost && (
+        <EditPostDialog
+          onOpenChange={open => setOpenEdit(false)}
+          open={openEdit}
+          post={currentPost}
         />
       )}
     </div>
