@@ -3,15 +3,23 @@ import {RuFlagIcon} from "@/shared/assets/icons/RU";
 import {LenType} from './en';
 
 export const ru: LenType = {
+    "Are you really want to log out of your account": "Вы действительно хотите выйти из своего аккаунта ",
     "Congratulations!": "Поздравляем!",
     "Email sent": "Письмо отправлено",
     "Email verification link expired": "Срок действия ссылки истек",
+    "Followers": "Подписчики",
+    "Following": "Подписки",
+    "Log Out": "Выйти",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Похоже, что ссылка для подтверждения истекла. Не волнуйтесь, мы можем отправить ссылку снова",
+    "No": "Нет",
     "Ok": "Хорошо",
+    "Profile Settings": "Настройки профиля",
+    "Publications": "Публикации",
     "Resend verification link": "Отправить ссылку для подтверждения еще раз",
     "Sign In": "Войти",
     "Sign Up": "Регистрация",
     "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",
+    "Yes": "Да",
     "Your email has been confirmed": "Ваша электронная почта подтверждена",
     button: {
         Button: 'Кнопка',

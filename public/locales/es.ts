@@ -1,20 +1,27 @@
-import { EsFlagIcon } from "@/shared/assets/icons/ES";
+import {EsFlagIcon} from "@/shared/assets/icons/ES";
 
-
-import { LenType } from './en';
+import {LenType} from './en';
 
 export const es: LenType = {
+    "Are you really want to log out of your account": "¿Realmente deseas cerrar sesión en tu cuenta ",
     "Congratulations!": "¡Felicidades!",
     "Email sent": "Correo enviado",
+
     "Email verification link expired": "El enlace ha caducado",
+    "Followers": "Seguidores",
+    "Following": "Siguiendo",
 
+    "Log Out": "Cerrar sesión",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
+    "No": "No",
     "Ok": "Ok",
+    "Profile Settings": "Configuración del perfil",
+    "Publications": "Publicaciones",
     "Resend verification link": "Reenviar enlace de verificación",
-
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",
+    "Yes": "Sí",
     "Your email has been confirmed": "Tu correo electrónico ha sido confirmado",
     button: {
         Button: 'Botón',

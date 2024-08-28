@@ -22,8 +22,8 @@ export const Sidebar = ({ className }: Props) => {
         {items.map((item, i) => (
           <SidebarItem item={item} key={i} />
         ))}
+        <LogOut email={email} />
       </nav>
-      <LogOut email={email} />
     </aside>
   )
 }

@@ -1,16 +1,24 @@
-import { UsFlagIcon } from "@/shared/assets/icons/US";
+import {UsFlagIcon} from "@/shared/assets/icons/US";
 
 
 export const en = {
+    "Are you really want to log out of your account": "Are you really want to log out of your account ",
     "Congratulations!": "Congratulations!",
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
+    "Followers": "Followers",
+    "Following": "Following",
+    "Log Out": "Log Out",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Looks like the verification link has expired. Not to worry, we can send the link again",
+    "No": "No",
     "Ok": "Ok",
+    "Profile Settings": "Profile Settings",
+    "Publications": "Publications",
     "Resend verification link": "Resend verification link",
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",
     "We have sent a link to confirm your email to": "We have sent a link to confirm your email to ",
+    "Yes": "Yes",
     "Your email has been confirmed": "Your email has been confirmed",
     button: {
         Button: 'Button',

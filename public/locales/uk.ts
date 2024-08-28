@@ -1,19 +1,26 @@
-import { UaFlagIcon } from "@/shared/assets/icons/UA";
+import {UaFlagIcon} from "@/shared/assets/icons/UA";
 
-
-import { LenType } from './en';
+import {LenType} from './en';
 
 
 export const uk: LenType = {
+    "Are you really want to log out of your account": "Ви справді хочете вийти з акаунта ",
     "Congratulations!": "Вітаємо!",
     "Email sent": "Лист відправлено",
     "Email verification link expired": "Термін дії посилання завершився",
+    "Followers": "Підписники",
+    "Following": "Підписки",
+    "Log Out": "Вийти",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Схоже, що термін дії посилання для підтвердження завершився. Не хвилюйтеся, ми можемо надіслати посилання знову",
+    "No": "Ні",
     "Ok": "Гаразд",
+    "Profile Settings": "Налаштування профілю",
+    "Publications": "Публікації",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
+    "Yes": "Так",
     "Your email has been confirmed": "Вашу електронну пошту підтверджено",
     button: {
         Button: 'Кнопка',

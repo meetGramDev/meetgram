@@ -5,6 +5,7 @@ import { GetPublicPostsResponse } from '@/features/profile/addPost/model/types/a
 import { AddPost } from '@/features/profile/addPost/ui/AddPost'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { PROFILE_SETTINGS } from '@/shared/config/router'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
 
@@ -17,6 +18,7 @@ type Props = {
 
 export const User = ({ posts, userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
+  const t = useTranslate()
 
   return (
     <div className={s.userWrapper}>
@@ -36,24 +38,24 @@ export const User = ({ posts, userData }: Props) => {
           <div className={s.userName}>
             <h1 className={s.userNameTitle}>{userData.userName}</h1>
             <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
-              Profile Settings
+              {t('Profile Settings')}
             </Button>
           </div>
           <div className={s.buttonPublications}>
             <Link className={s.userLinks} href={'#'}>
               <span>{userData ? userData.followingCount : 0}</span>
               <br />
-              Following
+              {t('Following')}
             </Link>
             <Link className={s.userLinks} href={'#'}>
               <span>{userData ? userData.followersCount : 0}</span>
               <br />
-              Followers
+              {t('Followers')}
             </Link>
             <Link className={s.userLinks} href={'#'}>
               <span>{userData ? userData.publicationsCount : 0}</span>
               <br />
-              Publications
+              {t('Publications')}
             </Link>
           </div>
           <div className={s.aboutMeText}>{userData?.aboutMe}</div>

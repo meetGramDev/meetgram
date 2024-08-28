@@ -1,18 +1,27 @@
-import { ByFlagIcon } from "@/shared/assets/icons/BY";
+import {ByFlagIcon} from "@/shared/assets/icons/BY";
 
-
-import { LenType } from './en';
+import {LenType} from './en';
 
 
 export const be: LenType = {
+    "Are you really want to log out of your account": "Вы сапраўды хочаце выйсці са свайго акаўнта ",
     "Congratulations!": "Віншуем!",
     "Email sent": "Ліст адпраўлены",
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
+    "Followers": "Падпісанты",
+    "Following": "Падпісаны",
+    "Log Out": "Выйсці",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Падаецца, спасылка для пацверджання пратэрмінавана. Не хвалюйцеся, мы можам адправіць спасылку зноў",
-    "Ok": "Добра", "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
+    "No": "Не",
+    "Ok": "Добра",
+    "Profile Settings": "Налады профілю",
+    "Publications": "Публікацыі",
+    "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
     "Sign In": "Увайсці",
     "Sign Up": "Рэгістрацыя",
-    "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ", "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
+    "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ",
+    "Yes": "Так",
+    "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
     button: {
         Button: 'Кнопка',
         Link: 'Спасылка, якая выглядае як кнопка',

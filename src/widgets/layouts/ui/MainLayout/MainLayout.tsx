@@ -7,6 +7,7 @@ import { Sidebar } from '@/widgets/sidebar'
 import { Inter } from 'next/font/google'
 
 import s from './MainLayout.module.scss'
+
 const inter = Inter({ subsets: ['latin'] })
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
@@ -16,7 +17,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
     <div className={`min-h-[calc(100vh_-_3.75rem_-_72px)] ${inter.className}`}>
       {isMobile ? <MobileHeader /> : <Header />}
       <div className={s.page}>
-        <Sidebar />
+        {!isMobile && <Sidebar />}
         <main className={s.main}>{children}</main>
       </div>
     </div>
