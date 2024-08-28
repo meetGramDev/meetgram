@@ -4,11 +4,9 @@ import { Post, PostView, PublicPost } from '@/entities/post'
 
 import s from './PostsList.module.scss'
 
-type Props = {
-  posts: PublicPost[]
-}
+import { PostListProps } from '../props.type'
 
-export const PostsListDesktop = ({ posts }: Props) => {
+export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
   const [openPost, setOpenPost] = useState<boolean>(false)
   const [currentPost, setCurrentPost] = useState<PublicPost | null>(null)
 
@@ -34,21 +32,12 @@ export const PostsListDesktop = ({ posts }: Props) => {
       })}
       {currentPost && (
         <PostView
-          avatarOwner={currentPost.avatarOwner}
-          isFollowing={false}
+          isFollowing={isFollowing}
           isOpen={setOpenPost}
+          onEdit={() => {}}
           open={openPost}
-          ownerId={currentPost.ownerId}
-          post={{
-            alt: 'post',
-            className: s.image,
-            src: currentPost.images[0].url,
-          }}
-          postCreate={new Date()}
-          postId={currentPost.id}
-          postLikesCount={currentPost.likesCount}
-          userId={currentPost.ownerId}
-          userName={currentPost.userName}
+          post={currentPost}
+          userId={userId}
         />
       )}
     </div>

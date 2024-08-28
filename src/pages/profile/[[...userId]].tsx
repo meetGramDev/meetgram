@@ -13,11 +13,9 @@ import { useRouter } from 'next/router'
 const UserId: NextPageWithLayout = () => {
   const router = useRouter()
   const userName = useAppSelector(selectCurrentUserName)
-  const {
-    data: userData,
-    isError: userProfileQueryError,
-    isLoading: userProfileLoading,
-  } = useFullUserProfileQuery(userName || skipToken)
+  const { data: userData, isLoading: userProfileLoading } = useFullUserProfileQuery(
+    userName || skipToken
+  )
 
   const userId = router.query.userId
 
@@ -32,7 +30,7 @@ const UserId: NextPageWithLayout = () => {
           </div>
         }
       >
-        <PostsList skipFetchingPosts={userProfileQueryError} userId={userData?.id} />
+        <PostsList userName={userName} />
       </Suspense>
     </div>
   )

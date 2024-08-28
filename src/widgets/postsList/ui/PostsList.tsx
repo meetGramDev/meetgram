@@ -2,21 +2,27 @@ import { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
 import { useGetPublicPostsQuery } from '@/entities/post'
+import { useFullUserProfileQuery } from '@/entities/user'
 import { useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
+import { skipToken } from '@reduxjs/toolkit/query'
 
 import { PostsListDesktop } from './postsListDesktop/PostsListDesktop'
 import { PostsListMobile } from './postsListMobile/PostsListMobile'
 
 type Props = {
-  skipFetchingPosts: boolean
-  userId: number | undefined
+  userName: string
 }
 
 const PAGE_SIZE = 12
 
-export const PostsList = ({ skipFetchingPosts, userId }: Props) => {
+export const PostsList = ({ userName }: Props) => {
   const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
+  const {
+    data: currentUser,
+    isError: userProfileQueryError,
+    isSuccess: isUserSuccess,
+  } = useFullUserProfileQuery(userName || skipToken)
 
   // =========== //
   const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(undefined)
@@ -35,21 +41,35 @@ export const PostsList = ({ skipFetchingPosts, userId }: Props) => {
   } = useGetPublicPostsQuery(
     {
       endCursorPostId,
-      id: String(userId),
+      id: String(currentUser?.id),
       params: { pageSize: PAGE_SIZE },
     },
-    { skip: (!userId && !endCursorPostId) || skipFetchingPosts }
+    { skip: (!currentUser?.id && !endCursorPostId) || userProfileQueryError }
   )
 
   return (
     <>
       {publicPostsSuccess && (
         <>
-          {isMobile ? (
-            <PostsListMobile posts={publicPosts.items} />
-          ) : (
-            <PostsListDesktop posts={publicPosts.items} />
-          )}
+          {isMobile
+            ? isUserSuccess && (
+                <>
+                  <PostsListMobile
+                    isFollowing={currentUser.isFollowing}
+                    posts={publicPosts.items}
+                    userId={currentUser.id}
+                  />
+                </>
+              )
+            : isUserSuccess && (
+                <>
+                  <PostsListDesktop
+                    isFollowing={currentUser.isFollowing}
+                    posts={publicPosts.items}
+                    userId={currentUser.id}
+                  />
+                </>
+              )}
         </>
       )}
       {publicPosts && publicPosts.items.length === 0 && (
