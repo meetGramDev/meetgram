@@ -51,3 +51,38 @@
   min-width: 100%;
   word-break: break-word;
 }
+
+@media (width <= 650px) {
+  .userPhoto {
+    width: 75px;
+    height: 75px;
+  }
+
+  .buttonPublications {
+    gap: 12%;
+    margin: 0;
+  }
+
+  .userLinks {
+    font: var(--font-small-link);
+  }
+
+  .userInformation {
+    justify-content: center;
+    margin-left: 8%;
+  }
+
+  .userWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 2.25rem 1.5rem 0;
+  }
+
+  .userName {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font: var(--font-regular-small);
+  }
+}

@@ -1,3 +1,5 @@
+import { useMediaQuery } from 'react-responsive'
+
 import { Photo } from '@/entities/photo'
 import { FullUserProfile } from '@/entities/user'
 import { AddPost } from '@/features/profile/addPost/ui/AddPost'
@@ -17,6 +19,8 @@ export const User = ({ userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
   const t = useTranslate()
 
+  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
+
   return (
     <div className={s.userWrapper}>
       <div className={s.userData}>
@@ -31,13 +35,16 @@ export const User = ({ userData }: Props) => {
               }
             : { alt: 'blank avatar', src: userPhoto })}
         />
+
         <div className={s.userInformation}>
-          <div className={s.userName}>
-            <h1 className={s.userNameTitle}>{userData.userName}</h1>
-            <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
-              {t('Profile Settings')}
-            </Button>
-          </div>
+          {!isMobile && (
+            <div className={s.userName}>
+              <h1 className={s.userNameTitle}>{userData.userName}</h1>
+              <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
+                {t('Profile Settings')}
+              </Button>
+            </div>
+          )}
           <div className={s.buttonPublications}>
             <Link className={s.userLinks} href={'#'}>
               <span>{userData ? userData.followingCount : 0}</span>
@@ -55,9 +62,16 @@ export const User = ({ userData }: Props) => {
               {t('Publications')}
             </Link>
           </div>
-          <div className={s.aboutMeText}>{userData?.aboutMe}</div>
+
+          {!isMobile && <div className={s.aboutMeText}>{userData?.aboutMe}</div>}
         </div>
       </div>
+      {isMobile && (
+        <div className={s.userName}>
+          <h1 className={s.userNameTitle}>{userData.userName}</h1>
+          <div className={s.aboutMeText}>{userData?.aboutMe}</div>
+        </div>
+      )}
       <AddPost />
     </div>
   )
