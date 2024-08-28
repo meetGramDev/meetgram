@@ -4,6 +4,13 @@ import { GerPublicPostsRequest, GetPublicPostsResponse } from '../types/posts.ty
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    deletePost: builder.mutation<void, { postId: number }>({
+      invalidatesTags: ['post'],
+      query: args => ({
+        method: 'DELETE',
+        url: `posts/${args.postId}`,
+      }),
+    }),
     getPublicPosts: builder.query<GetPublicPostsResponse, GerPublicPostsRequest>({
       forceRefetch: ({ currentArg, previousArg }) => {
         return (
@@ -39,4 +46,4 @@ export const postsApi = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetPublicPostsQuery } = postsApi
+export const { useDeletePostMutation, useGetPublicPostsQuery } = postsApi

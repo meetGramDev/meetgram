@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { useDeletePostMutation } from '@/entities/post/model/services/post.service'
 import { CopyLinkIcon } from '@/shared/assets/icons/CopyLink'
 import { EditIcon } from '@/shared/assets/icons/Edit'
 import { FollowIcon } from '@/shared/assets/icons/Follow'
@@ -15,10 +16,12 @@ type Props = {
   id: number
   isFollowing: boolean
   ownerId: number
+  userId: number
 }
 
-export const PostViewSelect = ({ id, isFollowing, ownerId }: Props) => {
-  const isOwner = ownerId === id
+export const PostViewSelect = ({ id, isFollowing, ownerId, userId }: Props) => {
+  const [deletePost, {}] = useDeletePostMutation()
+  const isOwner = ownerId === userId
 
   const [openModal, setOpenModal] = useState<boolean>(false)
 
@@ -38,12 +41,19 @@ delete this post?`}</span>
               <div className={s.dialogBtnWrap}>
                 <Button
                   className={clsx(s.dialogButton, s.dialogButtonComplete)}
-                  onClick={() => {}}
+                  onClick={() => {
+                    deletePost({ postId: id })
+                    setOpenModal(false)
+                  }}
                   variant={'outlined'}
                 >
                   Yes
                 </Button>
-                <Button className={s.dialogButton} onClick={() => {}} variant={'primary'}>
+                <Button
+                  className={s.dialogButton}
+                  onClick={() => setOpenModal(false)}
+                  variant={'primary'}
+                >
                   No
                 </Button>
               </div>

@@ -65,7 +65,12 @@ export const PostView = memo(
               {userName}
             </Link>
             <div>
-              <PostViewSelect id={userId} isFollowing={isFollowing} ownerId={ownerId} />
+              <PostViewSelect
+                id={postId}
+                isFollowing={isFollowing}
+                ownerId={ownerId}
+                userId={userId}
+              />
             </div>
           </div>
           <div className={s.commentsField}></div>
