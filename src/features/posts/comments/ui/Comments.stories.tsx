@@ -21,7 +21,7 @@ export const CommentsOfPost: Story = {
           answerCount: 0,
           content:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, adipisci assumenda blanditiis corporis doloribus error, excepturi fugit in incidunt ipsam itaque minima molestiae neque nesciunt nulla provident repellat temporibus voluptatum.',
-          createdAt: '2024-08-27T14:07:07.652Z',
+          createdAt: '2023-08-27T14:07:07.652Z',
           from: {
             avatars: [
               {

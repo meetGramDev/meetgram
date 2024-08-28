@@ -1,13 +1,14 @@
 import { Photo } from '@/entities/photo'
-import { UseGetTimeAgo } from '@/features/posts/comments/lib/useGetTimeAgo'
 import { Heart } from '@/shared/assets/icons/Heart'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './Comments.module.scss'
 
+import { getTimeAgo } from '../lib/getTimeAgo'
 import { CommentsType } from '../model/types/commentsType'
 
 type Props = {
@@ -15,6 +16,8 @@ type Props = {
 }
 
 export const Comments = ({ comments }: Props) => {
+  const tr = useRouter().locale
+
   return (
     <>
       {comments &&
@@ -44,7 +47,7 @@ export const Comments = ({ comments }: Props) => {
               </div>
             </div>
             <div className={s.commentFooter}>
-              <span>{UseGetTimeAgo('locale', comment.createdAt)}</span>
+              <span>{getTimeAgo(tr ?? 'en', comment.createdAt)}</span>
               {comment.isLiked && <span className={s.like}>Like:</span>}
               {comment.likeCount !== 0 && comment.likeCount}
               <Button className={s.button} variant={'text'}>

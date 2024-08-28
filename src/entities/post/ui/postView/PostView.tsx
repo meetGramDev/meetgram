@@ -26,7 +26,6 @@ export const PostView = memo(
     ownerId,
     post,
     postCreate,
-    postId,
     postLikesCount,
     userId,
     userName,
@@ -34,11 +33,15 @@ export const PostView = memo(
     const [isLiked, setIsLiked] = useState(false)
     const [isFavourite, setIsFavourite] = useState(false)
     const [value, setValue] = useState('')
-    const dateOfCreate = postCreate.toLocaleDateString('en-US', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    })
+    const dateOfCreate = (postCreate: string) => {
+      const date = new Date(postCreate)
+
+      return date.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
+    }
 
     const changeTextAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
       setValue(e.currentTarget.value)
@@ -93,13 +96,15 @@ export const PostView = memo(
                 {isFavourite ? <SketchedFavourites className={s.favourite} /> : <FavoritesIcon />}
               </Button>
             </div>
-            {postLikesCount && (
-              <div className={s.postLikes}>
-                {/* eslint-disable-next-line react/no-unescaped-entities */}
-                {postLikesCount} <span className={s.like}>"Like"</span>
-              </div>
-            )}
-            <span className={s.date}>{dateOfCreate}</span>
+            <div className={s.postLikes}>
+              {postLikesCount !== 0 && (
+                <span>
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
+                  {postLikesCount} "<span className={s.like}>Like</span>"
+                </span>
+              )}
+            </div>
+            <div className={s.date}>{dateOfCreate(postCreate)}</div>
           </div>
           <div className={s.commentContainer}>
             <TextArea

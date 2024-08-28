@@ -17,7 +17,7 @@ const meta = {
     open: false,
     ownerId: 1,
     post: { alt: 'Post', src: beach },
-    postCreate: new Date(),
+    postCreate: '2024-08-27T14:07:07.652Z',
     postId: 1,
     postLikesCount: 5,
     userId: 1,
@@ -61,8 +61,9 @@ export const PostsViewFromSomeDude: Story = {
           isOpen={setOpen}
           open={open}
           post={{ alt: 'Post', src: someDude }}
-          postCreate={new Date()}
+          postCreate={'2024-08-25T14:07:07.652Z'}
           postId={1}
+          postLikesCount={0}
           userId={2}
           userName={'SomeDude'}
         />

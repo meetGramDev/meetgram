@@ -9,7 +9,7 @@ export type PostViewType = {
   open: boolean
   ownerId: number
   post: PostType
-  postCreate: Date
+  postCreate: string
   postId: number
   postLikesCount: number
   userId: number
