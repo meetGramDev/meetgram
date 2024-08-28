@@ -1,0 +1,66 @@
+.commentsContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.commentItems {
+  display: flex;
+  flex-direction: row;
+}
+
+.avatars {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.75rem;
+  padding-top: 0.31rem;
+}
+
+.userName {
+  width: min-content;
+  height: min-content;
+  margin-right: 0.31rem;
+  font-weight: bold;
+}
+
+.commentContent {
+  scrollbar-width: none;
+  overflow: scroll;
+  width: 21.56rem;
+  height: 4.5rem;
+
+  .scrollable::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.hearts {
+  display: flex;
+  flex-direction: column;
+  padding-top: 0.93rem;
+}
+
+.heart {
+  width: min-content;
+  height: min-content;
+  padding: 0.25rem 0 0 0.12rem;
+  color: var(--danger-color-500);
+}
+
+.commentFooter {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+
+  margin: 0.31rem 0 0.93rem 2.9rem;
+
+  color: #757575ff;
+}
+
+.like {
+  margin-right: -0.56rem;
+  font-weight: bold;
+}
+
+.button {
+  color: #757575ff;
+}
