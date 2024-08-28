@@ -1,13 +1,10 @@
 import { userSlice } from '@/entities/user'
-import { authSliceReducer } from '@/features/auth/signUp/model/slice/auth.slice'
-import { addPostReducer } from '@/features/profile/addPost'
+import { authSlice } from '@/features/auth/signUp'
+import { addPostSlice } from '@/features/profile/addPost'
 import { baseApi } from '@/shared/api'
 import { type Action, type ThunkAction, combineSlices, configureStore } from '@reduxjs/toolkit'
 
-const rootReducer = combineSlices(baseApi, userSlice, {
-  addPost: addPostReducer,
-  auth: authSliceReducer,
-})
+const rootReducer = combineSlices(baseApi, userSlice, authSlice, addPostSlice)
 
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>

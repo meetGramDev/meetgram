@@ -14,12 +14,6 @@ type Story = StoryObj<typeof meta>
 
 export const UserPage: Story = {
   args: {
-    posts: {
-      items: [],
-      pageSize: 8,
-      totalCount: 8,
-      totalUsers: 1,
-    },
     userData: {
       aboutMe: 'Some interesting info about me',
       avatars: [],

@@ -1,3 +1,1 @@
-export { useGetPublicPostsQuery } from './model/services/addPost.service'
-export { addPostReducer, setOpenModal } from './model/slice/addPostSlice'
-export type { GetPublicPostsResponse, PublicPost } from './model/types/addPostTypes'
+export { addPostSlice, setOpenModal } from './model/slice/addPostSlice'

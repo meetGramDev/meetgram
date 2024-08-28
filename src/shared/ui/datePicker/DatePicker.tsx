@@ -17,7 +17,7 @@ import s from './DatePicker.module.scss'
 registerLocale('ru-RU', ru)
 registerLocale('en-US', enUS)
 
-const years = range(1940, getYear(new Date()) + 1, 1)
+const years = range(1901, getYear(new Date()) + 1, 1)
 const months = {
   en: [
     'January',

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Post } from '@/entities/post'
-import { PublicPost } from '@/features/profile/addPost'
+import { Post, PublicPost } from '@/entities/post'
 import { clsx } from 'clsx'
 
 import s from './PostsListMobile.module.scss'

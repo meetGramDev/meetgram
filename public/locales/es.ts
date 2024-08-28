@@ -2,6 +2,7 @@ import {EsFlagIcon} from "@/shared/assets/icons/ES";
 
 import {LenType} from './en';
 
+
 export const es: LenType = {
     "Are you really want to log out of your account": "¿Realmente deseas cerrar sesión en tu cuenta ",
     "Congratulations!": "¡Felicidades!",

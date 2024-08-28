@@ -1,6 +1,6 @@
-import {RuFlagIcon} from "@/shared/assets/icons/RU";
+import { RuFlagIcon } from "@/shared/assets/icons/RU";
 
-import {LenType} from './en';
+import { LenType } from './en';
 
 export const ru: LenType = {
     "Are you really want to log out of your account": "Вы действительно хотите выйти из своего аккаунта ",
@@ -46,8 +46,8 @@ export const ru: LenType = {
             passContain: 'Пароль должен содержать',
             requiredFields: 'Заполните обязательные поля',
             wrongDateOfBirth: `Пользователь младше 13 лет не может создать профиль`,
-            wrongFirstName: 'Недопустимое Имя',
-            wrongLastName: 'Недопустимая Фаимилия',
+            wrongFirstName: 'Недопустимое имя',
+            wrongLastName: 'Недопустимая фамилия',
             wrongUsername: 'Неправильное имя пользователя',
         },
     },

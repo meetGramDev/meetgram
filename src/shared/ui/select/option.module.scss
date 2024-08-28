@@ -1,0 +1,24 @@
+@use './variables';
+
+.item {
+  cursor: pointer;
+  user-select: none;
+
+  position: relative;
+
+  padding: variables.$select-paddings;
+
+  font: var(--font-regular);
+  color: var(--light-color-100);
+
+  &[data-disabled] {
+    pointer-events: none;
+    color: var(--light-color-900);
+  }
+
+  &[data-highlighted] {
+    color: var(--primary-color-500);
+    background-color: var(--dark-color-300);
+    outline: none;
+  }
+}

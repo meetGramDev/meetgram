@@ -1,7 +1,5 @@
 import { Photo } from '@/entities/photo'
 import { FullUserProfile } from '@/entities/user'
-import { PostsList } from '@/features/posts/postsList'
-import { GetPublicPostsResponse } from '@/features/profile/addPost/model/types/addPostTypes'
 import { AddPost } from '@/features/profile/addPost/ui/AddPost'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { PROFILE_SETTINGS } from '@/shared/config/router'
@@ -12,11 +10,10 @@ import Link from 'next/link'
 import s from './User.module.scss'
 
 type Props = {
-  posts: GetPublicPostsResponse
   userData: FullUserProfile
 }
 
-export const User = ({ posts, userData }: Props) => {
+export const User = ({ userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
   const t = useTranslate()
 
@@ -61,7 +58,6 @@ export const User = ({ posts, userData }: Props) => {
           <div className={s.aboutMeText}>{userData?.aboutMe}</div>
         </div>
       </div>
-      {!!posts && <PostsList posts={posts} />}
       <AddPost />
     </div>
   )
