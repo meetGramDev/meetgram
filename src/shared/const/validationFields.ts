@@ -48,5 +48,5 @@ export const getPasswordSignInConstraint = (errorValidationFields?: ErrorValidat
 }
 
 export const getEditPostDescriptionConstraint = () => {
-  return z.string().trim().max(500, { message: `Максимальное количество символом: 500` })
+  return z.string().trim().max(500, { message: `Максимальное количество символов: 500` })
 }

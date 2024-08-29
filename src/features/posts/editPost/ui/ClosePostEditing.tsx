@@ -4,7 +4,7 @@ type Props = {
   onClose: (value: boolean) => void
 }
 
-export const CloseEditPostDialog = ({ onClose }: Props) => {
+export const ClosePostEditingDialog = ({ onClose }: Props) => {
   return (
     <Dialog title={'Close Post'}>
       <p>
