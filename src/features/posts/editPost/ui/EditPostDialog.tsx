@@ -1,7 +1,10 @@
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
 import { Post, PublicPost } from '@/entities/post'
+import { serverErrorHandler } from '@/shared/lib'
+import { isErrorServerMessagesType } from '@/shared/types'
 import { Button, Dialog, TextArea } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -23,9 +26,11 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
   const [editPost] = useEditPostMutation()
 
   const {
-    formState: { errors, isDirty, isSubmitting, isValid, touchedFields },
+    clearErrors,
+    formState: { errors, isSubmitting, isValid },
     handleSubmit,
     register,
+    setError,
     watch,
   } = useForm<EditPostField>({
     defaultValues: {
@@ -39,6 +44,25 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
 
   const submitHandler = handleSubmit(data => {
     editPost({ description: data.description, postId: post.id })
+      .unwrap()
+      .then()
+      .catch(error => {
+        const message = serverErrorHandler(error)
+
+        if (typeof message === 'string') {
+          toast.error(message)
+        }
+
+        if (isErrorServerMessagesType(message)) {
+          message.forEach(msg => {
+            setError(
+              msg.field as keyof EditPostField,
+              { message: msg.message },
+              { shouldFocus: true }
+            )
+          })
+        }
+      })
   })
 
   return (
@@ -78,7 +102,7 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
               </div>
             </div>
             <div className={'flex justify-end'}>
-              <Button disabled={!isValid || !touchedFields.description || isSubmitting}>
+              <Button disabled={!isValid || isSubmitting || !!errors.description}>
                 Save changes
               </Button>
             </div>
