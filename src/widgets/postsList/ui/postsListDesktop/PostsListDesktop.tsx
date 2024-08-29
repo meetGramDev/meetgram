@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
 import { Post, PostView, PublicPost } from '@/entities/post'
+import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { EditPostDialog } from '@/features/posts/editPost'
+import { Dialog } from '@/shared/ui'
 
 import s from './PostsList.module.scss'
 
@@ -12,14 +14,20 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
   const [currentPost, setCurrentPost] = useState<PublicPost | null>(null)
 
   const [openEdit, setOpenEdit] = useState(false)
+  const [openCloseEditingPost, setOpenCloseEditingPost] = useState(false)
 
   const currentPostHandler = (post: PublicPost) => {
     setOpenPost(true)
     setCurrentPost(post)
   }
 
-  const handleOnEditPost = () => {
-    setOpenEdit(true)
+  const handleCloseEditDialog = (isConfirm: boolean) => {
+    if (isConfirm) {
+      setOpenCloseEditingPost(false)
+      setOpenEdit(false)
+    } else {
+      setOpenCloseEditingPost(false)
+    }
   }
 
   return (
@@ -41,7 +49,7 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
         <PostView
           isFollowing={isFollowing}
           isOpen={setOpenPost}
-          onEdit={handleOnEditPost}
+          onEdit={() => setOpenEdit(true)}
           open={openPost}
           post={currentPost}
           userId={userId}
@@ -50,10 +58,25 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
 
       {openEdit && currentPost && (
         <EditPostDialog
-          onOpenChange={open => setOpenEdit(false)}
+          onOpenChange={() => setOpenCloseEditingPost(true)}
           open={openEdit}
           post={currentPost}
         />
+      )}
+
+      {openCloseEditingPost && (
+        <Dialog
+          onOpenChange={() => setOpenCloseEditingPost(false)}
+          open={openCloseEditingPost}
+          title={'Close Post'}
+        >
+          <ConfirmClosingDialog
+            message={
+              'Do you really want to finish editing? If you close the changes you have made will not be saved.'
+            }
+            onConfirm={handleCloseEditDialog}
+          />
+        </Dialog>
       )}
     </div>
   )
