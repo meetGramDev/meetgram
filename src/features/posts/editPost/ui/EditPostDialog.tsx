@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { Photo } from '@/entities/photo'
 import { Post, PublicPost } from '@/entities/post'
 import { serverErrorHandler } from '@/shared/lib'
-import { isErrorServerMessagesType } from '@/shared/types'
+import { Nullable, isErrorServerMessagesType } from '@/shared/types'
 import { Button, Dialog, TextArea } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -34,7 +34,7 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
     watch,
   } = useForm<EditPostField>({
     defaultValues: {
-      description: post.description,
+      description: post?.description,
     },
     mode: 'onChange',
     resolver: zodResolver(getEditPostSchema()),

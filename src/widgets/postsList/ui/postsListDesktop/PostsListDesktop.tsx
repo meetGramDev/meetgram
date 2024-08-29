@@ -37,7 +37,7 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
           </div>
         )
       })}
-      {currentPost && (
+      {openPost && currentPost && (
         <PostView
           isFollowing={isFollowing}
           isOpen={setOpenPost}
@@ -48,7 +48,7 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
         />
       )}
 
-      {currentPost && (
+      {openEdit && currentPost && (
         <EditPostDialog
           onOpenChange={open => setOpenEdit(false)}
           open={openEdit}
