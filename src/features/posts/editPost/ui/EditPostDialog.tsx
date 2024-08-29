@@ -17,7 +17,7 @@ import { type EditPostField, getEditPostSchema } from '../validation/schema'
 const MAX_DESCRIPTION_LENGTH = 500
 
 type Props = {
-  onOpenChange: (open: boolean) => void
+  onOpenChange: ({ isSuccess, open }: { isSuccess?: boolean; open: boolean }) => void
   open: boolean
   post: PublicPost
 }
@@ -45,7 +45,12 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
   const submitHandler = handleSubmit(data => {
     editPost({ description: data.description, postId: post.id })
       .unwrap()
-      .then()
+      .then(res => {
+        if (isDirty) {
+          // await editPost({ description: data.description, postId: post.id }).unwrap()
+          onOpenChange({ isSuccess: true, open: false })
+        }
+      })
       .catch(error => {
         const message = serverErrorHandler(error)
 
@@ -66,7 +71,7 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
   })
 
   return (
-    <Dialog onOpenChange={onOpenChange} open={open} title={'Edit Post'}>
+    <Dialog modal onOpenChange={open => onOpenChange({ open })} open={open} title={'Edit Post'}>
       <div className={'flex'}>
         <div className={s.post}>
           <Post alt={'post'} src={post.images[0].url} />

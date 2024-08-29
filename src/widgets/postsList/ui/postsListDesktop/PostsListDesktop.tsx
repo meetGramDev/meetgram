@@ -21,6 +21,14 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
     setCurrentPost(post)
   }
 
+  const handleEditPostDialog = ({ isSuccess }: { isSuccess?: boolean }) => {
+    if (isSuccess) {
+      setOpenEdit(false)
+    } else {
+      setOpenCloseEditingPost(true)
+    }
+  }
+
   const handleCloseEditDialog = (isConfirm: boolean) => {
     if (isConfirm) {
       setOpenCloseEditingPost(false)
@@ -57,11 +65,7 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
       )}
 
       {openEdit && currentPost && (
-        <EditPostDialog
-          onOpenChange={() => setOpenCloseEditingPost(true)}
-          open={openEdit}
-          post={currentPost}
-        />
+        <EditPostDialog onOpenChange={handleEditPostDialog} open={openEdit} post={currentPost} />
       )}
 
       {openCloseEditingPost && (
