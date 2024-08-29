@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { Photo } from '@/entities/photo'
 import { Post, PublicPost } from '@/entities/post'
 import { serverErrorHandler } from '@/shared/lib'
-import { Nullable, isErrorServerMessagesType } from '@/shared/types'
+import { isErrorServerMessagesType } from '@/shared/types'
 import { Button, Dialog, TextArea } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -16,8 +16,14 @@ import { type EditPostField, getEditPostSchema } from '../validation/schema'
 
 const MAX_DESCRIPTION_LENGTH = 500
 
+export interface OnOpenChangeArgs {
+  isDirty?: boolean
+  isSuccess?: boolean
+  open: boolean
+}
+
 type Props = {
-  onOpenChange: ({ isSuccess, open }: { isSuccess?: boolean; open: boolean }) => void
+  onOpenChange: ({ isDirty, isSuccess, open }: OnOpenChangeArgs) => void
   open: boolean
   post: PublicPost
 }
@@ -26,15 +32,14 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
   const [editPost] = useEditPostMutation()
 
   const {
-    clearErrors,
-    formState: { errors, isSubmitting, isValid },
+    formState: { errors, isDirty, isSubmitting, isValid },
     handleSubmit,
     register,
     setError,
     watch,
   } = useForm<EditPostField>({
     defaultValues: {
-      description: post?.description,
+      description: post.description,
     },
     mode: 'onChange',
     resolver: zodResolver(getEditPostSchema()),
@@ -42,36 +47,37 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
 
   const textDescription = watch('description')
 
-  const submitHandler = handleSubmit(data => {
-    editPost({ description: data.description, postId: post.id })
-      .unwrap()
-      .then(res => {
-        if (isDirty) {
-          // await editPost({ description: data.description, postId: post.id }).unwrap()
-          onOpenChange({ isSuccess: true, open: false })
-        }
-      })
-      .catch(error => {
-        const message = serverErrorHandler(error)
+  const submitHandler = handleSubmit(async data => {
+    try {
+      await editPost({ description: data.description, postId: post.id }).unwrap()
 
-        if (typeof message === 'string') {
-          toast.error(message)
-        }
+      onOpenChange({ isSuccess: true, open: false })
+    } catch (error) {
+      const message = serverErrorHandler(error)
 
-        if (isErrorServerMessagesType(message)) {
-          message.forEach(msg => {
-            setError(
-              msg.field as keyof EditPostField,
-              { message: msg.message },
-              { shouldFocus: true }
-            )
-          })
-        }
-      })
+      if (typeof message === 'string') {
+        toast.error(message)
+      }
+
+      if (isErrorServerMessagesType(message)) {
+        message.forEach(msg => {
+          setError(
+            msg.field as keyof EditPostField,
+            { message: msg.message },
+            { shouldFocus: true }
+          )
+        })
+      }
+    }
   })
 
   return (
-    <Dialog modal onOpenChange={open => onOpenChange({ open })} open={open} title={'Edit Post'}>
+    <Dialog
+      modal
+      onOpenChange={open => onOpenChange({ isDirty, open })}
+      open={open}
+      title={'Edit Post'}
+    >
       <div className={'flex'}>
         <div className={s.post}>
           <Post alt={'post'} src={post.images[0].url} />
@@ -107,7 +113,7 @@ export const EditPostDialog = ({ onOpenChange, open, post }: Props) => {
               </div>
             </div>
             <div className={'flex justify-end'}>
-              <Button disabled={!isValid || isSubmitting || !!errors.description}>
+              <Button disabled={!isValid || isSubmitting || !!errors.description || !isDirty}>
                 Save changes
               </Button>
             </div>

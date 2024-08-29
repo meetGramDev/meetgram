@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Post, PostView, PublicPost } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
-import { EditPostDialog } from '@/features/posts/editPost'
+import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
 import { Dialog } from '@/shared/ui'
 
 import s from './PostsList.module.scss'
@@ -21,7 +21,13 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
     setCurrentPost(post)
   }
 
-  const handleEditPostDialog = ({ isSuccess }: { isSuccess?: boolean }) => {
+  const handleEditPostDialog = ({ isDirty, isSuccess }: OnOpenChangeArgs) => {
+    if (!isDirty) {
+      setOpenEdit(false)
+
+      return
+    }
+
     if (isSuccess) {
       setOpenEdit(false)
     } else {
