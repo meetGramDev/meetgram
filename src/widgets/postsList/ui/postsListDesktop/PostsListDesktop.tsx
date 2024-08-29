@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
 import { Post, PostView, PublicPost } from '@/entities/post'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './PostsList.module.scss'
 
@@ -9,6 +11,7 @@ type Props = {
 }
 
 export const PostsListDesktop = ({ posts }: Props) => {
+  const router = useRouter()
   const [openPost, setOpenPost] = useState<boolean>(false)
   const [currentPost, setCurrentPost] = useState<PublicPost | null>(null)
 
@@ -28,7 +31,9 @@ export const PostsListDesktop = ({ posts }: Props) => {
               currentPostHandler(post)
             }}
           >
-            <Post alt={'post'} className={s.image} src={post.images[0].url} />
+            <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpen=true`}>
+              <Post alt={'post'} className={s.image} src={post.images[0].url} />
+            </Link>
           </div>
         )
       })}
