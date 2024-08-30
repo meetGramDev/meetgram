@@ -1,7 +1,7 @@
 import { ChangeEvent, memo, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { Post, useGetSinglePublicPostQuery } from '@/entities/post'
+import { Post, PublicPost, useGetSinglePublicPostQuery } from '@/entities/post'
 import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
@@ -21,6 +21,7 @@ type Props = {
   isOpen: (open: boolean) => void
   onEdit?: () => void
   open: boolean
+  post?: PublicPost
   postId: number
   userId: number
 }
