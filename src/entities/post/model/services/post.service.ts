@@ -1,10 +1,11 @@
 import { baseApi } from '@/shared/api'
+import { providesTags } from '@/shared/lib'
 
-import { GerPublicPostsRequest, GetPublicPostsResponse } from '../types/posts.types'
+import { GetPublicPostsArgs, GetPublicPostsResponse, PublicPost } from '../types/posts.types'
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getPublicPosts: builder.query<GetPublicPostsResponse, GerPublicPostsRequest>({
+    getPublicPosts: builder.query<GetPublicPostsResponse, GetPublicPostsArgs>({
       forceRefetch: ({ currentArg, previousArg }) => {
         return (
           currentArg?.endCursorPostId !== previousArg?.endCursorPostId ||
@@ -12,12 +13,13 @@ export const postsApi = baseApi.injectEndpoints({
         )
       },
       merge: (currentCacheData, responseData) => {
+        // TODO
         currentCacheData.items.push(...responseData.items)
         currentCacheData.totalCount = responseData.totalCount
         currentCacheData.pageSize = responseData.pageSize
         currentCacheData.totalUsers = responseData.totalUsers
       },
-      providesTags: ['post'],
+      providesTags: res => providesTags(res?.items, 'post'),
       query: args => {
         let url: string = `/public-posts/user/`
 
@@ -36,7 +38,13 @@ export const postsApi = baseApi.injectEndpoints({
         return { id: queryArgs.id }
       },
     }),
+    getSinglePublicPost: builder.query<PublicPost, number>({
+      providesTags: (res, error, id) => [{ id, type: 'post' }],
+      query: postId => ({
+        url: `/public-posts/${postId}`,
+      }),
+    }),
   }),
 })
 
-export const { useGetPublicPostsQuery } = postsApi
+export const { useGetPublicPostsQuery, useGetSinglePublicPostQuery } = postsApi

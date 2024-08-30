@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Post, PostView, PublicPost } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
+import { Nullable } from '@/shared/types'
 import { Dialog } from '@/shared/ui'
 
 import s from './PostsList.module.scss'
@@ -11,14 +12,14 @@ import { PostListProps } from '../props.type'
 
 export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
   const [openPost, setOpenPost] = useState<boolean>(false)
-  const [currentPost, setCurrentPost] = useState<PublicPost | null>(null)
+  const [currentPostId, setCurrentPostId] = useState<Nullable<number>>(null)
 
   const [openEdit, setOpenEdit] = useState(false)
   const [openCloseEditingPost, setOpenCloseEditingPost] = useState(false)
 
-  const currentPostHandler = (post: PublicPost) => {
+  const currentPostHandler = (id: number) => {
     setOpenPost(true)
-    setCurrentPost(post)
+    setCurrentPostId(id)
   }
 
   const handleEditPostDialog = ({ isDirty, isSuccess }: OnOpenChangeArgs) => {
@@ -52,26 +53,30 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
             className={s.item}
             key={post.id}
             onClick={() => {
-              currentPostHandler(post)
+              currentPostHandler(post.id)
             }}
           >
             <Post alt={'post'} className={s.image} src={post.images[0].url} />
           </div>
         )
       })}
-      {openPost && currentPost && (
+      {openPost && currentPostId && (
         <PostView
           isFollowing={isFollowing}
           isOpen={setOpenPost}
           onEdit={() => setOpenEdit(true)}
           open={openPost}
-          post={currentPost}
+          postId={currentPostId}
           userId={userId}
         />
       )}
 
-      {openEdit && currentPost && (
-        <EditPostDialog onOpenChange={handleEditPostDialog} open={openEdit} post={currentPost} />
+      {openEdit && currentPostId && (
+        <EditPostDialog
+          onOpenChange={handleEditPostDialog}
+          open={openEdit}
+          postId={currentPostId}
+        />
       )}
 
       {openCloseEditingPost && (

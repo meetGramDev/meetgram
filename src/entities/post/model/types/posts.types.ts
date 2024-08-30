@@ -32,7 +32,7 @@ export type GetPublicPostsResponse = {
   totalUsers: number
 }
 
-export type GerPublicPostsRequest = {
+export type GetPublicPostsArgs = {
   endCursorPostId?: number
   id: string
   params: {
