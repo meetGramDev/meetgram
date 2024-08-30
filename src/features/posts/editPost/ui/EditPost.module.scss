@@ -1,0 +1,26 @@
+/* Edit Post Dialog */
+.form {
+  width: 21.25rem;
+  margin: 1.5rem;
+}
+
+.post {
+  width: 30.125rem;
+  height: 100%;
+
+  & > img {
+    width: 100%;
+    object-fit: cover;
+    image-rendering: crisp-edges;
+  }
+}
+
+.charLimitation {
+  font: var(--font-small);
+  color: var(--light-color-900);
+  text-align: end;
+}
+
+/* ==================== */
+
+/* Close Post Editing */

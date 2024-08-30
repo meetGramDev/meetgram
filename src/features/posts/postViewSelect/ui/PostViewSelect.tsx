@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 
 import { CopyLinkIcon } from '@/shared/assets/icons/CopyLink'
 import { EditIcon } from '@/shared/assets/icons/Edit'
@@ -13,10 +13,11 @@ import s from './PostViewSelect.module.scss'
 type Props = {
   id: number
   isFollowing: boolean
+  onEdit?: () => void
   ownerId: number
 }
 
-export const PostViewSelect = ({ id, isFollowing, ownerId }: Props) => {
+export const PostViewSelect = memo(({ id, isFollowing, onEdit, ownerId }: Props) => {
   const isOwner = ownerId === id
 
   return (
@@ -29,7 +30,7 @@ export const PostViewSelect = ({ id, isFollowing, ownerId }: Props) => {
       >
         {isOwner ? (
           <div className={s.menuContent}>
-            <Button className={s.button} variant={'text'}>
+            <Button className={s.button} onClick={onEdit} variant={'text'}>
               <EditIcon /> Edit Post
             </Button>
             <Button className={s.button} variant={'text'}>
@@ -55,4 +56,6 @@ export const PostViewSelect = ({ id, isFollowing, ownerId }: Props) => {
       </Select>
     </div>
   )
-}
+})
+
+PostViewSelect.displayName = 'PostViewSelect'

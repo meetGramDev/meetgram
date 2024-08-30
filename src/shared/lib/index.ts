@@ -1,6 +1,7 @@
 export { cn } from './cn'
 export * from './errorHandlers'
 export * from './langSwitcher'
+export { getProvidesTags } from './providesTags'
 export { range } from './range'
 export { readFile } from './readFile'
 export { useChangeZodErrorLang } from './useChangeZodErrorLang'

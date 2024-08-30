@@ -204,8 +204,10 @@
     display: none;
   }
 
-  &:focus {
+  &:focus,
+  &:focus-visible {
     outline: none;
+    box-shadow: none;
   }
 }
 
