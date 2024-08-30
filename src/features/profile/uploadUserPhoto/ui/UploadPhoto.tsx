@@ -5,6 +5,7 @@ import {
   useDeleteProfilePhotoMutation,
   useUploadProfilePhotoMutation,
 } from '@/entities/photo'
+import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { isErrorServerMessagesType } from '@/shared/types'
 import { Button, Dialog } from '@/shared/ui'
@@ -12,7 +13,6 @@ import { Button, Dialog } from '@/shared/ui'
 import s from './UploadPhoto.module.scss'
 
 import { UploadedPhotoType } from '../types/types'
-import { DeletePhotoForm } from './DeletePhotoForm'
 import { UploadPhotoForm } from './UploadPhotoForm'
 
 type Props = {
@@ -92,7 +92,10 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
             open={openDelete}
             title={'Delete photo'}
           >
-            <DeletePhotoForm onConfirm={confirm => handleDeletePhoto(confirm)} />
+            <ConfirmClosingDialog
+              message={'Are you sure you want to delete the photo?'}
+              onConfirm={handleDeletePhoto}
+            />
           </Dialog>
         </>
       )}
