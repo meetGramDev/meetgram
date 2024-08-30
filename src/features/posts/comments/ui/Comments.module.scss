@@ -15,18 +15,44 @@
   padding-top: 0.31rem;
 }
 
+.photo {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
 .userName {
   width: min-content;
   height: min-content;
   margin-right: 0.31rem;
+
   font-weight: bold;
+
+  transition: all 0.3s;
+
+  &:hover {
+    color: var(--primary-color-100);
+  }
+
+  &:active {
+    outline: var(--primary-color-700);
+  }
+
+  &:focus-visible {
+    color: var(--primary-color-700);
+    outline: none;
+  }
 }
 
 .commentContent {
   scrollbar-width: none;
-  overflow: scroll;
+
+  overflow: auto;
+
   width: 21.56rem;
-  height: 4.5rem;
+  max-height: 4.5rem;
+
+  word-wrap: break-word;
+  white-space: normal;
 
   .scrollable::-webkit-scrollbar {
     display: none;
@@ -36,7 +62,16 @@
 .hearts {
   display: flex;
   flex-direction: column;
-  padding-top: 0.93rem;
+  margin-left: 0.65rem;
+  padding-top: 0.43rem;
+}
+
+.heartButton {
+  color: var(--light-color-100);
+
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 .heart {
@@ -63,4 +98,8 @@
 
 .button {
   color: #757575ff;
+
+  &:focus-visible {
+    outline: none;
+  }
 }

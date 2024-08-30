@@ -41,15 +41,39 @@
   border-bottom: 1px solid var(--dark-color-100);
 }
 
-.userData {
+.userLink {
   display: flex;
+  flex-direction: row;
   gap: 0.75rem;
   align-items: center;
   justify-content: center;
 
-  margin-left: 1.87rem;
+  margin: 0.5rem 0 0 1.8rem;
+}
 
+.linkAvatar {
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.link {
+  padding-bottom: 0.31rem;
   font: var(--font-h3);
+  transition: all 0.3s;
+
+  &:hover {
+    color: var(--primary-color-100);
+  }
+
+  &:active {
+    outline: var(--primary-color-700);
+  }
+
+  &:focus-visible {
+    color: var(--primary-color-700);
+    outline: none;
+  }
 }
 
 .avatar {
@@ -59,13 +83,30 @@
 }
 
 .commentsField {
-  scrollbar-width: none;
-  overflow: scroll;
-  height: 21rem;
+  scrollbar-color: var(--dark-color-100);
 
-  .scrollable::-webkit-scrollbar {
-    display: none;
-  }
+  overflow: auto;
+  align-self: center;
+
+  width: 481px;
+  height: 21rem;
+  padding-left: 1.8rem;
+}
+
+.commentsField::-webkit-scrollbar {
+  width: 1px;
+}
+
+.commentsField::-webkit-scrollbar-track {
+  background-color: var(--dark-color-900);
+}
+
+.commentsField::-webkit-scrollbar-thumb {
+  background-color: var(--light-color-100);
+}
+
+.commentsField::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color-700);
 }
 
 .button {
@@ -88,7 +129,7 @@
   flex-direction: row;
   justify-content: space-between;
 
-  margin: 0.75rem 0 1.18rem -0.31rem;
+  margin: 0.75rem 0 1.18rem;
   padding-right: 1.5rem;
 }
 

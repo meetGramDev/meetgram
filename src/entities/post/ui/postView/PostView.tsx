@@ -2,6 +2,7 @@ import { ChangeEvent, memo, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { Post } from '@/entities/post'
+import { Comments } from '@/features/posts/comments'
 import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
@@ -11,11 +12,19 @@ import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import { Button, Dialog, TextArea } from '@/shared/ui'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './PostView.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
+import {
+  useAddPostCommentMutation,
+  useGetPostCommentsQuery,
+} from '../../model/services/postView.service'
 import { PostViewType } from '../../model/types/postViewTypes'
+
+const PAGE_SIZE = 12
+const PAGE_NUMBER = 5
 
 export const PostView = memo(
   ({
@@ -26,17 +35,28 @@ export const PostView = memo(
     ownerId,
     post,
     postCreate,
+    postId,
     postLikesCount,
     userId,
     userName,
   }: PostViewType) => {
+    const [addComment] = useAddPostCommentMutation()
+    const {
+      data: comments,
+      isFetching: commentsFetching,
+      isLoading: commentsLoading,
+    } = useGetPostCommentsQuery({
+      params: { pageNumber: PAGE_NUMBER, pageSize: PAGE_SIZE },
+      postId: postId,
+    })
     const [isLiked, setIsLiked] = useState(false)
     const [isFavourite, setIsFavourite] = useState(false)
-    const [value, setValue] = useState('')
+    const [commentContent, setCommentContent] = useState('')
+    const tr = useRouter().locale
     const dateOfCreate = (postCreate: string) => {
       const date = new Date(postCreate)
 
-      return date.toLocaleDateString('en-US', {
+      return date.toLocaleDateString(tr ?? 'en-US', {
         day: 'numeric',
         month: 'long',
         year: 'numeric',
@@ -44,7 +64,19 @@ export const PostView = memo(
     }
 
     const changeTextAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.currentTarget.value)
+      setCommentContent(e.currentTarget.value)
+    }
+
+    const addCommentHandler = () => {
+      setCommentContent('')
+      if (postId) {
+        addComment({ body: { content: commentContent }, postId: postId })
+          .unwrap()
+          .then(() => {})
+          .catch((error: { messages: any[] }) => {
+            console.log(error.messages[0])
+          })
+      }
     }
 
     return (
@@ -57,21 +89,27 @@ export const PostView = memo(
             <CloseIcon onClick={() => isOpen(false)} />
           </Button>
           <div className={s.title}>
-            <Link className={s.userData} href={'#'}>
-              <Photo
-                alt={'Owner avatar'}
-                className={s.avatar}
-                height={36}
-                src={avatarOwner || notPhoto}
-                width={36}
-              />
-              {userName}
-            </Link>
+            <div className={s.userLink}>
+              <Link className={s.linkAvatar} href={'#'}>
+                <Photo
+                  alt={'Owner avatar'}
+                  className={s.avatar}
+                  height={36}
+                  src={avatarOwner || notPhoto}
+                  width={36}
+                />
+              </Link>
+              <Link className={s.link} href={'#'}>
+                {userName}
+              </Link>
+            </div>
             <div>
               <PostViewSelect id={userId} isFollowing={isFollowing} ownerId={ownerId} />
             </div>
           </div>
-          <div className={s.commentsField}></div>
+          <div className={s.commentsField}>
+            {comments && <Comments comments={comments} postId={postId} />}
+          </div>
           <div className={s.footer}>
             <div className={s.footerButtons}>
               <div className={s.leftSideButtons}>
@@ -109,13 +147,13 @@ export const PostView = memo(
           <div className={s.commentContainer}>
             <TextArea
               className={s.commentTextArea}
-              label={!value && 'Add a Comment...'}
+              label={!commentContent && 'Add a Comment...'}
               labelClassName={s.label}
               maxLength={500}
               onChange={changeTextAreaHandler}
-              value={value}
+              value={commentContent}
             />
-            <Button className={s.publishButton} variant={'text'}>
+            <Button className={s.publishButton} onClick={addCommentHandler} variant={'text'}>
               Publish
             </Button>
           </div>

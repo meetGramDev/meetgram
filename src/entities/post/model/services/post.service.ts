@@ -1,10 +1,10 @@
 import { baseApi } from '@/shared/api'
 
-import { GerPublicPostsRequest, GetPublicPostsResponse } from '../types/posts.types'
+import { GetPublicPostsRequest, GetPublicPostsResponse } from '../types/posts.types'
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getPublicPosts: builder.query<GetPublicPostsResponse, GerPublicPostsRequest>({
+    getPublicPosts: builder.query<GetPublicPostsResponse, GetPublicPostsRequest>({
       forceRefetch: ({ currentArg, previousArg }) => {
         return (
           currentArg?.endCursorPostId !== previousArg?.endCursorPostId ||
@@ -17,7 +17,7 @@ export const postsApi = baseApi.injectEndpoints({
         currentCacheData.pageSize = responseData.pageSize
         currentCacheData.totalUsers = responseData.totalUsers
       },
-      providesTags: ['post'],
+      providesTags: ['posts'],
       query: args => {
         let url: string = `/public-posts/user/`
 

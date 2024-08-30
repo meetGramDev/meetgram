@@ -2,8 +2,6 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 export type CommentsType = {
   items: CommentsItems[]
-  pageSize: number
-  totalCount: number
 }
 
 export type CommentsItems = {

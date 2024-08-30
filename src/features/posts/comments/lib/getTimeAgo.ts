@@ -23,5 +23,5 @@ export const getTimeAgo = (lang: string | undefined, createdAt: string) => {
     style: 'long',
   })
 
-  return rtf.format(-Math.floor(Math.abs(deltaSeconds) / divisor), units[unitIndex])
+  return rtf.format(-Math.round(Math.abs(deltaSeconds) / divisor), units[unitIndex])
 }

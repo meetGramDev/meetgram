@@ -1,3 +1,4 @@
+import { CommentsItems } from '@/features/posts/comments/model/types/commentsType'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 import { PostType } from '../../ui/Post'
@@ -14,4 +15,26 @@ export type PostViewType = {
   postLikesCount: number
   userId: number
   userName: string
+}
+
+export type GetCommentsResponse = {
+  items: CommentsItems[]
+  pageSize: number
+  totalCount: number
+}
+
+export type GetCommentsArgs = {
+  params: {
+    pageNumber?: number
+    pageSize?: number
+  }
+  postId: number
+}
+
+export type AddCommentArgs = {
+  content: string
+}
+
+export type AddCommentResponse = {
+  items: CommentsItems
 }

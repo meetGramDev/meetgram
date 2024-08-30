@@ -13,20 +13,22 @@ import { CommentsType } from '../model/types/commentsType'
 
 type Props = {
   comments: CommentsType
+  postId: number
 }
 
-export const Comments = ({ comments }: Props) => {
+export const Comments = ({ comments, postId }: Props) => {
   const tr = useRouter().locale
 
   return (
     <>
       {comments &&
-        comments.items.map((comment, index) => (
-          <div key={index}>
+        comments.items.map(comment => (
+          <div key={postId}>
             <div className={s.commentsContainer}>
               <div className={s.avatars}>
                 <Photo
                   alt={'user photo'}
+                  className={s.photo}
                   height={36}
                   src={comment.from.avatars[0].url || withoutPhoto}
                   width={36}
@@ -34,7 +36,7 @@ export const Comments = ({ comments }: Props) => {
               </div>
               <div className={s.commentItems}>
                 <div className={s.commentContent}>
-                  <Link className={s.userName} href={'#'}>
+                  <Link className={s.userName} href={`/profile/${comment.from.id}`}>
                     {comment.from.username}
                   </Link>
                   {comment.content}

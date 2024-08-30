@@ -44,7 +44,7 @@ export const PostsListDesktop = ({ posts }: Props) => {
             className: s.image,
             src: currentPost.images[0].url,
           }}
-          postCreate={new Date()}
+          postCreate={currentPost.createdAt}
           postId={currentPost.id}
           postLikesCount={currentPost.likesCount}
           userId={currentPost.ownerId}
