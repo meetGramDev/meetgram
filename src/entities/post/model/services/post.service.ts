@@ -1,5 +1,5 @@
 import { baseApi } from '@/shared/api'
-import { providesTags } from '@/shared/lib'
+import { getProvidesTags } from '@/shared/lib'
 
 import { GetPublicPostsArgs, GetPublicPostsResponse, PublicPost } from '../types/posts.types'
 
@@ -12,14 +12,17 @@ export const postsApi = baseApi.injectEndpoints({
           currentArg?.params !== previousArg?.params
         )
       },
-      merge: (currentCacheData, responseData) => {
-        // TODO
+      merge: (currentCacheData, responseData, { arg }) => {
+        if (!arg.endCursorPostId) {
+          return responseData
+        }
+
         currentCacheData.items.push(...responseData.items)
         currentCacheData.totalCount = responseData.totalCount
         currentCacheData.pageSize = responseData.pageSize
         currentCacheData.totalUsers = responseData.totalUsers
       },
-      providesTags: res => providesTags(res?.items, 'post'),
+      providesTags: res => getProvidesTags(res?.items, 'post'),
       query: args => {
         let url: string = `/public-posts/user/`
 
