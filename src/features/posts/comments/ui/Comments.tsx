@@ -11,19 +11,14 @@ import s from './Comments.module.scss'
 import { getTimeAgo } from '../lib/getTimeAgo'
 import { CommentsType } from '../model/types/commentsType'
 
-type Props = {
-  comments: CommentsType
-  postId: number
-}
-
-export const Comments = ({ comments, postId }: Props) => {
+export const Comments = ({ items }: CommentsType) => {
   const tr = useRouter().locale
 
   return (
     <>
-      {comments &&
-        comments.items.map(comment => (
-          <div key={postId}>
+      {items &&
+        items.map(comment => (
+          <div key={comment.id}>
             <div className={s.commentsContainer}>
               <div className={s.avatars}>
                 <Photo

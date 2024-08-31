@@ -22,7 +22,7 @@ export const postsApi = baseApi.injectEndpoints({
         currentCacheData.pageSize = responseData.pageSize
         currentCacheData.totalUsers = responseData.totalUsers
       },
-      providesTags: res => getProvidesTags(res?.items, 'post'),
+      providesTags: res => getProvidesTags(res?.items, 'posts'),
       query: args => {
         let url: string = `/public-posts/user/`
 
@@ -42,7 +42,7 @@ export const postsApi = baseApi.injectEndpoints({
       },
     }),
     getSinglePublicPost: builder.query<PublicPost, number>({
-      providesTags: (res, error, id) => [{ id, type: 'post' }],
+      providesTags: (res, error, id) => [{ id, type: 'posts' }],
       query: postId => ({
         url: `/public-posts/${postId}`,
       }),
