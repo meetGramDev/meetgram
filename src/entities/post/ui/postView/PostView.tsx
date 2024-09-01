@@ -1,8 +1,8 @@
 import { ChangeEvent, memo, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
 import { Post, PublicPost, useGetSinglePublicPostQuery } from '@/entities/post'
+import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
 import { Heart } from '@/shared/assets/icons/Heart'
@@ -74,10 +74,11 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
               </Link>
               <div>
                 <PostViewSelect
-                  id={userId}
+                  id={postId}
                   isFollowing={isFollowing}
                   onEdit={onEdit}
                   ownerId={post.ownerId}
+                  userId={userId}
                 />
               </div>
             </div>

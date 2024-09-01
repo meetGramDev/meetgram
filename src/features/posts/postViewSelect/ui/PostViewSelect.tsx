@@ -22,7 +22,7 @@ type Props = {
 
 export const PostViewSelect = memo(({ id, isFollowing, onEdit, ownerId, userId }: Props) => {
   const [deletePost, {}] = useDeletePostMutation()
-  const isOwner = ownerId === id
+  const isOwner = ownerId === userId
 
   const [openModal, setOpenModal] = useState<boolean>(false)
 
