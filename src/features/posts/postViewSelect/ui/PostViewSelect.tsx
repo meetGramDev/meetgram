@@ -7,8 +7,10 @@ import { FollowIcon } from '@/shared/assets/icons/Follow'
 import { MoreIcon } from '@/shared/assets/icons/More'
 import { UnfollowIcon } from '@/shared/assets/icons/Unfollow'
 import { Wastebasket } from '@/shared/assets/icons/Wastebasket'
+import { HOME } from '@/shared/config/router'
 import { Button, Dialog, Select } from '@/shared/ui'
 import { clsx } from 'clsx'
+import { useRouter } from 'next/router'
 
 import s from './PostViewSelect.module.scss'
 
@@ -21,6 +23,7 @@ type Props = {
 }
 
 export const PostViewSelect = memo(({ id, isFollowing, onEdit, ownerId, userId }: Props) => {
+  const router = useRouter()
   const [deletePost, {}] = useDeletePostMutation()
   const isOwner = ownerId === userId
 
@@ -45,6 +48,7 @@ delete this post?`}</span>
                   onClick={() => {
                     deletePost({ postId: id })
                     setOpenModal(false)
+                    router.push(`${HOME}/${userId}`)
                   }}
                   variant={'outlined'}
                 >

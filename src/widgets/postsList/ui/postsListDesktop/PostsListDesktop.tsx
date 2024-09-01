@@ -6,6 +6,7 @@ import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
 import { Nullable } from '@/shared/types'
 import { Dialog } from '@/shared/ui'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import s from './PostsList.module.scss'
@@ -14,7 +15,10 @@ import { PostListProps } from '../props.type'
 
 export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
   const router = useRouter()
-  const [openPost, setOpenPost] = useState<boolean>(false)
+  const searchParams = useSearchParams()
+  const isOpenPost = searchParams?.get('isOpenPost')
+
+  const [openPost, setOpenPost] = useState<Nullable<boolean>>(isOpenPost === 'true' || false)
   const [currentPostId, setCurrentPostId] = useState<Nullable<number>>(null)
 
   const [openEdit, setOpenEdit] = useState(false)
@@ -59,7 +63,7 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
               currentPostHandler(post.id)
             }}
           >
-            <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpen=true`}>
+            <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
               <Post alt={'post'} className={s.image} src={post.images[0].url} />
             </Link>
           </div>

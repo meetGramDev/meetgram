@@ -9,8 +9,12 @@ import { Heart } from '@/shared/assets/icons/Heart'
 import { PaperPlane } from '@/shared/assets/icons/PaperPlane'
 import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
+import { HOME } from '@/shared/config/router'
+import { Nullable } from '@/shared/types'
 import { Button, Dialog, TextArea } from '@/shared/ui'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 import s from './PostView.module.scss'
 
@@ -27,7 +31,13 @@ type Props = {
 }
 
 export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
-  const { data: post, isSuccess } = useGetSinglePublicPostQuery(postId)
+  const searchParams = useSearchParams()
+  const isOpenPost = searchParams?.get('isOpenPost')
+  const urlPostId = searchParams?.get('postId')
+
+  const router = useRouter()
+
+  const { data: post, isSuccess } = useGetSinglePublicPostQuery(+urlPostId)
 
   const [isLiked, setIsLiked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false)
@@ -45,7 +55,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
   }
 
   return (
-    <Dialog className={s.container} onOpenChange={isOpen} open={open}>
+    <Dialog className={s.container} open={open}>
       {isSuccess && (
         <>
           <div className={s.post}>
@@ -59,7 +69,14 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
           </div>
           <div className={s.content}>
             <Button className={s.iconClose} variant={'text'}>
-              <CloseIcon onClick={() => isOpen(false)} />
+              <CloseIcon
+                onClick={() => {
+                  if (isOpenPost === 'true') {
+                    isOpen(false)
+                    router.push(`${HOME}/${userId}`)
+                  }
+                }}
+              />
             </Button>
             <div className={s.title}>
               <Link className={s.userData} href={'#'}>
@@ -74,7 +91,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
               </Link>
               <div>
                 <PostViewSelect
-                  id={postId}
+                  id={+urlPostId}
                   isFollowing={isFollowing}
                   onEdit={onEdit}
                   ownerId={post.ownerId}
