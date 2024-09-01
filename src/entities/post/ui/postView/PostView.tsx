@@ -94,6 +94,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
                   id={+urlPostId}
                   isFollowing={isFollowing}
                   onEdit={onEdit}
+                  onOpenPost={isOpen}
                   ownerId={post.ownerId}
                   userId={userId}
                 />

@@ -18,7 +18,10 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
   const searchParams = useSearchParams()
   const isOpenPost = searchParams?.get('isOpenPost')
 
-  const [openPost, setOpenPost] = useState<Nullable<boolean>>(isOpenPost === 'true' || false)
+  const [openPost, setOpenPost] = useState<Nullable<boolean>>(isOpenPost === 'true')
+
+  console.log(openPost)
+  console.log(isOpenPost)
   const [currentPostId, setCurrentPostId] = useState<Nullable<number>>(null)
 
   const [openEdit, setOpenEdit] = useState(false)
