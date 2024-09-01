@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Post, PublicPost } from '@/entities/post'
+import { Post } from '@/entities/post'
 import { clsx } from 'clsx'
 
 import s from './PostsListMobile.module.scss'
 
-type Props = {
-  posts: PublicPost[]
-}
+import { PostListProps } from '../props.type'
 
-export const PostsListMobile = ({ posts }: Props) => {
+export const PostsListMobile = ({ isFollowing, posts, userId }: PostListProps) => {
   const [showGallery, setShowGallery] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0)
   const itemRefs = useRef<(HTMLDivElement | null)[]>([])

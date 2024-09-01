@@ -1,26 +1,92 @@
+import { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
-import { PublicPost } from '@/entities/post'
+import { useGetPublicPostsQuery } from '@/entities/post'
+import { useFullUserProfileQuery } from '@/entities/user'
 import { useInfiniteScroll } from '@/shared/lib'
+import { Loader } from '@/shared/ui'
+import { skipToken } from '@reduxjs/toolkit/query'
 
 import { PostsListDesktop } from './postsListDesktop/PostsListDesktop'
 import { PostsListMobile } from './postsListMobile/PostsListMobile'
 
 type Props = {
-  fetchNextPosts: () => void
-  posts: PublicPost[]
+  userName: string
 }
 
-export const PostsList = ({ fetchNextPosts, posts }: Props) => {
-  const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
+const PAGE_SIZE = 12
 
-  const { ref, scroll } = useInfiniteScroll(fetchNextPosts)
+export const PostsList = ({ userName }: Props) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
+  const {
+    data: currentUser,
+    isError: userProfileQueryError,
+    isSuccess: isUserSuccess,
+  } = useFullUserProfileQuery(userName || skipToken)
+
+  // =========== //
+  const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(undefined)
+
+  const { ref, scroll } = useInfiniteScroll(() => {
+    if (publicPosts?.items && publicPosts.items.length >= PAGE_SIZE) {
+      setEndCursorPostId(publicPosts?.items.at(-1)?.id)
+    }
+  })
+
+  const {
+    data: publicPosts,
+    isFetching: publicPostsFetching,
+    isLoading: publicPostsLoading,
+    isSuccess: publicPostsSuccess,
+  } = useGetPublicPostsQuery(
+    {
+      endCursorPostId,
+      id: String(currentUser?.id),
+      params: { pageSize: PAGE_SIZE },
+    },
+    { skip: (!currentUser?.id && !endCursorPostId) || userProfileQueryError }
+  )
 
   return (
     <>
-      {isMobile ? <PostsListMobile posts={posts} /> : <PostsListDesktop posts={posts} />}
+      {publicPostsSuccess && (
+        <>
+          {isMobile
+            ? isUserSuccess && (
+                <>
+                  <PostsListMobile
+                    isFollowing={currentUser.isFollowing}
+                    posts={publicPosts.items}
+                    userId={currentUser.id}
+                  />
+                </>
+              )
+            : isUserSuccess && (
+                <>
+                  <PostsListDesktop
+                    isFollowing={currentUser.isFollowing}
+                    posts={publicPosts.items}
+                    userId={currentUser.id}
+                  />
+                </>
+              )}
+        </>
+      )}
+      {publicPosts && publicPosts.items.length === 0 && (
+        <p className={'w-full text-center leading-loose'}>
+          No posts yet <br />
+        </p>
+      )}
 
-      {scroll > 0 && <div className={'invisible h-4 w-full'} ref={ref}></div>}
+      {!publicPostsLoading && scroll > 0 && (
+        <div className={'invisible h-4 w-full'} ref={ref}></div>
+      )}
+
+      {publicPostsFetching && (
+        <div className={'flex justify-center'}>
+          <Loader />
+        </div>
+      )}
     </>
   )
 }

@@ -46,3 +46,7 @@ export const getPasswordSignInConstraint = (errorValidationFields?: ErrorValidat
     .min(6, { message: `${errorValidationFields ? errorValidationFields.minChar : minChar} 6` })
     .max(20, { message: `${errorValidationFields ? errorValidationFields.maxChar : maxChar} 20` })
 }
+
+export const getEditPostDescriptionConstraint = () => {
+  return z.string().trim().max(500, { message: `Максимальное количество символов: 500` })
+}

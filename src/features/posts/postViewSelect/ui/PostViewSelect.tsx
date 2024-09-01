@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
 import { useDeletePostMutation } from '@/entities/post/model/services/post.service'
 import { CopyLinkIcon } from '@/shared/assets/icons/CopyLink'
@@ -15,13 +15,14 @@ import s from './PostViewSelect.module.scss'
 type Props = {
   id: number
   isFollowing: boolean
+  onEdit?: () => void
   ownerId: number
   userId: number
 }
 
-export const PostViewSelect = ({ id, isFollowing, ownerId, userId }: Props) => {
+export const PostViewSelect = memo(({ id, isFollowing, onEdit, ownerId, userId }: Props) => {
   const [deletePost, {}] = useDeletePostMutation()
-  const isOwner = ownerId === userId
+  const isOwner = ownerId === id
 
   const [openModal, setOpenModal] = useState<boolean>(false)
 
@@ -62,7 +63,7 @@ delete this post?`}</span>
         )}
         {isOwner ? (
           <div className={s.menuContent}>
-            <Button className={s.button} variant={'text'}>
+            <Button className={s.button} onClick={onEdit} variant={'text'}>
               <EditIcon /> Edit Post
             </Button>
             <Button className={s.button} onClick={() => setOpenModal(true)} variant={'text'}>
@@ -88,4 +89,6 @@ delete this post?`}</span>
       </Select>
     </div>
   )
-}
+})
+
+PostViewSelect.displayName = 'PostViewSelect'
