@@ -29,7 +29,7 @@ type Props = {
 }
 
 export const EditPostDialog = ({ onOpenChange, open, postId }: Props) => {
-  const { data: post, isSuccess } = useGetSinglePublicPostQuery(postId)
+  const { data: post, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
   const [editPost] = useEditPostMutation()
 
   const {

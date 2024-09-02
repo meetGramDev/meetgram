@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Post, PostView, PublicPost } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
+import { HOME } from '@/shared/config/router'
 import { Nullable } from '@/shared/types'
 import { Dialog } from '@/shared/ui'
 import Link from 'next/link'
@@ -15,13 +16,18 @@ import { PostListProps } from '../props.type'
 
 export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
   const router = useRouter()
+
   const searchParams = useSearchParams()
   const isOpenPost = searchParams?.get('isOpenPost')
 
   const [openPost, setOpenPost] = useState<Nullable<boolean>>(isOpenPost === 'true')
 
-  console.log(openPost)
-  console.log(isOpenPost)
+  //const isClosePost = searchParams?.set({})
+
+  // if (isOpenPost === null) {
+  //   //router.replace(`${HOME}/${userId}`)
+  // }
+
   const [currentPostId, setCurrentPostId] = useState<Nullable<number>>(null)
 
   const [openEdit, setOpenEdit] = useState(false)

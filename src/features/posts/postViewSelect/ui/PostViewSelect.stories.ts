@@ -16,8 +16,10 @@ type Story = StoryObj<typeof meta>
 
 export const PostsViewSelect: Story = {
   args: {
-    id: 1,
+    id: '1',
     isFollowing: false,
+    onOpenPost: () => {},
     ownerId: 1,
+    userId: 1,
   },
 }

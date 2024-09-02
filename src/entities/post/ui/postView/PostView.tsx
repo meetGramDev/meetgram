@@ -10,7 +10,6 @@ import { PaperPlane } from '@/shared/assets/icons/PaperPlane'
 import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import { HOME } from '@/shared/config/router'
-import { Nullable } from '@/shared/types'
 import { Button, Dialog, TextArea } from '@/shared/ui'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -37,7 +36,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
 
   const router = useRouter()
 
-  const { data: post, isSuccess } = useGetSinglePublicPostQuery(+urlPostId)
+  const { data: post, isSuccess } = useGetSinglePublicPostQuery(urlPostId ?? '')
 
   const [isLiked, setIsLiked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false)
@@ -55,7 +54,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
   }
 
   return (
-    <Dialog className={s.container} open={open}>
+    <Dialog className={s.container} onOpenChange={isOpen} open={open}>
       {isSuccess && (
         <>
           <div className={s.post}>
@@ -91,7 +90,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
               </Link>
               <div>
                 <PostViewSelect
-                  id={+urlPostId}
+                  id={urlPostId ?? ''}
                   isFollowing={isFollowing}
                   onEdit={onEdit}
                   onOpenPost={isOpen}

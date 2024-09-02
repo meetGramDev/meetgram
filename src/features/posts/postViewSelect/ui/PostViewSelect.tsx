@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 import s from './PostViewSelect.module.scss'
 
 type Props = {
-  id: number
+  id?: string
   isFollowing: boolean
   onEdit?: () => void
   onOpenPost: (open: boolean) => void
@@ -48,7 +48,7 @@ delete this post?`}</span>
                   <Button
                     className={clsx(s.dialogButton, s.dialogButtonComplete)}
                     onClick={() => {
-                      deletePost({ postId: id })
+                      deletePost({ postId: id ?? '' })
                       setOpenModal(false)
                       onOpenPost(false)
                       router.push(`${HOME}/${userId}`)

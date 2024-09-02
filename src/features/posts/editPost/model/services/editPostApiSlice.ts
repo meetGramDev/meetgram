@@ -9,7 +9,7 @@ export const editPostApi = baseApi.injectEndpoints({
       invalidatesTags: (res, error, args) => [{ id: args.postId, type: 'post' }],
       onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
         const getEditPostPatchResult = dispatch(
-          postsApi.util.updateQueryData('getSinglePublicPost', args.postId, state => {
+          postsApi.util.updateQueryData('getSinglePublicPost', `${args.postId}`, state => {
             state.description = args.description
           })
         )
