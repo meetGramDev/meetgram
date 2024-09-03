@@ -1,7 +1,6 @@
 import { ChangeEvent, memo, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { Post, PublicPost, useGetSinglePublicPostQuery } from '@/entities/post'
 import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
@@ -9,12 +8,20 @@ import { Heart } from '@/shared/assets/icons/Heart'
 import { PaperPlane } from '@/shared/assets/icons/PaperPlane'
 import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
+import { showToastError } from '@/shared/lib'
 import { Button, Dialog, TextArea } from '@/shared/ui'
 import Link from 'next/link'
 
 import s from './PostView.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
+import {
+  useGetPostLikesQuery,
+  useGetSinglePublicPostQuery,
+  useGiveLikeToPostMutation,
+} from '../../model/services/post.service'
+import { PublicPost } from '../../model/types/posts.types'
+import { Post } from '../../ui/Post'
 
 type Props = {
   isFollowing: boolean
@@ -28,8 +35,10 @@ type Props = {
 
 export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
   const { data: post, isSuccess } = useGetSinglePublicPostQuery(postId)
+  const [giveLike, { isLoading: isGivingLike }] = useGiveLikeToPostMutation()
+  const { data: postLikesCount } = useGetPostLikesQuery(postId)
 
-  const [isLiked, setIsLiked] = useState(false)
+  // const [isLiked, setIsLiked] = useState(post?.isLiked ?? false)
   const [isFavourite, setIsFavourite] = useState(false)
   const [value, setValue] = useState('')
   const dateOfCreate =
@@ -42,6 +51,23 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
 
   const changeTextAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.currentTarget.value)
+  }
+
+  const handleGiveLike = async () => {
+    // setIsLiked(isLiked => !isLiked)
+
+    if (!post?.id) {
+      return
+    }
+
+    try {
+      await giveLike({
+        likeStatus: post.isLiked ? 'NONE' : 'LIKE',
+        postId: post.id,
+      }).unwrap()
+    } catch (error) {
+      showToastError(error)
+    }
   }
 
   return (
@@ -89,10 +115,11 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
                 <div className={s.leftSideButtons}>
                   <Button
                     className={s.footerButton}
-                    onClick={() => setIsLiked(!isLiked)}
+                    disabled={isGivingLike}
+                    onClick={handleGiveLike}
                     variant={'text'}
                   >
-                    {isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
+                    {postLikesCount?.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
                   </Button>
                   <Button className={s.footerButton} variant={'text'}>
                     <PaperPlane />
