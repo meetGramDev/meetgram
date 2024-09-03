@@ -9,11 +9,8 @@ import { Heart } from '@/shared/assets/icons/Heart'
 import { PaperPlane } from '@/shared/assets/icons/PaperPlane'
 import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
-import { HOME } from '@/shared/config/router'
 import { Button, Dialog, TextArea } from '@/shared/ui'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/router'
 
 import s from './PostView.module.scss'
 
@@ -30,13 +27,7 @@ type Props = {
 }
 
 export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
-  const searchParams = useSearchParams()
-  const isOpenPost = searchParams?.get('isOpenPost')
-  const urlPostId = searchParams?.get('postId')
-
-  const router = useRouter()
-
-  const { data: post, isSuccess } = useGetSinglePublicPostQuery(urlPostId ?? '')
+  const { data: post, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
 
   const [isLiked, setIsLiked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false)
@@ -70,10 +61,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
             <Button className={s.iconClose} variant={'text'}>
               <CloseIcon
                 onClick={() => {
-                  if (isOpenPost === 'true') {
-                    isOpen(false)
-                    router.push(`${HOME}/${userId}`)
-                  }
+                  isOpen(false)
                 }}
               />
             </Button>
@@ -90,7 +78,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
               </Link>
               <div>
                 <PostViewSelect
-                  id={urlPostId ?? ''}
+                  id={`${postId}`}
                   isFollowing={isFollowing}
                   onEdit={onEdit}
                   onOpenPost={isOpen}

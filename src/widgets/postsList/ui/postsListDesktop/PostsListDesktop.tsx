@@ -1,13 +1,12 @@
 import { useState } from 'react'
 
-import { Post, PostView, PublicPost } from '@/entities/post'
+import { Post, PostView } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
 import { HOME } from '@/shared/config/router'
 import { Nullable } from '@/shared/types'
 import { Dialog } from '@/shared/ui'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 import s from './PostsList.module.scss'
@@ -16,25 +15,15 @@ import { PostListProps } from '../props.type'
 
 export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
   const router = useRouter()
+  const isOpenPost = router.query.isOpenPost as string
+  const postId = router.query.postId as string
 
-  const searchParams = useSearchParams()
-  const isOpenPost = searchParams?.get('isOpenPost')
-
-  const [openPost, setOpenPost] = useState<Nullable<boolean>>(isOpenPost === 'true')
-
-  //const isClosePost = searchParams?.set({})
-
-  // if (isOpenPost === null) {
-  //   //router.replace(`${HOME}/${userId}`)
-  // }
-
-  const [currentPostId, setCurrentPostId] = useState<Nullable<number>>(null)
+  const [currentPostId, setCurrentPostId] = useState<Nullable<number>>(+postId)
 
   const [openEdit, setOpenEdit] = useState(false)
   const [openCloseEditingPost, setOpenCloseEditingPost] = useState(false)
 
   const currentPostHandler = (id: number) => {
-    setOpenPost(true)
     setCurrentPostId(id)
   }
 
@@ -61,6 +50,10 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
     }
   }
 
+  const handleCloseModalDialog = (open: boolean) => {
+    !open && router.push(`${HOME}/${userId}`, undefined, { shallow: true })
+  }
+
   return (
     <div className={s.postsList}>
       {posts?.map(post => {
@@ -78,12 +71,12 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
           </div>
         )
       })}
-      {openPost && currentPostId && (
+      {isOpenPost && currentPostId && (
         <PostView
           isFollowing={isFollowing}
-          isOpen={setOpenPost}
+          isOpen={handleCloseModalDialog}
           onEdit={() => setOpenEdit(true)}
-          open={openPost}
+          open={isOpenPost === 'true'}
           postId={currentPostId}
           userId={userId}
         />
