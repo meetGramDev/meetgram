@@ -1,4 +1,4 @@
-import { Avatar } from '@/entities/user'
+import { Avatar } from '@/shared/types'
 
 export type Profile = {
   aboutMe: string
