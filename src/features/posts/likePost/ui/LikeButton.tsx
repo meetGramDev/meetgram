@@ -11,14 +11,14 @@ import s from './LikeButton.module.scss'
 import {
   useGetWhoLikedPostQuery,
   useGiveLikeToPostMutation,
-} from '../model/service/likeApi.service'
+} from '../../../../entities/like/model/service/likeApi.service'
 
 type Props = {
   postId: number
 }
 
 export const LikeButton = memo(({ postId }: Props) => {
-  const { data } = useGetWhoLikedPostQuery(postId)
+  const { data } = useGetWhoLikedPostQuery({ postId })
   const [giveLike, { isLoading: isGivingLike }] = useGiveLikeToPostMutation()
 
   const handleGiveLike = async () => {

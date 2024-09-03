@@ -4,8 +4,20 @@ export type UserWhoLikedPost = {
   avatars: Avatar[]
   createdAt: string
   id: number
+  isFollowedBy: boolean
+  isFollowing: boolean
   userId: number
   userName: string
+}
+
+export type GetWhoLikedPostRequest = {
+  params?: {
+    cursor?: number
+    pageNumber?: number
+    pageSize?: number
+    searchQuery?: string
+  }
+  postId: number
 }
 
 export type GetWhoLikedPostResponse = {

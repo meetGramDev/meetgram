@@ -1,12 +1,17 @@
 import { baseApi } from '@/shared/api'
 
-import { GetWhoLikedPostResponse, GiveLikeToPostArgs } from '../types/service.types'
+import {
+  GetWhoLikedPostRequest,
+  GetWhoLikedPostResponse,
+  GiveLikeToPostArgs,
+} from '../types/service.types'
 
 export const likePostApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getWhoLikedPost: builder.query<GetWhoLikedPostResponse, number>({
+    getWhoLikedPost: builder.query<GetWhoLikedPostResponse, GetWhoLikedPostRequest>({
       providesTags: ['PostLikes'],
-      query: postId => ({
+      query: ({ params, postId }) => ({
+        params,
         url: `/posts/${postId}/likes`,
       }),
     }),
@@ -17,7 +22,7 @@ export const likePostApi = baseApi.injectEndpoints({
       ],
       onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
         const getGiveLikePostPatch = dispatch(
-          likePostApi.util.updateQueryData('getWhoLikedPost', args.postId, state => {
+          likePostApi.util.updateQueryData('getWhoLikedPost', { postId: args.postId }, state => {
             state.isLiked = args.likeStatus === 'NONE' ? true : false
           })
         )

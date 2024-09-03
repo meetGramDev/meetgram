@@ -2,6 +2,7 @@ import { ChangeEvent, memo, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { LikeButton } from '@/features/posts/likePost'
+import { LikesView } from '@/features/posts/likesView'
 import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
 import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
@@ -88,6 +89,7 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
               <div className={s.footerButtons}>
                 <div className={s.leftSideButtons}>
                   <LikeButton postId={post.id} />
+
                   <Button className={s.footerButton} variant={'text'}>
                     <PaperPlane />
                   </Button>
@@ -102,10 +104,9 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
                   {isFavourite ? <SketchedFavourites className={s.favourite} /> : <FavoritesIcon />}
                 </Button>
               </div>
-              {post.likesCount && (
+              {!!post.likesCount && (
                 <div className={s.postLikes}>
-                  {/* eslint-disable-next-line react/no-unescaped-entities */}
-                  <span className={s.like}>{post.likesCount} "Like"</span>
+                  <LikesView likesCount={post.likesCount} postId={post.id} />
                 </div>
               )}
               <span className={s.date}>{dateOfCreate}</span>
