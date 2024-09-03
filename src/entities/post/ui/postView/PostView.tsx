@@ -78,6 +78,8 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
     }
   }
 
+  const ownerProfile = `/profile/${userId}`
+
   if (postLoading) {
     return <Loader loaderClassName={s.loader} />
   }
@@ -101,7 +103,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
             </Button>
             <div className={s.title}>
               <div className={s.userLink}>
-                <Link className={s.linkAvatar} href={`/profile/${userId}`}>
+                <Link className={s.linkAvatar} href={ownerProfile}>
                   <Photo
                     alt={'Owner avatar'}
                     className={s.avatar}
@@ -110,7 +112,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                     width={36}
                   />
                 </Link>
-                <Link className={s.link} href={`/profile/${userId}`}>
+                <Link className={s.link} href={ownerProfile}>
                   {post.userName}
                 </Link>
               </div>
@@ -125,7 +127,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
               {post.description && (
                 <div className={s.description}>
                   <div className={s.descriptionItems}>
-                    <Link className={s.descriptionAvatar} href={`/profile/${userId}`}>
+                    <Link className={s.descriptionAvatar} href={ownerProfile}>
                       <Photo
                         alt={'Owner avatar'}
                         className={s.avatar}
@@ -135,7 +137,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                       />
                     </Link>
                     <div className={s.descriptionContent}>
-                      <Link className={s.descriptionUserName} href={`/profile/${userId}`}>
+                      <Link className={s.descriptionUserName} href={ownerProfile}>
                         {post.userName}
                       </Link>
                       {post.description}
