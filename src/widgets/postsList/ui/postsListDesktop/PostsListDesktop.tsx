@@ -18,14 +18,8 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
   const isOpenPost = router.query.isOpenPost as string
   const postId = router.query.postId as string
 
-  const [currentPostId, setCurrentPostId] = useState<Nullable<number>>(+postId)
-
   const [openEdit, setOpenEdit] = useState(false)
   const [openCloseEditingPost, setOpenCloseEditingPost] = useState(false)
-
-  const currentPostHandler = (id: number) => {
-    setCurrentPostId(id)
-  }
 
   const handleEditPostDialog = ({ isDirty, isSuccess }: OnOpenChangeArgs) => {
     if (!isDirty) {
@@ -58,36 +52,26 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
     <div className={s.postsList}>
       {posts?.map(post => {
         return (
-          <div
-            className={s.item}
-            key={post.id}
-            onClick={() => {
-              currentPostHandler(post.id)
-            }}
-          >
+          <div className={s.item} key={post.id}>
             <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
               <Post alt={'post'} className={s.image} src={post.images[0].url} />
             </Link>
           </div>
         )
       })}
-      {isOpenPost && currentPostId && (
+      {isOpenPost && postId && (
         <PostView
           isFollowing={isFollowing}
           isOpen={handleCloseModalDialog}
           onEdit={() => setOpenEdit(true)}
           open={isOpenPost === 'true'}
-          postId={currentPostId}
+          postId={+postId}
           userId={userId}
         />
       )}
 
-      {openEdit && currentPostId && (
-        <EditPostDialog
-          onOpenChange={handleEditPostDialog}
-          open={openEdit}
-          postId={currentPostId}
-        />
+      {openEdit && postId && (
+        <EditPostDialog onOpenChange={handleEditPostDialog} open={openEdit} postId={+postId} />
       )}
 
       {openCloseEditingPost && (

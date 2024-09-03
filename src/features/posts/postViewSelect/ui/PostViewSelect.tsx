@@ -1,6 +1,7 @@
 import React, { memo, useState } from 'react'
 
 import { useDeletePostMutation } from '@/entities/post/model/services/post.service'
+import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { CopyLinkIcon } from '@/shared/assets/icons/CopyLink'
 import { EditIcon } from '@/shared/assets/icons/Edit'
 import { FollowIcon } from '@/shared/assets/icons/Follow'
@@ -26,7 +27,7 @@ type Props = {
 export const PostViewSelect = memo(
   ({ id, isFollowing, onEdit, onOpenPost, ownerId, userId }: Props) => {
     const router = useRouter()
-    const [deletePost, {}] = useDeletePostMutation()
+    const [deletePost, { isSuccess }] = useDeletePostMutation()
     const isOwner = ownerId === userId
 
     const [openModal, setOpenModal] = useState<boolean>(false)
@@ -41,31 +42,47 @@ export const PostViewSelect = memo(
         >
           {openModal && (
             <Dialog onOpenChange={setOpenModal} open={openModal} title={'Delete Post'}>
-              <div className={s.dialogChildrenWrapper}>
-                <span className={s.dialogText}>{`Are you sure you want to
-delete this post?`}</span>
-                <div className={s.dialogBtnWrap}>
-                  <Button
-                    className={clsx(s.dialogButton, s.dialogButtonComplete)}
-                    onClick={() => {
-                      deletePost({ postId: id ?? '' })
+              <ConfirmClosingDialog
+                message={'Are you sure you want to delete this post?'}
+                onConfirm={(isConfirm: boolean) => {
+                  if (isConfirm) {
+                    deletePost({ postId: id ?? '' }).then(() => {
                       setOpenModal(false)
                       onOpenPost(false)
                       router.push(`${HOME}/${userId}`)
-                    }}
-                    variant={'outlined'}
-                  >
-                    Yes
-                  </Button>
-                  <Button
-                    className={s.dialogButton}
-                    onClick={() => setOpenModal(false)}
-                    variant={'primary'}
-                  >
-                    No
-                  </Button>
-                </div>
-              </div>
+                    })
+                  } else {
+                    setOpenModal(false)
+                  }
+                }}
+              />
+              {/*<div className={s.dialogChildrenWrapper}>*/}
+              {/*  <span className={s.dialogText}>{`Are you sure you want to*/}
+              {/*delete this post?`}</span>*/}
+              {/*  <div className={s.dialogBtnWrap}>*/}
+              {/*    <Button*/}
+              {/*      className={clsx(s.dialogButton, s.dialogButtonComplete)}*/}
+              {/*      onClick={() => {*/}
+              {/*        deletePost({ postId: id ?? '' })*/}
+              {/*        if (isSuccess) {*/}
+              {/*          setOpenModal(false)*/}
+              {/*          onOpenPost(false)*/}
+              {/*          router.push(`${HOME}/${userId}`)*/}
+              {/*        }*/}
+              {/*      }}*/}
+              {/*      variant={'outlined'}*/}
+              {/*    >*/}
+              {/*      Yes*/}
+              {/*    </Button>*/}
+              {/*    <Button*/}
+              {/*      className={s.dialogButton}*/}
+              {/*      onClick={() => setOpenModal(false)}*/}
+              {/*      variant={'primary'}*/}
+              {/*    >*/}
+              {/*      No*/}
+              {/*    </Button>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
             </Dialog>
           )}
           {isOwner ? (
