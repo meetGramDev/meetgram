@@ -5,6 +5,13 @@ import { GetPublicPostsArgs, GetPublicPostsResponse, PublicPost } from '../types
 
 export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    deletePost: builder.mutation<void, { postId: string }>({
+      invalidatesTags: (res, err, args) => [{ id: args.postId, type: 'post' }],
+      query: args => ({
+        method: 'DELETE',
+        url: `posts/${args.postId}`,
+      }),
+    }),
     getPublicPosts: builder.query<GetPublicPostsResponse, GetPublicPostsArgs>({
       forceRefetch: ({ currentArg, previousArg }) => {
         return (
@@ -41,7 +48,7 @@ export const postsApi = baseApi.injectEndpoints({
         return { id: queryArgs.id }
       },
     }),
-    getSinglePublicPost: builder.query<PublicPost, number>({
+    getSinglePublicPost: builder.query<PublicPost, string>({
       providesTags: (res, error, id) => [{ id, type: 'post' }],
       query: postId => ({
         url: `/public-posts/${postId}`,
@@ -49,5 +56,5 @@ export const postsApi = baseApi.injectEndpoints({
     }),
   }),
 })
-
-export const { useGetPublicPostsQuery, useGetSinglePublicPostQuery } = postsApi
+export const { useDeletePostMutation, useGetPublicPostsQuery, useGetSinglePublicPostQuery } =
+  postsApi

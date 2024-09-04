@@ -27,7 +27,7 @@ type Props = {
 }
 
 export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
-  const { data: post, isSuccess } = useGetSinglePublicPostQuery(postId)
+  const { data: post, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
 
   const [isLiked, setIsLiked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false)
@@ -59,7 +59,11 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
           </div>
           <div className={s.content}>
             <Button className={s.iconClose} variant={'text'}>
-              <CloseIcon onClick={() => isOpen(false)} />
+              <CloseIcon
+                onClick={() => {
+                  isOpen(false)
+                }}
+              />
             </Button>
             <div className={s.title}>
               <Link className={s.userData} href={'#'}>
@@ -74,10 +78,12 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
               </Link>
               <div>
                 <PostViewSelect
-                  id={userId}
+                  id={`${postId}`}
                   isFollowing={isFollowing}
                   onEdit={onEdit}
+                  onOpenPost={isOpen}
                   ownerId={post.ownerId}
+                  userId={userId}
                 />
               </div>
             </div>
