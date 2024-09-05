@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react'
 
-import { useDeletePostMutation } from '@/entities/post/model/services/post.service'
+import { useDeletePostMutation } from '@/entities/post/model/services/posts.service'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { CopyLinkIcon } from '@/shared/assets/icons/CopyLink'
 import { EditIcon } from '@/shared/assets/icons/Edit'
@@ -10,7 +10,6 @@ import { UnfollowIcon } from '@/shared/assets/icons/Unfollow'
 import { Wastebasket } from '@/shared/assets/icons/Wastebasket'
 import { HOME } from '@/shared/config/router'
 import { Button, Dialog, Select } from '@/shared/ui'
-import { clsx } from 'clsx'
 import { useRouter } from 'next/router'
 
 import s from './PostViewSelect.module.scss'

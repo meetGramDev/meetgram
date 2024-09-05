@@ -1,8 +1,5 @@
-export {
-  postsApi,
-  useGetPublicPostsQuery,
-  useGetSinglePublicPostQuery,
-} from './model/services/post.service'
+export { useGetSinglePublicPostQuery } from './model/services/post.service'
+export { postsApi, useGetPublicPostsQuery } from './model/services/posts.service'
 export {
   type GetPublicPostsResponse,
   type ImageType,
