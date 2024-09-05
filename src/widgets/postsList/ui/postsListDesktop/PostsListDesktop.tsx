@@ -1,26 +1,25 @@
 import { useState } from 'react'
 
-import { Post, PostView, PublicPost } from '@/entities/post'
+import { Post, PostView } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
+import { HOME } from '@/shared/config/router'
 import { Nullable } from '@/shared/types'
 import { Dialog } from '@/shared/ui'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './PostsList.module.scss'
 
 import { PostListProps } from '../props.type'
 
 export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
-  const [openPost, setOpenPost] = useState<boolean>(false)
-  const [currentPostId, setCurrentPostId] = useState<Nullable<number>>(null)
+  const router = useRouter()
+  const isOpenPost = router.query.isOpenPost as string
+  const postId = router.query.postId as string
 
   const [openEdit, setOpenEdit] = useState(false)
   const [openCloseEditingPost, setOpenCloseEditingPost] = useState(false)
-
-  const currentPostHandler = (id: number) => {
-    setOpenPost(true)
-    setCurrentPostId(id)
-  }
 
   const handleEditPostDialog = ({ isDirty, isSuccess }: OnOpenChangeArgs) => {
     if (!isDirty) {
@@ -45,38 +44,34 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
     }
   }
 
+  const handleCloseModalDialog = (open: boolean) => {
+    !open && router.push(`${HOME}/${userId}`, undefined, { shallow: true })
+  }
+
   return (
     <div className={s.postsList}>
       {posts?.map(post => {
         return (
-          <div
-            className={s.item}
-            key={post.id}
-            onClick={() => {
-              currentPostHandler(post.id)
-            }}
-          >
-            <Post alt={'post'} className={s.image} src={post.images[0].url} />
+          <div className={s.item} key={post.id}>
+            <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
+              <Post alt={'post'} className={s.image} src={post.images[0].url} />
+            </Link>
           </div>
         )
       })}
-      {openPost && currentPostId && (
+      {isOpenPost && postId && (
         <PostView
           isFollowing={isFollowing}
-          isOpen={setOpenPost}
+          isOpen={handleCloseModalDialog}
           onEdit={() => setOpenEdit(true)}
-          open={openPost}
-          postId={currentPostId}
+          open={isOpenPost === 'true'}
+          postId={+postId}
           userId={userId}
         />
       )}
 
-      {openEdit && currentPostId && (
-        <EditPostDialog
-          onOpenChange={handleEditPostDialog}
-          open={openEdit}
-          postId={currentPostId}
-        />
+      {openEdit && postId && (
+        <EditPostDialog onOpenChange={handleEditPostDialog} open={openEdit} postId={+postId} />
       )}
 
       {openCloseEditingPost && (

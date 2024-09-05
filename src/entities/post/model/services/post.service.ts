@@ -1,10 +1,7 @@
-import { PublicPost } from '@/entities/post'
-import {
-  AddCommentArgs,
-  AddCommentResponse,
-  GetCommentsResponse,
-} from '@/entities/post/model/types/postTypes'
 import { baseApi } from '@/shared/api'
+
+import { AddCommentArgs, AddCommentResponse, GetCommentsResponse } from '../types/postTypes'
+import { PublicPost } from '../types/posts.types'
 
 export const postApi = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -16,7 +13,7 @@ export const postApi = baseApi.injectEndpoints({
       providesTags: postId => [{ postId, type: 'post' }],
       query: ({ postId }) => `posts/${postId}/comments`,
     }),
-    getSinglePublicPost: builder.query<PublicPost, number>({
+    getSinglePublicPost: builder.query<PublicPost, string>({
       providesTags: (res, error, id) => [{ id, type: 'post' }],
       query: postId => ({
         url: `/public-posts/${postId}`,

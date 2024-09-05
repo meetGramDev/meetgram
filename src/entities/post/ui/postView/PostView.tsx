@@ -11,6 +11,7 @@ import { Heart } from '@/shared/assets/icons/Heart'
 import { PaperPlane } from '@/shared/assets/icons/PaperPlane'
 import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
+import { HOME } from '@/shared/config/router'
 import { serverErrorHandler } from '@/shared/lib'
 import { isErrorMessageString } from '@/shared/types'
 import { Button, Dialog, Loader, TextArea } from '@/shared/ui'
@@ -39,7 +40,7 @@ type Props = {
 }
 
 export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
-  const { data: post, isLoading: postLoading, isSuccess } = useGetSinglePublicPostQuery(postId)
+  const { data: post, isLoading: postLoading, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
   const [addComment] = useAddPostCommentMutation()
   const { data: comments } = useGetPostCommentsQuery({ postId })
 
@@ -78,7 +79,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
     }
   }
 
-  const ownerProfile = `/profile/${userId}`
+  const ownerProfile = `/${HOME}/${userId}`
 
   if (postLoading) {
     return <Loader loaderClassName={s.loader} />
@@ -99,7 +100,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
           </div>
           <div className={s.content}>
             <Button className={s.iconClose} variant={'text'}>
-              <CloseIcon onClick={() => isOpen(false)} />
+              <CloseIcon
+                onClick={() => {
+                  isOpen(false)
+                }}
+              />
             </Button>
             <div className={s.title}>
               <div className={s.userLink}>
@@ -117,10 +122,12 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                 </Link>
               </div>
               <PostViewSelect
-                id={userId}
+                id={`${postId}`}
                 isFollowing={isFollowing}
                 onEdit={onEdit}
+                onOpenPost={isOpen}
                 ownerId={post.ownerId}
+                userId={userId}
               />
             </div>
             <div className={s.commentsField}>

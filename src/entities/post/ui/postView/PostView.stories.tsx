@@ -63,7 +63,7 @@ export const PostsViewFromOwner: Story = {
         <div onClick={() => setOpen(true)}>
           <Post alt={'Post'} src={beach} />
         </div>
-        <PostView {...args} isOpen={setOpen} open={open} />
+        <PostView {...args} isOpen={setOpen} open={open} post={myPost} />
       </>
     )
   },
