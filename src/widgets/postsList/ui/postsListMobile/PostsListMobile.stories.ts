@@ -41,6 +41,8 @@ const post = {
 
 export const PostsListMobileComponent: Story = {
   args: {
-    posts: [post, post, post, post, post, post],
+    isFollowing: false,
+    posts: [post, post, post, post, post, post, post, post],
+    userId: 1297,
   },
 }

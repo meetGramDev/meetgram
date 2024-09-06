@@ -77,7 +77,7 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, Props>(
       <SelectRadix.Content className={classes.content} position={'popper'}>
         <ScrollArea.Root className={s.scrollAreaRoot} type={'auto'}>
           <SelectRadix.Viewport asChild>
-            <ScrollArea.Viewport className={s.scrollAreaViewport}>
+            <ScrollArea.Viewport className={s.scrollAreaViewport} style={{ overflowY: undefined }}>
               {optionsToRender === 'children' && children}
               {optionsToRender === 'options' &&
                 options?.map(option => (

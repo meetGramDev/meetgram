@@ -1,42 +1,26 @@
 import { baseApi } from '@/shared/api'
 
-import { GerPublicPostsRequest, GetPublicPostsResponse } from '../types/posts.types'
+import { AddCommentArgs, AddCommentResponse, GetCommentsResponse } from '../types/postTypes'
+import { PublicPost } from '../types/posts.types'
 
-export const postsApi = baseApi.injectEndpoints({
+export const postApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getPublicPosts: builder.query<GetPublicPostsResponse, GerPublicPostsRequest>({
-      forceRefetch: ({ currentArg, previousArg }) => {
-        return (
-          currentArg?.endCursorPostId !== previousArg?.endCursorPostId ||
-          currentArg?.params !== previousArg?.params
-        )
-      },
-      merge: (currentCacheData, responseData) => {
-        currentCacheData.items.push(...responseData.items)
-        currentCacheData.totalCount = responseData.totalCount
-        currentCacheData.pageSize = responseData.pageSize
-        currentCacheData.totalUsers = responseData.totalUsers
-      },
-      providesTags: ['post'],
-      query: args => {
-        let url: string = `/public-posts/user/`
-
-        if (args.endCursorPostId) {
-          url += `${args.id}/${args.endCursorPostId}`
-        } else {
-          url += `${args.id}`
-        }
-
-        return {
-          params: args.params,
-          url,
-        }
-      },
-      serializeQueryArgs: ({ queryArgs }) => {
-        return { id: queryArgs.id }
-      },
+    addPostComment: builder.mutation<AddCommentResponse, { body: AddCommentArgs; postId: number }>({
+      invalidatesTags: postId => [{ postId, type: 'post' }],
+      query: ({ body, postId }) => ({ body, method: 'POST', url: `posts/${postId}/comments` }),
+    }),
+    getPostComments: builder.query<GetCommentsResponse, { postId: number }>({
+      providesTags: postId => [{ postId, type: 'post' }],
+      query: ({ postId }) => `posts/${postId}/comments`,
+    }),
+    getSinglePublicPost: builder.query<PublicPost, string>({
+      providesTags: (res, error, id) => [{ id, type: 'post' }],
+      query: postId => ({
+        url: `/public-posts/${postId}`,
+      }),
     }),
   }),
 })
 
-export const { useGetPublicPostsQuery } = postsApi
+export const { useAddPostCommentMutation, useGetPostCommentsQuery, useGetSinglePublicPostQuery } =
+  postApi

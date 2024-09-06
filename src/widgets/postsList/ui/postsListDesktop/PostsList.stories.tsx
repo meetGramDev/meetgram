@@ -1,3 +1,4 @@
+import { PublicPost } from '@/entities/post'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { PostsListDesktop } from './PostsListDesktop'
@@ -11,7 +12,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const post = {
+const post: PublicPost = {
   avatarOwner:
     'https://staging-it-incubator.s3.eu-central-1.amazonaws.com/trainee-instagram-api/Image/2c568b8b-25b1-457d-9a15-67d97f446ae4_users/590/avatar/0fce4d56-f8bb-44ea-9ba5-97f072865d98-images-192x192',
   createdAt: '2024-08-07T14:49:21.967Z',
@@ -38,6 +39,8 @@ const post = {
 
 export const PostsListDesktopComponent: Story = {
   args: {
+    isFollowing: false,
     posts: [post, post, post, post, post, post, post, post],
+    userId: 1297,
   },
 }

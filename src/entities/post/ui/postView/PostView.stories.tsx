@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Post } from '@/entities/post'
+import { Post, PublicPost } from '@/entities/post'
 import { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
 
@@ -9,19 +9,42 @@ import photo from '../../../../shared/assets/img/photo-preview.png'
 import someDude from '../../../../shared/assets/img/photo6.png'
 import { PostView } from '../../ui/postView/PostView'
 
+const myPost: PublicPost = {
+  avatarOwner: String(photo),
+  createdAt: new Date().toLocaleDateString(),
+  description: 'Какое-то описание',
+  id: 1,
+  images: [
+    {
+      createdAt: '12.12.2012',
+      fileSize: 200,
+      height: 300,
+      uploadId: '1',
+      url: String(beach),
+      width: 300,
+    },
+  ],
+  isLiked: false,
+  likesCount: 0,
+  location: '',
+  owner: {
+    firstName: 'Petya',
+    lastName: 'Ivanov',
+  },
+  ownerId: 1,
+  updatedAt: '',
+  userName: 'Petya',
+}
+
 const meta = {
   args: {
-    avatarOwner: photo,
     isFollowing: false,
     isOpen: fn(),
+    onEdit: fn(),
     open: false,
-    ownerId: 1,
-    post: { alt: 'Post', src: beach },
-    postCreate: new Date(),
+    post: myPost,
     postId: 1,
-    postLikesCount: 5,
     userId: 1,
-    userName: 'Petya',
   },
   component: PostView,
   tags: ['autodocs'],
@@ -40,7 +63,7 @@ export const PostsViewFromOwner: Story = {
         <div onClick={() => setOpen(true)}>
           <Post alt={'Post'} src={beach} />
         </div>
-        <PostView {...args} isOpen={setOpen} open={open} />
+        <PostView {...args} isOpen={setOpen} open={open} post={myPost} />
       </>
     )
   },
@@ -55,17 +78,7 @@ export const PostsViewFromSomeDude: Story = {
         <div onClick={() => setOpen(true)}>
           <Post alt={'Post'} src={someDude} />
         </div>
-        <PostView
-          {...args}
-          avatarOwner={''}
-          isOpen={setOpen}
-          open={open}
-          post={{ alt: 'Post', src: someDude }}
-          postCreate={new Date()}
-          postId={1}
-          userId={2}
-          userName={'SomeDude'}
-        />
+        <PostView {...args} isOpen={setOpen} open={open} post={myPost} postId={1} userId={2} />
       </>
     )
   },
