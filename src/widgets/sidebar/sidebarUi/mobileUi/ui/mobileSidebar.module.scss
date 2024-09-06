@@ -1,0 +1,17 @@
+.sidebar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  width: 100vw;
+  height: 3rem;
+  padding: 1rem;
+
+  border-top: 1px solid var(--dark-color-300);
+}
+
+.move_item {
+  &:nth-child(3) {
+    order: 5;
+  }
+}

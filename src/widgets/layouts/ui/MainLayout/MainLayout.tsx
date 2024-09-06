@@ -4,6 +4,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Header } from '@/widgets/header'
 import { MobileHeader } from '@/widgets/mobileHeader'
 import { Sidebar } from '@/widgets/sidebar'
+import { MobileSidebar } from '@/widgets/sidebar/sidebarUi/mobileUi/ui/MobileSidebar'
 import { Inter } from 'next/font/google'
 
 import s from './MainLayout.module.scss'
@@ -20,6 +21,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
         {!isMobile && <Sidebar />}
         <main className={s.main}>{children}</main>
       </div>
+      <div>{isMobile && <MobileSidebar />}</div>
     </div>
   )
 }
