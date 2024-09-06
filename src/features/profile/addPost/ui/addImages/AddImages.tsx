@@ -37,7 +37,8 @@ export const AddImages = () => {
       const data = await readFile(file)
 
       dispatch(addImage({ data, image: URL.createObjectURL(file) }))
-      dispatch(setPostView(PostView.DESCRIPTION))
+      // dispatch(setPostView(PostView.DESCRIPTION))
+      dispatch(setPostView(PostView.CROPPING))
     }
   }
 

@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 
+import { AddScropping } from '@/features/profile/addPost/ui/addScropping/AddScropping'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { Dialog } from '@/shared/ui'
 
@@ -24,6 +25,9 @@ export const AddPost = () => {
       }
       case PostView.DESCRIPTION: {
         return <AddDescription />
+      }
+      case PostView.CROPPING: {
+        return <AddScropping />
       }
     }
   }, [postView])
