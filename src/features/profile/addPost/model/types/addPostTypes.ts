@@ -3,6 +3,7 @@ import { ImageType } from '@/entities/post'
 export enum PostView {
   CROPPING = 'CROPPING',
   DESCRIPTION = 'DESCRIPTION',
+  FILTERS = 'FILTERS',
   IMAGE = 'IMAGE',
 }
 

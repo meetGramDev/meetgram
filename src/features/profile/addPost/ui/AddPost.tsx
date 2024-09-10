@@ -29,6 +29,9 @@ export const AddPost = () => {
       case PostView.CROPPING: {
         return <AddScropping />
       }
+      case PostView.FILTERS: {
+        return <div>FILTERS</div>
+      }
     }
   }, [postView])
 
