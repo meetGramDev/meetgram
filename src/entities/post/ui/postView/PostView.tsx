@@ -79,7 +79,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
     }
   }
 
-  const ownerProfile = `/${HOME}/${userId}`
+  const ownerProfile = `${HOME}/${userId}`
 
   if (postLoading) {
     return <Loader loaderClassName={s.loader} />
