@@ -1,12 +1,12 @@
 import { selectCurrentUserEmail } from '@/entities/user'
 import { LogOut } from '@/features/auth/logOut'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { SidebarItem, SidebarItemType } from '@/widgets/sidebar/sidebarUi/sidebarItem/SidebarItem'
+import { SidebarItem, SidebarItemType } from '@/widgets/sidebar/sidebarItem/SidebarItem'
 import clsx from 'clsx'
 
 import s from './sidebar.module.scss'
 
-import { useGetSidebarItems } from '../useSidebarItems'
+import { useGetSidebarItems } from '../../lib/useSidebarItems'
 
 type Props = {
   className?: string

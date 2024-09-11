@@ -1,3 +1,3 @@
-export { MobileSidebarSelector } from './sidebarUi/mobileUi/selectUi/MobileSidebarSelector'
-export { MobileSidebar } from '@/widgets/sidebar/sidebarUi/mobileUi/ui/MobileSidebar'
-export { Sidebar } from '@/widgets/sidebar/sidebarUi/ui/Sidebar'
+export { Sidebar } from '@/widgets/sidebar/desktopSidbar/ui/Sidebar'
+export { MobileSidebarSelector } from '@/widgets/sidebar/mobileSidbar/select/MobileSidebarSelector'
+export { MobileSidebar } from '@/widgets/sidebar/mobileSidbar/ui/MobileSidebar'

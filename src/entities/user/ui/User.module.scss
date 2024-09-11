@@ -54,12 +54,12 @@
 
 @media (width <= 650px) {
   .userPhoto {
-    width: 75px;
-    height: 75px;
+    width: 4.68rem;
+    height: 4.68rem;
   }
 
   .buttonPublications {
-    gap: 12%;
+    gap: 10%;
     margin: 0;
   }
 
@@ -69,20 +69,20 @@
 
   .userInformation {
     justify-content: center;
-    margin-left: 8%;
+    margin-left: 7%;
   }
 
   .userWrapper {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0.75rem;
     padding: 2.25rem 1.5rem 0;
   }
 
   .userName {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0.75rem;
     font: var(--font-regular-small);
   }
 }

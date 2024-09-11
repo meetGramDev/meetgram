@@ -4,7 +4,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Header } from '@/widgets/header'
 import { MobileHeader } from '@/widgets/mobileHeader'
 import { Sidebar } from '@/widgets/sidebar'
-import { MobileSidebar } from '@/widgets/sidebar/sidebarUi/mobileUi/ui/MobileSidebar'
+import { MobileSidebar } from '@/widgets/sidebar/mobileSidbar/ui/MobileSidebar'
 import { Inter } from 'next/font/google'
 
 import s from './MainLayout.module.scss'

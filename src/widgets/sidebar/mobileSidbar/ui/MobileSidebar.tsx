@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { SidebarItem, SidebarItemType } from '@/widgets/sidebar/sidebarUi/sidebarItem/SidebarItem'
-import { useGetSidebarItems } from '@/widgets/sidebar/sidebarUi/useSidebarItems'
+import { useGetSidebarItems } from '@/widgets/sidebar/lib/useSidebarItems'
+import { SidebarItem, SidebarItemType } from '@/widgets/sidebar/sidebarItem/SidebarItem'
 
 import s from './mobileSidebar.module.scss'
 

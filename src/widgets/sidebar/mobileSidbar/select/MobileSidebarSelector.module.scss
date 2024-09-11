@@ -27,6 +27,8 @@
   height: min-content;
   margin-top: 1.5rem;
 
+  white-space: nowrap;
+
   border: 1px solid var(--dark-color-100);
   border-radius: 2px;
 }
@@ -34,4 +36,9 @@
 .button {
   font: var(--font-regular-small);
   color: var(--light-color-100);
+}
+
+.moreIcon {
+  color: var(--light-color-100);
+  transition: 0.3s;
 }
