@@ -3,6 +3,11 @@ import Cropper from 'react-easy-crop'
 
 import { setPostView } from '@/features/profile/addPost/model/slice/addPostSlice'
 import { PostView } from '@/features/profile/addPost/model/types/addPostTypes'
+import { Expand } from '@/shared/assets/icons/Expand'
+import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
+import { ImageIconOutlined } from '@/shared/assets/icons/ImageIconOutlined'
+import { Maxinize } from '@/shared/assets/icons/Maxinize'
+import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import ArrowBack from '@/shared/assets/icons/arrow-back.svg'
 import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui'
@@ -34,14 +39,21 @@ export const AddScropping = () => {
           Next
         </Button>
       </div>
+      <div className={s.buttonWrapper}>
+        <ButtonIcon onClick={() => {}}>{/*<Expand />*/}</ButtonIcon>
+        <ButtonIcon onClick={() => {}}>{/*<ImageIcon fill={'#397df6'} />*/}</ButtonIcon>
+        <ButtonIcon onClick={() => {}}>{/*<ImageIconOutlined />*/}</ButtonIcon>
+      </div>
       <div className={s.cropperWrapper}>
         <Cropper
           aspect={4 / 3}
           crop={crop}
+          cropShape={'rect'}
           image={images[0].image}
           onCropChange={setCrop}
           onZoomChange={setZoom}
           zoom={zoom}
+          zoomWithScroll={false}
         />
       </div>
     </div>
