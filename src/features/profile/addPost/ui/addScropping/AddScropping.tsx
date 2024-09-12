@@ -39,11 +39,7 @@ export const AddScropping = () => {
           Next
         </Button>
       </div>
-      <div className={s.buttonWrapper}>
-        <ButtonIcon onClick={() => {}}>{/*<Expand />*/}</ButtonIcon>
-        <ButtonIcon onClick={() => {}}>{/*<ImageIcon fill={'#397df6'} />*/}</ButtonIcon>
-        <ButtonIcon onClick={() => {}}>{/*<ImageIconOutlined />*/}</ButtonIcon>
-      </div>
+
       <div className={s.cropperWrapper}>
         <Cropper
           aspect={4 / 3}
@@ -55,6 +51,17 @@ export const AddScropping = () => {
           zoom={zoom}
           zoomWithScroll={false}
         />
+        <div className={s.buttonWrapper}>
+          <ButtonIcon onClick={() => {}} style={{ padding: '6px' }}>
+            {<Expand />}
+          </ButtonIcon>
+          <ButtonIcon onClick={() => {}} style={{ padding: '6px' }}>
+            {<ImageIcon fill={'#397df6'} />}
+          </ButtonIcon>
+          <ButtonIcon onClick={() => {}} style={{ padding: '6px' }}>
+            {<ImageIconOutlined />}
+          </ButtonIcon>
+        </div>
       </div>
     </div>
   )
