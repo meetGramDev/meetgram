@@ -1,0 +1,20 @@
+.selectContent {
+  transform: translateX(-80%);
+  transform: translateY(-260%);
+
+  width: min-content;
+  height: min-content;
+
+  border: 1px solid var(--dark-color-100);
+  border-radius: 2px;
+  outline: none;
+
+  &:focus {
+    outline: var(--dark-color-100);
+    box-shadow: none;
+  }
+}
+
+.button {
+  padding: 0;
+}

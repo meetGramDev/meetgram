@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import Cropper from 'react-easy-crop'
 
+import { PostViewSelect } from '@/features/posts/postViewSelect'
 import { setPostView } from '@/features/profile/addPost/model/slice/addPostSlice'
 import { PostView } from '@/features/profile/addPost/model/types/addPostTypes'
+import { AddPostSettingsSelect } from '@/features/profile/addPost/ui/addPostSettingsSelect/AddPostSettingsSelect'
 import { Expand } from '@/shared/assets/icons/Expand'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { ImageIconOutlined } from '@/shared/assets/icons/ImageIconOutlined'
@@ -49,14 +51,13 @@ export const AddScropping = () => {
           onCropChange={setCrop}
           onZoomChange={setZoom}
           zoom={zoom}
-          zoomWithScroll={false}
+          // zoomWithScroll={false}
         />
         <div className={s.buttonWrapper}>
+          {/*<PostViewSelect isFollowing={} onOpenPost={} ownerId={} userId={} />*/}
+          <AddPostSettingsSelect placeholder={<Expand />} />
           <ButtonIcon onClick={() => {}} style={{ padding: '6px' }}>
-            {<Expand />}
-          </ButtonIcon>
-          <ButtonIcon onClick={() => {}} style={{ padding: '6px' }}>
-            {<ImageIcon fill={'#397df6'} />}
+            {<Maxinize />}
           </ButtonIcon>
           <ButtonIcon onClick={() => {}} style={{ padding: '6px' }}>
             {<ImageIconOutlined />}
