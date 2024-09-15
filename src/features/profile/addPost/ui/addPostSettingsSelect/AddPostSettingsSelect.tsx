@@ -8,10 +8,11 @@ import { Button, Select } from '@/shared/ui'
 import s from './AddPostSettingsSelect.module.scss'
 
 type Props = {
+  children: React.ReactNode
   placeholder: React.ReactNode
 }
 
-export const AddPostSettingsSelect = ({ placeholder }: Props) => {
+export const AddPostSettingsSelect = ({ children, placeholder }: Props) => {
   return (
     <Select
       contentClassName={s.selectContent}
@@ -19,18 +20,7 @@ export const AddPostSettingsSelect = ({ placeholder }: Props) => {
       rootClassName={s.selectTrigger}
       showArrow={false}
     >
-      <Button className={s.button} onClick={() => {}} variant={'text'}>
-        Оригинал <ImageIcon />{' '}
-      </Button>
-      <Button className={s.button} onClick={() => {}} variant={'text'}>
-        1:1 <Rectangle />{' '}
-      </Button>
-      <Button className={s.button} onClick={() => {}} variant={'text'}>
-        4:5 <Rectangular />{' '}
-      </Button>
-      <Button className={s.button} onClick={() => {}} variant={'text'}>
-        16:9 <HorizontalRectangle />{' '}
-      </Button>
+      {children}
     </Select>
   )
 }
