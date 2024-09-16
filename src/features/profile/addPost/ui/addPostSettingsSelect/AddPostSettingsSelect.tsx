@@ -1,9 +1,4 @@
-import { Expand } from '@/shared/assets/icons/Expand'
-import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
-import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
-import { Rectangle } from '@/shared/assets/icons/Rectangle'
-import { Rectangular } from '@/shared/assets/icons/Rectangular'
-import { Button, Select } from '@/shared/ui'
+import { Select } from '@/shared/ui'
 
 import s from './AddPostSettingsSelect.module.scss'
 
