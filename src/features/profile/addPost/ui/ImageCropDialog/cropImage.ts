@@ -1,3 +1,26 @@
+export const createImage = url =>
+  new Promise((resolve, reject) => {
+    const image = new Image()
+
+    image.addEventListener('load', () => resolve(image))
+    image.addEventListener('error', error => reject(error))
+    image.setAttribute('crossOrigin', 'anonymous') // needed to avoid cross-origin issues on CodeSandbox
+    image.src = url
+  })
+
+export function getRadianAngle(degreeValue) {
+  return (degreeValue * Math.PI) / 180
+}
+
+export function rotateSize(width, height, rotation) {
+  const rotRad = getRadianAngle(rotation)
+
+  return {
+    height: Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height),
+    width: Math.abs(Math.cos(rotRad) * width) + Math.abs(Math.sin(rotRad) * height),
+  }
+}
+
 export default async function getCroppedImg(
   imageSrc,
   pixelCrop,
