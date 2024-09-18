@@ -1,16 +1,38 @@
-import { EsFlagIcon } from "@/shared/assets/icons/ES";
+import {EsFlagIcon} from "@/shared/assets/icons/ES";
 
-import { LenType } from './en';
+import {LenType} from './en';
 
 export const es: LenType = {
+    "About me": "Sobre mí",
+    "Account Management": "Gestión de la cuenta",
+    "April": "Abril",
+    "August": "Agosto",
+    "City": "Ciudad",
     "Congratulations!": "¡Felicidades!",
+    "Country": "País",
+    "Date of birth": "Fecha de nacimiento",
+    "December": "Diciembre",
+    "Devices": "Dispositivos",
     "Email sent": "Correo enviado",
     "Email verification link expired": "El enlace ha caducado",
-
+    "February": "Febrero",
+    "First Name": "Nombre",
+    "General Information": "Información general",
+    "January": "Enero",
+    "July": "Julio",
+    "June": "Junio",
+    "Last Name": "Apellido",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
+    "March": "Marzo",
+    "May": "Mayo",
+    "My Payments": "Mis pagos",
+    "November": "Noviembre",
+    "October": "Octubre",
     "Ok": "Ok",
     "Resend verification link": "Reenviar enlace de verificación",
-
+    "Select your city": "Selecciona tu ciudad",
+    "Select your country": "Selecciona tu país",
+    "September": "Septiembre",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",
@@ -18,8 +40,8 @@ export const es: LenType = {
     button: {
         Button: 'Botón',
         Link: 'Enlace que parece un botón',
-    }, componentLang: EsFlagIcon,
-    createNewPasswordForm: {
+    },
+    componentLang: EsFlagIcon, createNewPasswordForm: {
         createNewPassword: 'Crear nueva contraseña',
         newPassword: 'Nueva contraseña',
         passwordConfirmation: 'Confirmación de contraseña',
@@ -56,8 +78,8 @@ export const es: LenType = {
         sendAgain: 'Si no recibes un correo electrónico, envía el enlace nuevamente.',
         sendLink: 'Enviar Enlace',
         sendLinkDialog: 'Hemos enviado un enlace para confirmar tu correo electrónico a',
-    }, language: 'Español',
-    policies: {
+    },
+    language: 'Español', policies: {
         "Privacy Policy": "Política de Privacidad",
         "Terms Of Service": "Condiciones de uso",
     },
@@ -95,4 +117,5 @@ export const es: LenType = {
         username: 'Nombre de usuario',
     },
     test: 'Lorem Ipsum es simplemente texto de relleno de la impresión',
+    "text area": "área de texto",
 }
