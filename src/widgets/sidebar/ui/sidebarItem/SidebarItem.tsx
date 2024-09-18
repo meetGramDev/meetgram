@@ -1,9 +1,9 @@
 import { FC, SVGProps } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { setOpenModal } from '@/features/profile/addPost'
+import { addPostActions, setOpenModal } from '@/features/profile/addPost'
 import { HOME } from '@/shared/config/router'
-import { useAppSelector } from '@/shared/config/storeHooks'
+import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -22,13 +22,13 @@ type Props = {
 }
 
 export const SidebarItem = ({ item }: Props) => {
-  const dispatch = useDispatch()
+  const { setOpenModal } = useActions(addPostActions)
   const router = useRouter()
   const userId = useAppSelector(state => state.user.accountData.userId)
 
   const handleClickCreatePost = async () => {
-    await router.push(`${HOME}/${userId}`)
-    dispatch(setOpenModal(true))
+    await router.push(`${HOME}/${userId}`, undefined, { shallow: true })
+    setOpenModal(true)
   }
 
   return (

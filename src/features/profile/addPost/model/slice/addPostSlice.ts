@@ -30,3 +30,4 @@ export const addPostSlice = createSlice({
 })
 
 export const { addImage, setOpenModal, setPostView } = addPostSlice.actions
+export const addPostActions = addPostSlice.actions

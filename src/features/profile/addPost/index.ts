@@ -1,1 +1,1 @@
-export { addPostSlice, setOpenModal } from './model/slice/addPostSlice'
+export { addPostActions, addPostSlice, setOpenModal } from './model/slice/addPostSlice'
