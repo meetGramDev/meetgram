@@ -7,6 +7,7 @@ import { PRIVACY_POLICY } from '@/shared/config/router'
 import { cities } from '@/shared/const/citiesData'
 import { countries } from '@/shared/const/countriesData'
 import { translate } from '@/shared/lib/langSwitcher'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
@@ -28,6 +29,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   const { errorsTr, policies, signUpLang } = translate(locale)
 
+  const t = useTranslate()
   const { control, errors, getValues, handleSubmit, isDirty, isValid, register, setError } =
     useUserSettings(errorsTr, data)
 
@@ -61,7 +63,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
         />
         <Input
           error={errors.firstName?.message}
-          label={'First Name'}
+          label={t('First Name')}
           required
           type={'firstName'}
           {...register('firstName', {
@@ -70,7 +72,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
         />
         <Input
           error={errors.lastName?.message}
-          label={'Last Name'}
+          label={t('Last Name')}
           required
           type={'lastName'}
           {...register('lastName', {
@@ -92,7 +94,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
                   // @ts-ignore // TODO
                   error={errors.dateOfBirth?.message}
                   inputClassName={!validAge(Number(start))}
-                  label={'Date of birth'}
+                  label={t('Date of birth')}
                   onStartDateChange={onChangeDate}
                   startDate={value}
                   {...field}
@@ -119,10 +121,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
             render={({ field: { onChange, value, ...field } }) => (
               <Select
                 contentClassName={s.scrollSelect}
-                label={'Select your country'}
+                label={t('Select your country')}
                 onValueChange={onChange}
                 options={countries}
-                placeholder={'Country'}
+                placeholder={t('Country')}
                 rootClassName={s.selectWidth}
                 value={value}
                 {...field}
@@ -137,10 +139,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
             render={({ field: { onChange, value, ...field } }) => (
               <Select
                 contentClassName={s.scrollSelect}
-                label={'Select your city'}
+                label={t('Select your city')}
                 onValueChange={onChange}
                 options={cities}
-                placeholder={'City'}
+                placeholder={t('City')}
                 rootClassName={s.selectWidth}
                 value={value}
                 {...field}
@@ -149,7 +151,12 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
           />
         </div>
       </div>
-      <TextArea error={errors.aboutMe?.message} label={'About me'} {...register('aboutMe')} />
+      <TextArea
+        error={errors.aboutMe?.message}
+        label={t('About me')}
+        placeholder={t('text area')}
+        {...register('aboutMe')}
+      />
       <hr className={s.hr}></hr>
       <Button className={s.button} disabled={isDisabled} type={'submit'}>
         Save changes
