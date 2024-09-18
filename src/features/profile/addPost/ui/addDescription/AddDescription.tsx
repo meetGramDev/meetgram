@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { Photo } from '@/entities/photo'
 import { useGetProfileQuery } from '@/features/userSettings'
 import ArrowBack from '@/shared/assets/icons/arrow-back.svg'
-import { useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
+import { useActions, useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { useClientProgress } from '@/shared/lib'
 import { Button, TextArea } from '@/shared/ui'
 import { ButtonIcon } from '@/shared/ui/buttonIcon/ButtonIcon'
@@ -14,8 +14,8 @@ import Image from 'next/image'
 import s from './AddDescription.module.scss'
 
 import { useAddImagesMutation, useCreatePostMutation } from '../../model/services/addPost.service'
-import { setAddPostStage, setOpenAddingPost } from '../../model/slice/addPostSlice'
-import { AddPostStage } from '../../model/types/addPostTypes'
+import { addPostActions, setAddingPostStage } from '../../model/slice/addPostSlice'
+import { AddingPostStage } from '../../model/types/addPostTypes'
 
 export const AddDescription = () => {
   const images = useAppSelector(state => state.addPost.images)
@@ -23,11 +23,12 @@ export const AddDescription = () => {
   const [addImages, { isLoading: isLoadingAddImages }] = useAddImagesMutation()
   const [createPost, { isLoading: isLoadingCreatePost }] = useCreatePostMutation()
   const dispatch = useAppDispatch()
+  const { closeAddingPost } = useActions(addPostActions)
 
   const [description, setDescription] = useState('')
 
   const handlePrevView = () => {
-    dispatch(setAddPostStage(AddPostStage.ADD))
+    dispatch(setAddingPostStage(AddingPostStage.ADD))
   }
 
   const onSendPostImage = async () => {
@@ -44,7 +45,7 @@ export const AddDescription = () => {
             description,
           })
           toast.success('Post added successfully.')
-          dispatch(setOpenAddingPost(false))
+          closeAddingPost()
         } catch (e) {
           console.log(e)
         }

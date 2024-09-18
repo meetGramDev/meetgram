@@ -1,6 +1,6 @@
 import { ImageType } from '@/entities/post'
 
-export enum AddPostStage {
+export enum AddingPostStage {
   ADD = 'Add Photo',
   CROPPING = 'Cropping',
   DESCRIPTION = 'Description',

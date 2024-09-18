@@ -8,8 +8,8 @@ import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
 import s from './AddImages.module.scss'
 
-import { addImage, setAddPostStage } from '../../model/slice/addPostSlice'
-import { AddPostStage } from '../../model/types/addPostTypes'
+import { addImage, setAddingPostStage } from '../../model/slice/addPostSlice'
+import { AddingPostStage } from '../../model/types/addPostTypes'
 
 export const AddImages = () => {
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
@@ -37,7 +37,7 @@ export const AddImages = () => {
       const data = await readFile(file)
 
       dispatch(addImage({ data, image: URL.createObjectURL(file) }))
-      dispatch(setAddPostStage(AddPostStage.DESCRIPTION))
+      dispatch(setAddingPostStage(AddingPostStage.DESCRIPTION))
     }
   }
 

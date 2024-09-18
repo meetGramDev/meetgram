@@ -1,4 +1,4 @@
 import { RootState } from '@/app/lib'
 
 export const selectIsDialogOpen = (state: RootState) => state.addPost.isOpenModal
-export const selectAddPostStage = (state: RootState) => state.addPost.addPostStage
+export const selectAddingPostStage = (state: RootState) => state.addPost.addingPostStage

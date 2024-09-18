@@ -4,9 +4,9 @@ import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import {
   AddDescription,
   AddImages,
-  AddPostStage,
+  AddingPostStage,
   addPostActions,
-  selectAddPostStage,
+  selectAddingPostStage,
   selectIsDialogOpen,
 } from '@/features/profile/addPost'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
@@ -14,8 +14,8 @@ import { Dialog } from '@/shared/ui'
 
 export const AddingPostView = () => {
   const open = useAppSelector(selectIsDialogOpen)
-  const addPostStage = useAppSelector(selectAddPostStage)
-  const { setOpenAddingPost } = useActions(addPostActions)
+  const addingPostStage = useAppSelector(selectAddingPostStage)
+  const { closeAddingPost } = useActions(addPostActions)
 
   const [openConfirmClosing, setOpenConfirmClosing] = useState(false)
 
@@ -23,35 +23,34 @@ export const AddingPostView = () => {
     if (!isOpen) {
       setOpenConfirmClosing(true)
     }
-    // setOpenAddingPost(value)
   }
 
   const handleCloseAddingPost = (isConfirm: boolean) => {
     if (isConfirm) {
-      setOpenAddingPost(false)
       setOpenConfirmClosing(false)
+      closeAddingPost()
     } else {
       setOpenConfirmClosing(false)
     }
   }
 
   const content = useMemo(() => {
-    switch (addPostStage) {
-      case AddPostStage.ADD: {
+    switch (addingPostStage) {
+      case AddingPostStage.ADD: {
         return <AddImages />
       }
-      case AddPostStage.DESCRIPTION: {
+      case AddingPostStage.DESCRIPTION: {
         return <AddDescription />
       }
     }
-  }, [addPostStage])
+  }, [addingPostStage])
 
   return (
     <>
       <Dialog
         onOpenChange={handleOpenAddingPost}
         open={open}
-        title={addPostStage === AddPostStage.ADD ? 'Add Photo' : ''}
+        title={addingPostStage === AddingPostStage.ADD ? 'Add Photo' : ''}
       >
         {content}
 
