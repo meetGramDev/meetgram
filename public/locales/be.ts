@@ -1,17 +1,18 @@
-import {ByFlagIcon} from "@/shared/assets/icons/BY";
-
-import {LenType} from './en';
+import { LenType } from './en';
 
 export const be: LenType = {
     "About me": "Пра мяне",
     "Account Management": "Кіраванне акаўнтам",
+    "Add Photo": "Дадаць фота",
     "April": "Красавік",
-    "August": "Жнівень",
-    "City": "Горад", "Congratulations!": "Віншуем!",
+    "August": "Жнівень", "City": "Горад",
+    "Close": "Закрыць",
+    "Congratulations!": "Віншуем!",
     "Country": "Краіна",
     "Date of birth": "Дата нараджэння",
     "December": "Снежань",
     "Devices": "Прылады",
+    "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы сапраўды хочаце спыніць стварэнне публікацыі? Калі вы закрыеце, усё будзе выдалена",
     "Email sent": "Ліст адпраўлены",
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
     'February': "Люты",
@@ -29,6 +30,7 @@ export const be: LenType = {
     "October": "Кастрычнік",
     "Ok": "Добра",
     "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
+    "Select from computer": "Выбраць на кампутары",
     "Select your city": "Абярыце ваш горад",
     "Select your country": "Абярыце вашу краіну",
     "September": "Верасень",
@@ -40,7 +42,6 @@ export const be: LenType = {
         Button: 'Кнопка',
         Link: 'Спасылка, якая выглядае як кнопка',
     },
-    componentLang: ByFlagIcon,
     createNewPasswordForm: {
         createNewPassword: 'Стварыць новы пароль',
         newPassword: 'Новы пароль',

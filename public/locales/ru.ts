@@ -1,18 +1,19 @@
-import {RuFlagIcon} from "@/shared/assets/icons/RU";
-
-import {LenType} from './en';
+import { LenType } from './en';
 
 export const ru: LenType = {
     "About me": "О себе",
     "Account Management": "Управление аккаунтом",
+    "Add Photo": "Добавить фото",
     "April": "Апрель",
     "August": "Август",
     "City": "Город",
+    "Close": "Закрыть",
     "Congratulations!": "Поздравляем!",
     "Country": "Страна",
     "Date of birth": "Дата рождения",
     "December": "Декабрь",
     "Devices": "Устройства",
+    "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы действительно хотите закрыть создание публикации? Если вы закроете окно, всё будет удалено.",
     "Email sent": "Письмо отправлено",
     "Email verification link expired": "Срок действия ссылки истек",
     "February": "Февраль",
@@ -30,10 +31,11 @@ export const ru: LenType = {
     "October": "Октябрь",
     "Ok": "Хорошо",
     "Resend verification link": "Отправить ссылку для подтверждения еще раз",
+    "Select from computer": "Выбрать на компьютере",
     "Select your city": "Выберите ваш город",
     "Select your country": "Выберите вашу страну",
     "September": "Сентябрь",
-    "Sign In": "Войти",
+        "Sign In": "Войти",
     "Sign Up": "Регистрация",
     "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",
     "Your email has been confirmed": "Ваша электронная почта подтверждена",
@@ -41,7 +43,6 @@ export const ru: LenType = {
         Button: 'Кнопка',
         Link: 'Ссылка, которая выглядит как кнопка',
     },
-    componentLang: RuFlagIcon,
     createNewPasswordForm: {
         createNewPassword: 'Создать новый пароль',
         newPassword: 'Новый пароль',

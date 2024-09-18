@@ -11,11 +11,14 @@ import {
   selectIsDialogOpen,
 } from '@/features/profile/addPost'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Dialog } from '@/shared/ui'
 
 export const AddingPostView = () => {
+  const t = useTranslate()
+
   const open = useAppSelector(selectIsDialogOpen)
-  const addingPostStage = useAppSelector(selectAddingPostStage)
+  const currentAddingPostStage = useAppSelector(selectAddingPostStage)
   const isAddedImages = useAppSelector(selectIsAddedImages)
   const { closeAddingPost } = useActions(addPostActions)
 
@@ -39,7 +42,7 @@ export const AddingPostView = () => {
   }
 
   const content = useMemo(() => {
-    switch (addingPostStage) {
+    switch (currentAddingPostStage) {
       case AddingPostStage.ADD: {
         return <AddImages />
       }
@@ -47,22 +50,29 @@ export const AddingPostView = () => {
         return <AddDescription />
       }
     }
-  }, [addingPostStage])
+  }, [currentAddingPostStage])
 
   return (
     <>
       <Dialog
+        modal
         onOpenChange={handleOpenAddingPost}
         open={open}
-        title={addingPostStage === AddingPostStage.ADD ? 'Add Photo' : ''}
+        title={currentAddingPostStage === AddingPostStage.ADD ? (t('Add Photo') as string) : ''}
       >
         {content}
 
         {openConfirmClosing && (
-          <Dialog onOpenChange={setOpenConfirmClosing} open={openConfirmClosing} title={'Close'}>
+          <Dialog
+            onOpenChange={setOpenConfirmClosing}
+            open={openConfirmClosing}
+            title={t('Close') as string}
+          >
             <ConfirmClosingDialog
               message={
-                'Do you really want to close the creation of a publication? If you close everything will be deleted'
+                t(
+                  'Do you really want to close the creation of a publication? If you close everything will be deleted'
+                ) as string
               }
               onConfirm={handleCloseAddingPost}
             />

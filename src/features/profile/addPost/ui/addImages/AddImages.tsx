@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Photo } from '@/entities/photo'
 import { useAppDispatch } from '@/shared/config/storeHooks'
 import { readFile } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
@@ -12,6 +13,7 @@ import { addImage, setAddingPostStage } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
 
 export const AddImages = () => {
+  const t = useTranslate()
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
 
   const dispatch = useAppDispatch()
@@ -53,7 +55,7 @@ export const AddImages = () => {
         <Photo type={'empty'} variant={'square'} />
       </Dropzone>
       <Button className={s.button} onClick={handleSelectFileClick} variant={'primary'}>
-        Select from computer
+        {t('Select from computer') as string}
       </Button>
     </div>
   )
