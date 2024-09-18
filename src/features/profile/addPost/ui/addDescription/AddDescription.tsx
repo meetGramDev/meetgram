@@ -14,8 +14,8 @@ import Image from 'next/image'
 import s from './AddDescription.module.scss'
 
 import { useAddImagesMutation, useCreatePostMutation } from '../../model/services/addPost.service'
-import { setOpenModal, setPostView } from '../../model/slice/addPostSlice'
-import { PostView } from '../../model/types/addPostTypes'
+import { setAddPostStage, setOpenAddingPost } from '../../model/slice/addPostSlice'
+import { AddPostStage } from '../../model/types/addPostTypes'
 
 export const AddDescription = () => {
   const images = useAppSelector(state => state.addPost.images)
@@ -27,7 +27,7 @@ export const AddDescription = () => {
   const [description, setDescription] = useState('')
 
   const handlePrevView = () => {
-    dispatch(setPostView(PostView.IMAGE))
+    dispatch(setAddPostStage(AddPostStage.ADD))
   }
 
   const onSendPostImage = async () => {
@@ -44,7 +44,7 @@ export const AddDescription = () => {
             description,
           })
           toast.success('Post added successfully.')
-          dispatch(setOpenModal(false))
+          dispatch(setOpenAddingPost(false))
         } catch (e) {
           console.log(e)
         }
