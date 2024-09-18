@@ -7,6 +7,7 @@ import {
   AddingPostStage,
   addPostActions,
   selectAddingPostStage,
+  selectIsAddedImages,
   selectIsDialogOpen,
 } from '@/features/profile/addPost'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
@@ -15,13 +16,16 @@ import { Dialog } from '@/shared/ui'
 export const AddingPostView = () => {
   const open = useAppSelector(selectIsDialogOpen)
   const addingPostStage = useAppSelector(selectAddingPostStage)
+  const isAddedImages = useAppSelector(selectIsAddedImages)
   const { closeAddingPost } = useActions(addPostActions)
 
   const [openConfirmClosing, setOpenConfirmClosing] = useState(false)
 
   const handleOpenAddingPost = (isOpen: boolean) => {
-    if (!isOpen) {
-      setOpenConfirmClosing(true)
+    if (isAddedImages) {
+      !isOpen && setOpenConfirmClosing(true)
+    } else {
+      closeAddingPost()
     }
   }
 
