@@ -12,6 +12,6 @@ export type UploadImageResponse = {
 }
 
 export type CreatePost = {
-  childrenMetadata: [{ uploadId: string }]
+  childrenMetadata: { uploadId: string }[]
   description: string
 }

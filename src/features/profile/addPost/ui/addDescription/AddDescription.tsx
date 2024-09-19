@@ -1,16 +1,13 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import { toast } from 'react-toastify'
 
-import { PostDescriptionForm } from '@/entities/post'
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
+import { PostDescriptionField, PostDescriptionForm, PostDescriptionFormRef } from '@/entities/post'
 import { useGetProfileQuery } from '@/features/userSettings'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
-import { useClientProgress } from '@/shared/lib'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
-import { Dialog } from '@/shared/ui'
+import { Nullable } from '@/shared/types'
 import { dataURLToBlob } from 'blob-util'
-
-import s from './AddDescription.module.scss'
 
 import { selectImages } from '../../model/selectors/addPost.selectors'
 import { useAddImagesMutation, useCreatePostMutation } from '../../model/services/addPost.service'
@@ -30,31 +27,49 @@ export const AddDescription = () => {
 
   const { closeAddingPost, setAddingPostStage } = useActions(addPostActions)
 
-  const [description, setDescription] = useState('')
+  const postDescriptionRef = useRef<Nullable<PostDescriptionFormRef>>(null)
 
   const handlePrevView = () => {
     setAddingPostStage(AddingPostStage.FILTERS)
   }
 
-  const onSendPostImage = async () => {
-    if (images) {
-      images.map(async el => {
-        const formData = new FormData()
+  const handlePublish = () => {
+    postDescriptionRef.current?.onSubmitFormClick()
+  }
 
-        formData.append('file', dataURLToBlob(el.data))
-        try {
-          const imagesResult = await addImages(formData).unwrap()
+  const handleOnSendPostImage = async ({ description }: PostDescriptionField) => {
+    if (!images.length) {
+      return
+    }
 
-          await createPost({
-            childrenMetadata: [imagesResult.images[0]],
-            description,
-          })
-          toast.success('Post added successfully.')
-          closeAddingPost()
-        } catch (e) {
-          console.log(e)
-        }
-      })
+    const formData = new FormData()
+
+    images.forEach(image => {
+      formData.append('file', dataURLToBlob(image.data))
+    })
+
+    try {
+      const imagesResult = await addImages(formData).unwrap()
+
+      const childrenMetadata = imagesResult.images.map(img => ({
+        uploadId: img.uploadId,
+      }))
+
+      await createPost({
+        childrenMetadata,
+        description,
+      }).unwrap()
+
+      toast.success('Post added successfully.')
+      closeAddingPost()
+    } catch (e) {
+      const message = serverErrorHandler(e)
+
+      if (typeof message === 'string') {
+        toast.error(message)
+      } else {
+        console.error(message)
+      }
     }
   }
 
@@ -70,13 +85,14 @@ export const AddDescription = () => {
         header={'Publication'}
         nextBtnText={'Publish'}
         onBack={handlePrevView}
-        onNext={onSendPostImage}
+        onNext={handlePublish}
       />
       <AddDialogLayout images={images}>
         <PostDescriptionForm
-          onSubmit={() => {}}
+          onSubmit={handleOnSendPostImage}
           ownerAvatar={profile.avatars[0].url}
           ownerUsername={profile.userName}
+          ref={postDescriptionRef}
         />
       </AddDialogLayout>
     </>

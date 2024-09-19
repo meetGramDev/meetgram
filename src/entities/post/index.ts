@@ -6,5 +6,9 @@ export {
   type PublicPost,
 } from './model/types/posts.types'
 export { Post } from './ui/Post'
-export { PostDescriptionForm } from './ui/postDescriptionForm/PostDescriptionForm'
+export {
+  PostDescriptionForm,
+  type PostDescriptionFormRef,
+} from './ui/postDescriptionForm/PostDescriptionForm'
 export { PostView } from './ui/postView/PostView'
+export { type PostDescriptionField } from './validation/schema'
