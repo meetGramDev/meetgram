@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useRef, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { UploadMessage } from '@/shared/components/dialog'
@@ -21,11 +21,9 @@ export const AddImages = () => {
 
   const { addImage, setAddingPostStage } = useActions(addPostActions)
 
-  const [file, setFile] = useState<File | null>()
   const [error, setError] = useState<ReactElement | string>('')
 
   const resetState = () => {
-    setFile(null)
     setError('')
   }
 
@@ -34,9 +32,15 @@ export const AddImages = () => {
     dropzoneRef.current?.onSelectFile()
   }
 
+  const handleNextView = async (file: File) => {
+    const data = await readFile(file)
+
+    addImage({ data, image: URL.createObjectURL(file) })
+    setAddingPostStage(AddingPostStage.CROPPING)
+  }
+
   const handleFileSelect = (file: File) => {
     resetState()
-    setFile(file)
 
     if (!isImgFileTypeValid(file, ALLOWED_TYPES)) {
       setError(
@@ -44,23 +48,16 @@ export const AddImages = () => {
           Invalid file type. Failed to upload <span className={'font-bold'}>{file.name}</span>
         </p>
       )
+
+      return
     }
+
+    if (!file || error) {
+      return
+    }
+
+    handleNextView(file)
   }
-
-  const handleNextView = async () => {
-    if (file) {
-      const data = await readFile(file)
-
-      addImage({ data, image: URL.createObjectURL(file) })
-      setAddingPostStage(AddingPostStage.CROPPING)
-    }
-  }
-
-  useEffect(() => {
-    if (file && !error) {
-      handleNextView()
-    }
-  }, [file])
 
   return (
     <div className={s.content}>
