@@ -1,30 +1,54 @@
-import { UsFlagIcon } from "@/shared/assets/icons/US";
+import {UsFlagIcon} from "@/shared/assets/icons/US";
 
 
 export const en = {
+    "About me": "About me",
+    "Account Management": "Account Management",
+    "April": "April",
+    "August": "August",
+    "City": "City",
     "Congratulations!": "Congratulations!",
+    "Country": "Country",
+    "Date of birth": "Date of birth",
+    "December": "December",
+    "Devices": "Devices",
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
+    "February": "February",
+    "First Name": "First Name",
+    "General Information": "General Information",
+    "January": "January",
+    'July': "July",
+    "June": "June",
+    "Last Name": "Last Name",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Looks like the verification link has expired. Not to worry, we can send the link again",
+    "March": "March",
+    "May": "May",
+    "My Payments": "My Payments",
+    "November": "November",
+    "October": "October",
     "Ok": "Ok",
     "Resend verification link": "Resend verification link",
+    "Select your city": "Select your city",
+    "Select your country": "Select your country",
+    "September": "September",
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",
     "We have sent a link to confirm your email to": "We have sent a link to confirm your email to ",
     "Your email has been confirmed": "Your email has been confirmed",
+
     button: {
         Button: 'Button',
         Link: 'Link that looks like a button',
 
     },
-    componentLang: UsFlagIcon, createNewPasswordForm: {
+    componentLang: UsFlagIcon,
+    createNewPasswordForm: {
         createNewPassword: 'Create New Password',
         newPassword: 'New password',
         passwordConfirmation: 'Password confirmation',
         passwordTerm: 'Your password must be between 6 and 20 characters',
-    },
-
-    errorsTr: {
+    }, errorsTr: {
 
         errorEmail: {InvalidEmail: 'Invalid email'},
         errorNewPassword: {
@@ -45,6 +69,7 @@ export const en = {
             wrongUsername: 'Wrong username'
         },
     },
+
     forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
@@ -57,8 +82,8 @@ export const en = {
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
     },
-
     language: 'English',
+
     policies: {
         "Privacy Policy": "Privacy Policy",
         "Terms Of Service": "Terms Of Service",
@@ -96,7 +121,8 @@ export const en = {
         termServ: 'Terms of Service',
         username: 'Username',
     },
-    test: 'Lorem Ipsum is simply dummy text of the printing'
+    test: 'Lorem Ipsum is simply dummy text of the printing',
+    "text area": "text area"
 }
 
 const {errorsTr, sidebarTr} = en
