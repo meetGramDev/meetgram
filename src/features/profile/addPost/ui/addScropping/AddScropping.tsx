@@ -35,7 +35,7 @@ export const AddScropping = () => {
     dispatch(setPostView(PostView.DESCRIPTION))
   }
 
-  console.log(cropImg)
+  // console.log(cropImg)
 
   return (
     <div className={s.wrapper}>
