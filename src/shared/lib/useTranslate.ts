@@ -12,8 +12,9 @@ export const useTranslate = () => {
 
   const lang = switcher(locale)
 
-  function t(phrase: keyof LenType) {
-    return lang[phrase] || phrase
+  // TODO сделать типизацию
+  function t(phrase: any = '') {
+    return lang[phrase as keyof LenType] || phrase
   }
 
   return t

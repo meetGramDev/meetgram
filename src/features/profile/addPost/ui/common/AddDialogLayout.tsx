@@ -4,7 +4,7 @@ import { Post } from '@/entities/post'
 
 import s from './style.module.scss'
 
-import { ImageType } from '../../model/slice/addPostSlice'
+import { ImageType } from '../../model/types/slice'
 
 type Props = {
   children: ReactNode
