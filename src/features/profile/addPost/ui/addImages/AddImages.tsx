@@ -4,15 +4,18 @@ import { Photo } from '@/entities/photo'
 import { UploadMessage } from '@/shared/components/dialog'
 import { useActions } from '@/shared/config/storeHooks'
 import { ALLOWED_TYPES } from '@/shared/const/consts'
-import { isImgFileTypeValid, readFile } from '@/shared/lib'
+import { isImgFileTypeValid, readFile, sleep } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
-import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
+import { Button, Dropzone, DropzoneRef, Loader } from '@/shared/ui'
 
 import s from './AddImages.module.scss'
 
 import { addPostActions } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
+import { ImageType } from '../../model/types/slice'
+
+const MAX_FILES_LENGTH = 10
 
 export const AddImages = () => {
   const t = useTranslate()
@@ -21,6 +24,7 @@ export const AddImages = () => {
   const { setAddingPostStage, startEditing } = useActions(addPostActions)
 
   const [error, setError] = useState<ReactElement | string>('')
+  const [loading, setLoading] = useState(false)
 
   const resetState = () => {
     setError('')
@@ -31,48 +35,89 @@ export const AddImages = () => {
     dropzoneRef.current?.onSelectFile()
   }
 
-  const handleNextView = async (file: File) => {
-    const data = await readFile(file)
+  const handleNextView = (files: ImageType[]) => {
+    if (!files || error) {
+      return
+    }
 
-    startEditing({ data, image: URL.createObjectURL(file) })
+    startEditing(files)
     setAddingPostStage(AddingPostStage.CROPPING)
   }
 
-  const handleFileSelect = (file: File) => {
+  const handleFilesSelect = async (files: FileList) => {
     resetState()
+    setLoading(true)
 
-    if (!isImgFileTypeValid(file, ALLOWED_TYPES)) {
-      setError(
-        <p>
-          Invalid file type. Failed to upload <span className={'font-bold'}>{file.name}</span>
-        </p>
-      )
+    let fileArray = Array.from(files)
 
-      return
+    if (fileArray.length > MAX_FILES_LENGTH) {
+      fileArray = fileArray.slice(0, MAX_FILES_LENGTH)
     }
 
-    if (!file || error) {
-      return
+    let readFiles: ImageType[] = []
+
+    for (let i = 0; i < fileArray.length; i++) {
+      if (!isImgFileTypeValid(fileArray[i], ALLOWED_TYPES)) {
+        setError(
+          <p>
+            Invalid file type. Failed to upload{' '}
+            <span className={'font-bold'}>{fileArray[i].name}</span>
+          </p>
+        )
+
+        return
+      }
+
+      if (fileArray[i].size < 1024) {
+        setError('File must be at least 1 KB')
+
+        return
+      }
+
+      const data = await readFile(fileArray[i])
+
+      readFiles = [...readFiles, { image: data }]
     }
 
-    handleNextView(file)
+    await sleep(1200)
+    setLoading(false)
+
+    handleNextView(readFiles)
   }
 
   return (
     <div className={s.content}>
       <div className={'px-5'}>
-        {error && (
-          <div className={'my-7'}>
-            <UploadMessage message={error} type={'error'} />
+        {loading && (
+          <div className={'mx-28 my-36'}>
+            <Loader />
           </div>
         )}
-
-        {!error && <p className={s.dropdownMessage}>Перетащите сюда фото</p>}
-        <Dropzone className={s.photo} onFileSelect={handleFileSelect} ref={dropzoneRef}>
-          <Photo type={'empty'} variant={'square'} />
-        </Dropzone>
+        {!loading && (
+          <>
+            {error && (
+              <div className={'my-7'}>
+                <UploadMessage message={error} type={'error'} />
+              </div>
+            )}
+            {!error && <p className={s.dropdownMessage}>Перетащите сюда фото</p>}
+            <Dropzone
+              className={s.photo}
+              multiple
+              onFileListSelect={handleFilesSelect}
+              ref={dropzoneRef}
+            >
+              <Photo type={'empty'} variant={'square'} />
+            </Dropzone>
+          </>
+        )}
       </div>
-      <Button className={s.button} onClick={handleSelectFileClick} variant={'primary'}>
+      <Button
+        className={s.button}
+        disabled={loading}
+        onClick={handleSelectFileClick}
+        variant={'primary'}
+      >
         {t('Select from computer') as string}
       </Button>
     </div>

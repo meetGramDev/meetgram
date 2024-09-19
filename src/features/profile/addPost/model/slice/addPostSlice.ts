@@ -38,8 +38,8 @@ export const addPostSlice = createSlice({
     setOpenAddingPost: (state, { payload }: PayloadAction<boolean>) => {
       state.isOpenModal = payload
     },
-    startEditing: (state, { payload }: PayloadAction<ImageType>) => {
-      state.images.push(payload)
+    startEditing: (state, { payload }: PayloadAction<ImageType[]>) => {
+      state.images = payload
       state.currentIndex = 0
     },
     updateImage: (state, { payload: { image, index } }: PayloadAction<UpdateImagePayload>) => {

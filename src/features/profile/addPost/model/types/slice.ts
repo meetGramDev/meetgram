@@ -1,6 +1,5 @@
 export type ImageType = {
-  data: string
-  image: string
+  image: string // Base64
 }
 
 export type UpdateImagePayload = {
