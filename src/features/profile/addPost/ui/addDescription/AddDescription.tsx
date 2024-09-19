@@ -1,21 +1,19 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { Photo } from '@/entities/photo'
+import { PostDescriptionForm } from '@/entities/post'
 import { useGetProfileQuery } from '@/features/userSettings'
-import ArrowBack from '@/shared/assets/icons/arrow-back.svg'
 import { useActions, useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
 import { useClientProgress } from '@/shared/lib'
-import { Button, TextArea } from '@/shared/ui'
-import { ButtonIcon } from '@/shared/ui/buttonIcon/ButtonIcon'
 import { dataURLToBlob } from 'blob-util'
-import Image from 'next/image'
 
 import s from './AddDescription.module.scss'
 
 import { useAddImagesMutation, useCreatePostMutation } from '../../model/services/addPost.service'
 import { addPostActions, setAddingPostStage } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
+import { AddDialogLayout } from '../common/AddDialogLayout'
+import { DialogHeader } from '../common/DialogHeader'
 
 export const AddDescription = () => {
   const images = useAppSelector(state => state.addPost.images)
@@ -61,31 +59,19 @@ export const AddDescription = () => {
 
   return (
     <div className={s.root}>
-      <div className={s.header}>
-        <ButtonIcon onClick={handlePrevView}>
-          <Image alt={'arrow-back'} src={ArrowBack} />
-        </ButtonIcon>
-        <div>Publication</div>
-        <Button onClick={onSendPostImage} variant={'text'}>
-          Publish
-        </Button>
-      </div>
-      <div className={s.newPost}>
-        <div className={s.postImg}>
-          <Image alt={'post image'} height={250} src={images[0].image} width={500} />
-        </div>
-        <div className={s.info}>
-          <div className={s.userData}>
-            <Photo alt={'avatar'} height={30} src={profile?.avatars[0].url ?? ''} width={30} />
-            <span>{profile.userName}</span>
-          </div>
-          <TextArea
-            label={'Add publication descriptions'}
-            onChange={e => setDescription(e.target.value)}
-            value={description}
-          />
-        </div>
-      </div>
+      <DialogHeader
+        header={'Publication'}
+        nextBtnText={'Publish'}
+        onBack={handlePrevView}
+        onNext={onSendPostImage}
+      />
+      <AddDialogLayout images={images}>
+        <PostDescriptionForm
+          onSubmit={() => {}}
+          ownerAvatar={profile.avatars[0].url}
+          ownerUsername={profile.userName}
+        />
+      </AddDialogLayout>
     </div>
   )
 }

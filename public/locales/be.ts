@@ -26,6 +26,7 @@ export const be: LenType = {
     "March": "Сакавік",
     "May": "Май",
     "My Payments": "Мае плацяжы",
+    "Next": "Наступны",
     "November": "Лістапад",
     "October": "Кастрычнік",
     "Ok": "Добра",

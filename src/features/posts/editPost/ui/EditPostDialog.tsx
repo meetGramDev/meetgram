@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
 import { Post, useGetSinglePublicPostQuery } from '@/entities/post'
+import { PostDescriptionField, getPostDescriptionSchema } from '@/entities/post/validation/schema'
 import { serverErrorHandler } from '@/shared/lib'
 import { isErrorServerMessagesType } from '@/shared/types'
 import { Button, Dialog, TextArea } from '@/shared/ui'
@@ -12,7 +13,6 @@ import s from './EditPost.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
 import { useEditPostMutation } from '../model/services/editPostApiSlice'
-import { type EditPostField, getEditPostSchema } from '../validation/schema'
 
 const MAX_DESCRIPTION_LENGTH = 500
 
@@ -38,12 +38,12 @@ export const EditPostDialog = ({ onOpenChange, open, postId }: Props) => {
     register,
     setError,
     watch,
-  } = useForm<EditPostField>({
+  } = useForm<PostDescriptionField>({
     defaultValues: {
       description: post?.description ?? '',
     },
     mode: 'onChange',
-    resolver: zodResolver(getEditPostSchema()),
+    resolver: zodResolver(getPostDescriptionSchema()),
   })
 
   const textDescription = watch('description')
@@ -67,7 +67,7 @@ export const EditPostDialog = ({ onOpenChange, open, postId }: Props) => {
       if (isErrorServerMessagesType(message)) {
         message.forEach(msg => {
           setError(
-            msg.field as keyof EditPostField,
+            msg.field as keyof PostDescriptionField,
             { message: msg.message },
             { shouldFocus: true }
           )

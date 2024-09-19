@@ -1,0 +1,27 @@
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  padding: 1rem 2rem;
+
+  border-bottom: 1px solid var(--dark-color-100);
+}
+
+/* ====== */
+
+/* Layout */
+.post {
+  width: 30.125rem;
+  height: 100%;
+
+  & > img {
+    width: 100%;
+    object-fit: cover;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* ====== */
