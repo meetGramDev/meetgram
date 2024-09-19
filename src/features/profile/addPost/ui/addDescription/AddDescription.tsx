@@ -2,31 +2,38 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { PostDescriptionForm } from '@/entities/post'
+import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { useGetProfileQuery } from '@/features/userSettings'
-import { useActions, useAppDispatch, useAppSelector } from '@/shared/config/storeHooks'
+import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { useClientProgress } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
+import { Dialog } from '@/shared/ui'
 import { dataURLToBlob } from 'blob-util'
 
 import s from './AddDescription.module.scss'
 
+import { selectImages } from '../../model/selectors/addPost.selectors'
 import { useAddImagesMutation, useCreatePostMutation } from '../../model/services/addPost.service'
-import { addPostActions, setAddingPostStage } from '../../model/slice/addPostSlice'
+import { addPostActions } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
 import { AddDialogLayout } from '../common/AddDialogLayout'
 import { DialogHeader } from '../common/DialogHeader'
 
 export const AddDescription = () => {
-  const images = useAppSelector(state => state.addPost.images)
+  const t = useTranslate()
+
+  const images = useAppSelector(selectImages)
+
   const { data: profile } = useGetProfileQuery()
   const [addImages, { isLoading: isLoadingAddImages }] = useAddImagesMutation()
   const [createPost, { isLoading: isLoadingCreatePost }] = useCreatePostMutation()
-  const dispatch = useAppDispatch()
-  const { closeAddingPost } = useActions(addPostActions)
+
+  const { closeAddingPost, setAddingPostStage } = useActions(addPostActions)
 
   const [description, setDescription] = useState('')
 
   const handlePrevView = () => {
-    dispatch(setAddingPostStage(AddingPostStage.ADD))
+    setAddingPostStage(AddingPostStage.FILTERS)
   }
 
   const onSendPostImage = async () => {
@@ -58,7 +65,7 @@ export const AddDescription = () => {
   }
 
   return (
-    <div className={s.root}>
+    <>
       <DialogHeader
         header={'Publication'}
         nextBtnText={'Publish'}
@@ -72,6 +79,6 @@ export const AddDescription = () => {
           ownerUsername={profile.userName}
         />
       </AddDialogLayout>
-    </div>
+    </>
   )
 }

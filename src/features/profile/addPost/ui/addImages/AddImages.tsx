@@ -52,7 +52,7 @@ export const AddImages = () => {
       const data = await readFile(file)
 
       addImage({ data, image: URL.createObjectURL(file) })
-      setAddingPostStage(AddingPostStage.DESCRIPTION)
+      setAddingPostStage(AddingPostStage.CROPPING)
     }
   }
 

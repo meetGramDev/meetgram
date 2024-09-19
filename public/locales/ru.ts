@@ -13,7 +13,7 @@ export const ru: LenType = {
     "Date of birth": "Дата рождения",
     "December": "Декабрь",
     "Devices": "Устройства",
-    "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы действительно хотите закрыть создание публикации? Если вы закроете окно, всё будет удалено.",
+    "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы действительно хотите отменить публикацию? Если вы выйдете, изменения не будут сохранены.",
     "Email sent": "Письмо отправлено",
     "Email verification link expired": "Срок действия ссылки истек",
     "February": "Февраль",

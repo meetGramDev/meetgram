@@ -18,6 +18,9 @@ export const addPostSlice = createSlice({
     addImage: (state, { payload }) => {
       state.images.push(payload)
     },
+    clearEditedImages: state => {
+      state.images = []
+    },
     closeAddingPost: state => {
       state.images = []
       state.addingPostStage = AddingPostStage.ADD
