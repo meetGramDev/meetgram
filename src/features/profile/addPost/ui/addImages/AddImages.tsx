@@ -3,6 +3,7 @@ import { ReactElement, useRef, useState } from 'react'
 import { Photo } from '@/entities/photo'
 import { UploadMessage } from '@/shared/components/dialog'
 import { useActions } from '@/shared/config/storeHooks'
+import { ALLOWED_TYPES } from '@/shared/const/consts'
 import { isImgFileTypeValid, readFile } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
@@ -12,8 +13,6 @@ import s from './AddImages.module.scss'
 
 import { addPostActions } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
-
-export const ALLOWED_TYPES = ['image/jpg', 'image/png', 'image/jpeg', 'image/heic', 'image/heif']
 
 export const AddImages = () => {
   const t = useTranslate()
