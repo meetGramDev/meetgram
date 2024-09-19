@@ -1,18 +1,19 @@
-import {EsFlagIcon} from "@/shared/assets/icons/ES";
-
-import {LenType} from './en';
+import { LenType } from './en';
 
 export const es: LenType = {
     "About me": "Sobre mí",
     "Account Management": "Gestión de la cuenta",
+    "Add Photo": "Añadir foto",
     "April": "Abril",
     "August": "Agosto",
     "City": "Ciudad",
+    "Close": "Cerca",
     "Congratulations!": "¡Felicidades!",
     "Country": "País",
     "Date of birth": "Fecha de nacimiento",
     "December": "Diciembre",
     "Devices": "Dispositivos",
+    "Do you really want to close the creation of a publication? If you close everything will be deleted": "¿Seguro que quieres cerrar la creación de una publicación? Si la cierras, se eliminará todo.",
     "Email sent": "Correo enviado",
     "Email verification link expired": "El enlace ha caducado",
     "February": "Febrero",
@@ -26,13 +27,15 @@ export const es: LenType = {
     "March": "Marzo",
     "May": "Mayo",
     "My Payments": "Mis pagos",
+    "Next": "siguiente",
     "November": "Noviembre",
     "October": "Octubre",
     "Ok": "Ok",
     "Resend verification link": "Reenviar enlace de verificación",
+    "Select from computer": "Seleccionar desde la computadora",
     "Select your city": "Selecciona tu ciudad",
     "Select your country": "Selecciona tu país",
-    "September": "Septiembre",
+        "September": "Septiembre",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",
@@ -41,7 +44,7 @@ export const es: LenType = {
         Button: 'Botón',
         Link: 'Enlace que parece un botón',
     },
-    componentLang: EsFlagIcon, createNewPasswordForm: {
+    createNewPasswordForm: {
         createNewPassword: 'Crear nueva contraseña',
         newPassword: 'Nueva contraseña',
         passwordConfirmation: 'Confirmación de contraseña',
