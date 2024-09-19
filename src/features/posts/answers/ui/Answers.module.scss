@@ -1,0 +1,136 @@
+.answersHide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 58%;
+  margin-bottom: 15px;
+  position: relative;
+  cursor: pointer;
+}
+
+.answersHide::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--light-color-900);
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.answersContainer {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.answerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+.answerContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.answerItems {
+  display: flex;
+  flex-direction: row;
+  width: 78%;
+}
+
+.avatars {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.75rem;
+  padding-top: 0.31rem;
+}
+
+.photo {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.userName {
+  width: min-content;
+  height: min-content;
+  margin-right: 0.31rem;
+
+  font-weight: bold;
+
+  transition: all 0.3s;
+
+  &:hover {
+    color: var(--primary-color-100);
+  }
+
+  &:active {
+    outline: var(--primary-color-700);
+  }
+
+  &:focus-visible {
+    color: var(--primary-color-700);
+    outline: none;
+  }
+}
+
+.answerContent {
+  scrollbar-width: none;
+
+  overflow: auto;
+
+  width: 20.4rem;
+  max-height: 4.5rem;
+
+  word-wrap: break-word;
+  white-space: normal;
+
+  .scrollable::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.hearts {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.65rem;
+  padding-top: 0.43rem;
+}
+
+.heartButton {
+  color: var(--light-color-100);
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.heart {
+  width: min-content;
+  height: min-content;
+  padding: 0.25rem 0 0 0.12rem;
+  color: var(--danger-color-500);
+}
+
+.answerFooter {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  margin: 0.31rem 0 0.93rem 2.9rem;
+  align-self: start;
+  margin-right: 10px;
+  color: var(--light-color-900);
+}
+
+.like {
+  margin-right: -0.56rem;
+  font-weight: bold;
+}
+
+.button {
+  color: var(--light-color-900);
+
+  &:focus-visible {
+    outline: none;
+  }
+}
