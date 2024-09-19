@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react'
 import Cropper, { Area, Point } from 'react-easy-crop'
 
+import { getCroppedImg, onCrop } from '@/features/profile/addPost/ui/ImageCropDialog/cropImage'
 import { AddPostSettingsSelect } from '@/features/profile/addPost/ui/addPostSettingsSelect/AddPostSettingsSelect'
 import { Expand } from '@/shared/assets/icons/Expand'
 import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
@@ -44,6 +45,7 @@ export type ImageCropDialogType = {
   cropInit?: { x: number; y: number }
   id?: number
   imageUrl?: string
+  setCropImg: (img: string | undefined) => void
   zoomInit?: number
 }
 
@@ -57,6 +59,7 @@ export const ImageCropDialog = ({
   cropInit,
   id,
   imageUrl,
+  setCropImg,
   zoomInit,
 }: ImageCropDialogType) => {
   if (zoomInit == null) {
@@ -85,9 +88,18 @@ export const ImageCropDialog = ({
     const value = e.currentTarget.value
   }
 
-  const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
+  const onCropComplete = async (croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
-    console.log(croppedArea, croppedAreaPixels)
+    if (imageUrl === undefined) {
+      return
+    }
+    onCrop(
+      croppedAreaPixels,
+      imageUrl,
+      croppedAreaPixels.width,
+      croppedAreaPixels.height,
+      setCropImg
+    )
   }
 
   return (

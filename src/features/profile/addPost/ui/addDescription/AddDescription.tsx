@@ -14,9 +14,10 @@ import Image from 'next/image'
 import s from './AddDescription.module.scss'
 
 import { useAddImagesMutation, useCreatePostMutation } from '../../model/services/addPost.service'
-import { setOpenModal, setPostView } from '../../model/slice/addPostSlice'
+import { clearImagesState, setOpenModal, setPostView } from '../../model/slice/addPostSlice'
 import { PostView } from '../../model/types/addPostTypes'
 
+type AddDescriptionType = {}
 export const AddDescription = () => {
   const images = useAppSelector(state => state.addPost.images)
   const { data: profile } = useGetProfileQuery()
@@ -50,6 +51,27 @@ export const AddDescription = () => {
         }
       })
     }
+    // if (images) {
+    //   const formData = new FormData()
+    //
+    //   console.log(images.data)
+    //   console.log(images.image)
+    //
+    //   formData.append('file', images.image)
+    //
+    //   try {
+    //     const imagesResult = await addImages(formData).unwrap()
+    //
+    //     await createPost({
+    //       childrenMetadata: [imagesResult.images[0]],
+    //       description,
+    //     })
+    //     toast.success('Post added successfully.')
+    //     dispatch(setOpenModal(false))
+    //   } catch (e) {
+    //     console.log(e)
+    //   }
+    // }
   }
 
   useClientProgress(isLoadingAddImages || isLoadingCreatePost)

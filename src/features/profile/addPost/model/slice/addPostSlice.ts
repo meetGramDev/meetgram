@@ -20,6 +20,9 @@ export const addPostSlice = createSlice({
     addImage: (state, { payload }) => {
       state.images.push(payload)
     },
+    clearImagesState: state => {
+      state.images = []
+    },
     setOpenModal: (state, { payload }) => {
       state.isOpenModal = payload
     },
@@ -29,4 +32,4 @@ export const addPostSlice = createSlice({
   },
 })
 
-export const { addImage, setOpenModal, setPostView } = addPostSlice.actions
+export const { addImage, clearImagesState, setOpenModal, setPostView } = addPostSlice.actions

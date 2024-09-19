@@ -8,7 +8,7 @@ import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
 import s from './AddImages.module.scss'
 
-import { addImage, setPostView } from '../../model/slice/addPostSlice'
+import { addImage, clearImagesState, setPostView } from '../../model/slice/addPostSlice'
 import { PostView } from '../../model/types/addPostTypes'
 
 export const AddImages = () => {
@@ -36,6 +36,11 @@ export const AddImages = () => {
     if (file) {
       const data = await readFile(file)
 
+      // console.log(URL.createObjectURL(file))
+      // console.log(file)
+      // console.log(data)
+
+      dispatch(clearImagesState())
       dispatch(addImage({ data, image: URL.createObjectURL(file) }))
       // dispatch(setPostView(PostView.DESCRIPTION))
       dispatch(setPostView(PostView.CROPPING))
