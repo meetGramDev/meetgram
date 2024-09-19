@@ -108,7 +108,7 @@ export const Dropzone = forwardRef<DropzoneRef, Props>(
           htmlFor={id}
         >
           <input
-            accept={'.jpg,.png,.jpeg'}
+            accept={'image/jpg,image/png,image/jpeg,image/heic,image/heif'}
             className={'hidden'}
             disabled={disabled}
             hidden

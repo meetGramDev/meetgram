@@ -1,27 +1,32 @@
-import { useEffect, useRef, useState } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { useAppDispatch } from '@/shared/config/storeHooks'
-import { readFile } from '@/shared/lib'
+import { UploadMessage } from '@/shared/components/dialog'
+import { useActions } from '@/shared/config/storeHooks'
+import { isImgFileTypeValid, readFile } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
 import s from './AddImages.module.scss'
 
-import { addImage, setAddingPostStage } from '../../model/slice/addPostSlice'
+import { addPostActions } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
+
+export const ALLOWED_TYPES = ['image/jpg', 'image/png', 'image/jpeg', 'image/heic', 'image/heif']
 
 export const AddImages = () => {
   const t = useTranslate()
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
 
-  const dispatch = useAppDispatch()
+  const { addImage, setAddingPostStage } = useActions(addPostActions)
 
   const [file, setFile] = useState<File | null>()
+  const [error, setError] = useState<ReactElement | string>('')
 
   const resetState = () => {
     setFile(null)
+    setError('')
   }
 
   const handleSelectFileClick = () => {
@@ -32,28 +37,45 @@ export const AddImages = () => {
   const handleFileSelect = (file: File) => {
     resetState()
     setFile(file)
+
+    if (!isImgFileTypeValid(file, ALLOWED_TYPES)) {
+      setError(
+        <p>
+          Invalid file type. Failed to upload <span className={'font-bold'}>{file.name}</span>
+        </p>
+      )
+    }
   }
 
   const handleNextView = async () => {
     if (file) {
       const data = await readFile(file)
 
-      dispatch(addImage({ data, image: URL.createObjectURL(file) }))
-      dispatch(setAddingPostStage(AddingPostStage.DESCRIPTION))
+      addImage({ data, image: URL.createObjectURL(file) })
+      setAddingPostStage(AddingPostStage.DESCRIPTION)
     }
   }
 
   useEffect(() => {
-    if (file) {
+    if (file && !error) {
       handleNextView()
     }
   }, [file])
 
   return (
     <div className={s.content}>
-      <Dropzone className={s.photo} onFileSelect={handleFileSelect} ref={dropzoneRef}>
-        <Photo type={'empty'} variant={'square'} />
-      </Dropzone>
+      <div className={'px-5'}>
+        {error && (
+          <div className={'my-7'}>
+            <UploadMessage message={error} type={'error'} />
+          </div>
+        )}
+
+        {!error && <p className={s.dropdownMessage}>Перетащите сюда фото</p>}
+        <Dropzone className={s.photo} onFileSelect={handleFileSelect} ref={dropzoneRef}>
+          <Photo type={'empty'} variant={'square'} />
+        </Dropzone>
+      </div>
       <Button className={s.button} onClick={handleSelectFileClick} variant={'primary'}>
         {t('Select from computer') as string}
       </Button>
