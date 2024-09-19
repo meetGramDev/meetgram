@@ -19,7 +19,7 @@ export const AddImages = () => {
   const t = useTranslate()
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
 
-  const { addImage, setAddingPostStage } = useActions(addPostActions)
+  const { setAddingPostStage, startEditing } = useActions(addPostActions)
 
   const [error, setError] = useState<ReactElement | string>('')
 
@@ -35,7 +35,7 @@ export const AddImages = () => {
   const handleNextView = async (file: File) => {
     const data = await readFile(file)
 
-    addImage({ data, image: URL.createObjectURL(file) })
+    startEditing({ data, image: URL.createObjectURL(file) })
     setAddingPostStage(AddingPostStage.CROPPING)
   }
 

@@ -1,12 +1,8 @@
 import { Nullable } from '@/shared/types'
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { AddingPostStage } from '../types/addPostTypes'
-
-export type ImageType = {
-  data: string
-  image: string
-}
+import { ImageType, UpdateImagePayload } from '../types/slice'
 
 export const addPostSlice = createSlice({
   initialState: {
@@ -17,11 +13,10 @@ export const addPostSlice = createSlice({
   },
   name: 'addPost',
   reducers: {
-    addImage: (state, { payload }) => {
+    addImage: (state, { payload }: PayloadAction<ImageType>) => {
       state.images.push(payload)
-      state.currentIndex = 0
     },
-    changeCurrentIndex: (state, { payload }) => {
+    changeCurrentIndex: (state, { payload }: PayloadAction<Nullable<number>>) => {
       state.currentIndex = payload
     },
     clearEditedImages: state => {
@@ -34,11 +29,21 @@ export const addPostSlice = createSlice({
       state.isOpenModal = false
       state.currentIndex = 0
     },
-    setAddingPostStage: (state, { payload }) => {
+    removeImage: (state, { payload }: PayloadAction<{ index: number }>) => {
+      state.images.splice(payload.index, 1)
+    },
+    setAddingPostStage: (state, { payload }: PayloadAction<AddingPostStage>) => {
       state.addingPostStage = payload
     },
-    setOpenAddingPost: (state, { payload }) => {
+    setOpenAddingPost: (state, { payload }: PayloadAction<boolean>) => {
       state.isOpenModal = payload
+    },
+    startEditing: (state, { payload }: PayloadAction<ImageType>) => {
+      state.images.push(payload)
+      state.currentIndex = 0
+    },
+    updateImage: (state, { payload: { image, index } }: PayloadAction<UpdateImagePayload>) => {
+      Object.assign(state.images[index], image)
     },
   },
 })
