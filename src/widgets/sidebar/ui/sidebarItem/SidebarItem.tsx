@@ -25,9 +25,10 @@ export const SidebarItem = ({ item }: Props) => {
   const router = useRouter()
   const userId = useAppSelector(state => state.user.accountData.userId)
 
-  const handleClickCreatePost = async () => {
-    await router.push(`${HOME}/${userId}`, undefined, { shallow: true })
-    setOpenAddingPost(true)
+  const handleClickCreatePost = () => {
+    if (router.asPath === `${HOME}/${userId}`) {
+      setOpenAddingPost(true)
+    }
   }
 
   return (

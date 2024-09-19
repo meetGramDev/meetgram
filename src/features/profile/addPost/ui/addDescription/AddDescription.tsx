@@ -90,7 +90,7 @@ export const AddDescription = () => {
       <AddDialogLayout images={images}>
         <PostDescriptionForm
           onSubmit={handleOnSendPostImage}
-          ownerAvatar={profile.avatars[0].url}
+          ownerAvatar={profile.avatars.length ? profile.avatars[0].url : undefined}
           ownerUsername={profile.userName}
           ref={postDescriptionRef}
         />
