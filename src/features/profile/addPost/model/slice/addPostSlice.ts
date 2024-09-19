@@ -1,3 +1,4 @@
+import { Nullable } from '@/shared/types'
 import { createSlice } from '@reduxjs/toolkit'
 
 import { AddingPostStage } from '../types/addPostTypes'
@@ -10,6 +11,7 @@ export type ImageType = {
 export const addPostSlice = createSlice({
   initialState: {
     addingPostStage: AddingPostStage.ADD as AddingPostStage,
+    currentIndex: null as Nullable<number>,
     images: [] as ImageType[],
     isOpenModal: false,
   },
@@ -17,14 +19,20 @@ export const addPostSlice = createSlice({
   reducers: {
     addImage: (state, { payload }) => {
       state.images.push(payload)
+      state.currentIndex = 0
+    },
+    changeCurrentIndex: (state, { payload }) => {
+      state.currentIndex = payload
     },
     clearEditedImages: state => {
       state.images = []
+      state.currentIndex = null
     },
     closeAddingPost: state => {
       state.images = []
       state.addingPostStage = AddingPostStage.ADD
       state.isOpenModal = false
+      state.currentIndex = 0
     },
     setAddingPostStage: (state, { payload }) => {
       state.addingPostStage = payload
@@ -35,5 +43,4 @@ export const addPostSlice = createSlice({
   },
 })
 
-export const { addImage, setAddingPostStage, setOpenAddingPost } = addPostSlice.actions
 export const addPostActions = addPostSlice.actions
