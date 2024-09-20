@@ -46,6 +46,7 @@ export const uk: LenType = {
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
     "Yes": "Так",
     "Your email has been confirmed": "Вашу електронну пошту підтверджено",
+    
     button: {
         Button: 'Кнопка',
         Link: 'Посилання, що виглядає як кнопка',
