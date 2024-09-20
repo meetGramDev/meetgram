@@ -7,6 +7,7 @@ import {
 } from '@/entities/photo'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { isErrorServerMessagesType } from '@/shared/types'
 import { Button, Dialog } from '@/shared/ui'
 
@@ -27,6 +28,7 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
   const [openUpload, setOpenUpload] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [error, setError] = useState('')
+  const t = useTranslate()
 
   useClientProgress(isUploadLoading || isRemoveLoading)
 
@@ -80,7 +82,7 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
       ) : (
         <>
           <Photo
-            alt={'Avatar'}
+            alt={t('Avatar')}
             height={avatar?.height}
             onDelete={() => setOpenDelete(true)}
             priority
@@ -90,10 +92,10 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
           <Dialog
             onOpenChange={() => setOpenDelete(false)}
             open={openDelete}
-            title={'Delete photo'}
+            title={t('Delete photo')}
           >
             <ConfirmClosingDialog
-              message={'Are you sure you want to delete the photo?'}
+              message={t('Are you sure you want to delete the photo?')}
               onConfirm={handleDeletePhoto}
             />
           </Dialog>
@@ -104,10 +106,10 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
         className={s.dialog}
         onOpenChange={open => setOpenUpload(open)}
         open={openUpload}
-        title={'Add a Profile Photo'}
+        title={t('Add a Profile Photo')}
         trigger={
           <Button className={s.button} fullWidth variant={'outlined'}>
-            {avatar?.url ? 'Change profile photo' : 'Add a profile photo'}
+            {avatar?.url ? t('Change profile photo') : t('Add a profile photo')}
           </Button>
         }
       >
