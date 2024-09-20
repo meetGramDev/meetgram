@@ -1,10 +1,9 @@
-import {RuFlagIcon} from "@/shared/assets/icons/RU";
-
 import {LenType} from './en';
 
 export const ru: LenType = {
     "About me": "О себе",
     "Account Management": "Управление аккаунтом",
+    "Add Photo": "Добавить фото",
     "Add a Profile Photo": "Добавить фото профиля",
     "Add a profile photo": "Добавить фото профиля",
     "April": "Апрель",
@@ -13,12 +12,14 @@ export const ru: LenType = {
     "Avatar": "Аватар",
     "Change profile photo": "Изменить фото профиля",
     "City": "Город",
+    "Close": "Закрыть",
     "Congratulations!": "Поздравляем!",
     "Country": "Страна",
     "Date of birth": "Дата рождения",
     "December": "Декабрь",
     "Delete photo": "Удалить фото",
     "Devices": "Устройства",
+    "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы действительно хотите отменить публикацию? Если вы выйдете, изменения не будут сохранены.",
     "Email sent": "Письмо отправлено",
     "Email verification link expired": "Срок действия ссылки истек",
     "February": "Февраль",
@@ -32,12 +33,14 @@ export const ru: LenType = {
     "March": "Март",
     "May": "Май",
     "My Payments": "Мои платежи",
+    "Next": "Далее",
     "No": "Нет",
     "November": "Ноябрь",
     "October": "Октябрь",
     "Ok": "Хорошо",
     "Resend verification link": "Отправить ссылку для подтверждения еще раз",
     "Save changes": "Сохранить изменения",
+    "Select from computer": "Выбрать на компьютере",
     "Select your city": "Выберите ваш город",
     "Select your country": "Выберите вашу страну",
     "September": "Сентябрь",
@@ -50,7 +53,6 @@ export const ru: LenType = {
         Button: 'Кнопка',
         Link: 'Ссылка, которая выглядит как кнопка',
     },
-    componentLang: RuFlagIcon,
     createNewPasswordForm: {
         createNewPassword: 'Создать новый пароль',
         newPassword: 'Новый пароль',

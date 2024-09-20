@@ -1,8 +1,10 @@
 import { ImageType } from '@/entities/post'
 
-export enum PostView {
-  DESCRIPTION = 'DESCRIPTION',
-  IMAGE = 'IMAGE',
+export enum AddingPostStage {
+  ADD = 'Add Photo',
+  CROPPING = 'Cropping',
+  DESCRIPTION = 'Description',
+  FILTERS = 'Filters',
 }
 
 export type UploadImageResponse = {
@@ -10,6 +12,6 @@ export type UploadImageResponse = {
 }
 
 export type CreatePost = {
-  childrenMetadata: [{ uploadId: string }]
+  childrenMetadata: { uploadId: string }[]
   description: string
 }

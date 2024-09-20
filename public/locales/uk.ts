@@ -1,10 +1,9 @@
-import {UaFlagIcon} from "@/shared/assets/icons/UA";
-
 import {LenType} from './en';
 
 export const uk: LenType = {
     "About me": "Про мене",
     "Account Management": "Керування акаунтом",
+    "Add Photo": "Додайте фото",
     "Add a Profile Photo": "Додати фото профілю",
     "Add a profile photo": "Додати фото профілю",
     "April": "Квітень",
@@ -13,12 +12,14 @@ export const uk: LenType = {
     "Avatar": "Аватар",
     "Change profile photo": "Змінити фото профілю",
     "City": "Місто",
+    "Close": "Закрити",
     "Congratulations!": "Вітаємо!",
     "Country": "Країна",
     "Date of birth": "Дата народження",
     "December": "Грудень",
     "Delete photo": "Видалити фото",
     "Devices": "Пристрої",
+    "Do you really want to close the creation of a publication? If you close everything will be deleted": "Ви дійсно хочете закрити створення публікації? Якщо ви закриєте, усе буде видалено",
     "Email sent": "Лист відправлено",
     "Email verification link expired": "Термін дії посилання завершився",
     "February": "Лютий",
@@ -32,12 +33,14 @@ export const uk: LenType = {
     "March": "Березень",
     "May": "Травень",
     "My Payments": "Мої платежі",
+    "Next": "Наступний",
     "No": "Ні",
     "November": "Листопад",
     "October": "Жовтень",
     "Ok": "Гаразд",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Save changes": "Зберегти зміни",
+    "Select from computer": "Виберіть з комп’ютера",
     "Select your city": "Виберіть ваше місто",
     "Select your country": "Виберіть вашу країну",
     "September": "Вересень",
@@ -51,7 +54,7 @@ export const uk: LenType = {
         Button: 'Кнопка',
         Link: 'Посилання, що виглядає як кнопка',
     },
-    componentLang: UaFlagIcon, createNewPasswordForm: {
+    createNewPasswordForm: {
         createNewPassword: 'Створити новий пароль',
         newPassword: 'Новий пароль',
         passwordConfirmation: 'Підтвердження пароля',

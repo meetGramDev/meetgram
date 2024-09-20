@@ -22,6 +22,11 @@ type Props = {
   className?: string
   disabled?: boolean
   /**
+   * Enable multiple files selection
+   */
+  multiple?: boolean
+  onFileListSelect?: (files: FileList) => void
+  /**
    * Passes selected file
    * @param {File} file
    */
@@ -36,7 +41,10 @@ type Props = {
  * A file upload wrapper
  */
 export const Dropzone = forwardRef<DropzoneRef, Props>(
-  ({ children, className, disabled, onFileSelect, overlay = true }, innerRef) => {
+  (
+    { children, className, disabled, multiple, onFileListSelect, onFileSelect, overlay = true },
+    innerRef
+  ) => {
     const inputRef = useRef<Nullable<HTMLInputElement>>(null)
     const id = useId()
     const [dropping, setDropping] = useState(false)
@@ -50,16 +58,22 @@ export const Dropzone = forwardRef<DropzoneRef, Props>(
       }
     })
 
-    const handleFile = (file: File | undefined) => {
-      if (!file) {
+    const handleFile = (files: FileList | null) => {
+      if (!files?.length) {
         return
       }
 
-      onFileSelect?.(file)
+      if (multiple) {
+        onFileListSelect?.(files)
+
+        return
+      }
+
+      onFileSelect?.(files[0])
     }
 
     const handleFileChange: ChangeEventHandler<HTMLInputElement> = e => {
-      handleFile(e.currentTarget.files?.[0])
+      handleFile(e.currentTarget.files)
     }
 
     const handleDrop: DragEventHandler<HTMLDivElement> = e => {
@@ -68,7 +82,7 @@ export const Dropzone = forwardRef<DropzoneRef, Props>(
       }
       e.preventDefault()
 
-      const droppedFile = e.dataTransfer.files[0]
+      const droppedFile = e.dataTransfer.files
 
       setDropping(false)
 
@@ -108,11 +122,12 @@ export const Dropzone = forwardRef<DropzoneRef, Props>(
           htmlFor={id}
         >
           <input
-            accept={'.jpg,.png,.jpeg'}
+            accept={'image/jpg,image/png,image/jpeg,image/heic,image/heif'}
             className={'hidden'}
             disabled={disabled}
             hidden
             id={id}
+            multiple
             onChange={handleFileChange}
             ref={inputRef}
             type={'file'}
