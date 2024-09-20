@@ -18,6 +18,7 @@ export const AddScropping = () => {
   }
   const onNextPageView = () => {
     if (cropImg) {
+      actions.removeImage({ index: 0 })
       actions.addImage({ image: cropImg })
     }
 
