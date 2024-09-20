@@ -1,35 +1,51 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { Nullable } from '@/shared/types'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { PostView } from '../types/addPostTypes'
-
-export type ImageType = {
-  data: string
-  image: string
-}
-
-const initialState = {
-  images: [] as ImageType[],
-  isOpenModal: false,
-  postView: PostView.IMAGE,
-}
+import { AddingPostStage } from '../types/addPostTypes'
+import { ImageType, UpdateImagePayload } from '../types/slice'
 
 export const addPostSlice = createSlice({
-  initialState,
+  initialState: {
+    addingPostStage: AddingPostStage.ADD as AddingPostStage,
+    currentIndex: null as Nullable<number>,
+    images: [] as ImageType[],
+    isOpenModal: false,
+  },
   name: 'addPost',
   reducers: {
-    addImage: (state, { payload }) => {
+    addImage: (state, { payload }: PayloadAction<ImageType>) => {
       state.images.push(payload)
     },
-    clearImagesState: state => {
-      state.images = []
+    changeCurrentIndex: (state, { payload }: PayloadAction<Nullable<number>>) => {
+      state.currentIndex = payload
     },
-    setOpenModal: (state, { payload }) => {
+    clearEditedImages: state => {
+      state.images = []
+      state.currentIndex = null
+    },
+    closeAddingPost: state => {
+      state.images = []
+      state.addingPostStage = AddingPostStage.ADD
+      state.isOpenModal = false
+      state.currentIndex = 0
+    },
+    removeImage: (state, { payload }: PayloadAction<{ index: number }>) => {
+      state.images.splice(payload.index, 1)
+    },
+    setAddingPostStage: (state, { payload }: PayloadAction<AddingPostStage>) => {
+      state.addingPostStage = payload
+    },
+    setOpenAddingPost: (state, { payload }: PayloadAction<boolean>) => {
       state.isOpenModal = payload
     },
-    setPostView: (state, { payload }) => {
-      state.postView = payload
+    startEditing: (state, { payload }: PayloadAction<ImageType[]>) => {
+      state.images = payload
+      state.currentIndex = 0
+    },
+    updateImage: (state, { payload: { image, index } }: PayloadAction<UpdateImagePayload>) => {
+      Object.assign(state.images[index], image)
     },
   },
 })
 
-export const { addImage, clearImagesState, setOpenModal, setPostView } = addPostSlice.actions
+export const addPostActions = addPostSlice.actions

@@ -1,7 +1,9 @@
+import { ReactElement } from 'react'
+
 import { cn } from '@/shared/lib/cn'
 
 type Props = {
-  message?: string
+  message?: ReactElement | string
   type?: 'error' | 'success'
 }
 
