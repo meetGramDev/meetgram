@@ -1,12 +1,12 @@
 import { getEditPostDescriptionConstraint } from '@/shared/const/validationFields'
 import { z } from 'zod'
 
-export const getEditPostSchema = () => {
+export const getPostDescriptionSchema = () => {
   return z.object({
     description: getEditPostDescriptionConstraint(),
   })
 }
 
-const editPostSchema = getEditPostSchema()
+const PostDescriptionSchema = getPostDescriptionSchema()
 
-export type EditPostField = z.infer<typeof editPostSchema>
+export type PostDescriptionField = z.infer<typeof PostDescriptionSchema>

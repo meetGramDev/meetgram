@@ -5,7 +5,8 @@ import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { NextPageWithLayout } from '@/shared/types'
 import { Loader } from '@/shared/ui'
-import { getMainLayout } from '@/widgets/layouts/ui/MainLayout/MainLayout'
+import { AddingPostView } from '@/widgets/addingPostView'
+import { getMainLayout } from '@/widgets/layouts'
 import { PostsList } from '@/widgets/postsList'
 import { skipToken } from '@reduxjs/toolkit/query'
 import { useRouter } from 'next/router'
@@ -32,6 +33,8 @@ const UserId: NextPageWithLayout = () => {
       >
         <PostsList userName={userName} />
       </Suspense>
+
+      <AddingPostView />
     </div>
   )
 }

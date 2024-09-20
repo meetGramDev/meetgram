@@ -1,9 +1,7 @@
-import {UsFlagIcon} from "@/shared/assets/icons/US";
-
-
 export const en = {
     "About me": "About me",
     "Account Management": "Account Management",
+    'Add Photo': 'Add Photo',
     "Add a Profile Photo": "Add a Profile Photo",
     "Add a profile photo": "Add a profile photo",
     "April": "April",
@@ -12,12 +10,14 @@ export const en = {
     "Avatar": "Avatar",
     "Change profile photo": "Change profile photo",
     "City": "City",
+    'Close': 'Close',
     "Congratulations!": "Congratulations!",
     "Country": "Country",
     "Date of birth": "Date of birth",
     "December": "December",
     "Delete photo": "Delete photo",
     "Devices": "Devices",
+    "Do you really want to close the creation of a publication? If you close everything will be deleted": "Do you really want to close the creation of a publication? If you close everything will be deleted",
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
     "February": "February",
@@ -31,13 +31,16 @@ export const en = {
     "March": "March",
     "May": "May",
     "My Payments": "My Payments",
+    "Next": "Next",
     "No": "No",
     "November": "November",
     "October": "October",
     "Ok": "Ok",
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
+    'Select from computer': "Select from computer",
     "Select your city": "Select your city",
+
     "Select your country": "Select your country",
     "September": "September",
     "Sign In": "Sign In",
@@ -48,15 +51,16 @@ export const en = {
     button: {
         Button: 'Button',
         Link: 'Link that looks like a button',
-
     },
-    componentLang: UsFlagIcon,
+
     createNewPasswordForm: {
         createNewPassword: 'Create New Password',
         newPassword: 'New password',
         passwordConfirmation: 'Password confirmation',
         passwordTerm: 'Your password must be between 6 and 20 characters',
-    }, errorsTr: {
+    },
+
+    errorsTr: {
 
         errorEmail: {InvalidEmail: 'Invalid email'},
         errorNewPassword: {
@@ -77,7 +81,6 @@ export const en = {
             wrongUsername: 'Wrong username'
         },
     },
-
     forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
@@ -91,7 +94,6 @@ export const en = {
         sendLinkDialog: 'We have sent a link to confirm your email to',
     },
     language: 'English',
-
     policies: {
         "Privacy Policy": "Privacy Policy",
         "Terms Of Service": "Terms Of Service",
