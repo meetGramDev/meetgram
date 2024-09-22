@@ -11,7 +11,7 @@ import { Maxinize } from '@/shared/assets/icons/Maxinize'
 import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
-import { Button } from '@/shared/ui'
+import { Button, Slider } from '@/shared/ui'
 
 import s from './ImageCropDialog.module.scss'
 
@@ -166,6 +166,13 @@ export const ImageCropDialog = ({
           </div>
           <div className={s.buttonContainer}>
             <AddPostSettingsSelect placeholder={<MaxinizeOutline />}>
+              <Slider
+                max={3}
+                min={1}
+                onValueChange={() => {}}
+                onValueCommit={() => {}}
+                step={0.1}
+              />
               <input
                 className={s.slider}
                 max={3}

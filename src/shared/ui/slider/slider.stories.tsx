@@ -1,5 +1,8 @@
+import { useState } from 'react'
+
 import { Slider } from '@/shared/ui'
 import { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
 const meta = {
   component: Slider,
@@ -16,6 +19,9 @@ export const SliderVar: Story = {
   args: {
     max: 3,
     min: 1,
+    name: 'SliderComponent',
+    onValueChange: (arr: number[]) => {},
+    onValueCommit: (valueCounts: number[]) => {},
     step: 0.1,
   },
 }
