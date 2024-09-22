@@ -8,13 +8,13 @@ export {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  usePrevNextButtons,
+  type CarouselProps,
 } from './carousel/Carousel'
-export { ImageCarousel } from './carousel/ImageCarousel'
 export { Checkbox } from './checkbox/Checkbox'
 export { DatePicker } from './datePicker/DatePicker'
 export { Dialog } from './dialog/Dialog'
 export { Dropzone, type DropzoneRef } from './dropzone/Dropzone'
+export { ImageCarousel } from './imageCarousel/ImageCarousel'
 export { Input } from './input/input'
 export { Loader } from './loader/Loader'
 export { Option } from './select/option'

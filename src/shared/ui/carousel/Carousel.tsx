@@ -1,14 +1,10 @@
-/* eslint-disable max-lines */
 import {
   ComponentProps,
   HTMLAttributes,
   KeyboardEvent,
-  createContext,
   forwardRef,
   useCallback,
-  useContext,
   useEffect,
-  useState,
 } from 'react'
 
 import { ArrowNext } from '@/shared/assets/icons/ArrowNext'
@@ -16,182 +12,14 @@ import { ArrowPrev } from '@/shared/assets/icons/ArrowPrev'
 import { Dot } from '@/shared/assets/icons/Dot'
 import { ButtonIcon } from '@/shared/ui/buttonIcon/ButtonIcon'
 import clsx from 'clsx'
-import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
+import useEmblaCarousel from 'embla-carousel-react'
 
 import s from './Carousel.module.scss'
 
-/* === TYPES === */
-type CarouselApi = UseEmblaCarouselType[1]
-type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
-type CarouselOptions = UseCarouselParameters[0]
-type CarouselPlugin = UseCarouselParameters[1]
+import { CarouselContext, useCarousel } from './context'
+import { useDotButton, usePrevNextButtons } from './hooks'
+import { CarouselApi, CarouselProps } from './types'
 
-type UsePrevNextButtonsType = {
-  canScrollNext: boolean
-  canScrollPrev: boolean
-  scrollNext: () => void
-  scrollPrev: () => void
-}
-type UseDotButtonType = {
-  onDotButtonClick: (index: number) => void
-  scrollSnaps: number[]
-  selectedIndex: number
-}
-
-type CarouselProps = {
-  dotsClassname?: string
-  /**
-   * Customize how the carousel works.
-   * Docs: @see {@link https://www.embla-carousel.com/api/options/}
-   */
-  options?: CarouselOptions
-  /**
-   * Plugins you want to use. They need to be passed in an array.
-   * More: @see {@link https://www.embla-carousel.com/plugins/}
-   */
-  plugins?: CarouselPlugin
-  /**
-   * Enables to get an access to an instance of the carousel API
-   * @param api carousel api object
-   *
-   * @example
-   * ```tsx
-   * const [api, setApi] = React.useState<CarouselApi>()
-   *
-   *   React.useEffect(() => {
-   *    if (!api) {
-   *      return
-   *    }
-   *
-   *    api.on("select", () => {
-   *        // Do sth on select
-   *     })
-   *   }, [api])
-   *
-   * return <Carousel setApi={setApi} ></Carousel>
-   * ```
-   */
-  setApi?: (api: CarouselApi) => void
-  showDotsPagination?: boolean
-}
-type CarouselContextProps = {
-  carouselApi: CarouselApi
-  carouselRef: ReturnType<typeof useEmblaCarousel>[0]
-} & CarouselProps &
-  UseDotButtonType &
-  UsePrevNextButtonsType
-
-/* === CONTEXT API === */
-const CarouselContext = createContext<CarouselContextProps | null>(null)
-
-function useCarousel() {
-  const context = useContext(CarouselContext)
-
-  if (!context) {
-    throw new Error('useCarousel must be used within a <Carousel />')
-  }
-
-  return context
-}
-
-/* === HOOKS === */
-export const usePrevNextButtons = (carouselApi: CarouselApi): UsePrevNextButtonsType => {
-  const [canScrollPrev, setCanScrollPrev] = useState(false)
-  const [canScrollNext, setCanScrollNext] = useState(false)
-
-  const scrollPrev = useCallback(() => {
-    if (!carouselApi) {
-      return
-    }
-    carouselApi.scrollPrev()
-  }, [carouselApi])
-
-  const scrollNext = useCallback(() => {
-    if (!carouselApi) {
-      return
-    }
-    carouselApi.scrollNext()
-  }, [carouselApi])
-
-  const onSelect = useCallback((carouselApi: CarouselApi) => {
-    if (!carouselApi) {
-      return
-    }
-
-    setCanScrollPrev(carouselApi.canScrollPrev())
-    setCanScrollNext(carouselApi.canScrollNext())
-  }, [])
-
-  useEffect(() => {
-    if (!carouselApi) {
-      return
-    }
-
-    onSelect(carouselApi)
-    carouselApi.on('reInit', onSelect).on('select', onSelect)
-
-    return () => {
-      carouselApi?.off('select', onSelect)
-    }
-  }, [carouselApi, onSelect])
-
-  return {
-    canScrollNext,
-    canScrollPrev,
-    scrollNext,
-    scrollPrev,
-  }
-}
-/* === ==== */
-const useDotButton = (carouselApi: CarouselApi): UseDotButtonType => {
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
-
-  const onDotButtonClick = useCallback(
-    (index: number) => {
-      if (!carouselApi) {
-        return
-      }
-
-      carouselApi.scrollTo(index)
-    },
-    [carouselApi]
-  )
-
-  const onInit = useCallback((carouselApi: CarouselApi) => {
-    if (!carouselApi) {
-      return
-    }
-
-    setScrollSnaps(carouselApi.scrollSnapList())
-  }, [])
-
-  const onSelect = useCallback((carouselApi: CarouselApi) => {
-    if (!carouselApi) {
-      return
-    }
-
-    setSelectedIndex(carouselApi.selectedScrollSnap())
-  }, [])
-
-  useEffect(() => {
-    if (!carouselApi) {
-      return
-    }
-
-    onInit(carouselApi)
-    onSelect(carouselApi)
-    carouselApi.on('reInit', onInit).on('reInit', onSelect).on('select', onSelect)
-  }, [carouselApi, onInit, onSelect])
-
-  return {
-    onDotButtonClick,
-    scrollSnaps,
-    selectedIndex,
-  }
-}
-
-/* === COMPONENTS === */
 const Carousel = forwardRef<HTMLDivElement, CarouselProps & HTMLAttributes<HTMLDivElement>>(
   (
     {
@@ -372,5 +200,6 @@ export {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselProps,
   DotButton,
 }

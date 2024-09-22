@@ -26,7 +26,7 @@ const meta = {
   },
   component: Carousel,
   tags: ['autodocs'],
-  title: 'shared/Carousel',
+  title: 'shared/Carousel/Basic',
 } satisfies Meta<typeof Carousel>
 
 export default meta
