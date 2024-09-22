@@ -1,0 +1,13 @@
+.responsiveSlides {
+  @media (width >= 640px) {
+    flex-basis: 50%;
+  }
+
+  @media (width >= 768px) {
+    flex-basis: 33.33%;
+  }
+
+  @media (width >= 1024px) {
+    flex-basis: 25%;
+  }
+}

@@ -1,6 +1,16 @@
 export { BackButton } from './backButton/BackButton'
 export { Button } from './button/button'
 export { Card } from './card/Card'
+export {
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  usePrevNextButtons,
+} from './carousel/Carousel'
+export { ImageCarousel } from './carousel/ImageCarousel'
 export { Checkbox } from './checkbox/Checkbox'
 export { DatePicker } from './datePicker/DatePicker'
 export { Dialog } from './dialog/Dialog'
