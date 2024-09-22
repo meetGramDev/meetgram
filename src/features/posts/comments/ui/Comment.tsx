@@ -1,10 +1,14 @@
 import React from 'react'
 
 import { Photo } from '@/entities/photo'
-import { useGetAnswerCommentsQuery } from '@/entities/post/model/services/post.service'
+import {
+  useAddLikeToPostCommentMutation,
+  useGetAnswerCommentsQuery,
+} from '@/entities/post/model/services/post.service'
 import { Heart } from '@/shared/assets/icons/Heart'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
+import { serverErrorHandler } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -28,6 +32,25 @@ export const Comment = ({ comment, onClick }: Props) => {
     postId: comment.postId,
   })
 
+  const [likeComment] = useAddLikeToPostCommentMutation()
+  const [isCommentLiked, setIsCommentLiked] = React.useState(comment.isLiked)
+
+  const addLikeToComment = async () => {
+    try {
+      if (!comment.isLiked) {
+        likeComment({ commentId: comment.id, likeStatus: 'LIKE', postId: comment.postId })
+      } else {
+        likeComment({
+          commentId: comment.id,
+          likeStatus: 'NONE',
+          postId: comment.postId,
+        })
+      }
+    } catch (error) {
+      serverErrorHandler(error)
+    }
+  }
+
   return (
     <>
       <div key={comment.id}>
@@ -49,7 +72,7 @@ export const Comment = ({ comment, onClick }: Props) => {
               {comment.content}
             </div>
             <div className={s.hearts}>
-              <Button className={s.heartButton} variant={'text'}>
+              <Button className={s.heartButton} onClick={addLikeToComment} variant={'text'}>
                 {comment.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
               </Button>
             </div>
