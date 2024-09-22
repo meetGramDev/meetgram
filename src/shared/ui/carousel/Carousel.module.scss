@@ -57,6 +57,7 @@ $arrow-offset: 12%;
   touch-action: manipulation;
 
   position: absolute;
+  z-index: 9;
 
   display: inline-flex;
 
@@ -71,11 +72,17 @@ $arrow-offset: 12%;
   white-space: nowrap;
 
   & svg {
+    position: relative;
+    z-index: 10;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  &:active {
+  &:hover {
     color: var(--primary-color-500);
+  }
+
+  &:active {
+    color: var(--primary-color-700);
   }
 
   &:focus-visible {
@@ -86,7 +93,7 @@ $arrow-offset: 12%;
 
   &:disabled {
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.2;
   }
 
   @media (width <= 768px) {
@@ -117,6 +124,9 @@ $arrow-offset: 12%;
 }
 
 .dotButton {
+  position: relative;
+  z-index: 10;
+
   width: fit-content;
   height: fit-content;
 
