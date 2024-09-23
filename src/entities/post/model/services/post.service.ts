@@ -26,9 +26,23 @@ export const postApi = baseApi.injectEndpoints({
       void,
       { commentId: number; likeStatus: string; postId: number }
     >({
-      invalidatesTags: (result, error, { commentId, likeStatus, postId }) => [
+      invalidatesTags: (res, error, { commentId, likeStatus, postId }) => [
         { commentId, likeStatus, postId: postId, type: 'post' },
       ],
+      async onQueryStarted({ commentId, likeStatus, postId }, { dispatch, queryFulfilled }) {
+        const likeComment = dispatch(
+          postApi.util.updateQueryData('getPostComments', { postId }, state => {
+            state.items.map(
+              comment => comment.id === commentId && (comment.isLiked = likeStatus === 'LIKE')
+            )
+            try {
+              queryFulfilled
+            } catch (error) {
+              likeComment.undo()
+            }
+          })
+        )
+      },
       query: ({ commentId, likeStatus, postId }) => ({
         body: { likeStatus },
         method: 'PUT',

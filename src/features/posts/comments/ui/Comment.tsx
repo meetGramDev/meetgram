@@ -33,7 +33,6 @@ export const Comment = ({ comment, onClick }: Props) => {
   })
 
   const [likeComment] = useAddLikeToPostCommentMutation()
-  const [isCommentLiked, setIsCommentLiked] = React.useState(comment.isLiked)
 
   const addLikeToComment = async () => {
     try {
