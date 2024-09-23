@@ -71,6 +71,7 @@ const useDotButton = (carouselApi: CarouselApi): UseDotButtonType => {
     }
 
     setScrollSnaps(carouselApi.scrollSnapList())
+    // setSelectedIndex(carouselApi.selectedScrollSnap())
   }, [])
 
   const onSelect = useCallback((carouselApi: CarouselApi) => {

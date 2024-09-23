@@ -1,6 +1,7 @@
 .carousel {
   --max-picture-size-desktop: 490px;
   --max-picture-size-mobile: 330px;
+  --slide-spacing: 0.1rem;
 
   width: 100%;
   max-width: var(--max-picture-size-desktop);
@@ -67,14 +68,18 @@
 
 .photo {
   width: 100%;
-  max-width: var(--max-picture-size-desktop);
+  min-width: var(--max-picture-size-desktop);
   height: 100%;
-  max-height: var(--max-picture-size-desktop);
+  min-height: var(--max-picture-size-desktop);
 
   object-fit: cover;
 
   @media (width <= 640px) {
-    max-width: var(--max-picture-size-mobile);
-    max-height: var(--max-picture-size-mobile);
+    min-width: var(--max-picture-size-mobile);
+    min-height: var(--max-picture-size-mobile);
   }
+}
+
+.invisible {
+  display: none;
 }

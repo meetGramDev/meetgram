@@ -13,10 +13,9 @@
 }
 
 .post {
-  width: 30.62rem;
-  height: 35.12rem;
-  object-fit: cover;
-  image-rendering: crisp-edges;
+  --max-picture-size-desktop: 80vh;
+
+  height: 100%;
 }
 
 .iconClose {

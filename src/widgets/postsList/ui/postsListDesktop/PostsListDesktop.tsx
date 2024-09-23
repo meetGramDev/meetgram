@@ -4,7 +4,6 @@ import { Post, PostView } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
 import { HOME } from '@/shared/config/router'
-import { Nullable } from '@/shared/types'
 import { Dialog } from '@/shared/ui'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -53,8 +52,16 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
       {posts?.map(post => {
         return (
           <div className={s.item} key={post.id}>
-            <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
-              <Post alt={'post'} className={s.image} src={post.images[0].url} />
+            <Link
+              href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}
+              shallow
+            >
+              <Post
+                alt={post.description}
+                className={s.image}
+                isGallery={post.images.length > 1}
+                src={post.images[0].url}
+              />
             </Link>
           </div>
         )

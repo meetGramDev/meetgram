@@ -26,6 +26,7 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps & HTMLAttributes<HTMLD
       children,
       className,
       dotsClassname,
+      onCurrentSlide,
       options,
       plugins,
       setApi,
@@ -45,6 +46,14 @@ const Carousel = forwardRef<HTMLDivElement, CarouselProps & HTMLAttributes<HTMLD
 
       setApi(emblaApi)
     }, [emblaApi, setApi])
+
+    useEffect(() => {
+      if (!onCurrentSlide) {
+        return
+      }
+
+      onCurrentSlide(selectedIndex)
+    }, [onCurrentSlide, selectedIndex])
 
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLDivElement>) => {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { Post } from '@/entities/post'
+import { ImageCarousel } from '@/shared/ui'
 import { clsx } from 'clsx'
 
 import s from './PostsListMobile.module.scss'
@@ -34,13 +35,18 @@ export const PostsListMobile = ({ isFollowing, posts, userId }: PostListProps) =
               itemRefs.current[index] = el
             }}
           >
-            <Post
-              alt={'post'}
-              className={s.image}
-              height={post.images[0].height}
-              src={post.images[0].url}
-              width={post.images[0].width}
-            />
+            {!showGallery ? (
+              <Post
+                alt={'post'}
+                className={s.image}
+                height={post.images[0].height}
+                isGallery={post.images.length > 1}
+                src={post.images[0].url}
+                width={post.images[0].width}
+              />
+            ) : (
+              <ImageCarousel images={post.images} />
+            )}
           </div>
         ))}
       </div>

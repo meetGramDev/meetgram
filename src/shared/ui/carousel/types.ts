@@ -20,6 +20,10 @@ export type UseDotButtonType = {
 export type CarouselProps = {
   dotsClassname?: string
   /**
+   * Pass current slide index in args
+   */
+  onCurrentSlide?: (currentIndex: number) => void
+  /**
    * Customize how the carousel works.
    * Docs: @see {@link https://www.embla-carousel.com/api/options/}
    */
