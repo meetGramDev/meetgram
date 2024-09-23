@@ -1,17 +1,23 @@
-import { LenType } from './en';
+import {LenType} from './en';
 
 export const uk: LenType = {
     "About me": "Про мене",
     "Account Management": "Керування акаунтом",
     "Add Photo": "Додайте фото",
+    "Add a Profile Photo": "Додати фото профілю",
+    "Add a profile photo": "Додати фото профілю",
     "April": "Квітень",
+    "Are you sure you want to delete the photo?": "Ви впевнені, що хочете видалити фото?",
     "August": "Серпень",
+    "Avatar": "Аватар",
+    "Change profile photo": "Змінити фото профілю",
     "City": "Місто",
     "Close": "Закрити",
     "Congratulations!": "Вітаємо!",
     "Country": "Країна",
     "Date of birth": "Дата народження",
     "December": "Грудень",
+    "Delete photo": "Видалити фото",
     "Devices": "Пристрої",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Ви дійсно хочете закрити створення публікації? Якщо ви закриєте, усе буде видалено",
     "Email sent": "Лист відправлено",
@@ -28,10 +34,12 @@ export const uk: LenType = {
     "May": "Травень",
     "My Payments": "Мої платежі",
     "Next": "Наступний",
+    "No": "Ні",
     "November": "Листопад",
     "October": "Жовтень",
     "Ok": "Гаразд",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
+    "Save changes": "Зберегти зміни",
     "Select from computer": "Виберіть з комп’ютера",
     "Select your city": "Виберіть ваше місто",
     "Select your country": "Виберіть вашу країну",
@@ -39,7 +47,9 @@ export const uk: LenType = {
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
+    "Yes": "Так",
     "Your email has been confirmed": "Вашу електронну пошту підтверджено",
+    
     button: {
         Button: 'Кнопка',
         Link: 'Посилання, що виглядає як кнопка',

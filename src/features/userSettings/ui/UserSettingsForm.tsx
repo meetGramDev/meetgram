@@ -159,7 +159,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
       />
       <hr className={s.hr}></hr>
       <Button className={s.button} disabled={isDisabled} type={'submit'}>
-        Save changes
+        {t('Save changes')}
       </Button>
     </form>
   )

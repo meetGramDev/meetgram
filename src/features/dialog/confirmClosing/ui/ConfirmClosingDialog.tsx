@@ -1,3 +1,4 @@
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui'
 
 type Props = {
@@ -6,14 +7,16 @@ type Props = {
 }
 
 export const ConfirmClosingDialog = ({ message, onConfirm }: Props) => {
+  const t = useTranslate()
+
   return (
     <div className={'px-6 py-7'}>
       <p className={'mb-8 text-regular16 font-normal md:mb-12 md:pr-16'}>{message}</p>
       <div className={'flex flex-wrap gap-6 md:justify-end'}>
         <Button onClick={() => onConfirm(true)} variant={'outlined'}>
-          Yes
+          {t('Yes')}
         </Button>
-        <Button onClick={() => onConfirm(false)}>No</Button>
+        <Button onClick={() => onConfirm(false)}>{t('No')}</Button>
       </div>
     </div>
   )
