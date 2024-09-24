@@ -1,0 +1,105 @@
+.commentsContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.commentItems {
+  display: flex;
+  flex-direction: row;
+}
+
+.avatars {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.75rem;
+  padding-top: 0.31rem;
+}
+
+.photo {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.userName {
+  width: min-content;
+  height: min-content;
+  margin-right: 0.31rem;
+
+  font-weight: bold;
+
+  transition: all 0.3s;
+
+  &:hover {
+    color: var(--primary-color-100);
+  }
+
+  &:active {
+    outline: var(--primary-color-700);
+  }
+
+  &:focus-visible {
+    color: var(--primary-color-700);
+    outline: none;
+  }
+}
+
+.commentContent {
+  scrollbar-width: none;
+
+  overflow: auto;
+
+  width: 21.56rem;
+  max-height: 4.5rem;
+
+  word-wrap: break-word;
+  white-space: normal;
+
+  .scrollable::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.hearts {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.65rem;
+  padding-top: 0.43rem;
+}
+
+.heartButton {
+  color: var(--light-color-100);
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.heart {
+  width: min-content;
+  height: min-content;
+  padding: 0.25rem 0 0 0.12rem;
+  color: var(--danger-color-500);
+}
+
+.commentFooter {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+
+  margin: 0.31rem 0 0.93rem 2.9rem;
+
+  color: #757575ff;
+}
+
+.like {
+  margin-right: -0.56rem;
+  font-weight: bold;
+}
+
+.button {
+  color: #757575ff;
+
+  &:focus-visible {
+    outline: none;
+  }
+}

@@ -1,6 +1,15 @@
-import { ChangeEvent, memo, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
+import { Post, PublicPost, useGetSinglePublicPostQuery } from '@/entities/post'
+import {
+  useAddAnswerCommentMutation,
+  useAddPostCommentMutation,
+  useGetPostCommentsQuery,
+} from '@/entities/post/model/services/post.service'
+import { Comments } from '@/features/posts/comments'
+import { getTimeAgo } from '@/features/posts/comments/lib/getTimeAgo'
 import { LikeButton } from '@/features/posts/likePost'
 import { LikesView } from '@/features/posts/likesView'
 import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
@@ -8,15 +17,16 @@ import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
 import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
 import { PaperPlane } from '@/shared/assets/icons/PaperPlane'
 import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
-import { Button, Dialog, TextArea } from '@/shared/ui'
+import { HOME } from '@/shared/config/router'
+import { serverErrorHandler } from '@/shared/lib'
+import { isErrorMessageString } from '@/shared/types'
+import { Button, Dialog, Loader, TextArea } from '@/shared/ui'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './PostView.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
-import { useGetSinglePublicPostQuery } from '../../model/services/post.service'
-import { PublicPost } from '../../model/types/posts.types'
-import { Post } from '../../ui/Post'
 
 type Props = {
   isFollowing: boolean
@@ -28,21 +38,85 @@ type Props = {
   userId: number
 }
 
-export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
-  const { data: post, isSuccess } = useGetSinglePublicPostQuery(postId)
-
+export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
+  const { data: post, isLoading: postLoading, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
+  const [addComment] = useAddPostCommentMutation()
+  const { data: comments } = useGetPostCommentsQuery({ postId })
+  const [addAnswerComment] = useAddAnswerCommentMutation()
   const [isFavourite, setIsFavourite] = useState(false)
-  const [value, setValue] = useState('')
-  const dateOfCreate =
-    post &&
-    new Date(post.createdAt).toLocaleDateString('en-US', {
+  const [textContent, setTextContent] = useState('')
+  const [commentId, setCommentId] = useState<null | number>(null)
+
+  const answerCommentRef = useRef<HTMLTextAreaElement>(null)
+
+  const tr = useRouter().locale
+
+  const dateOfCreate = (postCreate: string) => {
+    const date = new Date(postCreate)
+
+    return date.toLocaleDateString(tr ?? 'en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
     })
+  }
 
   const changeTextAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.currentTarget.value)
+    setTextContent(e.currentTarget.value)
+  }
+
+  const addCommentHandler = () => {
+    try {
+      setTextContent('')
+      if (textContent !== '') {
+        addComment({ body: { content: textContent }, postId })
+      }
+    } catch (err) {
+      const message = serverErrorHandler(err)
+
+      if (isErrorMessageString(message)) {
+        toast.error(message)
+      }
+    }
+  }
+
+  const addAnswerHandler = (commentId: number) => {
+    try {
+      setTextContent(`${post?.userName} `)
+      if (textContent !== '') {
+        addAnswerComment({ body: { content: textContent }, commentId, postId })
+        setCommentId(null)
+      }
+    } catch (err) {
+      const message = serverErrorHandler(err)
+
+      if (isErrorMessageString(message)) {
+        toast.error(message)
+      }
+    }
+  }
+
+  const publishHandler = () => {
+    if (commentId) {
+      addAnswerHandler(commentId)
+    } else {
+      addCommentHandler()
+    }
+    setTextContent('')
+  }
+
+  const answerHandler = (commentId: number) => {
+    if (answerCommentRef.current) {
+      answerCommentRef.current.focus()
+    }
+    setTextContent(`${post?.userName} `)
+    setCommentId(commentId)
+  }
+
+  const ownerProfile = `${HOME}/${userId}`
+
+  if (postLoading) {
+    return <Loader loaderClassName={s.loader} />
   }
 
   return (
@@ -60,30 +134,62 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
           </div>
           <div className={s.content}>
             <Button className={s.iconClose} variant={'text'}>
-              <CloseIcon onClick={() => isOpen(false)} />
+              <CloseIcon
+                onClick={() => {
+                  isOpen(false)
+                }}
+              />
             </Button>
             <div className={s.title}>
-              <Link className={s.userData} href={'#'}>
-                <Photo
-                  alt={'Owner avatar'}
-                  className={s.avatar}
-                  height={36}
-                  src={post.avatarOwner || notPhoto}
-                  width={36}
-                />
-                {post.userName}
-              </Link>
-              <div>
-                <PostViewSelect
-                  id={userId}
-                  isFollowing={isFollowing}
-                  onEdit={onEdit}
-                  ownerId={post.ownerId}
-                />
+              <div className={s.userLink}>
+                <Link className={s.linkAvatar} href={ownerProfile}>
+                  <Photo
+                    alt={'Owner avatar'}
+                    className={s.avatar}
+                    height={36}
+                    src={post.avatarOwner || notPhoto}
+                    width={36}
+                  />
+                </Link>
+                <Link className={s.link} href={ownerProfile}>
+                  {post.userName}
+                </Link>
               </div>
+              <PostViewSelect
+                id={`${postId}`}
+                isFollowing={isFollowing}
+                onEdit={onEdit}
+                onOpenPost={isOpen}
+                ownerId={post.ownerId}
+                userId={userId}
+              />
             </div>
             <div className={s.commentsField}>
-              <div className={s.description}>{post.description}</div>
+              {post.description && (
+                <div className={s.description}>
+                  <div className={s.descriptionItems}>
+                    <Link className={s.descriptionAvatar} href={ownerProfile}>
+                      <Photo
+                        alt={'Owner avatar'}
+                        className={s.avatar}
+                        height={36}
+                        src={post.avatarOwner || notPhoto}
+                        width={36}
+                      />
+                    </Link>
+                    <div className={s.descriptionContent}>
+                      <Link className={s.descriptionUserName} href={ownerProfile}>
+                        {post.userName}
+                      </Link>
+                      {post.description}
+                    </div>
+                  </div>
+                  <span className={s.descriptionDate}>
+                    {getTimeAgo(tr ?? 'en', post.updatedAt || post.createdAt)}
+                  </span>
+                </div>
+              )}
+              {comments && <Comments comments={comments} onClick={answerHandler} />}
             </div>
             <div className={s.footer}>
               <div className={s.footerButtons}>
@@ -109,16 +215,17 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
                   <LikesView likesCount={post.likesCount} postId={post.id} />
                 </div>
               )}
-              <span className={s.date}>{dateOfCreate}</span>
+              <span className={s.date}>{dateOfCreate(post.createdAt)}</span>
             </div>
             <div className={s.commentContainer}>
               <TextArea
                 className={s.commentTextArea}
-                label={!value && 'Add a Comment...'}
+                label={!textContent && 'Add a Comment...'}
                 labelClassName={s.label}
                 maxLength={500}
                 onChange={changeTextAreaHandler}
-                value={value}
+                ref={answerCommentRef}
+                value={textContent}
               />
               <Button className={s.publishButton} variant={'text'}>
                 Publish
@@ -129,4 +236,4 @@ export const PostView = memo(({ isFollowing, isOpen, onEdit, open, postId, userI
       )}
     </Dialog>
   )
-})
+}

@@ -1,6 +1,5 @@
 import { Photo } from '@/entities/photo'
 import { FullUserProfile } from '@/entities/user'
-import { AddPost } from '@/features/profile/addPost/ui/AddPost'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { PROFILE_SETTINGS } from '@/shared/config/router'
 import { Button } from '@/shared/ui'
@@ -56,7 +55,6 @@ export const User = ({ userData }: Props) => {
           <div className={s.aboutMeText}>{userData?.aboutMe}</div>
         </div>
       </div>
-      <AddPost />
     </div>
   )
 }

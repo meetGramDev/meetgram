@@ -83,7 +83,37 @@
 
   margin-left: 0.75rem;
 
-  font: var(--font-regular-small);
+  font: var(--font-regular);
   color: var(--light-color-100);
   text-align: center;
+}
+
+.dialogChildrenWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  width: 378px;
+  max-width: 378px;
+  padding: 30px 24px 36px;
+}
+
+.dialogText {
+  max-width: 333px;
+}
+
+.dialogBtnWrap {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.dialogButton {
+  padding: 6px 36px;
+}
+
+.dialogButtonComplete {
+  margin-right: 24px;
 }

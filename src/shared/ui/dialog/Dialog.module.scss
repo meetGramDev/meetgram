@@ -16,6 +16,10 @@
   background-color: var(--dark-color-300);
   border: 1px solid var(--dark-color-100);
   border-radius: 2px;
+
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 .header {

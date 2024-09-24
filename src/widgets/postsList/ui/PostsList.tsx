@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
-import { useGetPublicPostsQuery } from '@/entities/post'
+import { useGetPublicPostsQuery } from '@/entities/post/model/services/posts.service'
 import { useFullUserProfileQuery } from '@/entities/user'
 import { useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'

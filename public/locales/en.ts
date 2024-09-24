@@ -1,23 +1,59 @@
-import { UsFlagIcon } from "@/shared/assets/icons/US";
-
-
 export const en = {
+    "About me": "About me",
+    "Account Management": "Account Management",
+    'Add Photo': 'Add Photo',
+    "Add a Profile Photo": "Add a Profile Photo",
+    "Add a profile photo": "Add a profile photo",
+    "April": "April",
+    "Are you sure you want to delete the photo?": "Are you sure you want to delete the photo?",
+    "August": "August",
+    "Avatar": "Avatar",
+    "Change profile photo": "Change profile photo",
+    "City": "City",
+    'Close': 'Close',
     "Congratulations!": "Congratulations!",
+    "Country": "Country",
+    "Date of birth": "Date of birth",
+    "December": "December",
+    "Delete photo": "Delete photo",
+    "Devices": "Devices",
+    "Do you really want to close the creation of a publication? If you close everything will be deleted": "Do you really want to close the creation of a publication? If you close everything will be deleted",
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
+    "February": "February",
+    "First Name": "First Name",
+    "General Information": "General Information",
+    "January": "January",
+    'July': "July",
+    "June": "June",
+    "Last Name": "Last Name",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Looks like the verification link has expired. Not to worry, we can send the link again",
+    "March": "March",
+    "May": "May",
+    "My Payments": "My Payments",
+    "Next": "Next",
+    "No": "No",
+    "November": "November",
+    "October": "October",
     "Ok": "Ok",
     "Resend verification link": "Resend verification link",
+    "Save changes": "Save changes",
+    'Select from computer': "Select from computer",
+    "Select your city": "Select your city",
+
+    "Select your country": "Select your country",
+    "September": "September",
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",
     "We have sent a link to confirm your email to": "We have sent a link to confirm your email to ",
+    "Yes": "Yes",
     "Your email has been confirmed": "Your email has been confirmed",
     button: {
         Button: 'Button',
         Link: 'Link that looks like a button',
-
     },
-    componentLang: UsFlagIcon, createNewPasswordForm: {
+
+    createNewPasswordForm: {
         createNewPassword: 'Create New Password',
         newPassword: 'New password',
         passwordConfirmation: 'Password confirmation',
@@ -57,7 +93,6 @@ export const en = {
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
     },
-
     language: 'English',
     policies: {
         "Privacy Policy": "Privacy Policy",
@@ -96,7 +131,8 @@ export const en = {
         termServ: 'Terms of Service',
         username: 'Username',
     },
-    test: 'Lorem Ipsum is simply dummy text of the printing'
+    test: 'Lorem Ipsum is simply dummy text of the printing',
+    "text area": "text area"
 }
 
 const {errorsTr, sidebarTr} = en
