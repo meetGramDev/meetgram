@@ -14,8 +14,8 @@ type Props = {
 export const AddDialogLayout = ({ children, images }: Props) => {
   return (
     <div className={'flex'}>
-      <div className={s.post}>
-        <ImageCarousel images={images} />
+      <div>
+        <ImageCarousel className={s.post} images={images} />
       </div>
 
       {children}
