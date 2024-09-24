@@ -10,6 +10,7 @@ import {
 } from 'react'
 
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
+import { ALLOWED_TYPES } from '@/shared/const/consts'
 import { cn } from '@/shared/lib/cn'
 import { Nullable } from '@/shared/types'
 
@@ -122,7 +123,7 @@ export const Dropzone = forwardRef<DropzoneRef, Props>(
           htmlFor={id}
         >
           <input
-            accept={'image/jpg,image/png,image/jpeg,image/heic,image/heif'}
+            accept={ALLOWED_TYPES.join(',')}
             className={'hidden'}
             disabled={disabled}
             hidden
