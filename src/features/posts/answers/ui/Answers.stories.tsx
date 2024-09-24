@@ -2,23 +2,23 @@ import { Meta, StoryObj } from '@storybook/react'
 
 import avatar from '../../../../shared/assets/img/photo-preview.png'
 import avatar2 from '../../../../shared/assets/img/photo6.png'
-import { Comments } from './Comments'
+import { Answers } from './Answers'
 
 const meta = {
-  component: Comments,
+  component: Answers,
   tags: ['autodocs'],
-  title: 'features/posts/comments',
-} satisfies Meta<typeof Comments>
+  title: 'features/posts/answers',
+} satisfies Meta<typeof Answers>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const CommentsOfPost: Story = {
   args: {
-    comments: {
+    answers: {
       items: [
         {
-          answerCount: 0,
+          commentId: 0,
           content:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, adipisci assumenda blanditiis corporis doloribus error, excepturi fugit in incidunt ipsam itaque minima molestiae neque nesciunt nulla provident repellat temporibus voluptatum.',
           createdAt: '2023-08-27T14:07:07.652Z',
@@ -34,10 +34,9 @@ export const CommentsOfPost: Story = {
           id: 1,
           isLiked: true,
           likeCount: 1,
-          postId: 0,
         },
         {
-          answerCount: 0,
+          commentId: 0,
           content:
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, adipisci assumenda blanditiis corporis doloribus error, excepturi fugit in incidunt ipsam itaque minima molestiae neque nesciunt nulla provident repellat temporibus voluptatum.',
           createdAt: '2024-08-26T14:07:07.652Z',
@@ -53,7 +52,6 @@ export const CommentsOfPost: Story = {
           id: 0,
           isLiked: false,
           likeCount: 0,
-          postId: 0,
         },
       ],
     },

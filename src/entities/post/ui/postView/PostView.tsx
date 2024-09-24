@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
@@ -22,6 +22,7 @@ import s from './PostView.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
 import {
+  useAddAnswerCommentMutation,
   useAddPostCommentMutation,
   useGetPostCommentsQuery,
   useGetSinglePublicPostQuery,
@@ -43,10 +44,13 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
   const { data: post, isLoading: postLoading, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
   const [addComment] = useAddPostCommentMutation()
   const { data: comments } = useGetPostCommentsQuery({ postId })
-
+  const [addAnswerComment] = useAddAnswerCommentMutation()
   const [isLiked, setIsLiked] = useState(false)
   const [isFavourite, setIsFavourite] = useState(false)
-  const [commentContent, setCommentContent] = useState('')
+  const [textContent, setTextContent] = useState('')
+  const [commentId, setCommentId] = useState<null | number>(null)
+
+  const answerCommentRef = useRef<HTMLTextAreaElement>(null)
 
   const tr = useRouter().locale
 
@@ -61,14 +65,14 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
   }
 
   const changeTextAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentContent(e.currentTarget.value)
+    setTextContent(e.currentTarget.value)
   }
 
   const addCommentHandler = () => {
     try {
-      setCommentContent('')
-      if (commentContent !== '') {
-        addComment({ body: { content: commentContent }, postId })
+      setTextContent('')
+      if (textContent !== '') {
+        addComment({ body: { content: textContent }, postId })
       }
     } catch (err) {
       const message = serverErrorHandler(err)
@@ -77,6 +81,39 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
         toast.error(message)
       }
     }
+  }
+
+  const addAnswerHandler = (commentId: number) => {
+    try {
+      setTextContent(`${post?.userName} `)
+      if (textContent !== '') {
+        addAnswerComment({ body: { content: textContent }, commentId, postId })
+        setCommentId(null)
+      }
+    } catch (err) {
+      const message = serverErrorHandler(err)
+
+      if (isErrorMessageString(message)) {
+        toast.error(message)
+      }
+    }
+  }
+
+  const publishHandler = () => {
+    if (commentId) {
+      addAnswerHandler(commentId)
+    } else {
+      addCommentHandler()
+    }
+    setTextContent('')
+  }
+
+  const answerHandler = (commentId: number) => {
+    if (answerCommentRef.current) {
+      answerCommentRef.current.focus()
+    }
+    setTextContent(`${post?.userName} `)
+    setCommentId(commentId)
   }
 
   const ownerProfile = `${HOME}/${userId}`
@@ -155,7 +192,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                   </span>
                 </div>
               )}
-              {comments && <Comments comments={comments} />}
+              {comments && <Comments comments={comments} onClick={answerHandler} />}
             </div>
             <div className={s.footer}>
               <div className={s.footerButtons}>
@@ -195,13 +232,14 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
               <div className={s.commentContainer}>
                 <TextArea
                   className={s.commentTextArea}
-                  label={!commentContent && 'Add a Comment...'}
+                  label={!textContent && 'Add a Comment...'}
                   labelClassName={s.label}
                   maxLength={500}
                   onChange={changeTextAreaHandler}
-                  value={commentContent}
+                  ref={answerCommentRef}
+                  value={textContent}
                 />
-                <Button className={s.publishButton} onClick={addCommentHandler} variant={'text'}>
+                <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
                   Publish
                 </Button>
               </div>
