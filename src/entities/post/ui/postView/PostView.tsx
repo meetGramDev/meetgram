@@ -2,21 +2,19 @@ import { ChangeEvent, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
-import { Post, PublicPost, useGetSinglePublicPostQuery } from '@/entities/post'
 import {
+  Post,
+  PublicPost,
   useAddAnswerCommentMutation,
   useAddPostCommentMutation,
   useGetPostCommentsQuery,
-} from '@/entities/post/model/services/post.service'
-import { Comments } from '@/features/posts/comments'
-import { getTimeAgo } from '@/features/posts/comments/lib/getTimeAgo'
+  useGetSinglePublicPostQuery,
+} from '@/entities/post'
+import { Comments, getTimeAgo } from '@/features/posts/comments'
 import { LikeButton } from '@/features/posts/likePost'
 import { LikesView } from '@/features/posts/likesView'
-import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
-import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
-import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
-import { PaperPlane } from '@/shared/assets/icons/PaperPlane'
-import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
+import { PostViewSelect } from '@/features/posts/postViewSelect'
+import { CloseIcon, FavoritesIcon, PaperPlane, SketchedFavourites } from '@/shared/assets'
 import { HOME } from '@/shared/config/router'
 import { serverErrorHandler } from '@/shared/lib'
 import { isErrorMessageString } from '@/shared/types'
