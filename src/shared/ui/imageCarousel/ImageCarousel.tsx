@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ReactEventHandler, useEffect, useRef, useState } from 'react'
 
 import {
   Carousel,
@@ -48,6 +48,8 @@ export const ImageCarousel = ({
   ...props
 }: Props) => {
   const [api, setApi] = useState<CarouselApi>()
+  const isManyItems = images.length > 1
+  const imageRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
     if (!api) {
@@ -87,34 +89,48 @@ export const ImageCarousel = ({
     api.on('scroll', preventEdgeScrolling)
   }, [api])
 
+  const handleOnImageLoad: ReactEventHandler<HTMLImageElement> = e => {
+    if (e.currentTarget.naturalHeight > e.currentTarget.naturalWidth) {
+      e.currentTarget.style.width = 'auto'
+      e.currentTarget.style.height = '100%'
+    }
+  }
+
   return (
     <Carousel
       className={clsx(s.carousel, className)}
-      dotsClassname={clsx(s.dots, images.length === 1 && s.invisible)}
+      dotsClassname={clsx(s.dots)}
       options={{
         ...options,
         containScroll: 'trimSnaps',
         skipSnaps: false,
-        watchDrag: images.length > 1,
+        watchDrag: isManyItems,
       }}
       setApi={setApi}
+      showDotsPagination={isManyItems}
       {...props}
     >
       <CarouselContent className={clsx(contentClassname)}>
         {images?.map((image, i) => (
           <CarouselItem className={clsx(itemClassname, s.item)} key={i}>
-            <Image
-              alt={`Image-${i + 1}`}
-              className={s.photo}
-              {...('image' in image
-                ? { height: 300, src: image.image, width: 300 }
-                : { height: image.height, src: image.url, width: image.width })}
-            />
+            <div className={s.itemContainer}>
+              <div className={s.picture}>
+                <Image
+                  alt={`Image-${i + 1}`}
+                  className={s.photo}
+                  onLoad={handleOnImageLoad}
+                  ref={imageRef}
+                  {...('image' in image
+                    ? { height: 300, src: image.image, width: 300 }
+                    : { height: image.height, src: image.url, width: image.width })}
+                />
+              </div>
+            </div>
           </CarouselItem>
         ))}
       </CarouselContent>
 
-      {showNavigation && images.length > 1 && (
+      {showNavigation && isManyItems && (
         <>
           <CarouselPrevious className={s.navigationPrev} />
           <CarouselNext className={s.navigationNext} />

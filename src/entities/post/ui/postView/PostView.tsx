@@ -135,105 +135,107 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
 
           <ImageCarousel className={s.post} images={post.images} options={{ align: 'start' }} />
 
-          <div className={s.title}>
-            <div className={s.userLink}>
-              <Link className={s.linkAvatar} href={ownerProfile}>
-                <Photo
-                  alt={'Owner avatar'}
-                  className={s.avatar}
-                  height={36}
-                  src={post.avatarOwner || notPhoto}
-                  width={36}
-                />
-              </Link>
-              <Link className={s.link} href={ownerProfile}>
-                {post.userName}
-              </Link>
-            </div>
-            <PostViewSelect
-              id={`${postId}`}
-              isFollowing={isFollowing}
-              onEdit={onEdit}
-              onOpenPost={isOpen}
-              ownerId={post.ownerId}
-              userId={userId}
-            />
-          </div>
-          <div className={s.commentsField}>
-            {post.description && (
-              <div className={s.description}>
-                <div className={s.descriptionItems}>
-                  <Link className={s.descriptionAvatar} href={ownerProfile}>
-                    <Photo
-                      alt={'Owner avatar'}
-                      className={s.avatar}
-                      height={36}
-                      src={post.avatarOwner || notPhoto}
-                      width={36}
-                    />
-                  </Link>
-                  <div className={s.descriptionContent}>
-                    <Link className={s.descriptionUserName} href={ownerProfile}>
-                      {post.userName}
-                    </Link>
-                    {post.description}
-                  </div>
-                </div>
-                <span className={s.descriptionDate}>
-                  {getTimeAgo(tr ?? 'en', post.updatedAt || post.createdAt)}
-                </span>
+          <div className={s.content}>
+            <div className={s.title}>
+              <div className={s.userLink}>
+                <Link className={s.linkAvatar} href={ownerProfile}>
+                  <Photo
+                    alt={'Owner avatar'}
+                    className={s.avatar}
+                    height={36}
+                    src={post.avatarOwner || notPhoto}
+                    width={36}
+                  />
+                </Link>
+                <Link className={s.link} href={ownerProfile}>
+                  {post.userName}
+                </Link>
               </div>
-            )}
-            {comments && <Comments comments={comments} onClick={answerHandler} />}
-          </div>
-          <div className={s.footer}>
-            <div className={s.footerButtons}>
-              <div className={s.leftSideButtons}>
+              <PostViewSelect
+                id={`${postId}`}
+                isFollowing={isFollowing}
+                onEdit={onEdit}
+                onOpenPost={isOpen}
+                ownerId={post.ownerId}
+                userId={userId}
+              />
+            </div>
+            <div className={s.commentsField}>
+              {post.description && (
+                <div className={s.description}>
+                  <div className={s.descriptionItems}>
+                    <Link className={s.descriptionAvatar} href={ownerProfile}>
+                      <Photo
+                        alt={'Owner avatar'}
+                        className={s.avatar}
+                        height={36}
+                        src={post.avatarOwner || notPhoto}
+                        width={36}
+                      />
+                    </Link>
+                    <div className={s.descriptionContent}>
+                      <Link className={s.descriptionUserName} href={ownerProfile}>
+                        {post.userName}
+                      </Link>
+                      {post.description}
+                    </div>
+                  </div>
+                  <span className={s.descriptionDate}>
+                    {getTimeAgo(tr ?? 'en', post.updatedAt || post.createdAt)}
+                  </span>
+                </div>
+              )}
+              {comments && <Comments comments={comments} onClick={answerHandler} />}
+            </div>
+            <div className={s.footer}>
+              <div className={s.footerButtons}>
+                <div className={s.leftSideButtons}>
+                  <Button
+                    className={s.footerButton}
+                    onClick={() => {
+                      setIsLiked(!isLiked)
+                    }}
+                    variant={'text'}
+                  >
+                    {isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
+                  </Button>
+                  <Button className={s.footerButton} variant={'text'}>
+                    <PaperPlane />
+                  </Button>
+                </div>
                 <Button
                   className={s.footerButton}
                   onClick={() => {
-                    setIsLiked(!isLiked)
+                    setIsFavourite(!isFavourite)
                   }}
                   variant={'text'}
                 >
-                  {isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
-                </Button>
-                <Button className={s.footerButton} variant={'text'}>
-                  <PaperPlane />
+                  {isFavourite ? <SketchedFavourites className={s.favourite} /> : <FavoritesIcon />}
                 </Button>
               </div>
-              <Button
-                className={s.footerButton}
-                onClick={() => {
-                  setIsFavourite(!isFavourite)
-                }}
-                variant={'text'}
-              >
-                {isFavourite ? <SketchedFavourites className={s.favourite} /> : <FavoritesIcon />}
-              </Button>
-            </div>
-            <div className={s.postLikes}>
-              {post.likesCount !== 0 && (
-                <span>
-                  {/* eslint-disable-next-line react/no-unescaped-entities */}
-                  {post.likesCount} "<span className={s.like}>Like</span>"
-                </span>
-              )}
-            </div>
-            <span className={s.date}>{dateOfCreate(post.createdAt)}</span>
-            <div className={s.commentContainer}>
-              <TextArea
-                className={s.commentTextArea}
-                label={!textContent && 'Add a Comment...'}
-                labelClassName={s.label}
-                maxLength={500}
-                onChange={changeTextAreaHandler}
-                ref={answerCommentRef}
-                value={textContent}
-              />
-              <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
-                Publish
-              </Button>
+              <div className={s.postLikes}>
+                {post.likesCount !== 0 && (
+                  <span>
+                    {/* eslint-disable-next-line react/no-unescaped-entities */}
+                    {post.likesCount} "<span className={s.like}>Like</span>"
+                  </span>
+                )}
+              </div>
+              <span className={s.date}>{dateOfCreate(post.createdAt)}</span>
+              <div className={s.commentContainer}>
+                <TextArea
+                  className={s.commentTextArea}
+                  label={!textContent && 'Add a Comment...'}
+                  labelClassName={s.label}
+                  maxLength={500}
+                  onChange={changeTextAreaHandler}
+                  ref={answerCommentRef}
+                  value={textContent}
+                />
+                <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
+                  Publish
+                </Button>
+              </div>
             </div>
           </div>
         </div>

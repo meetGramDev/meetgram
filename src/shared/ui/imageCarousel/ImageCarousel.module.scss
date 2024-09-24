@@ -1,14 +1,12 @@
 .carousel {
-  --max-picture-size-desktop: 490px;
-  --max-picture-size-mobile: 330px;
+  --slide-height-desktop: 48rem;
+  --slide-height-mobile: 330px;
   --slide-spacing: 0.1rem;
 
-  width: 100%;
-  max-width: var(--max-picture-size-desktop);
-  margin: 0;
+  width: var(--slide-height-desktop);
 
   @media (width <= 640px) {
-    max-width: var(--max-picture-size-mobile);
+    width: var(--slide-height-mobile);
   }
 }
 
@@ -63,29 +61,27 @@
   -ms-user-select: none;
   user-select: none;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  min-width: var(--max-picture-size-desktop);
-
-  //min-height: var(--max-picture-size-desktop);
-  height: 100%;
+  background-color: var(--dark-color-500);
 
   -webkit-touch-callout: none;
+}
+
+.itemContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.picture {
+  width: fit-content;
+  height: var(--slide-height-desktop);
 
   @media (width <= 640px) {
-    min-width: var(--max-picture-size-mobile);
-    min-height: var(--max-picture-size-mobile);
+    height: var(--slide-height-mobile);
   }
 }
 
 .photo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-
-.invisible {
-  display: none;
+  object-fit: contain;
 }

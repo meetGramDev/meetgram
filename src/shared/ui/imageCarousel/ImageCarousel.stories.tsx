@@ -2,8 +2,8 @@ import { Meta, StoryObj } from '@storybook/react'
 
 import beach from '../../../shared/assets/img/beach.png'
 import anotherDude from '../../../shared/assets/img/photo-preview.png'
+import fruits from '../../../shared/assets/img/photo3.png'
 import someDude from '../../../shared/assets/img/photo6.png'
-import people from '../../../shared/assets/img/photo7.png'
 import { ImageCarousel } from './ImageCarousel'
 
 const photos = [
@@ -36,7 +36,7 @@ const photos = [
     fileSize: 521234,
     height: 562,
     uploadId: 'serpkdfa38492',
-    url: people,
+    url: fruits,
     width: 490,
   },
 ]

@@ -9,22 +9,18 @@
 
 .container {
   position: relative;
-
-  display: grid;
-  grid-template: auto 1fr auto / repeat(2, 50%);
-  grid-template-areas:
-    'post title'
-    'post comments'
-    'post footer';
-
+  display: flex;
   max-height: 80vh;
 }
 
 .post {
-  --max-picture-size-desktop: 80vh;
+  --slide-height-desktop: 80vh;
+}
 
-  grid-area: post;
-  height: 100%;
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
 }
 
 .iconClose {
@@ -43,7 +39,6 @@
 
 .title {
   display: flex;
-  grid-area: title;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -118,7 +113,6 @@
   scrollbar-color: var(--dark-color-100);
 
   overflow: auto;
-  grid-area: comments;
   align-self: center;
 
   height: 100%;
@@ -197,7 +191,6 @@
 }
 
 .footer {
-  grid-area: footer;
   border-top: 1px solid var(--dark-color-100);
 }
 
