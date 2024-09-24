@@ -1,13 +1,12 @@
 import { FormEvent, useState } from 'react'
 import Cropper, { Area, Point } from 'react-easy-crop'
 
-import { getCroppedImg, onCrop } from '@/features/profile/addPost/ui/ImageCropDialog/cropImage'
+import { onCrop } from '@/features/profile/addPost/ui/ImageCropDialog/cropImage'
 import { AddPostSettingsSelect } from '@/features/profile/addPost/ui/addPostSettingsSelect/AddPostSettingsSelect'
 import { Expand } from '@/shared/assets/icons/Expand'
 import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { ImageIconOutlined } from '@/shared/assets/icons/ImageIconOutlined'
-import { Maxinize } from '@/shared/assets/icons/Maxinize'
 import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
@@ -181,16 +180,6 @@ export const ImageCropDialog = ({
                   value={zoom}
                 />
               </div>
-
-              {/*<input*/}
-              {/*  className={s.slider}*/}
-              {/*  max={3}*/}
-              {/*  min={1}*/}
-              {/*  onInput={e => onZoomChange(+e.currentTarget.value)}*/}
-              {/*  step={0.1}*/}
-              {/*  type={'range'}*/}
-              {/*  value={zoom}*/}
-              {/*/>*/}
             </AddPostSettingsSelect>
           </div>
         </div>
