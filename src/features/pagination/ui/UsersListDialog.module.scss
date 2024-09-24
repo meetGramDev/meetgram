@@ -1,0 +1,31 @@
+@use '@/app/styles/mixins';
+
+.list {
+  @include mixins.flex(column, center, center, 1.5rem);
+
+  overflow: hidden auto;
+}
+
+.list::-webkit-scrollbar {
+  width: 1px;
+}
+
+.list::-webkit-scrollbar-track {
+  background-color: var(--dark-color-900);
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: var(--light-color-100);
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color-700);
+}
+
+.followBtn {
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-user-select: none;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -ms-user-select: none;
+  user-select: none;
+}
