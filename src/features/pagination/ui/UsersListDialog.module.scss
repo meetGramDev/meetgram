@@ -1,9 +1,11 @@
-@use '@/app/styles/mixins';
-
 .list {
-  @include mixins.flex(column, center, center, 1.5rem);
-
   overflow: hidden auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  min-height: 200px;
 }
 
 .list::-webkit-scrollbar {
@@ -22,10 +24,27 @@
   background-color: var(--primary-color-700);
 }
 
+.user {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.6rem 0.4rem;
+}
+
 .followBtn {
   /* stylelint-disable-next-line property-no-vendor-prefix */
   -webkit-user-select: none;
   /* stylelint-disable-next-line property-no-vendor-prefix */
   -ms-user-select: none;
   user-select: none;
+}
+
+.smallLoader {
+  margin: 0 auto;
+  padding: 0.6rem 0.4rem;
+
+  & > div {
+    width: 30px;
+    height: 30px;
+  }
 }

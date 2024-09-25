@@ -33,17 +33,18 @@ export const LikesView = ({ likesCount, postId }: Props) => {
                 />
               ))}
           </div>
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          {likesCount} "Like"
+          {likesCount === 1 ? `${likesCount} Like` : `${likesCount} Likes`}
         </Button>
       }
     >
       {!isSuccess ? (
         <Loader />
       ) : (
-        <div className={'m-6 h-[40vh] min-w-[40vw] max-w-[60vw]'}>
+        <div className={s.container}>
           <SearchDialog />
-          <UsersListDialog postId={postId} />
+          <div className={s.content}>
+            <UsersListDialog postId={postId} />
+          </div>
         </div>
       )}
     </Dialog>

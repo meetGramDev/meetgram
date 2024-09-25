@@ -10,6 +10,13 @@
   }
 }
 
+.liked {
+  &:focus-visible {
+    outline: 1px solid var(--primary-color-500);
+    outline-offset: 4px;
+  }
+}
+
 .heart {
   width: min-content;
   height: min-content;

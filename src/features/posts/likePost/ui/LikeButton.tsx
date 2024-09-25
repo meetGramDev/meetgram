@@ -1,5 +1,3 @@
-import { memo } from 'react'
-
 import { Heart } from '@/shared/assets/icons/Heart'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import { showToastError } from '@/shared/lib'
@@ -17,7 +15,7 @@ type Props = {
   postId: number
 }
 
-export const LikeButton = memo(({ postId }: Props) => {
+export const LikeButton = ({ postId }: Props) => {
   const { data } = useGetWhoLikedPostQuery({ postId })
   const [giveLike, { isLoading: isGivingLike }] = useGiveLikeToPostMutation()
 
@@ -38,7 +36,7 @@ export const LikeButton = memo(({ postId }: Props) => {
 
   return (
     <Button
-      className={clsx(s.likeBtn, isGivingLike && s.disabled)}
+      className={clsx(s.likeBtn, isGivingLike && s.disabled, data?.isLiked && s.liked)}
       disabled={isGivingLike}
       onClick={handleGiveLike}
       variant={'text'}
@@ -50,6 +48,4 @@ export const LikeButton = memo(({ postId }: Props) => {
       )}
     </Button>
   )
-})
-
-LikeButton.displayName = 'LikeButton'
+}
