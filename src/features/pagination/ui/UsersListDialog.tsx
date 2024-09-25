@@ -1,24 +1,32 @@
 import { useRef, useState } from 'react'
 
 import { useGetWhoLikedPostQuery } from '@/entities/like'
-import { UserLink } from '@/entities/user'
+import { UserItem } from '@/features/pagination/ui/UserItem'
 import { useInfiniteScroll } from '@/shared/lib'
-import { Button, Loader } from '@/shared/ui'
+import { Loader } from '@/shared/ui'
 
 import s from './UsersListDialog.module.scss'
 
-type Props = {
+export type UserListProps = {
+  disabled?: boolean
   onFollow?: (id: number) => void
   postId: number
 }
 
 const MAX_PAGE_SIZE = 8
 
-export const UsersListDialog = ({ onFollow, postId }: Props) => {
-  const { data, isFetching, isLoading, isSuccess } = useGetWhoLikedPostQuery({ postId })
-
+export const UsersListDialog = ({ disabled, onFollow, postId }: UserListProps) => {
   const lastUserRef = useRef<HTMLElement>(null)
   const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
+
+  const { data, isFetching, isLoading, isSuccess } = useGetWhoLikedPostQuery({
+    params: {
+      cursor: endCursorId,
+      pageSize: MAX_PAGE_SIZE,
+    },
+    postId,
+  })
+
   const { ref } = useInfiniteScroll(
     () => {
       if (endCursorId && data?.items && data.items.length >= MAX_PAGE_SIZE) {
@@ -45,21 +53,11 @@ export const UsersListDialog = ({ onFollow, postId }: Props) => {
         if (data.items.length === i + 1) {
           return (
             <>
-              <li className={s.user} key={user.id} ref={ref}>
-                <UserLink avatars={user.avatars} userId={user.userId} userName={user.userName} />
-                <div className={'ml-auto'}>
-                  <Button
-                    className={s.followBtn}
-                    onClick={() => onFollow?.(user.userId)}
-                    variant={user.isFollowing ? 'outlined' : 'primary'}
-                  >
-                    {user.isFollowing ? 'Unfollow' : 'Follow'}
-                  </Button>
-                </div>
-              </li>
+              <UserItem disabled={disabled} key={user.id} onFollow={onFollow} ref={ref} {...user} />
 
               <li
                 className={s.smallLoader}
+                key={i + 2}
                 style={{ display: data.totalCount === data.items.length ? 'none' : '' }}
               >
                 {isFetching && <Loader />}
@@ -68,20 +66,7 @@ export const UsersListDialog = ({ onFollow, postId }: Props) => {
           )
         }
 
-        return (
-          <li className={s.user} key={user.id}>
-            <UserLink avatars={user.avatars} userId={user.userId} userName={user.userName} />
-            <div className={'ml-auto'}>
-              <Button
-                className={s.followBtn}
-                onClick={() => onFollow?.(user.userId)}
-                variant={user.isFollowing ? 'outlined' : 'primary'}
-              >
-                {user.isFollowing ? 'Unfollow' : 'Follow'}
-              </Button>
-            </div>
-          </li>
-        )
+        return <UserItem disabled={disabled} key={user.id} onFollow={onFollow} {...user} />
       })}
     </ul>
   )
