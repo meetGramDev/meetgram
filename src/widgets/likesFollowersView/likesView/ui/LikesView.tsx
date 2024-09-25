@@ -2,6 +2,7 @@ import { useGetWhoLikedPostQuery } from '@/entities/like'
 import { Photo } from '@/entities/photo'
 import { UsersListDialog } from '@/features/pagination'
 import { SearchDialog } from '@/features/search'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, Dialog, Loader } from '@/shared/ui'
 
 import s from './LikesView.module.scss'
@@ -14,9 +15,11 @@ type Props = {
 export const LikesView = ({ likesCount, postId }: Props) => {
   const { data, isSuccess } = useGetWhoLikedPostQuery({ postId })
 
+  const t = useTranslate()
+
   return (
     <Dialog
-      title={'Likes'}
+      title={t('Likes') as string}
       trigger={
         <Button className={s.likeCount} variant={'text'}>
           <div className={'flex -space-x-2'}>
@@ -33,7 +36,7 @@ export const LikesView = ({ likesCount, postId }: Props) => {
                 />
               ))}
           </div>
-          {likesCount === 1 ? `${likesCount} Like` : `${likesCount} Likes`}
+          {likesCount + ' ' + t('Like')}
         </Button>
       }
     >
