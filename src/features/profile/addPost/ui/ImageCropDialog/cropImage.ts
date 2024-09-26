@@ -41,7 +41,7 @@ export const onCrop = async (
   inputImg: string | undefined,
   canvaWidth: number,
   canvaHeight: number,
-  cropCallback: (img: string | undefined) => void
+  cropCallback: (img: string) => void
 ) => {
   if (cropArea && inputImg) {
     const img = await getCroppedImg(inputImg, cropArea, canvaWidth, canvaHeight)

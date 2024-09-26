@@ -1,13 +1,12 @@
 import { FormEvent, useState } from 'react'
 import Cropper, { Area, Point } from 'react-easy-crop'
 
-import { getCroppedImg, onCrop } from '@/features/profile/addPost/ui/ImageCropDialog/cropImage'
+import { onCrop } from '@/features/profile/addPost/ui/ImageCropDialog/cropImage'
 import { AddPostSettingsSelect } from '@/features/profile/addPost/ui/addPostSettingsSelect/AddPostSettingsSelect'
 import { Expand } from '@/shared/assets/icons/Expand'
 import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { ImageIconOutlined } from '@/shared/assets/icons/ImageIconOutlined'
-import { Maxinize } from '@/shared/assets/icons/Maxinize'
 import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
@@ -43,9 +42,10 @@ const aspectRatios = [
 export type ImageCropDialogType = {
   aspectInit?: AspectRatioType
   cropInit?: { x: number; y: number }
-  id?: number
+  id: number
   imageUrl?: string
-  setCropImg: (img: string | undefined) => void
+  // setCropImg: (img: string | undefined) => void
+  onCropComplete?: (img: string, id: number) => void
   zoomInit?: number
 }
 
@@ -59,7 +59,7 @@ export const ImageCropDialog = ({
   cropInit,
   id,
   imageUrl,
-  setCropImg,
+  onCropComplete,
   zoomInit,
 }: ImageCropDialogType) => {
   if (zoomInit == null) {
@@ -88,7 +88,7 @@ export const ImageCropDialog = ({
     const value = e.currentTarget.value
   }
 
-  const onCropComplete = async (croppedArea: Area, croppedAreaPixels: Area) => {
+  const handleOnCropComplete = async (croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
     if (imageUrl === undefined) {
       return
@@ -98,7 +98,9 @@ export const ImageCropDialog = ({
       imageUrl,
       croppedAreaPixels.width,
       croppedAreaPixels.height,
-      setCropImg
+      cropImg => {
+        onCropComplete?.(cropImg, id)
+      }
     )
   }
 
@@ -110,7 +112,7 @@ export const ImageCropDialog = ({
         cropShape={'rect'}
         image={imageUrl}
         onCropChange={onCropChange}
-        onCropComplete={onCropComplete}
+        onCropComplete={handleOnCropComplete}
         onZoomChange={onZoomChange}
         zoom={zoom}
         zoomWithScroll={false}

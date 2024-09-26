@@ -12,7 +12,7 @@ export const addPostService = baseApi.injectEndpoints({
       }),
     }),
     createPost: builder.mutation<any, CreatePost>({
-      invalidatesTags: ['post'],
+      invalidatesTags: ['post', 'profile'],
       query: body => ({
         body,
         method: 'POST',
