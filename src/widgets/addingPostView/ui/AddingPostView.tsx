@@ -10,6 +10,7 @@ import {
   selectIsAddedImages,
   selectIsDialogOpen,
 } from '@/features/profile/addPost'
+import { AddFilter } from '@/features/profile/addPost/ui/addFilter/AddFilter'
 import { AddScropping } from '@/features/profile/addPost/ui/addScropping/AddScropping'
 import { DialogHeader } from '@/features/profile/addPost/ui/common/DialogHeader'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
@@ -48,20 +49,12 @@ export const AddingPostView = () => {
       case AddingPostStage.ADD: {
         return <AddImages />
       }
-      case AddingPostStage.CROPPING:
-        // TEST
+      case AddingPostStage.CROPPING: {
         return <AddScropping />
-      case AddingPostStage.FILTERS:
-        // TEST
-        return (
-          <div>
-            <DialogHeader
-              header={'Filters'}
-              onBack={() => setAddingPostStage(AddingPostStage.CROPPING)}
-              onNext={() => setAddingPostStage(AddingPostStage.DESCRIPTION)}
-            />
-          </div>
-        )
+      }
+      case AddingPostStage.FILTERS: {
+        return <AddFilter />
+      }
       case AddingPostStage.DESCRIPTION: {
         return <AddDescription />
       }

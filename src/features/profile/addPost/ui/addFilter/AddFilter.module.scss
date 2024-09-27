@@ -1,0 +1,106 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.leftSide {
+  display: flex;
+  height: min-content;
+}
+
+.bigImage {
+  height: min-content;
+  object-fit: cover;
+  image-rendering: crisp-edges;
+}
+
+.rightSideContainer {
+  display: flex;
+  flex-direction: inherit;
+  align-items: center;
+  justify-content: center;
+
+  width: 30.625rem;
+}
+
+.rightSide {
+  display: grid;
+  grid-gap: 3rem 1.5rem;
+  grid-template-columns: repeat(3, 6.75rem);
+  grid-template-rows: repeat(3, 6.75rem);
+
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.smallImages {
+  cursor: pointer;
+  width: 6.75rem;
+  height: 6.75rem;
+  text-align: center;
+
+  &:hover {
+    outline: 1px solid var(--primary-color-500);
+  }
+}
+
+.select {
+  outline: 2px solid var(--primary-color-700);
+}
+
+.smallImage {
+  cursor: pointer;
+
+  height: 6.75rem;
+  margin-bottom: 0.3rem;
+
+  object-fit: cover;
+
+  image-rendering: crisp-edges;
+}
+
+.filterName {
+  width: min-content;
+  font: var(--font-regular);
+}
+
+.filter-Normal {
+  filter: none;
+}
+
+.filter-Clarendon {
+  filter: contrast(1.2) brightness(1.1) saturate(1.35);
+}
+
+.filter-Lark {
+  filter: brightness(1.1) contrast(0.9) saturate(1.25);
+}
+
+.filter-Gingham {
+  filter: sepia(0.1) contrast(1.1) brightness(1.1);
+}
+
+.filter-Moon {
+  filter: grayscale(1) brightness(1.1) contrast(1.2);
+}
+
+.filter-Sepia {
+  filter: sepia(1);
+}
+
+.filter-Grayscale {
+  filter: grayscale(1);
+}
+
+.filter-Juno {
+  filter: contrast(1.15) saturate(1.5);
+}
+
+.filter-Ludwig {
+  filter: brightness(1.05) contrast(1.1) saturate(1.25);
+}
