@@ -51,7 +51,7 @@ export const ThumbsCarousel = ({
         containScroll: 'keepSnaps',
         dragFree: false,
         skipSnaps: false,
-        slidesToScroll: SLIDES_TO_SCROLL,
+        slidesToScroll: 1,
         watchDrag: false,
       }}
       showDotsPagination={false}
