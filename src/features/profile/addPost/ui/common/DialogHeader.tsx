@@ -1,4 +1,4 @@
-import { memo, useState } from 'react'
+import { useState } from 'react'
 
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { ArrowBack } from '@/shared/assets/icons/ArrowBack'
@@ -9,7 +9,10 @@ import { ButtonIcon } from '@/shared/ui/buttonIcon/ButtonIcon'
 
 import s from './style.module.scss'
 
-import { selectAddingPostStage } from '../../model/selectors/addPost.selectors'
+import {
+  selectAddingPostStage,
+  selectNumberOfImages,
+} from '../../model/selectors/addPost.selectors'
 import { addPostActions } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
 
@@ -20,11 +23,12 @@ type Props = {
   onNext: () => void
 }
 
-export const DialogHeader = memo((props: Props) => {
+export const DialogHeader = (props: Props) => {
   const t = useTranslate()
   const { header, nextBtnText = t('Next'), onBack, onNext } = props
 
   const addingPostStage = useAppSelector(selectAddingPostStage)
+  const imagesNumber = useAppSelector(selectNumberOfImages)
   const { clearEditedImages } = useActions(addPostActions)
 
   const [openConfirm, setOpenConfirm] = useState(false)
@@ -39,7 +43,7 @@ export const DialogHeader = memo((props: Props) => {
   }
 
   const handleOnBack = () => {
-    if (addingPostStage === AddingPostStage.CROPPING) {
+    if (addingPostStage === AddingPostStage.CROPPING && imagesNumber > 0) {
       setOpenConfirm(true)
     } else {
       onBack?.()
@@ -72,4 +76,4 @@ export const DialogHeader = memo((props: Props) => {
       )}
     </>
   )
-})
+}
