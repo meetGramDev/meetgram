@@ -1,4 +1,4 @@
-import {LenType} from './en';
+import { LenType } from './en';
 
 export const ru: LenType = {
     "About me": "О себе",
@@ -29,6 +29,8 @@ export const ru: LenType = {
     "July": "Июль",
     "June": "Июнь",
     "Last Name": "Фамилия",
+    "Like": "Нравится",
+    "Likes": "Нравится",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Похоже, что ссылка для подтверждения истекла. Не волнуйтесь, мы можем отправить ссылку снова",
     "March": "Март",
     "May": "Май",

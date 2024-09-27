@@ -27,6 +27,8 @@ export const en = {
     'July': "July",
     "June": "June",
     "Last Name": "Last Name",
+    "Like": "Like",
+    "Likes": "Likes",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Looks like the verification link has expired. Not to worry, we can send the link again",
     "March": "March",
     "May": "May",
@@ -39,8 +41,8 @@ export const en = {
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
     'Select from computer': "Select from computer",
-    "Select your city": "Select your city",
 
+    "Select your city": "Select your city",
     "Select your country": "Select your country",
     "September": "September",
     "Sign In": "Sign In",

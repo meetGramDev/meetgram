@@ -22,17 +22,44 @@ export const postApi = baseApi.injectEndpoints({
       }),
     }),
 
+    addLikeToPostComment: builder.mutation<
+      void,
+      { commentId: number; likeStatus: string; postId: number }
+    >({
+      invalidatesTags: (res, error, { commentId, likeStatus, postId }) => [
+        { commentId, likeStatus, postId: postId, type: 'post' },
+      ],
+      async onQueryStarted({ commentId, likeStatus, postId }, { dispatch, queryFulfilled }) {
+        const likeComment = dispatch(
+          postApi.util.updateQueryData('getPostComments', { postId }, state => {
+            state.items.map(
+              comment => comment.id === commentId && (comment.isLiked = likeStatus === 'LIKE')
+            )
+            try {
+              queryFulfilled
+            } catch (error) {
+              likeComment.undo()
+            }
+          })
+        )
+      },
+      query: ({ commentId, likeStatus, postId }) => ({
+        body: { likeStatus },
+        method: 'PUT',
+        url: `posts/${postId}/comments/${commentId}/like-status`,
+      }),
+    }),
     addPostComment: builder.mutation<AddCommentResponse, { body: AddCommentArgs; postId: number }>({
       invalidatesTags: postId => [{ postId, type: 'post' }],
       query: ({ body, postId }) => ({ body, method: 'POST', url: `posts/${postId}/comments` }),
     }),
+
     getAnswerComments: builder.query<GetAnswersResponse, { commentId: number; postId: number }>({
       providesTags: (res, err, args) => [{ id: args.postId, type: 'post' }],
       query: ({ commentId, postId }) => ({
         url: `posts/${postId}/comments/${commentId}/answers`,
       }),
     }),
-
     getPostComments: builder.query<GetCommentsResponse, { postId: number }>({
       providesTags: postId => [{ postId, type: 'post' }],
       query: ({ postId }) => `posts/${postId}/comments`,
@@ -48,6 +75,7 @@ export const postApi = baseApi.injectEndpoints({
 
 export const {
   useAddAnswerCommentMutation,
+  useAddLikeToPostCommentMutation,
   useAddPostCommentMutation,
   useGetAnswerCommentsQuery,
   useGetPostCommentsQuery,
