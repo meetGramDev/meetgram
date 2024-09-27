@@ -45,7 +45,7 @@ export const es: LenType = {
     "Select from computer": "Seleccionar desde la computadora",
     "Select your city": "Selecciona tu ciudad",
     "Select your country": "Selecciona tu país",
-    "September": "Septiembre",
+        "September": "Septiembre",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",

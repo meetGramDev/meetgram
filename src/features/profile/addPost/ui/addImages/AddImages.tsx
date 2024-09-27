@@ -11,11 +11,10 @@ import { Button, Dropzone, DropzoneRef, Loader } from '@/shared/ui'
 
 import s from './AddImages.module.scss'
 
+import { MAX_FILE_SIZE, MAX_FILES_LENGTH } from '../../const/consts'
 import { addPostActions } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
 import { ImageType } from '../../model/types/slice'
-
-const MAX_FILES_LENGTH = 10
 
 export const AddImages = () => {
   const t = useTranslate()
@@ -65,18 +64,30 @@ export const AddImages = () => {
           </p>
         )
 
+        setLoading(false)
+
         return
       }
 
       if (fileArray[i].size < 1024) {
         setError('File must be at least 1 KB')
 
+        setLoading(false)
+
+        return
+      }
+
+      if (fileArray[i].size > MAX_FILE_SIZE.bytes) {
+        setError(`The image size mustn't exceed ${MAX_FILE_SIZE.size} MB`)
+
+        setLoading(false)
+
         return
       }
 
       const data = await readFile(fileArray[i])
 
-      readFiles = [...readFiles, { image: data }]
+      readFiles = [...readFiles, { image: data, orig: data }]
     }
 
     await sleep(1200)

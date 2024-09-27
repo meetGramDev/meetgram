@@ -17,7 +17,7 @@ import { CloseIcon, FavoritesIcon, PaperPlane, SketchedFavourites } from '@/shar
 import { HOME } from '@/shared/config/router'
 import { serverErrorHandler } from '@/shared/lib'
 import { isErrorMessageString } from '@/shared/types'
-import { Button, Dialog, Loader, TextArea } from '@/shared/ui'
+import { Button, Dialog, ImageCarousel, Loader, TextArea } from '@/shared/ui'
 import { LikesView } from '@/widgets/likesFollowersView'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -118,26 +118,20 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
   }
 
   return (
-    <Dialog className={s.container} onOpenChange={isOpen} open={open}>
+    <Dialog onOpenChange={isOpen} open={open}>
       {isSuccess && (
-        <>
-          <div className={s.post}>
-            <Post
-              alt={'post'}
-              className={s.post}
-              height={post.images[0].height}
-              src={post.images[0].url}
-              width={post.images[0].width}
+        <div className={s.container}>
+          <Button className={s.iconClose} variant={'text'}>
+            <CloseIcon
+              onClick={() => {
+                isOpen(false)
+              }}
             />
-          </div>
+          </Button>
+
+          <ImageCarousel className={s.post} images={post.images} options={{ align: 'start' }} />
+
           <div className={s.content}>
-            <Button className={s.iconClose} variant={'text'}>
-              <CloseIcon
-                onClick={() => {
-                  isOpen(false)
-                }}
-              />
-            </Button>
             <div className={s.title}>
               <div className={s.userLink}>
                 <Link className={s.linkAvatar} href={ownerProfile}>
@@ -230,7 +224,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
               </Button>
             </div>
           </div>
-        </>
+        </div>
       )}
     </Dialog>
   )

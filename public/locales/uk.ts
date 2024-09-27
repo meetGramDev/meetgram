@@ -45,7 +45,7 @@ export const uk: LenType = {
     "Select from computer": "Виберіть з комп’ютера",
     "Select your city": "Виберіть ваше місто",
     "Select your country": "Виберіть вашу країну",
-    "September": "Вересень",
+        "September": "Вересень",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",

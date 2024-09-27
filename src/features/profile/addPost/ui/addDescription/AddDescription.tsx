@@ -75,7 +75,7 @@ export const AddDescription = () => {
     }
   }
 
-  useClientProgress(isLoadingAddImages || isLoadingCreatePost)
+  useClientProgress(isLoadingAddImages)
 
   if (!profile) {
     return null

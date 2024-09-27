@@ -6,7 +6,7 @@ import { Post, useGetSinglePublicPostQuery } from '@/entities/post'
 import { PostDescriptionField, getPostDescriptionSchema } from '@/entities/post/validation/schema'
 import { serverErrorHandler } from '@/shared/lib'
 import { isErrorServerMessagesType } from '@/shared/types'
-import { Button, Dialog, TextArea } from '@/shared/ui'
+import { Button, Dialog, ImageCarousel, TextArea } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './EditPost.module.scss'
@@ -86,9 +86,8 @@ export const EditPostDialog = ({ onOpenChange, open, postId }: Props) => {
       {isSuccess && (
         <>
           <div className={'flex'}>
-            <div className={s.post}>
-              <Post alt={'post'} src={post.images[0].url} />
-            </div>
+            <ImageCarousel className={s.post} images={post.images} />
+
             <form className={s.form} onSubmit={submitHandler}>
               <div className={'mb-6'}>
                 <div className={'flex items-center gap-3'}>
