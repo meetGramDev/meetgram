@@ -45,7 +45,7 @@ export const ru: LenType = {
     "Select from computer": "Выбрать на компьютере",
     "Select your city": "Выберите ваш город",
     "Select your country": "Выберите вашу страну",
-    "September": "Сентябрь",
+        "September": "Сентябрь",
     "Sign In": "Войти",
     "Sign Up": "Регистрация",
     "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",

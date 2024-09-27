@@ -5,14 +5,9 @@
 }
 
 .post {
-  width: 30.125rem;
-  height: 100%;
+  --max-picture-size-desktop: 30.125rem;
 
-  & > img {
-    width: 100%;
-    object-fit: cover;
-    image-rendering: crisp-edges;
-  }
+  height: 100%;
 }
 
 /* ==================== */
