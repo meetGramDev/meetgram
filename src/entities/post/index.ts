@@ -1,5 +1,16 @@
-export { useGetSinglePublicPostQuery } from './model/services/post.service'
-export { postsApi, useGetPublicPostsQuery } from './model/services/posts.service'
+export {
+  useAddAnswerCommentMutation,
+  useAddLikeToPostCommentMutation,
+  useAddPostCommentMutation,
+  useGetAnswerCommentsQuery,
+  useGetPostCommentsQuery,
+  useGetSinglePublicPostQuery,
+} from './model/services/post.service'
+export {
+  postsApi,
+  useDeletePostMutation,
+  useGetPublicPostsQuery,
+} from './model/services/posts.service'
 export {
   type GetPublicPostsResponse,
   type ImageType,

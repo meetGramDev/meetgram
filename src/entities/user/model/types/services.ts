@@ -11,14 +11,6 @@ export type RefreshTokenResponseType = {
   accessToken: string
 }
 
-export type Avatar = {
-  createdAt: string
-  fileSize: number
-  height: number
-  url: string
-  width: number
-}
-
 export type FullUserProfile = {
   createdAt?: string
   followersCount: number

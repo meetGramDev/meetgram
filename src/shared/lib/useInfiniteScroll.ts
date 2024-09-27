@@ -34,7 +34,7 @@ export function useInfiniteScroll(
   }, [])
 
   useEffect(() => {
-    if (inView && scroll > 0) {
+    if (inView || scroll > 0) {
       callback()
     }
   }, [inView, scroll, callback])
