@@ -75,8 +75,8 @@ export const ThumbsCarousel = ({
                 style={{
                   backgroundImage:
                     selected !== index
-                      ? `linear-gradient(rgb(0 0 0 / 50%), rgb(0 0 0 / 50%)), url(${image.image})`
-                      : `linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0 / 0%)), url(${image.image})`,
+                      ? `linear-gradient(rgb(0 0 0 / 50%), rgb(0 0 0 / 50%)), url(${image.orig})`
+                      : `linear-gradient(rgb(0 0 0 / 0%), rgb(0 0 0 / 0%)), url(${image.orig})`,
                 }}
               />
             </div>

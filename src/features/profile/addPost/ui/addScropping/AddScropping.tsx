@@ -77,8 +77,8 @@ export const AddScropping = () => {
   }
 
   const handleAddImage = (images: ImageType[]) => {
-    images.forEach(image => {
-      actions.addImage({ image: image.image })
+    images.forEach(imageEl => {
+      actions.addImage({ image: imageEl.image, orig: imageEl.image })
     })
   }
 
@@ -138,7 +138,7 @@ export const AddScropping = () => {
                   <div className={s.imageCropContainer}>
                     <ImageCropDialog
                       id={index}
-                      imageUrl={image.image}
+                      imageUrl={image.orig}
                       onCropComplete={handleSaveCropImg}
                     />
                   </div>
