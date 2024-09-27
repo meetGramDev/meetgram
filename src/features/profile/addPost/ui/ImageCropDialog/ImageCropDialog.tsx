@@ -6,7 +6,6 @@ import { AddPostSettingsSelect } from '@/features/profile/addPost/ui/addPostSett
 import { Expand } from '@/shared/assets/icons/Expand'
 import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
-import { ImageIconOutlined } from '@/shared/assets/icons/ImageIconOutlined'
 import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
@@ -179,9 +178,6 @@ export const ImageCropDialog = ({
               />
             </AddPostSettingsSelect>
           </div>
-        </div>
-        <div className={s.buttonContainer}>
-          <AddPostSettingsSelect placeholder={<ImageIconOutlined />}> </AddPostSettingsSelect>
         </div>
       </div>
     </div>

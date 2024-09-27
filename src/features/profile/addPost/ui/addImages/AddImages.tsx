@@ -87,7 +87,7 @@ export const AddImages = () => {
 
       const data = await readFile(fileArray[i])
 
-      readFiles = [...readFiles, { image: data }]
+      readFiles = [...readFiles, { image: data, orig: data }]
     }
 
     await sleep(1200)
