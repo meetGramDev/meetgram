@@ -61,12 +61,7 @@ export const AddButton = ({ onAdd }: Props) => {
     <div>
       <Button className={s.btnAdd} onClick={handleOnAddFiles} variant={'text'}>
         <PlusCircle />
-        <Dropzone
-          className={s.photo}
-          multiple
-          onFileListSelect={handleFilesSelect}
-          ref={dropzoneRef}
-        />
+        <Dropzone multiple onFileListSelect={handleFilesSelect} ref={dropzoneRef} />
       </Button>
     </div>
   )

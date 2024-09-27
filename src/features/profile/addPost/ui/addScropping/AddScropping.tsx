@@ -78,7 +78,7 @@ export const AddScropping = () => {
 
   const handleAddImage = (images: ImageType[]) => {
     images.forEach(imageEl => {
-      actions.addImage({ image: imageEl.image, orig: imageEl.image })
+      actions.addImage({ image: imageEl.image, orig: imageEl.orig })
     })
   }
 
