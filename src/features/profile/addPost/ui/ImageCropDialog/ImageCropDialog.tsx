@@ -6,7 +6,6 @@ import { AddPostSettingsSelect } from '@/features/profile/addPost/ui/addPostSett
 import { Expand } from '@/shared/assets/icons/Expand'
 import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
-import { ImageIconOutlined } from '@/shared/assets/icons/ImageIconOutlined'
 import { Maxinize } from '@/shared/assets/icons/Maxinize'
 import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
@@ -43,9 +42,10 @@ const aspectRatios = [
 export type ImageCropDialogType = {
   aspectInit?: AspectRatioType
   cropInit?: { x: number; y: number }
-  id?: number
+  id: number
   imageUrl?: string
-  setCropImg: (img: string | undefined) => void
+  // setCropImg: (img: string | undefined) => void
+  onCropComplete?: (img: string, id: number) => void
   zoomInit?: number[]
 }
 
@@ -59,7 +59,7 @@ export const ImageCropDialog = ({
   cropInit,
   id,
   imageUrl,
-  setCropImg,
+  onCropComplete,
   zoomInit,
 }: ImageCropDialogType) => {
   if (zoomInit == null) {
@@ -92,7 +92,7 @@ export const ImageCropDialog = ({
     const value = e.currentTarget.value
   }
 
-  const onCropComplete = async (croppedArea: Area, croppedAreaPixels: Area) => {
+  const handleOnCropComplete = async (croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels)
     if (imageUrl === undefined) {
       return
@@ -102,7 +102,9 @@ export const ImageCropDialog = ({
       imageUrl,
       croppedAreaPixels.width,
       croppedAreaPixels.height,
-      setCropImg
+      cropImg => {
+        onCropComplete?.(cropImg, id)
+      }
     )
   }
 
@@ -114,7 +116,7 @@ export const ImageCropDialog = ({
         cropShape={'rect'}
         image={imageUrl}
         onCropChange={onCropChange}
-        onCropComplete={onCropComplete}
+        onCropComplete={handleOnCropComplete}
         //onZoomChange={onZoomChange}
         zoom={zoom[0]}
         zoomWithScroll={false}
@@ -187,9 +189,9 @@ export const ImageCropDialog = ({
             </AddPostSettingsSelect>
           </div>
         </div>
-        <div className={s.buttonContainer}>
-          <AddPostSettingsSelect placeholder={<ImageIconOutlined />}> </AddPostSettingsSelect>
-        </div>
+        {/*<div className={s.buttonContainer}>*/}
+        {/*  <AddPostSettingsSelect placeholder={<ImageIconOutlined />}> </AddPostSettingsSelect>*/}
+        {/*</div>*/}
       </div>
     </div>
   )

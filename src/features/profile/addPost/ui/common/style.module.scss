@@ -32,14 +32,7 @@
 
 /* Layout */
 .post {
-  width: 30.125rem;
-  height: 100%;
-
-  & > img {
-    width: 100%;
-    object-fit: cover;
-    image-rendering: crisp-edges;
-  }
+  --slide-height-desktop: 80vh;
 }
 
 /* ====== */
