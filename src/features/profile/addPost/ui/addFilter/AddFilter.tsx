@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 
 import { Post } from '@/entities/post'
-import { AddingPostStage, addPostActions } from '@/features/profile/addPost'
+import { addPostActions } from '../../model/slice/addPostSlice'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { ImageCarousel } from '@/shared/ui'
 import { clsx } from 'clsx'
@@ -10,6 +10,7 @@ import s from './AddFilter.module.scss'
 
 import { filterMap, filters } from '../../lib/filtersState'
 import { DialogHeader } from '../common/DialogHeader'
+import { AddingPostStage } from '../../model/types/addPostTypes'
 
 export const AddFilter = () => {
   const actions = useActions(addPostActions)

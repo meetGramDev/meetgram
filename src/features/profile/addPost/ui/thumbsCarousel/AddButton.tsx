@@ -51,7 +51,7 @@ export const AddButton = ({ onAdd }: Props) => {
 
       const data = await readFile(fileArray[i])
 
-      readFiles = [...readFiles, { image: data, orig: data }]
+      readFiles = [...readFiles, { image: data, orig: data, filter: data }]
     }
 
     onAdd(readFiles)
