@@ -7,6 +7,7 @@ import { Expand } from '@/shared/assets/icons/Expand'
 import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
 import { ImageIconOutlined } from '@/shared/assets/icons/ImageIconOutlined'
+import { Maxinize } from '@/shared/assets/icons/Maxinize'
 import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
@@ -168,7 +169,10 @@ export const ImageCropDialog = ({
             </AddPostSettingsSelect>
           </div>
           <div className={s.buttonContainer}>
-            <AddPostSettingsSelect placeholder={<MaxinizeOutline />}>
+            <AddPostSettingsSelect
+              placeholder={<MaxinizeOutline />}
+              secondPlaceholder={<Maxinize />}
+            >
               <div className={s.sliderWrapper}>
                 <Slider
                   className={s.slider}
