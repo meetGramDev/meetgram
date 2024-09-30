@@ -32,7 +32,7 @@ export const ChangedSlider = () => {
   const step = 0.1
   const [value, setValue] = useState<number[]>([0])
   const onValueCommit = (commitValue: number[]) => {
-    console.log(commitValue)
+    console.log('commiting values', commitValue)
   }
 
   return (
