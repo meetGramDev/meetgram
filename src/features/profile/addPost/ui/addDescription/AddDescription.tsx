@@ -25,7 +25,7 @@ export const AddDescription = () => {
   const [addImages, { isLoading: isLoadingAddImages }] = useAddImagesMutation()
   const [createPost, { isLoading: isLoadingCreatePost }] = useCreatePostMutation()
 
-  const { closeAddingPost, removeImage, setAddingPostStage } = useActions(addPostActions)
+  const { closeAddingPost, setAddingPostStage } = useActions(addPostActions)
 
   const postDescriptionRef = useRef<Nullable<PostDescriptionFormRef>>(null)
 
@@ -45,8 +45,8 @@ export const AddDescription = () => {
     const formData = new FormData()
 
     images.forEach(el => {
-      if (el.image != null) {
-        formData.append('file', dataURLToBlob(el.image))
+      if (el.filter != null) {
+        formData.append('file', dataURLToBlob(el.filter))
       }
     })
 
