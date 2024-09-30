@@ -13,8 +13,6 @@ type Props = {
 export const AddPostSettingsSelect = ({ children, placeholder, secondPlaceholder }: Props) => {
   const [open, setOpen] = useState<boolean>(false)
 
-  console.log(secondPlaceholder)
-
   if (secondPlaceholder === undefined) {
     return (
       <Select
