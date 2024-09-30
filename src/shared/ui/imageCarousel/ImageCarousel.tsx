@@ -120,9 +120,9 @@ export const ImageCarousel = ({
     >
       <CarouselContent className={clsx(contentClassname)}>
         {images?.map((image, i) => {
-          let imgProps = {
-            src: '',
+          const imgProps = {
             height: 300,
+            src: '',
             width: 300,
           }
 
