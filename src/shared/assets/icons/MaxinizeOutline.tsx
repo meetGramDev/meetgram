@@ -1,4 +1,5 @@
 import { Ref, SVGProps, forwardRef } from 'react'
+type SVGComponentProps = { className?: string } & React.SVGProps<SVGProps<SVGSVGElement>>
 const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
     fill={'currentColor'}
