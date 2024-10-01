@@ -6,10 +6,11 @@ import { AddPostSettingsSelect } from '@/features/profile/addPost/ui/addPostSett
 import { Expand } from '@/shared/assets/icons/Expand'
 import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
+import { Maxinize } from '@/shared/assets/icons/Maxinize'
 import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
-import { Button } from '@/shared/ui'
+import { Button, Slider } from '@/shared/ui'
 
 import s from './ImageCropDialog.module.scss'
 
@@ -45,7 +46,7 @@ export type ImageCropDialogType = {
   imageUrl?: string
   // setCropImg: (img: string | undefined) => void
   onCropComplete?: (img: string, id: number) => void
-  zoomInit?: number
+  zoomInit?: number[]
 }
 
 type CropType = {
@@ -62,7 +63,7 @@ export const ImageCropDialog = ({
   zoomInit,
 }: ImageCropDialogType) => {
   if (zoomInit == null) {
-    zoomInit = 1
+    zoomInit = [1]
   }
   if (cropInit == null) {
     cropInit = { x: 0, y: 0 }
@@ -71,7 +72,7 @@ export const ImageCropDialog = ({
     aspectInit = aspectRatios[0]
   }
   const [crop, setCrop] = useState<Point>(cropInit)
-  const [zoom, setZoom] = useState(zoomInit)
+  const [zoom, setZoom] = useState<number[]>(zoomInit)
   const [aspect, setAspect] = useState<AspectRatioType>(aspectInit)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
 
@@ -79,8 +80,12 @@ export const ImageCropDialog = ({
     setCrop(crop)
   }
 
-  const onZoomChange = (zoom: number) => {
-    setZoom(zoom)
+  //for zoom
+  const onZoomChange = (zoomCount: number[]) => {
+    setZoom(zoomCount)
+  }
+  const onZoomCommit = (val: number[]) => {
+    setZoom(val)
   }
 
   const onAspectChange = (e: FormEvent<HTMLInputElement>) => {
@@ -112,8 +117,8 @@ export const ImageCropDialog = ({
         image={imageUrl}
         onCropChange={onCropChange}
         onCropComplete={handleOnCropComplete}
-        onZoomChange={onZoomChange}
-        zoom={zoom}
+        //onZoomChange={onZoomChange}
+        zoom={zoom[0]}
         zoomWithScroll={false}
       />
       <div className={s.controlCropperWrapper}>
@@ -166,19 +171,27 @@ export const ImageCropDialog = ({
             </AddPostSettingsSelect>
           </div>
           <div className={s.buttonContainer}>
-            <AddPostSettingsSelect placeholder={<MaxinizeOutline />}>
-              <input
-                className={s.slider}
-                max={3}
-                min={1}
-                onInput={e => onZoomChange(+e.currentTarget.value)}
-                step={0.1}
-                type={'range'}
-                value={zoom}
-              />
+            <AddPostSettingsSelect
+              placeholder={<MaxinizeOutline />}
+              secondPlaceholder={<Maxinize />}
+            >
+              <div className={s.sliderWrapper}>
+                <Slider
+                  className={s.slider}
+                  max={3}
+                  min={1}
+                  onValueChange={onZoomChange}
+                  onValueCommit={onZoomCommit}
+                  step={0.1}
+                  value={zoom}
+                />
+              </div>
             </AddPostSettingsSelect>
           </div>
         </div>
+        {/*<div className={s.buttonContainer}>*/}
+        {/*  <AddPostSettingsSelect placeholder={<ImageIconOutlined />}> </AddPostSettingsSelect>*/}
+        {/*</div>*/}
       </div>
     </div>
   )
