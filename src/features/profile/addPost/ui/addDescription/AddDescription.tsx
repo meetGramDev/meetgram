@@ -45,7 +45,9 @@ export const AddDescription = () => {
     const formData = new FormData()
 
     images.forEach(el => {
-      formData.append('file', dataURLToBlob(el.image))
+      if (el.filter != null) {
+        formData.append('file', dataURLToBlob(el.filter))
+      }
     })
 
     try {

@@ -1,4 +1,4 @@
-import {
+import React, {
   ComponentProps,
   HTMLAttributes,
   KeyboardEvent,
@@ -140,45 +140,61 @@ const CarouselItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 
 CarouselItem.displayName = 'CarouselItem'
 
-const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof ButtonIcon>>(
-  ({ className, ...restProps }, ref) => {
-    const { canScrollPrev, scrollPrev } = useCarousel()
+const CarouselPrevious = forwardRef<
+  HTMLButtonElement,
+  { onPrev?: () => void } & ComponentProps<typeof ButtonIcon>
+>(({ className, onPrev, ...restProps }, ref) => {
+  const { canScrollPrev, scrollPrev } = useCarousel()
 
-    return (
-      <ButtonIcon
-        className={clsx(s.slideButton, s.slideBtnPrev, className)}
-        disabled={!canScrollPrev}
-        onClick={scrollPrev}
-        ref={ref}
-        {...restProps}
-      >
-        <span className={s.srOnly}>Previous slide</span>
-        <ArrowPrev />
-      </ButtonIcon>
-    )
+  const handlePrev = () => {
+    scrollPrev()
+    if (onPrev) {
+      onPrev()
+    }
   }
-)
+
+  return (
+    <ButtonIcon
+      className={clsx(s.slideButton, s.slideBtnPrev, className)}
+      disabled={!canScrollPrev}
+      onClick={handlePrev}
+      ref={ref}
+      {...restProps}
+    >
+      <span className={s.srOnly}>Previous slide</span>
+      <ArrowPrev />
+    </ButtonIcon>
+  )
+})
 
 CarouselPrevious.displayName = 'CarouselPrevious'
 
-const CarouselNext = forwardRef<HTMLButtonElement, ComponentProps<typeof ButtonIcon>>(
-  ({ className, ...restProps }, ref) => {
-    const { canScrollNext, scrollNext } = useCarousel()
+const CarouselNext = forwardRef<
+  HTMLButtonElement,
+  { onNext?: () => void } & ComponentProps<typeof ButtonIcon>
+>(({ className, onNext, ...restProps }, ref) => {
+  const { canScrollNext, scrollNext } = useCarousel()
 
-    return (
-      <ButtonIcon
-        className={clsx(s.slideButton, s.slideBtnNext, className)}
-        disabled={!canScrollNext}
-        onClick={scrollNext}
-        ref={ref}
-        {...restProps}
-      >
-        <span className={s.srOnly}>Next slide</span>
-        <ArrowNext />
-      </ButtonIcon>
-    )
+  const handleNext = () => {
+    scrollNext()
+    if (onNext) {
+      onNext()
+    }
   }
-)
+
+  return (
+    <ButtonIcon
+      className={clsx(s.slideButton, s.slideBtnNext, className)}
+      disabled={!canScrollNext}
+      onClick={handleNext}
+      ref={ref}
+      {...restProps}
+    >
+      <span className={s.srOnly}>Next slide</span>
+      <ArrowNext />
+    </ButtonIcon>
+  )
+})
 
 CarouselNext.displayName = 'CarouselNext'
 

@@ -45,7 +45,7 @@ export const AddScropping = () => {
   const onNextPageView = () => {
     if (cropImgs.size !== 0) {
       cropImgs.forEach((image, id) => {
-        actions.updateImage({ image: { image }, index: id })
+        actions.updateImage({ image: { filter: image, image: image }, index: id })
       })
     }
 
@@ -78,7 +78,7 @@ export const AddScropping = () => {
 
   const handleAddImage = (images: ImageType[]) => {
     images.forEach(imageEl => {
-      actions.addImage({ image: imageEl.image, orig: imageEl.orig })
+      actions.addImage({ filter: imageEl.filter, image: imageEl.image, orig: imageEl.orig })
     })
   }
 

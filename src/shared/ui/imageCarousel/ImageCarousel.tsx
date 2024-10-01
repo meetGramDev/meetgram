@@ -20,17 +20,21 @@ type ImageType =
       createdAt?: string
       fileSize: number
       height: number
+      image: string
       uploadId: string
-      url: StaticImport | string
       width: number
     }
-  | { image: string }
+  | { filter: string; image: string }
+  | { url: StaticImport | string }
 
 type Props = {
   className?: string
   contentClassname?: string
   images: ImageType[]
   itemClassname?: string
+  keyName?: 'filter' | 'image'
+  onNext?: () => void
+  onPrev?: () => void
   /**
    * Default: `True`.
    * Toggle a navigation arrow buttons view.
@@ -43,6 +47,10 @@ export const ImageCarousel = ({
   contentClassname,
   images,
   itemClassname,
+  keyName,
+  onCurrentSlide,
+  onNext,
+  onPrev,
   options,
   showNavigation = true,
   ...props
@@ -111,29 +119,43 @@ export const ImageCarousel = ({
       {...props}
     >
       <CarouselContent className={clsx(contentClassname)}>
-        {images?.map((image, i) => (
-          <CarouselItem className={clsx(itemClassname, s.item)} key={i}>
-            <div className={s.itemContainer}>
-              <div className={s.picture}>
-                <Image
-                  alt={`Image-${i + 1}`}
-                  className={s.photo}
-                  onLoad={handleOnImageLoad}
-                  ref={imageRef}
-                  {...('image' in image
-                    ? { height: 300, src: image.image, width: 300 }
-                    : { height: image.height, src: image.url, width: image.width })}
-                />
+        {images?.map((image, i) => {
+          const imgProps = {
+            height: 300,
+            src: '',
+            width: 300,
+          }
+
+          if (keyName === 'filter' && 'filter' in image) {
+            imgProps.src = image.filter || ''
+          } else if (keyName === 'image' && 'image' in image) {
+            imgProps.src = image.image || ''
+          } else if ('url' in image) {
+            imgProps.src = typeof image.url === 'string' ? image.url : ''
+          }
+
+          return (
+            <CarouselItem className={clsx(itemClassname, s.item)} key={i}>
+              <div className={s.itemContainer}>
+                <div className={s.picture}>
+                  <Image
+                    alt={`Image-${i + 1}`}
+                    className={s.photo}
+                    onLoad={handleOnImageLoad}
+                    ref={imageRef}
+                    {...imgProps}
+                  />
+                </div>
               </div>
-            </div>
-          </CarouselItem>
-        ))}
+            </CarouselItem>
+          )
+        })}
       </CarouselContent>
 
       {showNavigation && isManyItems && (
         <>
-          <CarouselPrevious className={s.navigationPrev} />
-          <CarouselNext className={s.navigationNext} />
+          <CarouselPrevious className={s.navigationPrev} onPrev={onPrev} />
+          <CarouselNext className={s.navigationNext} onNext={onNext} />
         </>
       )}
     </Carousel>
