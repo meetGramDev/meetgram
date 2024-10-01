@@ -121,9 +121,9 @@ export const ImageCarousel = ({
       <CarouselContent className={clsx(contentClassname)}>
         {images?.map((image, i) => {
           const imgProps = {
-            height: 300,
+            height: 'height' in image ? image.height : 300,
             src: '',
-            width: 300,
+            width: 'width' in image ? image.width : 300,
           }
 
           if (keyName === 'filter' && 'filter' in image) {
