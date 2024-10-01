@@ -11,6 +11,7 @@ import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
 import { Button, Slider } from '@/shared/ui'
+import * as SelectRadix from '@radix-ui/react-select'
 
 import s from './ImageCropDialog.module.scss'
 
@@ -125,49 +126,68 @@ export const ImageCropDialog = ({
         <div className={s.buttonCroppingWrapper}>
           <div className={s.buttonContainer}>
             <AddPostSettingsSelect placeholder={<Expand />}>
-              <div className={s.menuContent}>
-                <Button
-                  className={s.button}
-                  onClick={() => {
-                    setAspect(aspectRatios[0])
-                  }}
-                  variant={'text'}
-                >
-                  <>Оригинал</>
-                  <ImageIcon />{' '}
-                </Button>
+              {aspectRatios.map((ratio, count) => (
+                <SelectRadix.Item key={count} value={`${ratio.value}`}>
+                  <SelectRadix.ItemText>
+                    {/*<SelectRadix.ItemIndicator style={{ height: '100px', width: '100px' }}>*/}
+                    <Button
+                      className={s.button}
+                      onClick={() => {
+                        console.log(ratio)
+                        setAspect(ratio)
+                      }}
+                      variant={'text'}
+                    >
+                      <>{ratio.text}</>
+                      {/*<ImageIcon />{' '}*/}
+                    </Button>
+                    {/*</SelectRadix.ItemIndicator>*/}
+                  </SelectRadix.ItemText>
+                </SelectRadix.Item>
+              ))}
+              {/*<div className={s.menuContent}>*/}
+              {/*  <Button*/}
+              {/*    className={s.button}*/}
+              {/*    onClick={() => {*/}
+              {/*      setAspect(aspectRatios[0])*/}
+              {/*    }}*/}
+              {/*    variant={'text'}*/}
+              {/*  >*/}
+              {/*    <>Оригинал</>*/}
+              {/*    <ImageIcon />{' '}*/}
+              {/*  </Button>*/}
 
-                <Button
-                  className={s.button}
-                  onClick={() => {
-                    setAspect(aspectRatios[3])
-                  }}
-                  variant={'text'}
-                >
-                  <>1:1</>
-                  <Rectangle />{' '}
-                </Button>
-                <Button
-                  className={s.button}
-                  onClick={() => {
-                    setAspect(aspectRatios[1])
-                  }}
-                  variant={'text'}
-                >
-                  <>4:5</>
-                  <Rectangular />{' '}
-                </Button>
-                <Button
-                  className={s.button}
-                  onClick={() => {
-                    setAspect(aspectRatios[2])
-                  }}
-                  variant={'text'}
-                >
-                  <>16:9</>
-                  <HorizontalRectangle />{' '}
-                </Button>
-              </div>
+              {/*  <Button*/}
+              {/*    className={s.button}*/}
+              {/*    onClick={() => {*/}
+              {/*      setAspect(aspectRatios[3])*/}
+              {/*    }}*/}
+              {/*    variant={'text'}*/}
+              {/*  >*/}
+              {/*    <>1:1</>*/}
+              {/*    <Rectangle />{' '}*/}
+              {/*  </Button>*/}
+              {/*  <Button*/}
+              {/*    className={s.button}*/}
+              {/*    onClick={() => {*/}
+              {/*      setAspect(aspectRatios[1])*/}
+              {/*    }}*/}
+              {/*    variant={'text'}*/}
+              {/*  >*/}
+              {/*    <>4:5</>*/}
+              {/*    <Rectangular />{' '}*/}
+              {/*  </Button>*/}
+              {/*  <Button*/}
+              {/*    className={s.button}*/}
+              {/*    onClick={() => {*/}
+              {/*      setAspect(aspectRatios[2])*/}
+              {/*    }}*/}
+              {/*    variant={'text'}*/}
+              {/*  >*/}
+              {/*    <>16:9</>*/}
+              {/*    <HorizontalRectangle />{' '}*/}
+              {/*  </Button>*/}
+              {/*</div>*/}
             </AddPostSettingsSelect>
           </div>
           <div className={s.buttonContainer}>
