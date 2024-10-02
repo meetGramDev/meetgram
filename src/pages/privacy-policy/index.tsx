@@ -1,14 +1,17 @@
+import { translate } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
-import { BackButton } from '@/shared/ui/backButton/BackButton'
 import { getAuthLayout } from '@/widgets/layouts'
+import { useRouter } from 'next/router'
 
 const PrivacyPolicy: NextPageWithLayout = () => {
+  const { locale } = useRouter()
+
+  const { policies } = translate(locale)
+
   return (
     <div className={'mx-16'}>
-      <BackButton label={`${String.fromCharCode(8592)} Go back`} />
-
       <div className={'flex flex-col gap-5 text-center text-light-100'}>
-        <h2 className={'text-h1 font-bold'}>Privacy Policy</h2>
+        <h2 className={'text-h1 font-bold'}>{policies['Privacy Policy']}</h2>
         <p className={'px-24 text-regular14'}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Fames ac turpis egestas integer eget aliquet nibh. Amet

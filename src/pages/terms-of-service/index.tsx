@@ -1,15 +1,19 @@
+import { translate } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
-import { BackButton } from '@/shared/ui'
 import { getAuthLayout } from '@/widgets/layouts'
+import { useRouter } from 'next/router'
 
 import s from './index.module.scss'
 
 const TermsOfService: NextPageWithLayout = () => {
+  const { locale } = useRouter()
+
+  const { policies } = translate(locale)
+
   return (
     <div className={'mx-16'}>
-      <BackButton label={`${String.fromCharCode(8592)} Back to Sign Up`} />
       <div className={s.root}>
-        <h2 className={s.title}>Terms of Service</h2>
+        <h2 className={s.title}>{policies['Terms Of Service']}</h2>
         <div className={s.text}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Fames ac turpis egestas integer eget aliquet nibh. Amet

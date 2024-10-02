@@ -1,0 +1,119 @@
+.selectTrigger {
+  width: min-content;
+  height: min-content;
+  margin-right: 1.5rem;
+  padding: 0;
+
+  background: none;
+  border: none;
+  outline: none;
+
+  transition: 0.3s all;
+}
+
+.selectTrigger[data-placeholder] {
+  color: var(--light-color-100);
+
+  &:hover {
+    color: var(--primary-color-100);
+  }
+
+  &:focus {
+    color: var(--primary-color-300);
+    outline: none;
+  }
+
+  &:focus-visible {
+    color: var(--primary-color-300);
+    outline: none;
+  }
+}
+
+.selectTrigger[data-state='open'] {
+  color: var(--primary-color-700);
+  outline: none;
+
+  &:focus {
+    color: var(--primary-color-700);
+    outline: none;
+  }
+}
+
+.selectTrigger[data-state='open'][data-placeholder] {
+  color: var(--primary-color-700);
+  outline: none;
+
+  &:focus {
+    color: var(--primary-color-700);
+    outline: none;
+  }
+}
+
+.selectContent {
+  transform: translateX(-80%);
+
+  width: min-content;
+  height: min-content;
+
+  border: 1px solid var(--dark-color-100);
+  border-radius: 2px;
+  outline: none;
+
+  &:focus {
+    outline: var(--dark-color-100);
+    box-shadow: none;
+  }
+}
+
+.menuContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: start;
+  justify-content: start;
+
+  max-width: min-content;
+  margin: 0.75rem 0.75rem 0.75rem 0;
+
+  white-space: nowrap;
+}
+
+.button {
+  gap: 0.75rem;
+
+  margin-left: 0.75rem;
+
+  font: var(--font-regular);
+  color: var(--light-color-100);
+  text-align: center;
+}
+
+.dialogChildrenWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  width: 378px;
+  max-width: 378px;
+  padding: 30px 24px 36px;
+}
+
+.dialogText {
+  max-width: 333px;
+}
+
+.dialogBtnWrap {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.dialogButton {
+  padding: 6px 36px;
+}
+
+.dialogButtonComplete {
+  margin-right: 24px;
+}

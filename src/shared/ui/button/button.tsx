@@ -1,4 +1,11 @@
-import { ComponentPropsWithoutRef, ElementType, ReactNode, forwardRef } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  ElementType,
+  ForwardedRef,
+  ReactNode,
+  forwardRef,
+} from 'react'
 
 import { PolymorphicRef } from '@/shared/types'
 import clsx from 'clsx'
@@ -16,18 +23,23 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   variant?: ButtonVariant
 } & ComponentPropsWithoutRef<T>
 
-export const Button = forwardRef(
-  <T extends ElementType = 'button'>(props: ButtonProps<T>, forwardRef?: PolymorphicRef<T>) => {
-    const { as, className, disabled = false, fullWidth, variant = 'primary', ...rest } = props
+const ButtonComponent = <T extends ElementType = 'button'>(
+  props: ButtonProps<T>,
+  forwardRef?: PolymorphicRef<T>
+) => {
+  const { as, className, disabled = false, fullWidth, variant = 'primary', ...rest } = props
 
-    const classNames = { root: clsx(fullWidth && s.fullWidth, s[variant], className) }
+  const classNames = { root: clsx(fullWidth && s.fullWidth, s[variant], className) }
 
-    const Component = as || 'button'
+  const Component = as || 'button'
 
-    return (
-      <Component className={classNames.root} disabled={disabled} ref={forwardRef} {...rest}>
-        {props.children}
-      </Component>
-    )
-  }
-)
+  return (
+    <Component className={classNames.root} disabled={disabled} ref={forwardRef} {...rest}>
+      {props.children}
+    </Component>
+  )
+}
+
+export const Button = forwardRef(ButtonComponent) as <T extends ElementType = 'button'>(
+  props: { ref?: ForwardedRef<ElementRef<T>> } & ButtonProps<T>
+) => ReturnType<typeof ButtonComponent>

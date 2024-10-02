@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { StoreDecorator } from '@/shared/config/storybook'
 import { fn } from '@storybook/test'
 
 import { SignUpForm } from './SignUpForm'
@@ -8,7 +7,6 @@ import { SignUpForm } from './SignUpForm'
 const meta = {
   args: {},
   component: SignUpForm,
-  decorators: [StoreDecorator()],
   parameters: {
     layout: 'centered',
   },
