@@ -1,9 +1,10 @@
-import { forwardRef, useImperativeHandle, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Photo } from '@/entities/photo'
+import { ServerMessagesType } from '@/shared/api'
 import { cn } from '@/shared/lib'
-import { Nullable } from '@/shared/types'
+import { Nullable, isErrorServerMessagesType } from '@/shared/types'
 import { Button, TextArea } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -19,18 +20,21 @@ export type PostDescriptionFormRef = {
   onSubmitFormClick: () => void
 }
 type Props = {
-  onSubmit: (data: PostDescriptionField) => void
+  disabled?: boolean
+  error?: ServerMessagesType[] | string
+  onSubmit: (data: PostDescriptionField, isDirty?: boolean) => void
   ownerAvatar?: string
   ownerUsername?: string
   post?: PublicPost
 }
 
 export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
-  ({ onSubmit, ownerAvatar, ownerUsername, post }, forwardedRef) => {
+  ({ disabled, error, onSubmit, ownerAvatar, ownerUsername, post }, forwardedRef) => {
     const buttonRef = useRef<Nullable<HTMLButtonElement>>(null)
 
     const {
       formState: { errors, isDirty, isSubmitting, isValid },
+      getValues,
       handleSubmit,
       register,
       setError,
@@ -54,8 +58,18 @@ export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
       }
     })
 
+    const handleOnSubmitText = handleSubmit(data => {
+      onSubmit(data, isDirty)
+    })
+
+    useEffect(() => {
+      if (isErrorServerMessagesType(error)) {
+        setError(error[0].field as keyof PostDescriptionField, { message: error[0].message })
+      }
+    }, [error, setError, getValues])
+
     return (
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={s.form} onSubmit={handleOnSubmitText}>
         <div className={'mb-6'}>
           <div className={'flex items-center gap-3'}>
             <Photo
@@ -88,8 +102,7 @@ export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
           </div>
           <div className={cn('flex justify-end', forwardedRef && 'pointer-events-none invisible')}>
             <Button
-              disabled={!isValid || isSubmitting || !!errors.description}
-              /* @ts-ignore */
+              disabled={!isValid || isSubmitting || !!errors.description || disabled}
               ref={buttonRef}
             >
               Save changes
