@@ -180,6 +180,7 @@ export const AddFilter = () => {
             keyName={'image'}
             onNext={handleNextCarousel}
             onPrev={handlePrevCarousel}
+            options={{ watchDrag: false }}
             showDotsPagination={false}
           />
         </div>
