@@ -109,10 +109,10 @@ export const ImageCarousel = ({
       className={clsx(s.carousel, className)}
       dotsClassname={clsx(s.dots)}
       options={{
-        ...options,
         containScroll: 'trimSnaps',
         skipSnaps: false,
         watchDrag: isManyItems,
+        ...options,
       }}
       setApi={setApi}
       showDotsPagination={isManyItems}
