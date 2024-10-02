@@ -23,7 +23,7 @@ const SvgComponent = ({ fill, ...props }: SVGProps<SVGSVGElement>, ref: Ref<SVGS
       </clipPath>
     </defs>
     <rect
-      fill={'currentColor'}
+      fill={'#FFFFFF'}
       fillOpacity={'0'}
       height={'24.000000'}
       id={'more-horizontal-outline'}

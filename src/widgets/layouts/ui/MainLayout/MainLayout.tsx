@@ -13,7 +13,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
 
   return (
-    <div className={`min-h-[calc(100vh_-_3.75rem_-_72px)] ${inter.className}`}>
+    <div className={`min-h-[calc(100vh_-_3.75rem_-_72px)] pb-9 ${inter.className}`}>
       {isMobile ? <MobileHeader /> : <Header />}
       <div className={s.page}>
         <Sidebar />

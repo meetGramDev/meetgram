@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { StoreDecorator } from '@/shared/config/storybook'
 import { fn } from '@storybook/test'
 
 import { UploadPhoto } from './UploadPhoto'
@@ -8,6 +9,7 @@ import { UploadPhotoForm } from './UploadPhotoForm'
 const meta = {
   args: {},
   component: UploadPhotoForm,
+  decorators: [StoreDecorator()],
   tags: ['autodocs'],
   title: 'features/profile/UploadPhoto',
 } satisfies Meta<typeof UploadPhotoForm>

@@ -6,24 +6,20 @@ import {
   useForgotPasswordMutation,
 } from '@/features/auth/forgotPassword'
 import { ServerMessagesType } from '@/shared/api'
-import { serverErrorHandler, translate, useClientProgress } from '@/shared/lib'
-import { NextPageWithLayout, isErrorMessageString, isErrorServerMessagesType } from '@/shared/types'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { isErrorMessageString, isErrorServerMessagesType } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Dialog } from '@/shared/ui/dialog'
 import { getAuthLayout } from '@/widgets/layouts'
-import { useRouter } from 'next/router'
 
 import s from './index.module.scss'
 
-const ForgotPassword: NextPageWithLayout = () => {
-  const { locale } = useRouter()
+const ForgotPassword = () => {
   const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
   const [trigger, setTrigger] = useState<boolean>(false)
   const [isFormSended, setIsFormSended] = useState<boolean>(false)
   const [email, setEmail] = useState('')
   const [error, setError] = useState<ServerMessagesType[]>([])
-
-  const { forgoPasswordForm } = translate(locale)
 
   useClientProgress(isLoading)
 
@@ -53,9 +49,11 @@ const ForgotPassword: NextPageWithLayout = () => {
   return (
     <div>
       <ForgotPasswordForm error={error} isFormSended={isFormSended} onSubmit={onSubmit} />
-      <Dialog onOpenChange={setTrigger} open={trigger} title={`${forgoPasswordForm.emailSent}`}>
+      <Dialog onOpenChange={setTrigger} open={trigger} title={'Email sent'}>
         <div className={s.dialogChildrenWrapper}>
-          <span className={s.dialogText}>{`${forgoPasswordForm.sendLinkDialog} ${email}`}</span>
+          <span
+            className={s.dialogText}
+          >{`We have sent a link to confirm your email to ${email}`}</span>
           <div className={s.dialogBtnWrap}>
             <Button
               className={s.dialogButton}

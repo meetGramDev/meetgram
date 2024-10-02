@@ -35,9 +35,6 @@ export function serverErrorHandler(error: any): ServerMessagesType[] | string {
           if (isErrorMessageString(error.data.messages)) {
             errMsg = error.data.messages
           }
-          if (isErrorServerMessagesType(error.data.messages)) {
-            errMsg = error.data.messages[0].message
-          }
           break
 
         case StatusCode.NotFound:

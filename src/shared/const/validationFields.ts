@@ -8,11 +8,11 @@ const passContain = 'Password must contain'
 const wrongUsername = 'Wrong username'
 const errorEmail = 'Invalid email'
 
-export const getEmailConstraint = (errorEmail?: ErrorEmail) => {
+export const getEmailConstraint = (errorEmail: ErrorEmail | undefined) => {
   return z.string().email({ message: errorEmail ? errorEmail.InvalidEmail : errorEmail })
 }
 
-export const getPasswordConstraint = (errorValidationFields?: ErrorValidationFields) => {
+export const getPasswordConstraint = (errorValidationFields: ErrorValidationFields | undefined) => {
   return z
     .string()
     .trim()
@@ -21,14 +21,13 @@ export const getPasswordConstraint = (errorValidationFields?: ErrorValidationFie
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~\\]{6,}$/,
       errorValidationFields
-        ? errorValidationFields.passContain +
-            ' a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
+        ? errorValidationFields.passContain
         : passContain +
             ' a-z, A-Z,  ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
     )
 }
 
-export const getUserNameConstraint = (errorValidationFields?: ErrorValidationFields) => {
+export const getUserNameConstraint = (errorValidationFields: ErrorValidationFields | undefined) => {
   return z
     .string()
     .trim()
@@ -39,14 +38,12 @@ export const getUserNameConstraint = (errorValidationFields?: ErrorValidationFie
     })
 }
 
-export const getPasswordSignInConstraint = (errorValidationFields?: ErrorValidationFields) => {
+export const getPasswordSignInConstraint = (
+  errorValidationFields: ErrorValidationFields | undefined
+) => {
   return z
     .string()
     .trim()
     .min(6, { message: `${errorValidationFields ? errorValidationFields.minChar : minChar} 6` })
     .max(20, { message: `${errorValidationFields ? errorValidationFields.maxChar : maxChar} 20` })
-}
-
-export const getEditPostDescriptionConstraint = () => {
-  return z.string().trim().max(500, { message: `Максимальное количество символов: 500` })
 }

@@ -5,15 +5,13 @@ import {
   useDeleteProfilePhotoMutation,
   useUploadProfilePhotoMutation,
 } from '@/entities/photo'
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
-import { serverErrorHandler, useClientProgress } from '@/shared/lib'
-import { useTranslate } from '@/shared/lib/useTranslate'
-import { isErrorServerMessagesType } from '@/shared/types'
+import { useClientProgress } from '@/shared/lib'
 import { Button, Dialog } from '@/shared/ui'
 
 import s from './UploadPhoto.module.scss'
 
 import { UploadedPhotoType } from '../types/types'
+import { DeletePhotoForm } from './DeletePhotoForm'
 import { UploadPhotoForm } from './UploadPhotoForm'
 
 type Props = {
@@ -28,7 +26,6 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
   const [openUpload, setOpenUpload] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
   const [error, setError] = useState('')
-  const t = useTranslate()
 
   useClientProgress(isUploadLoading || isRemoveLoading)
 
@@ -45,15 +42,9 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
       setAvatar({ height: avatar.height, url: avatar.url, width: avatar.width })
       setOpenUpload(false)
     } catch (error) {
-      const message = serverErrorHandler(error)
+      console.error(error)
 
-      if (typeof message === 'string') {
-        setError(message)
-      }
-
-      if (isErrorServerMessagesType(message)) {
-        setError(`Error in ${message[0].field}: ${message[0].message}`)
-      }
+      setError('Error message')
     }
   }
 
@@ -82,7 +73,7 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
       ) : (
         <>
           <Photo
-            alt={t('Avatar')}
+            alt={'Avatar'}
             height={avatar?.height}
             onDelete={() => setOpenDelete(true)}
             priority
@@ -92,12 +83,9 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
           <Dialog
             onOpenChange={() => setOpenDelete(false)}
             open={openDelete}
-            title={t('Delete photo')}
+            title={'Delete photo'}
           >
-            <ConfirmClosingDialog
-              message={t('Are you sure you want to delete the photo?')}
-              onConfirm={handleDeletePhoto}
-            />
+            <DeletePhotoForm onConfirm={confirm => handleDeletePhoto(confirm)} />
           </Dialog>
         </>
       )}
@@ -106,10 +94,10 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
         className={s.dialog}
         onOpenChange={open => setOpenUpload(open)}
         open={openUpload}
-        title={t('Add a Profile Photo')}
+        title={'Add a Profile Photo'}
         trigger={
           <Button className={s.button} fullWidth variant={'outlined'}>
-            {avatar?.url ? t('Change profile photo') : t('Add a profile photo')}
+            {avatar?.url ? 'Change profile photo' : 'Add a profile photo'}
           </Button>
         }
       >

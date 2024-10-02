@@ -5,19 +5,3 @@
   align-items: $align-items;
   justify-content: $justify-content;
 }
-
-$skeleton-color: #353535;
-
-@mixin skeleton-animation() {
-  animation: skeleton-pulse linear 0.8s infinite alternate;
-
-  @keyframes skeleton-pulse {
-    0% {
-      background-color: rgba($skeleton-color, 0.7);
-    }
-
-    100% {
-      background-color: rgba($skeleton-color, 0.9);
-    }
-  }
-}

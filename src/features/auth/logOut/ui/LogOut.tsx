@@ -1,11 +1,9 @@
 import { useState } from 'react'
 
-import { baseApi } from '@/shared/api'
-import { nextSessionApi } from '@/shared/api/_next-auth'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
-import { serverErrorHandler } from '@/shared/lib'
+import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
 import { Dialog } from '@/shared/ui/dialog'
 import { clsx } from 'clsx'
@@ -23,23 +21,25 @@ type Props = {
 export const LogOut = ({ disabled, email }: Props) => {
   const [logout] = useLogOutMutation()
   const [open, setOpen] = useState(false)
-  const dispatch = useAppDispatch()
 
   const router = useRouter()
+  const dispatch = useAppDispatch()
 
   const handleLogOut = async () => {
     try {
-      const resp = await logout().unwrap()
+      await logout().unwrap()
 
-      if (resp) {
-        dispatch(baseApi.util.resetApiState())
-        router.push(SIGN_IN, undefined, { locale: router.locale })
-      }
+      // router.prefetch(SIGN_IN, SIGN_IN, { locale: router.locale })
+      // router.push(SIGN_IN, SIGN_IN, { locale: router.locale })
+      router.reload()
     } catch (err) {
-      const message = serverErrorHandler(err)
+      if (isFetchBaseQueryError(err)) {
+        const errMsg = 'error' in err ? err.error : JSON.stringify(err.data)
 
-      if (message) {
-        await nextSessionApi.deleteSession()
+        router.push(SIGN_IN)
+        console.error(errMsg, { variant: 'error' })
+      } else if (isErrorWithMessage(err)) {
+        console.error(err.message, { variant: 'error' })
       }
     } finally {
       setOpen(false)

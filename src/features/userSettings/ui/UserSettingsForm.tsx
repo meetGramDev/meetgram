@@ -7,7 +7,6 @@ import { PRIVACY_POLICY } from '@/shared/config/router'
 import { cities } from '@/shared/const/citiesData'
 import { countries } from '@/shared/const/countriesData'
 import { translate } from '@/shared/lib/langSwitcher'
-import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
@@ -27,9 +26,8 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   const { locale } = useRouter()
 
-  const { errorsTr, policies, signUpLang } = translate(locale)
+  const { errorsTr, signUpLang } = translate(locale)
 
-  const t = useTranslate()
   const { control, errors, getValues, handleSubmit, isDirty, isValid, register, setError } =
     useUserSettings(errorsTr, data)
 
@@ -63,7 +61,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
         />
         <Input
           error={errors.firstName?.message}
-          label={t('First Name')}
+          label={'First Name'}
           required
           type={'firstName'}
           {...register('firstName', {
@@ -72,7 +70,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
         />
         <Input
           error={errors.lastName?.message}
-          label={t('Last Name')}
+          label={'Last Name'}
           required
           type={'lastName'}
           {...register('lastName', {
@@ -91,10 +89,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
               return (
                 <DatePicker
-                  // @ts-ignore // TODO
+                  // @ts-ignore
                   error={errors.dateOfBirth?.message}
                   inputClassName={!validAge(Number(start))}
-                  label={t('Date of birth')}
+                  label={'Date of birth'}
                   onStartDateChange={onChangeDate}
                   startDate={value}
                   {...field}
@@ -107,7 +105,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
               {errorsTr.errorValidationFields.wrongDateOfBirth}
               &nbsp;
               <a className={s.errorLink} href={PRIVACY_POLICY} rel={'noreferrer'} target={'_blank'}>
-                {policies['Privacy Policy']}
+                {signUpLang.privPolicy}
               </a>
             </span>
           )}
@@ -121,10 +119,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
             render={({ field: { onChange, value, ...field } }) => (
               <Select
                 contentClassName={s.scrollSelect}
-                label={t('Select your country')}
+                label={'Select your country'}
                 onValueChange={onChange}
                 options={countries}
-                placeholder={t('Country')}
+                placeholder={'Country'}
                 rootClassName={s.selectWidth}
                 value={value}
                 {...field}
@@ -139,10 +137,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
             render={({ field: { onChange, value, ...field } }) => (
               <Select
                 contentClassName={s.scrollSelect}
-                label={t('Select your city')}
+                label={'Select your city'}
                 onValueChange={onChange}
                 options={cities}
-                placeholder={t('City')}
+                placeholder={'City'}
                 rootClassName={s.selectWidth}
                 value={value}
                 {...field}
@@ -151,15 +149,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
           />
         </div>
       </div>
-      <TextArea
-        error={errors.aboutMe?.message}
-        label={t('About me')}
-        placeholder={t('text area')}
-        {...register('aboutMe')}
-      />
+      <TextArea error={errors.aboutMe?.message} label={'About me'} {...register('aboutMe')} />
       <hr className={s.hr}></hr>
       <Button className={s.button} disabled={isDisabled} type={'submit'}>
-        {t('Save changes')}
+        Save changes
       </Button>
     </form>
   )

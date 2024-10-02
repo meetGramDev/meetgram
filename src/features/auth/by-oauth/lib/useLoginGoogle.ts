@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
 
-import { useLazyMeQuery } from '@/entities/user'
+import { ServerBadResponse } from '@/shared/api'
 import { PROFILE } from '@/shared/config/router'
-import { serverErrorHandler } from '@/shared/lib'
+import { isErrorWithMessage, isFetchBaseQueryError } from '@/shared/types'
 import { CodeResponse, NonOAuthError, useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 
-import { useGoogleLoginMutation } from '../model/services/googleLoginApiSlice'
+import { useGoogleLoginMutation } from '../api/googleLoginApiSlice'
 import { generateCryptoRandomState } from './generateCryptoRandomState'
 /**
  * Hook manages all necessary requests to auth with google
@@ -17,20 +16,12 @@ import { generateCryptoRandomState } from './generateCryptoRandomState'
 export function useLoginGoogle() {
   const [state, setState] = useState('')
   const [googleLogin] = useGoogleLoginMutation()
-  const [getMe] = useLazyMeQuery()
-
   const router = useRouter()
 
   const login = useGoogleLogin({
     flow: 'auth-code',
-    onError: (errorResponse: {
-      error?: string
-      error_description?: string
-      error_uri?: string
-    }) => {
-      toast.error(`Login failed: ${errorResponse.error}`)
-      console.error(errorResponse)
-    },
+    onError: (errorResponse: { error?: string; error_description?: string; error_uri?: string }) =>
+      console.error(`Login failed: ${errorResponse.error}`, errorResponse),
 
     onNonOAuthError: (nonOAuthErr: NonOAuthError) =>
       console.log(`⛔ Non Auth error ${nonOAuthErr.type}`),
@@ -41,18 +32,19 @@ export function useLoginGoogle() {
         setState('')
         try {
           await googleLogin(codeResponse.code).unwrap()
-          const res = await getMe().unwrap()
 
-          if (res) {
-            router.push(`${PROFILE}/${res.userId}`, undefined, { locale: router.locale })
-          }
+          router.push(PROFILE, undefined, { locale: router.locale })
         } catch (error) {
-          const message = serverErrorHandler(error)
+          if (isFetchBaseQueryError(error)) {
+            const errMsg =
+              'error' in error
+                ? error.error
+                : JSON.stringify((error.data as ServerBadResponse).messages)
 
-          if (typeof message === 'string') {
-            toast.error(message)
+            console.error(errMsg)
+          } else if (isErrorWithMessage(error)) {
+            console.error(error.message)
           }
-          console.error(message)
         }
       } else {
         console.warn('State mismatch. Possible CSRF attack')

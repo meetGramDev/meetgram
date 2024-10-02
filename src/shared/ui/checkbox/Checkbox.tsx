@@ -1,5 +1,3 @@
-import { ComponentPropsWithoutRef, forwardRef } from 'react'
-
 import { Check } from '@/shared/assets/icons/Check'
 import * as CheckboxRadix from '@radix-ui/react-checkbox'
 import { clsx } from 'clsx'
@@ -14,13 +12,10 @@ export type CheckboxProps = {
   label?: string
   onValueChange?: (checked: boolean) => void
   required?: boolean
-} & ComponentPropsWithoutRef<typeof CheckboxRadix.Root>
+}
 
-export const Checkbox = forwardRef<
-  HTMLButtonElement,
-  CheckboxProps & Omit<ComponentPropsWithoutRef<typeof CheckboxRadix.Root>, keyof CheckboxProps>
->((props, forwardRef) => {
-  const { checked, className, disabled, id, label, onValueChange, required, ...rest } = props
+export const Checkbox = (props: CheckboxProps) => {
+  const { checked, className, disabled, id, label, onValueChange, required } = props
 
   const classNames = {
     buttonWrapper: clsx(s.buttonWrapper, disabled && s.disabled),
@@ -34,13 +29,11 @@ export const Checkbox = forwardRef<
     <div className={classNames.container}>
       <div className={classNames.buttonWrapper}>
         <CheckboxRadix.Root
-          {...rest}
           checked={checked}
           className={classNames.root}
           disabled={disabled}
           id={id}
           onCheckedChange={onValueChange}
-          ref={forwardRef}
           required={required}
         >
           <CheckboxRadix.Indicator className={classNames.indicator}>
@@ -53,4 +46,4 @@ export const Checkbox = forwardRef<
       </label>
     </div>
   )
-})
+}

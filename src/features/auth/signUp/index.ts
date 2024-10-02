@@ -1,5 +1,5 @@
 export type { SignUpFormData } from './lib/useSignUp'
 export { getEmail } from './model/selectors/getEmail'
 export { useSignUpMutation } from './model/services/signUp.service'
-export { authSlice, authSliceActions } from './model/slice/auth.slice'
+export { authSliceActions, authSliceReducer } from './model/slice/auth.slice'
 export { SignUpForm } from './ui/SignUpForm'

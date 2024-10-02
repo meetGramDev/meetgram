@@ -4,7 +4,6 @@ import ReCAPTCHA from 'react-google-recaptcha'
 
 import { ServerMessagesType } from '@/shared/api'
 import { SIGN_IN } from '@/shared/config/router'
-import { useChangeZodErrorLang } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { Nullable } from '@/shared/types'
 import { Button } from '@/shared/ui/button/button'
@@ -35,10 +34,10 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
   const captchaRef = useRef<any>()
 
   const { errorsTr, forgoPasswordForm } = translate(locale)
-  const { errors, handleSubmit, isDirty, isValid, register, setError, touchedFields, trigger } =
-    useForgotPassword({
-      InvalidEmail: errorsTr.errorEmail.InvalidEmail,
-    })
+
+  const { errors, handleSubmit, isDirty, isValid, register, setError } = useForgotPassword({
+    InvalidEmail: errorsTr.errorEmail.InvalidEmail,
+  })
 
   useEffect(() => {
     if (error) {
@@ -47,8 +46,6 @@ export const ForgotPasswordForm = ({ error, isFormSended, onSubmit }: ForgotPass
       }
     }
   }, [error, setError])
-
-  useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName))
 
   const onSubmitHandler = handleSubmit(data => {
     const baseURL = window.location.origin

@@ -41,12 +41,11 @@ export const useSignUp = (errorsTr: ErrorsTr) => {
   const {
     clearErrors,
     control,
-    formState: { errors, isDirty, isValid, touchedFields },
+    formState: { errors, isDirty, isValid },
     getValues,
     handleSubmit,
     register,
     setError,
-    trigger,
   } = useForm<SignUpFormData>({
     defaultValues: {
       confirmPassword: '',
@@ -70,7 +69,5 @@ export const useSignUp = (errorsTr: ErrorsTr) => {
     isValid,
     register,
     setError,
-    touchedFields,
-    trigger,
   }
 }

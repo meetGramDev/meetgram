@@ -22,6 +22,7 @@ const meta = {
     onSubmit: fn(),
   },
   component: UserSettingsForm,
+  decorators: [StoreDecorator()],
   parameters: {
     layout: 'centered',
   },

@@ -1,13 +1,10 @@
 'use client'
-import React, { ElementRef, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 
 import { ArrowDown } from '@/shared/assets/icons/ArrowDown'
 import { cn } from '@/shared/lib/cn'
 import { Option, OptionType } from '@/shared/ui/select/option'
-import * as ScrollArea from '@radix-ui/react-scroll-area'
 import * as SelectRadix from '@radix-ui/react-select'
-
-import s from './select.module.scss'
 
 type Props = {
   /**
@@ -44,8 +41,11 @@ type Props = {
    */
   withPortal?: boolean
 } & SelectRadix.SelectProps
+type SelectComponent = React.ForwardRefExoticComponent<
+  Props & React.RefAttributes<HTMLButtonElement>
+>
 
-export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, Props>(
+export const Select: SelectComponent = forwardRef(
   (
     {
       children,
@@ -64,34 +64,33 @@ export const Select = forwardRef<ElementRef<typeof SelectRadix.Trigger>, Props>(
     },
     forwardRef
   ) => {
+    // classnames obj
     const classes = {
-      arrowDownIcon: cn(s.arrowDownIcon),
-      content: cn(s.content, contentClassName),
-      error: cn(s.error),
-      label: cn(s.label, required && s.required, rootClassName),
-      trigger: cn(s.trigger, error && s.hasError, rootClassName),
+      arrowDownIcon: cn(
+        'fill-light-100 transition-transform duration-300 group-data-[state=open]:rotate-180'
+      ),
+      content: cn('select-content', contentClassName),
+      error: cn('absolute ml-1 mt-1 text-danger-300'),
+      label: cn(
+        'block text-regular14 text-light-900',
+        required && 'after:ml-0.5 after:text-red-500 after:content-["*"]',
+        rootClassName
+      ),
+      trigger: cn('select-trigger', 'group', error && 'border-danger-300', rootClassName),
     }
 
     const optionsToRender = children ? 'children' : 'options'
     const contentToRender = (
       <SelectRadix.Content className={classes.content} position={'popper'}>
-        <ScrollArea.Root className={s.scrollAreaRoot} type={'auto'}>
-          <SelectRadix.Viewport asChild>
-            <ScrollArea.Viewport className={s.scrollAreaViewport} style={{ overflowY: undefined }}>
-              {optionsToRender === 'children' && children}
-              {optionsToRender === 'options' &&
-                options?.map(option => (
-                  <Option key={option.value} {...option}>
-                    {option.label}
-                  </Option>
-                ))}
-            </ScrollArea.Viewport>
-          </SelectRadix.Viewport>
-
-          <ScrollArea.Scrollbar className={s.scrollbar} orientation={'vertical'}>
-            <ScrollArea.Thumb className={s.scrollbarThumb} />
-          </ScrollArea.Scrollbar>
-        </ScrollArea.Root>
+        <SelectRadix.Viewport>
+          {optionsToRender === 'children' && children}
+          {optionsToRender === 'options' &&
+            options?.map(o => (
+              <Option key={o.value} {...o}>
+                {o.label}
+              </Option>
+            ))}
+        </SelectRadix.Viewport>
       </SelectRadix.Content>
     )
 

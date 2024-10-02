@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { useLazyMeQuery } from '@/entities/user'
 import { nextSessionApi } from '@/shared/api/_next-auth'
 import { PROFILE, SIGN_IN } from '@/shared/config/router'
 import { useRouter } from 'next/router'
@@ -13,7 +12,6 @@ import { useRouter } from 'next/router'
 export function useLoginGithub() {
   const router = useRouter()
   const [calledPush, setCalledPush] = useState(false)
-  const [getMe] = useLazyMeQuery()
 
   useEffect(() => {
     const authenticate = async function () {
@@ -28,9 +26,8 @@ export function useLoginGithub() {
 
       if (accessToken && email) {
         await nextSessionApi.makeSession(accessToken)
-        const res = await getMe().unwrap()
 
-        router.push(`${PROFILE}/${res.userId}`, undefined, { locale: router.locale })
+        router.push(PROFILE, undefined, { locale: router.locale })
 
         setCalledPush(true)
       } else {

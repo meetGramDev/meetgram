@@ -1,9 +1,7 @@
 import { useRef, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { UploadMessage } from '@/shared/components/dialog'
 import { cn } from '@/shared/lib/cn'
-import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
@@ -11,6 +9,7 @@ import s from './UploadPhoto.module.scss'
 
 import { MAX_FILE_SIZE, MIN_DIMENSION, PREVIEW_DIMENSION } from '../const/consts'
 import { UploadedPhotoType } from '../types/types'
+import { UploadMessage } from './UploadMessage'
 
 interface SelectedFileType extends UploadedPhotoType {
   blob: Nullable<File>
@@ -23,7 +22,6 @@ type Props = {
 }
 
 export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Props) => {
-  const t = useTranslate()
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
   const [file, setFile] = useState<SelectedFileType>({
     blob: null,
@@ -80,8 +78,8 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
       }
     })
 
-    if (file.size > MAX_FILE_SIZE.bytes) {
-      setError(`The image size mustn't exceed ${MAX_FILE_SIZE.size} MB`)
+    if (file.size > MAX_FILE_SIZE) {
+      setError(`The image size mustn't exceed 10 MB`)
     }
 
     reader.readAsDataURL(file)
@@ -113,7 +111,7 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
               <Photo type={'empty'} variant={'square'} />
             </Dropzone>
             <Button fullWidth onClick={handleSelectFileClick} variant={'primary'}>
-              {t('Select from computer') as string}
+              Select from computer
             </Button>
           </div>
         )}

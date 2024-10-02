@@ -2,28 +2,54 @@ import ReactDatePicker, { registerLocale } from 'react-datepicker'
 
 import { Calendar } from '@/shared/assets/icons/Calendar'
 import { range } from '@/shared/lib/range'
-import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
 import { Button, Input, Option, Select } from '@/shared/ui'
 import clsx from 'clsx'
 import { getMonth } from 'date-fns/getMonth'
 import { getYear } from 'date-fns/getYear'
-import { be, es, uk } from 'date-fns/locale'
 import { enUS } from 'date-fns/locale/en-US'
 import { ru } from 'date-fns/locale/ru'
-import { useRouter } from 'next/router'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
 import s from './DatePicker.module.scss'
 
-registerLocale('ru', ru)
-registerLocale('en', enUS)
-registerLocale('be', be)
-registerLocale('es', es)
-registerLocale('uk', uk)
+registerLocale('ru-RU', ru)
+registerLocale('en-US', enUS)
 
-const years = range(1901, getYear(new Date()) + 1, 1)
+const years = range(1940, getYear(new Date()) + 1, 1)
+const months = {
+  en: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ],
+  ru: [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь',
+  ],
+}
+
+type Locales = keyof typeof months
 
 type Props = {
   disabled?: boolean
@@ -53,23 +79,8 @@ export const DatePicker = ({
   selectsRange,
   startDate,
 }: Props) => {
-  const t = useTranslate()
-  const { locale } = useRouter()
-
-  const monthMonth: string[] = [
-    t('January'),
-    t('February'),
-    t('March'),
-    t('April'),
-    t('May'),
-    t('June'),
-    t('July'),
-    t('August'),
-    t('September'),
-    t('October'),
-    t('November'),
-    t('December'),
-  ]
+  const locale = 'en'
+  const localeMonths: Locales = locale.substring(0, 2) as Locales
 
   const classes = {
     hasError: clsx(error && s.hasError),
@@ -127,14 +138,14 @@ export const DatePicker = ({
               <div>
                 <Select
                   contentClassName={s.monthSelector}
-                  defaultValue={monthMonth[getMonth(date)]}
+                  defaultValue={months[localeMonths][getMonth(date)]}
                   onValueChange={value => changeMonth(+value)}
                   rootClassName={s.datePickerSelector}
                   showArrow={false}
                   value={getMonth(date).toString()}
                   withPortal={false}
                 >
-                  {monthMonth.map((m, i) => (
+                  {months[localeMonths].map((m, i) => (
                     <Option key={i} value={i.toString()}>
                       {m}
                     </Option>

@@ -1,8 +1,8 @@
+import { userApi } from '@/entities/user/api/userApiSlice'
 import { Nullable } from '@/shared/types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { userApi } from '../services/userApiSlice'
-import { SetCredentialsPayload } from '../types/slice'
+import { SetCredentialsPayload } from './types'
 
 const initialState = {
   accessToken: null as Nullable<string>,
