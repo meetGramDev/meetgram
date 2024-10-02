@@ -79,5 +79,5 @@ export const baseApi = createApi({
   baseQuery: baseQueryWithReAuth,
   endpoints: () => ({}),
   reducerPath: 'meetGramApi',
-  tagTypes: ['login', 'auth', 'profile'],
+  tagTypes: ['profile', 'post', 'PostLikes'],
 })

@@ -1,0 +1,29 @@
+.likeBtn {
+  color: var(--light-color-100);
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &.disabled {
+    color: var(--primary-color-900);
+  }
+}
+
+.liked {
+  &:focus-visible {
+    outline: 1px solid var(--primary-color-500);
+    outline-offset: 4px;
+  }
+}
+
+.heart {
+  width: min-content;
+  height: min-content;
+  padding: 0.25rem 0 0 0.12rem;
+  color: var(--danger-color-500);
+
+  &.disabled {
+    color: #740b20;
+  }
+}
