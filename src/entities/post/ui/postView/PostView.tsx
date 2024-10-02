@@ -3,7 +3,6 @@ import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
 import {
-  Post,
   PublicPost,
   useAddAnswerCommentMutation,
   useAddPostCommentMutation,
@@ -219,7 +218,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                 ref={answerCommentRef}
                 value={textContent}
               />
-              <Button className={s.publishButton} variant={'text'}>
+              <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
                 Publish
               </Button>
             </div>
