@@ -14,9 +14,9 @@
 }
 
 .bigImage {
+  --slide-height-desktop: 80vh;
+
   height: min-content;
-  object-fit: cover;
-  image-rendering: crisp-edges;
 }
 
 .rightSideContainer {
