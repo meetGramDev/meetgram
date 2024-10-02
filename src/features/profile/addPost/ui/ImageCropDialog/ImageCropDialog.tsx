@@ -11,29 +11,35 @@ import { MaxinizeOutline } from '@/shared/assets/icons/MaxinizeOutline'
 import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
 import { Button, Slider } from '@/shared/ui'
+import { clsx } from 'clsx'
 
 import s from './ImageCropDialog.module.scss'
 
 type AspectRatioType = {
+  icon: React.ReactNode
   text: string
   value: number
 }
 type AspectRatiosType = AspectRatioType[]
-const aspectRatios = [
+const aspectRatios: AspectRatiosType = [
   {
-    text: '4:3',
+    icon: <ImageIcon />,
+    text: 'Оригинал',
     value: 4 / 3,
   },
   {
+    icon: <Rectangular />,
     text: '4:5',
     value: 4 / 5,
   },
 
   {
+    icon: <HorizontalRectangle />,
     text: '16:9',
     value: 16 / 9,
   },
   {
+    icon: <Rectangle />,
     text: '1:1',
     value: 1 / 1,
   },
@@ -126,47 +132,22 @@ export const ImageCropDialog = ({
           <div className={s.buttonContainer}>
             <AddPostSettingsSelect placeholder={<Expand />}>
               <div className={s.menuContent}>
-                <Button
-                  className={s.button}
-                  onClick={() => {
-                    setAspect(aspectRatios[0])
-                  }}
-                  variant={'text'}
-                >
-                  <>Оригинал</>
-                  <ImageIcon />{' '}
-                </Button>
-
-                <Button
-                  className={s.button}
-                  onClick={() => {
-                    setAspect(aspectRatios[3])
-                  }}
-                  variant={'text'}
-                >
-                  <>1:1</>
-                  <Rectangle />{' '}
-                </Button>
-                <Button
-                  className={s.button}
-                  onClick={() => {
-                    setAspect(aspectRatios[1])
-                  }}
-                  variant={'text'}
-                >
-                  <>4:5</>
-                  <Rectangular />{' '}
-                </Button>
-                <Button
-                  className={s.button}
-                  onClick={() => {
-                    setAspect(aspectRatios[2])
-                  }}
-                  variant={'text'}
-                >
-                  <>16:9</>
-                  <HorizontalRectangle />{' '}
-                </Button>
+                {aspectRatios.map(aspectRatio => (
+                  <Button
+                    className={clsx(
+                      s.button,
+                      aspect.text === aspectRatio.text ? s.checkedButton : ''
+                    )}
+                    key={aspectRatio.text}
+                    onClick={() => {
+                      setAspect(aspectRatio)
+                    }}
+                    variant={'text'}
+                  >
+                    <>{aspectRatio.text}</>
+                    {aspectRatio.icon}
+                  </Button>
+                ))}
               </div>
             </AddPostSettingsSelect>
           </div>
@@ -189,9 +170,6 @@ export const ImageCropDialog = ({
             </AddPostSettingsSelect>
           </div>
         </div>
-        {/*<div className={s.buttonContainer}>*/}
-        {/*  <AddPostSettingsSelect placeholder={<ImageIconOutlined />}> </AddPostSettingsSelect>*/}
-        {/*</div>*/}
       </div>
     </div>
   )
