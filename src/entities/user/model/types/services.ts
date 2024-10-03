@@ -33,3 +33,10 @@ export type FullUserProfile = {
   publicationsCount: number
   region: string
 } & Profile
+
+export type PublicProfile = {
+  aboutMe: string
+  avatars: Avatar[]
+  id: number
+  userName: string
+}

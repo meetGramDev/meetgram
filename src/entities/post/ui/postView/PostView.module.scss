@@ -15,12 +15,15 @@
 
 .post {
   --slide-height-desktop: 80vh;
+
+  flex: 1 0 50%;
 }
 
 .content {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
+  flex: 0 1 45%;
 }
 
 .iconClose {
