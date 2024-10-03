@@ -1,4 +1,4 @@
-import { Profile } from '@/features/userSettings'
+import { Avatar } from '@/shared/types'
 
 export type AuthMeResponseType = {
   email: string
@@ -9,6 +9,19 @@ export type AuthMeResponseType = {
 
 export type RefreshTokenResponseType = {
   accessToken: string
+}
+
+export type Profile = {
+  aboutMe: string
+  avatars: Avatar[]
+  city: string
+  country: string
+  createdAt: string
+  dateOfBirth: string
+  firstName: string
+  id: number
+  lastName: string
+  userName: string
 }
 
 export type FullUserProfile = {

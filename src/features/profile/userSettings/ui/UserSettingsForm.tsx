@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { Profile } from '@/features/userSettings'
+import { Profile } from '@/entities/user'
 import { ServerMessagesType } from '@/shared/api'
 import { PRIVACY_POLICY } from '@/shared/config/router'
 import { cities } from '@/shared/const/citiesData'

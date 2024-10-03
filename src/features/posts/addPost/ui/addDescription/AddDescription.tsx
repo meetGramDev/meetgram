@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { toast } from 'react-toastify'
 
 import { PostDescriptionField, PostDescriptionForm, PostDescriptionFormRef } from '@/entities/post'
-import { useGetProfileQuery } from '@/features/userSettings'
+import { useGetProfileQuery } from '@/features/profile/userSettings'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'

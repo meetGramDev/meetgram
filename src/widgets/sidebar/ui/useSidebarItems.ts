@@ -28,5 +28,5 @@ export function useGetSidebarItems() {
       { Svg: FavoritesIcon, name: sidebarTr.favorites, path: '' },
       { Svg: StatisticsIcon, name: sidebarTr.statistics, path: '' },
     ]
-  }, [userId])
+  }, [locale])
 }

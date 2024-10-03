@@ -1,8 +1,8 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, ReactNode, useState } from 'react'
 import Cropper, { Area, Point } from 'react-easy-crop'
 
-import { onCrop } from '@/features/profile/addPost/ui/ImageCropDialog/cropImage'
-import { AddPostSettingsSelect } from '@/features/profile/addPost/ui/addPostSettingsSelect/AddPostSettingsSelect'
+import { onCrop } from '@/features/posts/addPost/ui/ImageCropDialog/cropImage'
+import { AddPostSettingsSelect } from '@/features/posts/addPost/ui/addPostSettingsSelect/AddPostSettingsSelect'
 import { Expand } from '@/shared/assets/icons/Expand'
 import { HorizontalRectangle } from '@/shared/assets/icons/HorizontalRectangle'
 import { ImageIcon } from '@/shared/assets/icons/ImageIcon'
@@ -16,7 +16,7 @@ import { clsx } from 'clsx'
 import s from './ImageCropDialog.module.scss'
 
 type AspectRatioType = {
-  icon: React.ReactNode
+  icon: ReactNode
   text: string
   value: number
 }

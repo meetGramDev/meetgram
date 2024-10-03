@@ -9,7 +9,7 @@ import {
   UserSettingsFormData,
   useGetProfileQuery,
   useUpdateProfileMutation,
-} from '@/features/userSettings'
+} from '@/features/profile/userSettings'
 import { ServerMessagesType } from '@/shared/api'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'

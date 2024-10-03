@@ -1,7 +1,7 @@
+import { Profile } from '@/entities/user'
 import { baseApi } from '@/shared/api'
 
 import { UserSettingsFormData } from '../../lib/useUserSettings'
-import { Profile } from '../types/profileService'
 
 export const profileService = baseApi.injectEndpoints({
   endpoints: builder => ({

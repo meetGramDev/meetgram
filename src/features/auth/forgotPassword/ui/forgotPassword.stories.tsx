@@ -23,8 +23,6 @@ export const Default: Story = {
 export const ReturnValue: Story = {
   args: {
     isFormSended: false,
-    onSubmit: data => {
-      console.log(data)
-    },
+    onSubmit: fn(),
   },
 }

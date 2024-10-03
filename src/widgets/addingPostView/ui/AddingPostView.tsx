@@ -9,10 +9,9 @@ import {
   selectAddingPostStage,
   selectIsAddedImages,
   selectIsDialogOpen,
-} from '@/features/profile/addPost'
-import { AddFilter } from '@/features/profile/addPost/ui/addFilter/AddFilter'
-import { AddScropping } from '@/features/profile/addPost/ui/addScropping/AddScropping'
-import { DialogHeader } from '@/features/profile/addPost/ui/common/DialogHeader'
+} from '@/features/posts/addPost'
+import { AddFilter } from '@/features/posts/addPost/ui/addFilter/AddFilter'
+import { AddScropping } from '@/features/posts/addPost/ui/addScropping/AddScropping'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Dialog } from '@/shared/ui'
