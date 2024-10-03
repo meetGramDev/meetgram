@@ -7,6 +7,8 @@ import { Button, Dialog, Loader } from '@/shared/ui'
 
 import s from './LikesView.module.scss'
 
+import noPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
+
 type Props = {
   likesCount: number
   postId: number
@@ -30,7 +32,7 @@ export const LikesView = ({ likesCount, postId }: Props) => {
                   alt={'user'}
                   height={24}
                   key={item.userId}
-                  src={item.avatars[1].url}
+                  src={item.avatars.length ? item.avatars[1].url : noPhoto}
                   variant={'round'}
                   width={24}
                 />

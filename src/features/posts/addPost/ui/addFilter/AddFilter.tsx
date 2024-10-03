@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 
 import { Post } from '@/entities/post'
-import { AddingPostStage, addPostActions } from '@/features/profile/addPost'
+import { AddingPostStage, addPostActions } from '@/features/posts/addPost'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { ImageCarousel } from '@/shared/ui'
 import { clsx } from 'clsx'

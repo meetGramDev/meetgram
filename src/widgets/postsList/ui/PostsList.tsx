@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive'
 
 import { useGetPublicPostsQuery } from '@/entities/post/model/services/posts.service'
 import { useFullUserProfileQuery } from '@/entities/user'
-import { useInfiniteScroll } from '@/shared/lib'
+import { cn, useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
 import { skipToken } from '@reduxjs/toolkit/query'
 
@@ -27,11 +27,14 @@ export const PostsList = ({ userName }: Props) => {
   // =========== //
   const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(undefined)
 
-  const { ref, scroll } = useInfiniteScroll(() => {
-    if (publicPosts?.items && publicPosts.items.length >= PAGE_SIZE) {
-      setEndCursorPostId(publicPosts?.items.at(-1)?.id)
-    }
-  })
+  const { ref, scroll } = useInfiniteScroll(
+    () => {
+      if (publicPosts?.items && publicPosts.items.length >= PAGE_SIZE) {
+        setEndCursorPostId(publicPosts?.items.at(-1)?.id)
+      }
+    },
+    { threshold: 1 }
+  )
 
   const {
     data: publicPosts,
@@ -83,7 +86,7 @@ export const PostsList = ({ userName }: Props) => {
       )}
 
       {publicPostsFetching && (
-        <div className={'flex justify-center'}>
+        <div className={'flex justify-center py-3'}>
           <Loader />
         </div>
       )}

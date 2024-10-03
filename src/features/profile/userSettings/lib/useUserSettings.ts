@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 
+import { Profile } from '@/entities/user'
 import {
   getAboutMeConstraint,
   getFirstNameConstraint,
@@ -9,8 +10,7 @@ import { getUserNameConstraint } from '@/shared/const/validationFields'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { ErrorsTr } from '../../../../public/locales/en'
-import { Profile } from '../model/types/profileService'
+import { ErrorsTr } from '../../../../../public/locales/en'
 
 const getUserSettingsSchema = (errorTr: ErrorsTr | undefined = undefined) => {
   const errorValidationFields = errorTr?.errorValidationFields

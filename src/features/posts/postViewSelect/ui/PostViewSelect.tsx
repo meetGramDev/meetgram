@@ -1,6 +1,7 @@
-import React, { memo, useState } from 'react'
+import { memo, useState } from 'react'
+import { toast } from 'react-toastify'
 
-import { useDeletePostMutation } from '@/entities/post/model/services/posts.service'
+import { useDeletePostMutation } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { CopyLinkIcon } from '@/shared/assets/icons/CopyLink'
 import { EditIcon } from '@/shared/assets/icons/Edit'
@@ -30,11 +31,14 @@ export const PostViewSelect = memo(
     const isOwner = ownerId === userId
 
     const [openModal, setOpenModal] = useState<boolean>(false)
+    const [openSelect, setOpenSelect] = useState(false)
 
     return (
       <div>
         <Select
           contentClassName={s.selectContent}
+          onOpenChange={setOpenSelect}
+          open={openSelect}
           placeholder={<MoreIcon />}
           rootClassName={s.selectTrigger}
           showArrow={false}
@@ -104,7 +108,15 @@ export const PostViewSelect = memo(
                   <FollowIcon /> Follow
                 </Button>
               )}
-              <Button className={s.button} variant={'text'}>
+              <Button
+                className={s.button}
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href)
+                  setOpenSelect(false)
+                  toast.info('Copied!', { autoClose: 1000 })
+                }}
+                variant={'text'}
+              >
                 <CopyLinkIcon /> Copy Link
               </Button>
             </div>
