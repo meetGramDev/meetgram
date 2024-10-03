@@ -18,17 +18,7 @@ type PropsType = {
 } & SliderRadix.SliderProps
 
 export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, PropsType>(
-  ({
-    className,
-    max,
-    min,
-    name,
-    onValueChange,
-    onValueCommit,
-    step,
-    value,
-    ...restProps
-  }: PropsType) => {
+  ({ className, max, min, name, onValueChange, onValueCommit, step, value, ...restProps }, ref) => {
     return (
       <div className={clsx(s.sliderWrapper, className)}>
         <SliderRadix.Root
@@ -38,6 +28,7 @@ export const Slider = forwardRef<ElementRef<typeof SliderRadix.Root>, PropsType>
           name={name}
           onValueChange={onValueChange}
           onValueCommit={onValueCommit}
+          ref={ref}
           step={step}
           value={value}
           {...restProps}

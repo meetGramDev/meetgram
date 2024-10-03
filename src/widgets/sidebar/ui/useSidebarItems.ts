@@ -19,14 +19,14 @@ export function useGetSidebarItems() {
 
   return useMemo(() => {
     return [
-      { Svg: HomeIcon, name: sidebarTr.home, path: `${HOME}/${userId}` },
+      { Svg: HomeIcon, name: sidebarTr.home, path: `${HOME}` },
       { Svg: CreateIcon, isCreatePost: true, name: sidebarTr.create, path: `` },
-      { Svg: MyProfileIcon, name: sidebarTr.myProfile, path: `${HOME}/${userId}` },
+      { Svg: MyProfileIcon, name: sidebarTr.myProfile, path: `${HOME}` },
       { Svg: MessengerIcon, name: sidebarTr.messenger, path: '' },
       { Svg: Search, name: sidebarTr.search, path: '' },
 
       { Svg: FavoritesIcon, name: sidebarTr.favorites, path: '' },
       { Svg: StatisticsIcon, name: sidebarTr.statistics, path: '' },
     ]
-  }, [userId])
+  }, [locale])
 }

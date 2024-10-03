@@ -1,4 +1,4 @@
-import type { AuthMeResponseType, FullUserProfile } from '../types/services'
+import type { AuthMeResponseType, FullUserProfile, PublicProfile } from '../types/services'
 
 import { baseApi } from '@/shared/api'
 
@@ -11,6 +11,11 @@ export const userApi = baseApi.injectEndpoints({
         url: `/users/${userName}`,
       }),
     }),
+    getPublicProfileById: builder.query<PublicProfile, string>({
+      query: id => ({
+        url: `/public-user/profile/${id}`,
+      }),
+    }),
     me: builder.query<AuthMeResponseType, void>({
       query: () => ({
         url: '/auth/me',
@@ -21,6 +26,7 @@ export const userApi = baseApi.injectEndpoints({
 
 export const {
   useFullUserProfileQuery,
+  useGetPublicProfileByIdQuery,
   useLazyMeQuery,
   useMeQuery,
   util: { getRunningQueriesThunk },

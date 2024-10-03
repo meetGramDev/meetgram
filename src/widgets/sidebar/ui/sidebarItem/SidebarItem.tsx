@@ -1,6 +1,6 @@
 import { FC, SVGProps } from 'react'
 
-import { addPostActions } from '@/features/profile/addPost'
+import { addPostActions } from '@/features/posts/addPost'
 import { HOME } from '@/shared/config/router'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui'

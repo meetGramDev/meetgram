@@ -3,18 +3,19 @@ import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
 import {
-  Post,
   PublicPost,
   useAddAnswerCommentMutation,
   useAddPostCommentMutation,
   useGetPostCommentsQuery,
   useGetSinglePublicPostQuery,
 } from '@/entities/post'
+import { selectCurrentUserId } from '@/entities/user'
 import { Comments, getTimeAgo } from '@/features/posts/comments'
 import { LikeButton } from '@/features/posts/likePost'
 import { PostViewSelect } from '@/features/posts/postViewSelect'
 import { CloseIcon, FavoritesIcon, PaperPlane, SketchedFavourites } from '@/shared/assets'
 import { HOME } from '@/shared/config/router'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
 import { isErrorMessageString } from '@/shared/types'
 import { Button, Dialog, ImageCarousel, Loader, TextArea } from '@/shared/ui'
@@ -48,6 +49,8 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
   const answerCommentRef = useRef<HTMLTextAreaElement>(null)
 
   const tr = useRouter().locale
+
+  const authUserId = useAppSelector(selectCurrentUserId)
 
   const dateOfCreate = (postCreate: string) => {
     const date = new Date(postCreate)
@@ -152,8 +155,8 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                 isFollowing={isFollowing}
                 onEdit={onEdit}
                 onOpenPost={isOpen}
-                ownerId={post.ownerId}
-                userId={userId}
+                ownerId={userId}
+                userId={authUserId!}
               />
             </div>
             <div className={s.commentsField}>
@@ -219,7 +222,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                 ref={answerCommentRef}
                 value={textContent}
               />
-              <Button className={s.publishButton} variant={'text'}>
+              <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
                 Publish
               </Button>
             </div>

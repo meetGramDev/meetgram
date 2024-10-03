@@ -1,7 +1,8 @@
 import { Photo } from '@/entities/photo'
-import { FullUserProfile } from '@/entities/user'
+import { FullUserProfile, selectCurrentUserId } from '@/entities/user'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { PROFILE_SETTINGS } from '@/shared/config/router'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
 
@@ -13,6 +14,7 @@ type Props = {
 
 export const User = ({ userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
+  const currentUserId = useAppSelector(selectCurrentUserId)
 
   return (
     <div className={s.userWrapper}>
@@ -31,9 +33,11 @@ export const User = ({ userData }: Props) => {
         <div className={s.userInformation}>
           <div className={s.userName}>
             <h1 className={s.userNameTitle}>{userData.userName}</h1>
-            <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
-              Profile Settings
-            </Button>
+            {currentUserId === userData.id && (
+              <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
+                Profile Settings
+              </Button>
+            )}
           </div>
           <div className={s.buttonPublications}>
             <Link className={s.userLinks} href={'#'}>
