@@ -2,9 +2,9 @@ import { FC, SVGProps } from 'react'
 import { useDispatch } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
 
-import { setOpenModal } from '@/features/profile/addPost'
+import { addPostActions } from '@/features/posts/addPost'
 import { HOME } from '@/shared/config/router'
-import { useAppSelector } from '@/shared/config/storeHooks'
+import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -26,12 +26,14 @@ type Props = {
 
 export const SidebarItem = ({ className, item }: Props) => {
   const dispatch = useDispatch()
+  const { setOpenAddingPost } = useActions(addPostActions)
   const router = useRouter()
   const userId = useAppSelector(state => state.user.accountData.userId)
 
-  const handleClickCreatePost = async () => {
-    await router.push(`${HOME}/${userId}`)
-    dispatch(setOpenModal(true))
+  const handleClickCreatePost = () => {
+    if (router.asPath === `${HOME}/${userId}`) {
+      setOpenAddingPost(true)
+    }
   }
   const isMobile = useMediaQuery({ query: '(max-width:650px)' })
 

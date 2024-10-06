@@ -1,10 +1,10 @@
 import { useMediaQuery } from 'react-responsive'
 
 import { Photo } from '@/entities/photo'
-import { FullUserProfile } from '@/entities/user'
-import { AddPost } from '@/features/profile/addPost/ui/AddPost'
+import { FullUserProfile, selectCurrentUserId } from '@/entities/user'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { PROFILE_SETTINGS } from '@/shared/config/router'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
@@ -20,6 +20,7 @@ export const User = ({ userData }: Props) => {
   const t = useTranslate()
 
   const isMobile = useMediaQuery({ query: '(max-width:650px)' })
+  const currentUserId = useAppSelector(selectCurrentUserId)
 
   return (
     <div className={s.userWrapper}>
@@ -72,7 +73,6 @@ export const User = ({ userData }: Props) => {
           <div className={s.aboutMeText}>{userData?.aboutMe}</div>
         </div>
       )}
-      <AddPost />
     </div>
   )
 }

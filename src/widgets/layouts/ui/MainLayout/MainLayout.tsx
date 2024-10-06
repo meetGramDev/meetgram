@@ -16,12 +16,12 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <div className={`min-h-[calc(100vh_-_3.75rem_-_72px)] ${inter.className}`}>
-      {isMobile ? <MobileHeader /> : <Header />}
+      <div>{isMobile ? <MobileHeader className={s.head} /> : <Header className={s.head} />}</div>
       <div className={s.page}>
-        {!isMobile && <Sidebar />}
+        {!isMobile && <Sidebar className={s.fixedSidebar} />}
         <main className={s.main}>{children}</main>
       </div>
-      <div>{isMobile && <MobileSidebar />}</div>
+      <div>{isMobile && <MobileSidebar className={s.fixedSidebar} />}</div>
     </div>
   )
 }

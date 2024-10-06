@@ -6,6 +6,6 @@ export function getProvidesTags<R extends { id: number | string }[], T extends s
   tagType: T
 ) {
   return resultsWithIds
-    ? [{ id: 'ALL', type: tagType }, ...resultsWithIds.map(({ id }) => ({ id, type: tagType }))]
-    : [{ id: 'ALL', type: tagType }]
+    ? [{ id: 'LIST', type: tagType }, ...resultsWithIds.map(({ id }) => ({ id, type: tagType }))]
+    : [{ id: 'LIST', type: tagType }]
 }

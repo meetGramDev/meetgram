@@ -1,33 +1,31 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
-import { Comments } from '@/features/posts/comments'
-import { getTimeAgo } from '@/features/posts/comments/lib/getTimeAgo'
-import { PostViewSelect } from '@/features/posts/postViewSelect/ui/PostViewSelect'
-import { CloseIcon } from '@/shared/assets/icons/CloseIcon'
-import { FavoritesIcon } from '@/shared/assets/icons/Favorites'
-import { Heart } from '@/shared/assets/icons/Heart'
-import { PaperPlane } from '@/shared/assets/icons/PaperPlane'
-import { SketchedFavourites } from '@/shared/assets/icons/SketchedFavourites'
-import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
+import {
+  PublicPost,
+  useAddAnswerCommentMutation,
+  useAddPostCommentMutation,
+  useGetPostCommentsQuery,
+  useGetSinglePublicPostQuery,
+} from '@/entities/post'
+import { selectCurrentUserId } from '@/entities/user'
+import { Comments, getTimeAgo } from '@/features/posts/comments'
+import { LikeButton } from '@/features/posts/likePost'
+import { PostViewSelect } from '@/features/posts/postViewSelect'
+import { CloseIcon, FavoritesIcon, PaperPlane, SketchedFavourites } from '@/shared/assets'
 import { HOME } from '@/shared/config/router'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
 import { isErrorMessageString } from '@/shared/types'
-import { Button, Dialog, Loader, TextArea } from '@/shared/ui'
+import { Button, Dialog, ImageCarousel, Loader, TextArea } from '@/shared/ui'
+import { LikesView } from '@/widgets/likesFollowersView'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './PostView.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
-import {
-  useAddPostCommentMutation,
-  useGetPostCommentsQuery,
-  useGetSinglePublicPostQuery,
-} from '../../model/services/post.service'
-import { PublicPost } from '../../model/types/posts.types'
-import { Post } from '../Post'
 
 type Props = {
   isFollowing: boolean
@@ -43,12 +41,16 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
   const { data: post, isLoading: postLoading, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
   const [addComment] = useAddPostCommentMutation()
   const { data: comments } = useGetPostCommentsQuery({ postId })
-
-  const [isLiked, setIsLiked] = useState(false)
+  const [addAnswerComment] = useAddAnswerCommentMutation()
   const [isFavourite, setIsFavourite] = useState(false)
-  const [commentContent, setCommentContent] = useState('')
+  const [textContent, setTextContent] = useState('')
+  const [commentId, setCommentId] = useState<null | number>(null)
+
+  const answerCommentRef = useRef<HTMLTextAreaElement>(null)
 
   const tr = useRouter().locale
+
+  const authUserId = useAppSelector(selectCurrentUserId)
 
   const dateOfCreate = (postCreate: string) => {
     const date = new Date(postCreate)
@@ -61,14 +63,14 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
   }
 
   const changeTextAreaHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setCommentContent(e.currentTarget.value)
+    setTextContent(e.currentTarget.value)
   }
 
   const addCommentHandler = () => {
     try {
-      setCommentContent('')
-      if (commentContent !== '') {
-        addComment({ body: { content: commentContent }, postId })
+      setTextContent('')
+      if (textContent !== '') {
+        addComment({ body: { content: textContent }, postId })
       }
     } catch (err) {
       const message = serverErrorHandler(err)
@@ -79,6 +81,39 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
     }
   }
 
+  const addAnswerHandler = (commentId: number) => {
+    try {
+      setTextContent(`${post?.userName} `)
+      if (textContent !== '') {
+        addAnswerComment({ body: { content: textContent }, commentId, postId })
+        setCommentId(null)
+      }
+    } catch (err) {
+      const message = serverErrorHandler(err)
+
+      if (isErrorMessageString(message)) {
+        toast.error(message)
+      }
+    }
+  }
+
+  const publishHandler = () => {
+    if (commentId) {
+      addAnswerHandler(commentId)
+    } else {
+      addCommentHandler()
+    }
+    setTextContent('')
+  }
+
+  const answerHandler = (commentId: number) => {
+    if (answerCommentRef.current) {
+      answerCommentRef.current.focus()
+    }
+    setTextContent(`${post?.userName} `)
+    setCommentId(commentId)
+  }
+
   const ownerProfile = `${HOME}/${userId}`
 
   if (postLoading) {
@@ -86,26 +121,20 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
   }
 
   return (
-    <Dialog className={s.container} onOpenChange={isOpen} open={open}>
+    <Dialog onOpenChange={isOpen} open={open}>
       {isSuccess && (
-        <>
-          <div className={s.post}>
-            <Post
-              alt={'post'}
-              className={s.post}
-              height={post.images[0].height}
-              src={post.images[0].url}
-              width={post.images[0].width}
+        <div className={s.container}>
+          <Button className={s.iconClose} variant={'text'}>
+            <CloseIcon
+              onClick={() => {
+                isOpen(false)
+              }}
             />
-          </div>
+          </Button>
+
+          <ImageCarousel className={s.post} images={post.images} options={{ align: 'start' }} />
+
           <div className={s.content}>
-            <Button className={s.iconClose} variant={'text'}>
-              <CloseIcon
-                onClick={() => {
-                  isOpen(false)
-                }}
-              />
-            </Button>
             <div className={s.title}>
               <div className={s.userLink}>
                 <Link className={s.linkAvatar} href={ownerProfile}>
@@ -126,8 +155,8 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                 isFollowing={isFollowing}
                 onEdit={onEdit}
                 onOpenPost={isOpen}
-                ownerId={post.ownerId}
-                userId={userId}
+                ownerId={userId}
+                userId={authUserId!}
               />
             </div>
             <div className={s.commentsField}>
@@ -155,20 +184,13 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                   </span>
                 </div>
               )}
-              {comments && <Comments comments={comments} />}
+              {comments && <Comments comments={comments} onClick={answerHandler} />}
             </div>
             <div className={s.footer}>
               <div className={s.footerButtons}>
                 <div className={s.leftSideButtons}>
-                  <Button
-                    className={s.footerButton}
-                    onClick={() => {
-                      setIsLiked(!isLiked)
-                    }}
-                    variant={'text'}
-                  >
-                    {isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
-                  </Button>
+                  <LikeButton postId={post.id} />
+
                   <Button className={s.footerButton} variant={'text'}>
                     <PaperPlane />
                   </Button>
@@ -183,31 +205,29 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                   {isFavourite ? <SketchedFavourites className={s.favourite} /> : <FavoritesIcon />}
                 </Button>
               </div>
-              <div className={s.postLikes}>
-                {post.likesCount !== 0 && (
-                  <span>
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    {post.likesCount} "<span className={s.like}>Like</span>"
-                  </span>
-                )}
-              </div>
+              {!!post.likesCount && (
+                <div className={s.postLikes}>
+                  <LikesView likesCount={post.likesCount} postId={post.id} />
+                </div>
+              )}
               <span className={s.date}>{dateOfCreate(post.createdAt)}</span>
-              <div className={s.commentContainer}>
-                <TextArea
-                  className={s.commentTextArea}
-                  label={!commentContent && 'Add a Comment...'}
-                  labelClassName={s.label}
-                  maxLength={500}
-                  onChange={changeTextAreaHandler}
-                  value={commentContent}
-                />
-                <Button className={s.publishButton} onClick={addCommentHandler} variant={'text'}>
-                  Publish
-                </Button>
-              </div>
+            </div>
+            <div className={s.commentContainer}>
+              <TextArea
+                className={s.commentTextArea}
+                label={!textContent && 'Add a Comment...'}
+                labelClassName={s.label}
+                maxLength={500}
+                onChange={changeTextAreaHandler}
+                ref={answerCommentRef}
+                value={textContent}
+              />
+              <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
+                Publish
+              </Button>
             </div>
           </div>
-        </>
+        </div>
       )}
     </Dialog>
   )

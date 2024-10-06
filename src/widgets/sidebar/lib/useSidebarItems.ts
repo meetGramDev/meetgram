@@ -23,7 +23,7 @@ export function useGetSidebarItems() {
     return [
       { Svg: HomeIcon, name: t('sidebarTr').home, path: `${HOME}/${userId}` },
       { Svg: CreateIcon, isCreatePost: true, name: sidebarTr.create, path: `` },
-      { Svg: MyProfileIcon, name: sidebarTr.myProfile, path: `${HOME}/${userId}` },
+      { Svg: MyProfileIcon, name: sidebarTr.myProfile, path: `${HOME}` },
       { Svg: MessengerIcon, name: sidebarTr.messenger, path: '' },
       { Svg: Search, name: sidebarTr.search, path: '' },
 

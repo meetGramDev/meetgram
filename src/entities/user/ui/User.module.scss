@@ -1,3 +1,10 @@
+/* $screen-size-mobile: 650px; */
+
+ @import "../../../app/styles/screens";
+
+
+
+
 .userWrapper {
   position: relative;
   width: 100%;
@@ -52,7 +59,7 @@
   word-break: break-word;
 }
 
-@media (width <= 650px) {
+@media (width <= $screen-size-mobile) {
   .userPhoto {
     width: 4.68rem;
     height: 4.68rem;
