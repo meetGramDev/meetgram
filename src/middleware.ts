@@ -6,7 +6,11 @@ export async function middleware(req: NextRequest) {
   const isAuth = authenticate(req)
   const isAuthRoute = req.nextUrl.pathname.startsWith('/auth')
   const userId = extractAuthorizedUserData(req)
+  const isPublicPageRoute = req.nextUrl.pathname.startsWith('/public-page')
 
+  if (!isAuth && isPublicPageRoute) {
+    return NextResponse.redirect(new URL('/public-page'))
+  }
   if (isAuth && isAuthRoute) {
     return NextResponse.redirect(new URL(PROFILE, req.url + req.nextUrl.locale))
   }

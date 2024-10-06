@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { GithubBtn, GoogleBtn } from '@/features/auth/by-oauth'
 import { ServerMessagesType } from '@/shared/api'
-import { FORGOT_PASSWORD, SIGN_UP } from '@/shared/config/router'
+import { FORGOT_PASSWORD, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { useChangeZodErrorLang } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { isErrorMessageString } from '@/shared/types'
@@ -85,6 +85,9 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
           </Button>
         </div>
       </form>
+      <Button as={Link} href={'/public-page'} variant={'link'}>
+        Public page
+      </Button>
     </Card>
   )
 }
