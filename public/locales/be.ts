@@ -1,12 +1,15 @@
-import { LenType } from './en';
+import {LenType} from './en';
+
 
 export const be: LenType = {
     "About me": "Пра мяне",
+
     "Account Management": "Кіраванне акаўнтам",
     "Add Photo": "Дадаць фота",
     "Add a Profile Photo": "Дадаць фота профілю",
     "Add a profile photo": "Дадаць фота профілю",
     "April": "Красавік",
+    "Are you really want to log out of your account": "Вы сапраўды хочаце выйсці са свайго акаўнта ",
     "Are you sure you want to delete the photo?": "Вы ўпэўнены, што хочаце выдаліць фота?",
     "August": "Жнівень",
     "Avatar": "Аватар",
@@ -24,13 +27,16 @@ export const be: LenType = {
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
     'February': "Люты",
     "First Name": "Імя",
+    "Followers": "Падпісанты",
+    "Following": "Падпісаны",
     "General Information": "Агульная інфармацыя",
     "January": "Студзень",
     "July": "Ліпень",
     "June": "Чэрвень",
     "Last Name": "Прозвішча",
-    "Like":"Падабацца",
-    "Likes":"Падабацца",
+    "Like": "Падабацца",
+    "Likes": "Падабацца",
+    "Log Out": "Выйсці",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Падаецца, спасылка для пацверджання пратэрмінавана. Не хвалюйцеся, мы можам адправіць спасылку зноў",
     "March": "Сакавік",
     "May": "Май",
@@ -40,6 +46,8 @@ export const be: LenType = {
     "November": "Лістапад",
     "October": "Кастрычнік",
     "Ok": "Добра",
+    "Profile Settings": "Налады профілю",
+    "Publications": "Публікацыі",
     "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
     "Save changes": "Захаваць змены",
     "Select from computer": "Выбраць на кампутары",

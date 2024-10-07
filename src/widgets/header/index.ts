@@ -1,1 +1,1 @@
-export { Header } from './ui/Header'
+export { Header } from '@/widgets/header/dexktopHeader/ui/Header'

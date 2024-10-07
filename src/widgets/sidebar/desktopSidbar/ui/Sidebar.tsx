@@ -1,12 +1,12 @@
 import { selectCurrentUserEmail } from '@/entities/user'
 import { LogOut } from '@/features/auth/logOut'
 import { useAppSelector } from '@/shared/config/storeHooks'
+import { SidebarItem, SidebarItemType } from '@/widgets/sidebar/sidebarItem/SidebarItem'
 import clsx from 'clsx'
 
 import s from './sidebar.module.scss'
 
-import { SidebarItem, SidebarItemType } from './sidebarItem/SidebarItem'
-import { useGetSidebarItems } from './useSidebarItems'
+import { useGetSidebarItems } from '../../lib/useSidebarItems'
 
 type Props = {
   className?: string
@@ -22,8 +22,8 @@ export const Sidebar = ({ className }: Props) => {
         {items.map((item, i) => (
           <SidebarItem item={item} key={i} />
         ))}
+        <LogOut email={email} />
       </nav>
-      <LogOut email={email} />
     </aside>
   )
 }

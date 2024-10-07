@@ -6,6 +6,7 @@ import { LogOutIcon } from '@/shared/assets/icons/LogOut'
 import { SIGN_IN } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui/button/button'
 import { Dialog } from '@/shared/ui/dialog'
 import { clsx } from 'clsx'
@@ -24,6 +25,8 @@ export const LogOut = ({ disabled, email }: Props) => {
   const [logout] = useLogOutMutation()
   const [open, setOpen] = useState(false)
   const dispatch = useAppDispatch()
+
+  const t = useTranslate()
 
   const router = useRouter()
 
@@ -46,6 +49,14 @@ export const LogOut = ({ disabled, email }: Props) => {
     }
   }
 
+  /*<Button
+            className={clsx(disabled && s.disabled, s.buttonTrigger)}
+            disabled={disabled}
+            variant={'text'}
+          >*/
+
+  /*</Button>*/
+
   return (
     <Dialog
       onOpenChange={setOpen}
@@ -58,21 +69,21 @@ export const LogOut = ({ disabled, email }: Props) => {
           variant={'text'}
         >
           <LogOutIcon />
-          Log Out
+          {t('Log Out')}
         </Button>
       }
     >
       <div className={s.logOutContent}>
         <span className={s.contentText}>
-          Are you really want to log out of your account &quot;
+          {t('Are you really want to log out of your account')} &quot;
           <span className={s.email}>{email}</span>&quot;?
         </span>
         <div className={s.contentButtons}>
           <Button className={s.buttonWidth} onClick={handleLogOut} variant={'outlined'}>
-            Yes
+            {t('Yes')}
           </Button>
           <Button className={s.buttonWidth} onClick={() => setOpen(false)} variant={'primary'}>
-            No
+            {t('No')}
           </Button>
         </div>
       </div>

@@ -5,14 +5,16 @@ import { useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui/button/button'
 import { LangSwitcher } from '@/widgets/langSwitcher'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 type Props = {
+  className?: string
   notification?: number
 }
 
-export const Header = ({ notification }: Props) => {
+export const Header = ({ className, notification }: Props) => {
   const router = useRouter()
 
   const t = useTranslate()
@@ -21,9 +23,10 @@ export const Header = ({ notification }: Props) => {
 
   return (
     <header
-      className={
-        'flex h-[3.75rem] w-full items-center justify-between border-b border-[#333] px-[3.75rem]'
-      }
+      className={clsx(
+        'flex h-[3.75rem] w-full items-center justify-between border-b border-[#333] px-[3.75rem]',
+        className
+      )}
     >
       <Link className={'text-large font-semibold'} href={HOME}>
         Meetgram
