@@ -1,4 +1,4 @@
-import {LenType} from './en';
+import { LenType } from './en';
 
 export const uk: LenType = {
     "About me": "Про мене",
@@ -29,6 +29,8 @@ export const uk: LenType = {
     "July": "Липень",
     "June": "Червень",
     "Last Name": "Прізвище",
+    "Like": "Подобатися",
+    "Likes": "Подобатися",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Схоже, що термін дії посилання для підтвердження завершився. Не хвилюйтеся, ми можемо надіслати посилання знову",
     "March": "Березень",
     "May": "Травень",
@@ -43,13 +45,12 @@ export const uk: LenType = {
     "Select from computer": "Виберіть з комп’ютера",
     "Select your city": "Виберіть ваше місто",
     "Select your country": "Виберіть вашу країну",
-    "September": "Вересень",
+        "September": "Вересень",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
     "Yes": "Так",
     "Your email has been confirmed": "Вашу електронну пошту підтверджено",
-    
     button: {
         Button: 'Кнопка',
         Link: 'Посилання, що виглядає як кнопка',

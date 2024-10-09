@@ -6,7 +6,7 @@ import { GetPublicPostsArgs, GetPublicPostsResponse } from '../types/posts.types
 export const postsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     deletePost: builder.mutation<void, { postId: string }>({
-      invalidatesTags: (res, err, args) => [{ id: args.postId, type: 'post' }, { type: 'profile' }],
+      invalidatesTags: (res, err, args) => [{ id: 'LIST', type: 'post' }, { type: 'profile' }],
       query: args => ({
         method: 'DELETE',
         url: `posts/${args.postId}`,

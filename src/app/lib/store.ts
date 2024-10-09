@@ -1,6 +1,6 @@
 import { userSlice } from '@/entities/user'
 import { authSlice } from '@/features/auth/signUp'
-import { addPostSlice } from '@/features/profile/addPost'
+import { addPostSlice } from '@/features/posts/addPost'
 import { baseApi } from '@/shared/api'
 import { type Action, type ThunkAction, combineSlices, configureStore } from '@reduxjs/toolkit'
 

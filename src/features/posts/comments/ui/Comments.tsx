@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useGetPostCommentsQuery } from '@/entities/post/model/services/post.service'
@@ -25,7 +25,7 @@ export const Comments = ({ onClick, pageNumber, postId, setPageNumber }: Props) 
     if (inView && !isFetching && hasMore) {
       setPageNumber(prevPage => prevPage + 1)
     }
-  }, [inView, isFetching, hasMore])
+  }, [inView, isFetching, hasMore, setPageNumber])
 
   useEffect(() => {
     if (data?.items) {

@@ -1,4 +1,4 @@
-import {LenType} from './en';
+import { LenType } from './en';
 
 export const es: LenType = {
     "About me": "Sobre mí",
@@ -29,6 +29,8 @@ export const es: LenType = {
     "July": "Julio",
     "June": "Junio",
     "Last Name": "Apellido",
+    "Like": 'Gusta',
+    "Likes": 'Gusta',
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
     "March": "Marzo",
     "May": "Mayo",
@@ -43,7 +45,7 @@ export const es: LenType = {
     "Select from computer": "Seleccionar desde la computadora",
     "Select your city": "Selecciona tu ciudad",
     "Select your country": "Selecciona tu país",
-    "September": "Septiembre",
+        "September": "Septiembre",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",

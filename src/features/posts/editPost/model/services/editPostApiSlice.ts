@@ -6,20 +6,8 @@ import { EditPostRequestArgs } from '../types/editPost.types'
 export const editPostApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     editPost: builder.mutation<void, EditPostRequestArgs>({
-      invalidatesTags: (res, error, args) => [{ id: args.postId, type: 'post' }],
-      onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
-        const getEditPostPatchResult = dispatch(
-          postApi.util.updateQueryData('getSinglePublicPost', `${args.postId}`, state => {
-            state.description = args.description
-          })
-        )
-
-        try {
-          await queryFulfilled
-        } catch (e) {
-          getEditPostPatchResult.undo()
-        }
-      },
+      invalidatesTags: (res, error, args) =>
+        !error?.data ? [{ id: args.postId, type: 'post' }] : [],
       query: args => ({
         body: { description: args.description },
         method: 'PUT',

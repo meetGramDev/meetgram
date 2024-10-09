@@ -1,5 +1,5 @@
 import { Ref, SVGProps, forwardRef } from 'react'
-type SVGComponentProps = { className?: string } & React.SVGProps<SVGSVGElement>
+type SVGComponentProps = { className?: string } & SVGProps<SVGSVGElement>
 const SvgComponent = (
   { className, fill = 'white', ...props }: SVGComponentProps,
   ref: Ref<SVGSVGElement>

@@ -80,8 +80,8 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
       }
     })
 
-    if (file.size > MAX_FILE_SIZE) {
-      setError(`The image size mustn't exceed 10 MB`)
+    if (file.size > MAX_FILE_SIZE.bytes) {
+      setError(`The image size mustn't exceed ${MAX_FILE_SIZE.size} MB`)
     }
 
     reader.readAsDataURL(file)
