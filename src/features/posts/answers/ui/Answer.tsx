@@ -29,7 +29,7 @@ export const Answer = ({ answer, onClick }: Props) => {
             alt={'user photo'}
             className={s.photo}
             height={36}
-            src={answer.from.avatars[0].url || withoutPhoto}
+            src={answer.from.avatars[0]?.url || withoutPhoto}
             width={36}
           />
         </div>

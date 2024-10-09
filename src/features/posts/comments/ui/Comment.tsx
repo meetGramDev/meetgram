@@ -59,7 +59,7 @@ export const Comment = ({ comment, onClick }: Props) => {
               alt={'user photo'}
               className={s.photo}
               height={36}
-              src={comment.from.avatars[0].url || withoutPhoto}
+              src={comment.from.avatars[0]?.url ?? withoutPhoto}
               width={36}
             />
           </div>
