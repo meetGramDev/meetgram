@@ -22,6 +22,37 @@ export const postApi = baseApi.injectEndpoints({
       }),
     }),
 
+    addLikeToPostAnswer: builder.mutation<
+      void,
+      { answerId: number; commentId: number; likeStatus: string; postId: number }
+    >({
+      invalidatesTags: (res, error, { answerId, commentId, likeStatus, postId }) => [
+        { answerId, commentId, likeStatus, postId, type: 'post' },
+      ],
+      async onQueryStarted(
+        { answerId, commentId, likeStatus, postId },
+        { dispatch, queryFulfilled }
+      ) {
+        const likeAnswer = dispatch(
+          postApi.util.updateQueryData('getAnswerComments', { commentId, postId }, state => {
+            state.items.map(
+              answer => answer.id === answerId && (answer.isLiked = likeStatus === 'LIKE')
+            )
+          })
+        )
+
+        try {
+          queryFulfilled
+        } catch (error) {
+          likeAnswer.undo()
+        }
+      },
+      query: ({ answerId, commentId, likeStatus, postId }) => ({
+        body: { likeStatus },
+        method: 'PUT',
+        url: `posts/${postId}/comments/${commentId}/answers/${answerId}/like-status`,
+      }),
+    }),
     addLikeToPostComment: builder.mutation<
       void,
       { commentId: number; likeStatus: string; postId: number }
@@ -136,6 +167,7 @@ export const postApi = baseApi.injectEndpoints({
 
 export const {
   useAddAnswerCommentMutation,
+  useAddLikeToPostAnswerMutation,
   useAddLikeToPostCommentMutation,
   useAddPostCommentMutation,
   useGetAnswerCommentsQuery,
