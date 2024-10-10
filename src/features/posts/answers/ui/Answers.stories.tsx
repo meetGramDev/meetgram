@@ -60,4 +60,3 @@ export const CommentsOfPost: Story = {
     postId: 0,
   },
 }
-
