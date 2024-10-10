@@ -10,10 +10,10 @@ export async function middleware(req: NextRequest) {
   if (isAuth && isAuthRoute) {
     return NextResponse.redirect(new URL(PROFILE, req.url + req.nextUrl.locale))
   }
-  if (isAuth && req.nextUrl.pathname.match(new RegExp('^\\' + PROFILE + '$'))) {
+  if (req.nextUrl.pathname.match(new RegExp('^\\' + PROFILE + '$'))) {
     return NextResponse.redirect(new URL(`${PROFILE}/${userId}`, req.url + req.nextUrl.locale))
   }
-  if (!isAuth && !isAuthRoute) {
+  if (!isAuth && !isAuthRoute && !req.nextUrl.pathname.startsWith(PROFILE)) {
     return NextResponse.redirect(new URL(SIGN_IN, req.url + req.nextUrl.locale))
   }
 

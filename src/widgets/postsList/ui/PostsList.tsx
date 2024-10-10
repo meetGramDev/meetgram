@@ -11,18 +11,19 @@ import { PostsListDesktop } from './postsListDesktop/PostsListDesktop'
 import { PostsListMobile } from './postsListMobile/PostsListMobile'
 
 type Props = {
-  userName: string
+  userId: number
+  userName?: string
 }
 
 const PAGE_SIZE = 12
 
-export const PostsList = ({ userName }: Props) => {
+export const PostsList = ({ userId }: Props) => {
   const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
-  const {
-    data: currentUser,
-    isError: userProfileQueryError,
-    isSuccess: isUserSuccess,
-  } = useFullUserProfileQuery(userName || skipToken)
+  // const {
+  //   data: currentUser,
+  //   isError: userProfileQueryError,
+  //   isSuccess: isUserSuccess,
+  // } = useFullUserProfileQuery(userName || skipToken)
 
   // =========== //
   const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(undefined)
@@ -44,35 +45,29 @@ export const PostsList = ({ userName }: Props) => {
   } = useGetPublicPostsQuery(
     {
       endCursorPostId,
-      id: String(currentUser?.id),
+      id: String(userId),
       params: { pageSize: PAGE_SIZE },
     },
-    { skip: (!currentUser?.id && !endCursorPostId) || userProfileQueryError }
+    { skip: !userId && !endCursorPostId }
   )
 
   return (
     <>
       {publicPostsSuccess && (
         <>
-          {isMobile
-            ? isUserSuccess && (
-                <>
-                  <PostsListMobile
-                    isFollowing={currentUser.isFollowing}
-                    posts={publicPosts.items}
-                    userId={currentUser.id}
-                  />
-                </>
-              )
-            : isUserSuccess && (
-                <>
-                  <PostsListDesktop
-                    isFollowing={currentUser.isFollowing}
-                    posts={publicPosts.items}
-                    userId={currentUser.id}
-                  />
-                </>
-              )}
+          {isMobile ? (
+            <PostsListMobile
+              // isFollowing={currentUser.isFollowing}
+              posts={publicPosts.items}
+              userId={userId}
+            />
+          ) : (
+            <PostsListDesktop
+              // isFollowing={currentUser.isFollowing}
+              posts={publicPosts.items}
+              userId={userId}
+            />
+          )}
         </>
       )}
       {publicPosts && publicPosts.items.length === 0 && (
