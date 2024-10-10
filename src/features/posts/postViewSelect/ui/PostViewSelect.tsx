@@ -17,7 +17,7 @@ import s from './PostViewSelect.module.scss'
 
 type Props = {
   id?: string
-  isFollowing: boolean
+  isFollowing?: boolean
   onEdit?: () => void
   onOpenPost: (open: boolean) => void
   ownerId: number
