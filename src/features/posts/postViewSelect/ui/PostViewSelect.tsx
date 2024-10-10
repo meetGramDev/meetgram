@@ -18,7 +18,7 @@ import s from './PostViewSelect.module.scss'
 type Props = {
   disableFollow?: boolean
   id?: string
-  isFollowing: boolean
+  isFollowing?: boolean
   onEdit?: () => void
   onFollow?: (userId: number) => void
   onOpenPost: (open: boolean) => void
