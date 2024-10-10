@@ -1,0 +1,20 @@
+.publicPostWrapper {
+  overflow: hidden;
+  display: flex;
+  display: -webkit-box;
+  flex-direction: column;
+  -webkit-box-orient: vertical;
+
+  max-width: 234px;
+  max-height: 391px;
+
+  text-overflow: ellipsis;
+
+  -webkit-line-clamp: 4;
+}
+
+.textExpanded {
+  height: auto;
+
+  -webkit-line-clamp: unset;
+}
