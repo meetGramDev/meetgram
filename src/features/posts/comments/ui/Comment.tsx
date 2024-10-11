@@ -36,12 +36,6 @@ export const Comment = ({ comment, onClick }: Props) => {
     try {
       if (!comment.isLiked) {
         likeComment({ commentId: comment.id, likeStatus: 'LIKE', postId: comment.postId })
-      } else {
-        likeComment({
-          commentId: comment.id,
-          likeStatus: 'NONE',
-          postId: comment.postId,
-        })
       }
     } catch (error) {
       serverErrorHandler(error)
@@ -83,7 +77,9 @@ export const Comment = ({ comment, onClick }: Props) => {
             Answer
           </Button>
         </div>
-        {answers && <Answers answers={answers} onClick={() => onClick(comment.id)} />}
+        {answers && (
+          <Answers answers={answers} onClick={() => onClick(comment.id)} postId={comment.postId} />
+        )}
       </div>
     </>
   )
