@@ -10,10 +10,10 @@ export const likePostApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getWhoLikedPost: builder.query<GetWhoLikedPostResponse, GetWhoLikedPostRequest>({
       forceRefetch: ({ currentArg, previousArg }) => {
-        return currentArg?.params?.cursor !== previousArg?.params?.cursor
+        return currentArg?.cursor !== previousArg?.cursor
       },
       merge(currentCacheData, responseData, otherArgs) {
-        if (!otherArgs.arg.params?.cursor) {
+        if (!otherArgs.arg.cursor) {
           return responseData
         }
 
@@ -24,12 +24,10 @@ export const likePostApi = baseApi.injectEndpoints({
         res
           ? [
               { id: 'LIST', type: 'PostLikes' },
-              ...res.items.map<{ id: number | string; type: 'PostLikes' | 'post' | 'profile' }>(
-                item => ({ id: item.userId, type: 'PostLikes' })
-              ),
+              ...res.items.map(item => ({ id: item.userId, type: 'PostLikes' as const })),
             ]
           : [{ id: 'LIST', type: 'PostLikes' }],
-      query: ({ params, postId }) => ({
+      query: ({ postId, ...params }) => ({
         params,
         url: `/posts/${postId}/likes`,
       }),
