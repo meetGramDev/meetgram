@@ -1,8 +1,11 @@
+import { useMediaQuery } from 'react-responsive'
+
 import { Photo } from '@/entities/photo'
 import { FullUserProfile, selectCurrentUserId } from '@/entities/user'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { PROFILE_SETTINGS } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
 
@@ -14,6 +17,9 @@ type Props = {
 
 export const User = ({ userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
+  const t = useTranslate()
+
+  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
   const currentUserId = useAppSelector(selectCurrentUserId)
 
   return (
@@ -30,35 +36,43 @@ export const User = ({ userData }: Props) => {
               }
             : { alt: 'blank avatar', src: userPhoto })}
         />
+
         <div className={s.userInformation}>
-          <div className={s.userName}>
-            <h1 className={s.userNameTitle}>{userData.userName}</h1>
-            {currentUserId === userData.id && (
+          {!isMobile && (
+            <div className={s.userName}>
+              <h1 className={s.userNameTitle}>{userData.userName}</h1>
               <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
-                Profile Settings
+                {t('Profile Settings')}
               </Button>
-            )}
-          </div>
+            </div>
+          )}
           <div className={s.buttonPublications}>
             <Link className={s.userLinks} href={'#'}>
               <span>{userData ? userData.followingCount : 0}</span>
               <br />
-              Following
+              {t('Following')}
             </Link>
             <Link className={s.userLinks} href={'#'}>
               <span>{userData ? userData.followersCount : 0}</span>
               <br />
-              Followers
+              {t('Followers')}
             </Link>
             <Link className={s.userLinks} href={'#'}>
               <span>{userData ? userData.publicationsCount : 0}</span>
               <br />
-              Publications
+              {t('Publications')}
             </Link>
           </div>
-          <div className={s.aboutMeText}>{userData?.aboutMe}</div>
+
+          {!isMobile && <div className={s.aboutMeText}>{userData?.aboutMe}</div>}
         </div>
       </div>
+      {isMobile && (
+        <div className={s.userName}>
+          <h1 className={s.userNameTitle}>{userData.userName}</h1>
+          <div className={s.aboutMeText}>{userData?.aboutMe}</div>
+        </div>
+      )}
     </div>
   )
 }

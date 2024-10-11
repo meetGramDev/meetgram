@@ -1,4 +1,5 @@
-import { LenType } from './en';
+import {LenType} from './en';
+
 
 export const uk: LenType = {
     "About me": "Про мене",
@@ -7,6 +8,7 @@ export const uk: LenType = {
     "Add a Profile Photo": "Додати фото профілю",
     "Add a profile photo": "Додати фото профілю",
     "April": "Квітень",
+    "Are you really want to log out of your account": "Ви справді хочете вийти з акаунта ",
     "Are you sure you want to delete the photo?": "Ви впевнені, що хочете видалити фото?",
     "August": "Серпень",
     "Avatar": "Аватар",
@@ -24,6 +26,8 @@ export const uk: LenType = {
     "Email verification link expired": "Термін дії посилання завершився",
     "February": "Лютий",
     "First Name": "Ім'я",
+    "Followers": "Підписники",
+    "Following": "Підписки",
     "General Information": "Загальна інформація",
     "January": "Січень",
     "July": "Липень",
@@ -31,6 +35,7 @@ export const uk: LenType = {
     "Last Name": "Прізвище",
     "Like": "Подобатися",
     "Likes": "Подобатися",
+    "Log Out": "Вийти",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Схоже, що термін дії посилання для підтвердження завершився. Не хвилюйтеся, ми можемо надіслати посилання знову",
     "March": "Березень",
     "May": "Травень",
@@ -40,12 +45,14 @@ export const uk: LenType = {
     "November": "Листопад",
     "October": "Жовтень",
     "Ok": "Гаразд",
+    "Profile Settings": "Налаштування профілю",
+    "Publications": "Публікації",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Save changes": "Зберегти зміни",
     "Select from computer": "Виберіть з комп’ютера",
     "Select your city": "Виберіть ваше місто",
     "Select your country": "Виберіть вашу країну",
-        "September": "Вересень",
+    "September": "Вересень",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
