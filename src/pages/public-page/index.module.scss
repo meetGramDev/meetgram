@@ -1,20 +1,37 @@
 .publicPostWrapper {
-  overflow: hidden;
+  scrollbar-width: none;
+  //text-overflow: ellipsis;
+  overflow: auto;
   display: flex;
-  display: -webkit-box;
   flex-direction: column;
-  -webkit-box-orient: vertical;
 
   max-width: 234px;
   max-height: 391px;
 
-  text-overflow: ellipsis;
+  border: 2px solid white;
+}
 
-  -webkit-line-clamp: 4;
+.publicPost {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  font-size: 14px;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+
+  -webkit-box-lines: unset;
+
+  -webkit-line-clamp: 3;
 }
 
 .textExpanded {
-  height: auto;
+  //height: auto;
+
+  //max-height: max-content;
 
   -webkit-line-clamp: unset;
 }
