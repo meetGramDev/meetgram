@@ -1,4 +1,4 @@
-@import '../../../../app/styles/screens';
+@import 'src/app/styles/screens' ;
 
 .head {
   position: fixed;
@@ -14,26 +14,19 @@
   width: 100%;
   min-height: 80vh;
   margin-top: 60px;
-}
 
-@media (width > $screen-size-mobile) {
-  .main {
-    margin-left: 230px;
+  @media (width > $screen-size-mobile) {
+    margin-left: var(--leftContentGapForSidebar);
   }
 }
 
 .fixedSidebar {
   position: fixed;
-  margin-top: 60px;
-}
 
-@media (width <= $screen-size-mobile) {
-  .fixedSidebar {
-    position: fixed;
+  @media (width <= $screen-size-mobile) {
     z-index: 1000;
     bottom: 0;
     left: 0;
-
     background-color: var(--dark-color-900);
   }
 }

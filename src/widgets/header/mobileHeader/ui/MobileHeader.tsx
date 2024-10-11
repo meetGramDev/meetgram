@@ -10,7 +10,7 @@ import Link from 'next/link'
 import s from './mobileHeader.module.scss'
 
 type Props = {
-  className: string
+  className?: string
 }
 
 export const MobileHeader = ({ className }: Props) => {

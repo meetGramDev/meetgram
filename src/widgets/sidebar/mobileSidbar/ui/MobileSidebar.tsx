@@ -12,15 +12,14 @@ type Props = {
 
 export const MobileSidebar = ({ className }: Props) => {
   const items: SidebarItemType[] = useGetSidebarItems()
+  const mobileSidebarItems = items.slice(0, 5)
 
   return (
     <aside>
       <nav className={clsx(s.sidebar, className)}>
-        {items.map((el, i) => {
-          if (i < 5) {
-            return <SidebarItem className={s.move_item} item={el} key={i} />
-          }
-        })}
+        {mobileSidebarItems.map((el, i) => (
+          <SidebarItem className={s.move_item} item={el} key={i} />
+        ))}
       </nav>
     </aside>
   )
