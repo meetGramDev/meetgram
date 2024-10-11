@@ -12,7 +12,7 @@ import { UserListProps } from './UsersListDialog'
 type Props = Partial<UserListProps> & UserWhoLikedPost
 
 export const UserItem = forwardRef<HTMLLIElement, Props>(
-  ({ avatars, id, isFollowedBy, isFollowing, onFollow, userId, userName }, ref) => {
+  ({ avatars, disabled, id, isFollowedBy, isFollowing, onFollow, userId, userName }, ref) => {
     const authUser = useAppSelector(selectCurrentUser)
     const isAuthUser = authUser.userId !== userId
 
@@ -23,6 +23,7 @@ export const UserItem = forwardRef<HTMLLIElement, Props>(
           {isAuthUser && (
             <Button
               className={s.followBtn}
+              disabled={disabled}
               onClick={() => onFollow?.(userId)}
               variant={isFollowing ? 'outlined' : 'primary'}
             >

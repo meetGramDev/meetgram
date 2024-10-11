@@ -1,13 +1,14 @@
 import { useGetWhoLikedPostQuery } from '@/entities/like'
 import { Photo } from '@/entities/photo'
+import { useFollowUserMutation } from '@/features/follow'
 import { UsersListDialog } from '@/features/pagination'
-import { SearchDialog } from '@/features/search'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, Dialog, Loader } from '@/shared/ui'
 
 import s from './LikesView.module.scss'
 
 import noPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
+import { ContainerWithSearch } from '../../ui/ContainerWithSearch'
 
 type Props = {
   likesCount: number
@@ -16,8 +17,11 @@ type Props = {
 
 export const LikesView = ({ likesCount, postId }: Props) => {
   const { data, isSuccess } = useGetWhoLikedPostQuery({ postId })
+  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
   const t = useTranslate()
+
+  const handleFollowUser = (userId: number) => followUser({ selectedUserId: userId })
 
   return (
     <Dialog
@@ -45,12 +49,9 @@ export const LikesView = ({ likesCount, postId }: Props) => {
       {!isSuccess ? (
         <Loader />
       ) : (
-        <div className={s.container}>
-          <SearchDialog />
-          <div className={s.content}>
-            <UsersListDialog postId={postId} />
-          </div>
-        </div>
+        <ContainerWithSearch>
+          <UsersListDialog disabled={isFollowLoading} onFollow={handleFollowUser} postId={postId} />
+        </ContainerWithSearch>
       )}
     </Dialog>
   )

@@ -1,5 +1,4 @@
 import { baseApi } from '@/shared/api'
-import { getProvidesTags } from '@/shared/lib'
 
 import {
   GetWhoLikedPostRequest,
@@ -21,7 +20,15 @@ export const likePostApi = baseApi.injectEndpoints({
         Object.assign(currentCacheData, responseData)
         currentCacheData.items.push(...responseData.items)
       },
-      providesTags: res => getProvidesTags(res?.items, 'PostLikes'),
+      providesTags: res =>
+        res
+          ? [
+              { id: 'LIST', type: 'PostLikes' },
+              ...res.items.map<{ id: number | string; type: 'PostLikes' | 'post' | 'profile' }>(
+                item => ({ id: item.userId, type: 'PostLikes' })
+              ),
+            ]
+          : [{ id: 'LIST', type: 'PostLikes' }],
       query: ({ params, postId }) => ({
         params,
         url: `/posts/${postId}/likes`,
