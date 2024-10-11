@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { useGetWhoLikedPostQuery } from '@/entities/like'
 import { Photo } from '@/entities/photo'
 import { useFollowUserMutation } from '@/features/follow'
@@ -15,8 +17,17 @@ type Props = {
   postId: number
 }
 
+const MAX_PAGE_SIZE = 8
+
 export const LikesView = ({ likesCount, postId }: Props) => {
-  const { data, isSuccess } = useGetWhoLikedPostQuery({ postId })
+  const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
+
+  const { data, isFetching, isLoading, isSuccess } = useGetWhoLikedPostQuery({
+    cursor: endCursorId,
+    pageSize: MAX_PAGE_SIZE,
+    postId,
+  })
+
   const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
   const t = useTranslate()
@@ -50,7 +61,17 @@ export const LikesView = ({ likesCount, postId }: Props) => {
         <Loader />
       ) : (
         <ContainerWithSearch>
-          <UsersListDialog disabled={isFollowLoading} onFollow={handleFollowUser} postId={postId} />
+          <UsersListDialog
+            data={data}
+            disabled={isFollowLoading}
+            endCursor={endCursorId}
+            isFetching={isFetching}
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            maxPageSize={MAX_PAGE_SIZE}
+            onFollow={handleFollowUser}
+            setEndCursor={setEndCursorId}
+          />
         </ContainerWithSearch>
       )}
     </Dialog>

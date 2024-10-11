@@ -1,6 +1,5 @@
-import { useRef, useState } from 'react'
+import { ReactNode, useRef } from 'react'
 
-import { useGetWhoLikedPostQuery } from '@/entities/like'
 import { UserItem } from '@/features/pagination/ui/UserItem'
 import { useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
@@ -8,29 +7,39 @@ import { Loader } from '@/shared/ui'
 import s from './UsersListDialog.module.scss'
 
 export type UserListProps = {
+  children?: ReactNode
+  data: {
+    items: any[]
+    totalCount: number
+  }
   disabled?: boolean
+  endCursor: number | undefined
+  isFetching: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  maxPageSize?: number
+  onDeleteFollowers?: (id: number) => void
   onFollow?: (id: number) => void
-  postId: number
+  setEndCursor: (cursorId: number | undefined) => void
 }
 
-const MAX_PAGE_SIZE = 8
-
-export const UsersListDialog = ({ disabled, onFollow, postId }: UserListProps) => {
+export const UsersListDialog = ({
+  data,
+  disabled,
+  endCursor,
+  isFetching,
+  isLoading,
+  isSuccess,
+  maxPageSize = 8,
+  onFollow,
+  setEndCursor,
+}: UserListProps) => {
   const lastUserRef = useRef<HTMLElement>(null)
-  const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
-
-  const { data, isFetching, isLoading, isSuccess } = useGetWhoLikedPostQuery({
-    params: {
-      cursor: endCursorId,
-      pageSize: MAX_PAGE_SIZE,
-    },
-    postId,
-  })
 
   const { ref } = useInfiniteScroll(
     () => {
-      if (endCursorId && data?.items && data.items.length >= MAX_PAGE_SIZE) {
-        setEndCursorId(data.items.at(-1)?.id)
+      if (endCursor && data?.items && data.items.length >= maxPageSize) {
+        setEndCursor(data.items.at(-1)?.id)
       }
     },
     {
