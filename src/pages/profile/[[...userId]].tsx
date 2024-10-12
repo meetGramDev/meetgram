@@ -41,7 +41,7 @@ const UserId: NextPageWithLayout = () => {
 
   return (
     <div className={'h-full'}>
-      {!userProfileFetching && userData ? (
+      {!userProfileLoading && userData ? (
         <User
           disabledFollowBtn={isFollowLoading}
           onFollow={userId => followUser({ selectedUserId: userId })}

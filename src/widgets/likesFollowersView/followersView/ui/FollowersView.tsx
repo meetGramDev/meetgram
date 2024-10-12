@@ -46,7 +46,7 @@ export const FollowersView = ({ followCount, type, userName }: FollowersProps) =
         </Button>
       }
     >
-      <FollowersContent type={type} userName={userName} />
+      <FollowersContent followCount={followCount} type={type} userName={userName} />
     </Dialog>
   )
 }

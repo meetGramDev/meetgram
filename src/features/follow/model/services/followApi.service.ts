@@ -9,7 +9,8 @@ import {
 export const followService = baseApi.injectEndpoints({
   endpoints: builder => ({
     deleteFollower: builder.mutation<void, string>({
-      invalidatesTags: (res, error, args) => (!error ? [{ id: args, type: 'follow' }] : []),
+      invalidatesTags: (res, error, args) =>
+        !error ? [{ id: args, type: 'follow' }, { type: 'profile' }] : [],
       query: userId => ({
         method: 'DELETE',
         url: `/users/follower/${userId}`,
@@ -31,6 +32,17 @@ export const followService = baseApi.injectEndpoints({
       }),
     }),
     getUserFollowingOrFollowers: builder.query<GetFollowingResponseType, GetFollowingArgsType>({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.cursor !== previousArg?.cursor
+      },
+      merge: (currentCacheData, responseData, otherArgs) => {
+        if (!otherArgs.arg.cursor) {
+          return responseData
+        }
+
+        Object.assign(currentCacheData, responseData)
+        currentCacheData.items.push(...responseData.items)
+      },
       providesTags: res =>
         res
           ? [
@@ -45,6 +57,8 @@ export const followService = baseApi.injectEndpoints({
 
         return { params, url }
       },
+      serializeQueryArgs: ({ queryArgs }) =>
+        `${queryArgs.isGetFollowers ? 'followers_' : 'following_'} ${queryArgs.userName}`,
     }),
   }),
 })

@@ -6,15 +6,56 @@ import s from './FollowButton.module.scss'
 
 type Props = {
   disabled?: boolean
+  isFollowedBy?: boolean
   isFollowing: boolean
+  onDeleteFollowers?: (id: number, userName?: string) => void
   onFollow?: (id: number) => void
   userId: number
-  // isFollowedBy: boolean
+  userName?: string
 }
 
-export const FollowButton = ({ disabled, isFollowing, onFollow, userId }: Props) => {
+export const FollowButton = ({
+  disabled,
+  isFollowedBy,
+  isFollowing,
+  onDeleteFollowers,
+  onFollow,
+  userId,
+  userName,
+}: Props) => {
   const authUser = useAppSelector(selectCurrentUser)
   const isAuthUser = authUser.userId !== userId
+
+  if (onDeleteFollowers) {
+    return (
+      <div className={'ml-auto'}>
+        {isAuthUser && (
+          <div className={s.followersBtn}>
+            {!isFollowing && (
+              <Button
+                className={s.followBtn}
+                disabled={disabled}
+                onClick={() => onFollow?.(userId)}
+                variant={isFollowing ? 'outlined' : 'primary'}
+              >
+                {isFollowing ? 'Unfollow' : 'Follow'}
+              </Button>
+            )}
+            {isFollowedBy && (
+              <Button
+                className={s.btnFollowerDelete}
+                disabled={disabled}
+                onClick={() => onDeleteFollowers?.(userId, userName)}
+                variant={'text'}
+              >
+                Delete
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
+    )
+  }
 
   return (
     <div className={'ml-auto'}>
