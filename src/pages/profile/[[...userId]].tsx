@@ -25,10 +25,13 @@ const UserId: NextPageWithLayout = () => {
   )
 
   const authUsername = useAppSelector(selectCurrentUserName)
-  const { data: userData, isLoading: userProfileLoading } = useFullUserProfileQuery(
-    userDataById?.userName || authUsername || skipToken,
-    { skip: isProfileByIdError }
-  )
+  const {
+    data: userData,
+    isFetching: userProfileFetching,
+    isLoading: userProfileLoading,
+  } = useFullUserProfileQuery(userDataById?.userName || authUsername || skipToken, {
+    skip: isProfileByIdError,
+  })
 
   const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
@@ -38,7 +41,7 @@ const UserId: NextPageWithLayout = () => {
 
   return (
     <div className={'h-full'}>
-      {!userProfileLoading && userData ? (
+      {!userProfileFetching && userData ? (
         <User
           disabledFollowBtn={isFollowLoading}
           onFollow={userId => followUser({ selectedUserId: userId })}

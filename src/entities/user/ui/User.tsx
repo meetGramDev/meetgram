@@ -69,13 +69,13 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
           <div className={s.buttonPublications}>
             <FollowersView
               followCount={userData.followingCount}
-              type={'Following'}
+              type={'following'}
               userName={userData.userName}
             />
 
             <FollowersView
               followCount={userData.followersCount}
-              type={'Followers'}
+              type={'followers'}
               userName={userData.userName}
             />
             <Link className={s.userLinks} href={'#'}>

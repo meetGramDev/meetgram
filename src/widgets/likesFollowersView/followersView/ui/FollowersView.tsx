@@ -1,34 +1,23 @@
-import { useState } from 'react'
-
-import { useFollowUserMutation, useLazyGetUserFollowingOrFollowersQuery } from '@/features/follow'
-import { UsersListDialog } from '@/features/pagination'
 import { useTranslate } from '@/shared/lib/useTranslate'
-import { Button, Dialog, Loader } from '@/shared/ui'
+import { Button, Dialog } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
 import s from './FollowersView.module.scss'
 
-import { ContainerWithSearch } from '../../ui/ContainerWithSearch'
+import { FollowersContent } from './FollowersContent'
 
-type Props = {
+export type FollowersProps = {
   followCount?: number
-  type: 'Followers' | 'Following'
+  type: 'followers' | 'following'
   userName: string
 }
 
-const MAX_PAGE_SIZE = 8
-
-export const FollowersView = ({ followCount, type, userName }: Props) => {
-  const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
-  const [getFollowingFollowers, { data, isFetching, isLoading, isSuccess }] =
-    useLazyGetUserFollowingOrFollowersQuery()
-
-  const [follow, { isLoading: isFollowLoading }] = useFollowUserMutation()
-
+export const FollowersView = ({ followCount, type, userName }: FollowersProps) => {
   const t = useTranslate()
   const router = useRouter()
-  const isOpen = router.query[type.toLowerCase()] as string | undefined
+  const isOpen = router.query[type] as string | undefined
   const profileUrl = `/profile/${router.query.userId}`
+  const shouldOpen = isOpen === '' && followCount !== 0
 
   const handleOpenDialog = (open: boolean) => {
     if (followCount === 0) {
@@ -38,51 +27,26 @@ export const FollowersView = ({ followCount, type, userName }: Props) => {
     if (!open) {
       router.push(profileUrl, undefined, { shallow: true })
     } else {
-      router.push(`${profileUrl}/?${type.toLowerCase()}`, undefined, {
+      router.push(`${profileUrl}/?${type}`, undefined, {
         shallow: true,
-      })
-      getFollowingFollowers({
-        cursor: endCursorId,
-        isGetFollowers: type === 'Followers',
-        pageSize: MAX_PAGE_SIZE,
-        userName,
       })
     }
   }
 
-  const handleFollowUser = (userId: number) => follow({ selectedUserId: userId })
-
   return (
     <Dialog
+      modal
       onOpenChange={handleOpenDialog}
-      open={isOpen === '' && followCount !== 0}
-      title={t(type) as string}
+      open={shouldOpen}
+      title={t(type.slice(0, 1).toUpperCase() + type.slice(1)) as string}
       trigger={
         <Button className={s.triggerBtn} variant={'text'}>
           <span>{followCount || 0}</span>
-          {t(type)}
+          {t(type.slice(0, 1).toUpperCase() + type.slice(1))}
         </Button>
       }
     >
-      {!isSuccess ? (
-        <div className={'flex items-center justify-center p-12'}>
-          <Loader />
-        </div>
-      ) : (
-        <ContainerWithSearch>
-          <UsersListDialog
-            data={data}
-            disabled={isFollowLoading}
-            endCursor={endCursorId}
-            isFetching={isFetching}
-            isLoading={isLoading}
-            isSuccess={isSuccess}
-            maxPageSize={MAX_PAGE_SIZE}
-            onFollow={handleFollowUser}
-            setEndCursor={setEndCursorId}
-          />
-        </ContainerWithSearch>
-      )}
+      <FollowersContent type={type} userName={userName} />
     </Dialog>
   )
 }
