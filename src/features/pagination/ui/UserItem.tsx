@@ -11,33 +11,12 @@ import { UserListProps } from './UsersListDialog'
 type Props = FollowLikeItemType & Partial<Omit<UserListProps, 'data'>>
 
 export const UserItem = forwardRef<HTMLLIElement, Props>(
-  (
-    {
-      avatars,
-      disabled,
-      id,
-      isFollowedBy,
-      isFollowing,
-      onDeleteFollowers,
-      onFollow,
-      userId,
-      userName,
-    },
-    ref
-  ) => {
+  ({ avatars, id, userId, userName, ...btnFollowProps }, ref) => {
     return (
-      <li className={s.user} key={id} ref={ref}>
+      <li className={s.user} ref={ref}>
         <UserLink avatars={avatars} userId={userId} userName={userName} />
         <div className={'ml-auto'}>
-          <FollowButton
-            disabled={disabled}
-            isFollowedBy={isFollowedBy}
-            isFollowing={isFollowing}
-            onDeleteFollowers={onDeleteFollowers}
-            onFollow={onFollow}
-            userId={userId}
-            userName={userName}
-          />
+          <FollowButton userId={userId} userName={userName} {...btnFollowProps} />
         </div>
       </li>
     )

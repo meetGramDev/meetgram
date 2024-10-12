@@ -21,7 +21,7 @@ export type UserListProps = {
   isLoading: boolean
   isSuccess: boolean
   maxPageSize?: number
-  onDeleteFollowers?: (id: number, userName?: string) => void
+  onDeleteFollowers?: (id: number) => void
   onFollow?: (id: number) => void
   setEndCursor: (cursorId: number | undefined) => void
   totalCount?: number
