@@ -29,7 +29,7 @@ export const Comments = ({ onClick, pageNumber, postId, setPageNumber }: Props) 
 
   useEffect(() => {
     if (data?.items) {
-      if (data.items.length === 0) {
+      if (data.items.length === data.totalCount) {
         setHasMore(false)
       } else {
         setHasMore(true)
