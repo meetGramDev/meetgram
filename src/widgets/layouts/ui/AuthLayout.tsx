@@ -1,8 +1,7 @@
 import type { ReactElement, ReactNode } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
-import { Header } from '@/widgets/header'
-import { MobileHeader } from '@/widgets/mobileHeader'
+import { Header, MobileHeader } from '@/widgets/header'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
