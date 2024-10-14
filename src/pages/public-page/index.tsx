@@ -1,3 +1,4 @@
+import { GetPublicPostsResponse } from '@/entities/post'
 import { useGetAllPublicPostsQuery } from '@/entities/post/model/services/posts.service'
 import { PublicPagePost } from '@/entities/post/ui/publicPagePost/PublicPagePost'
 import { TotalUsersCount } from '@/features/user/totalUsersCount/ui/totalUsersCount'
@@ -6,8 +7,26 @@ import { getAuthLayout } from '@/widgets/layouts'
 
 import s from './index.module.scss'
 
-const PublicPage: NextPageWithLayout = () => {
-  const { data } = useGetAllPublicPostsQuery({})
+// export const getServerSideProps = async () => {
+//   const { data: publicPosts } = useGetAllPublicPostsQuery({})
+//
+//   if (!publicPosts) {
+//     return {
+//       notFound: true,
+//     }
+//   }
+//
+//   return {
+//     props: { publicPosts },
+//   }
+// }
+
+type PropsType = {
+  data: GetPublicPostsResponse
+}
+
+const PublicPage = (props: PropsType) => {
+  const { data } = props
 
   console.log(data)
 
