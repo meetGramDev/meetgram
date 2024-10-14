@@ -1,0 +1,17 @@
+.followBtn {
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-user-select: none;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.followersBtn {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.btnFollowerDelete {
+  font-weight: 400;
+  color: var(--light-color);
+}

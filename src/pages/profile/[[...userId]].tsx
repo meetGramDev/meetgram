@@ -7,6 +7,7 @@ import {
   useGetPublicProfileByIdQuery,
 } from '@/entities/user'
 import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
+import { useFollowUserMutation } from '@/features/follow'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { NextPageWithLayout } from '@/shared/types'
 import { Loader } from '@/shared/ui'
@@ -24,10 +25,15 @@ const UserId: NextPageWithLayout = () => {
   )
 
   const authUsername = useAppSelector(selectCurrentUserName)
-  const { data: userData, isLoading: userProfileLoading } = useFullUserProfileQuery(
-    userDataById?.userName || authUsername || skipToken,
-    { skip: isProfileByIdError }
-  )
+  const {
+    data: userData,
+    isFetching: userProfileFetching,
+    isLoading: userProfileLoading,
+  } = useFullUserProfileQuery(userDataById?.userName || authUsername || skipToken, {
+    skip: isProfileByIdError,
+  })
+
+  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
   if (isProfileByIdError) {
     return <p className={'mt-40 text-center text-h1'}>Profile was not found</p>
@@ -35,7 +41,15 @@ const UserId: NextPageWithLayout = () => {
 
   return (
     <div className={'h-full'}>
-      {!userProfileLoading && userData ? <User userData={userData} /> : <UserSkeleton />}
+      {!userProfileLoading && userData ? (
+        <User
+          disabledFollowBtn={isFollowLoading}
+          onFollow={userId => followUser({ selectedUserId: userId })}
+          userData={userData}
+        />
+      ) : (
+        <UserSkeleton />
+      )}
 
       <Suspense
         fallback={

@@ -1,36 +1,51 @@
-import { useRef, useState } from 'react'
+import { ReactNode, useRef } from 'react'
 
-import { useGetWhoLikedPostQuery } from '@/entities/like'
-import { UserItem } from '@/features/pagination/ui/UserItem'
 import { useInfiniteScroll } from '@/shared/lib'
+import { FollowLikeItemType } from '@/shared/types'
 import { Loader } from '@/shared/ui'
 
 import s from './UsersListDialog.module.scss'
 
+import { UserItem } from './UserItem'
+
 export type UserListProps = {
+  children?: ReactNode
+  data: {
+    items: FollowLikeItemType[]
+    nextCursor: number
+    totalCount: number
+  }
   disabled?: boolean
+  endCursor: number | undefined
+  isFetching: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  maxPageSize?: number
+  onDeleteFollowers?: (id: number) => void
   onFollow?: (id: number) => void
-  postId: number
+  setEndCursor: (cursorId: number | undefined) => void
+  totalCount?: number
 }
 
-const MAX_PAGE_SIZE = 8
-
-export const UsersListDialog = ({ disabled, onFollow, postId }: UserListProps) => {
+export const UsersListDialog = ({
+  data,
+  disabled,
+  endCursor,
+  isFetching,
+  isLoading,
+  isSuccess,
+  maxPageSize = 8,
+  onDeleteFollowers,
+  onFollow,
+  setEndCursor,
+  totalCount,
+}: UserListProps) => {
   const lastUserRef = useRef<HTMLElement>(null)
-  const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
-
-  const { data, isFetching, isLoading, isSuccess } = useGetWhoLikedPostQuery({
-    params: {
-      cursor: endCursorId,
-      pageSize: MAX_PAGE_SIZE,
-    },
-    postId,
-  })
 
   const { ref } = useInfiniteScroll(
     () => {
-      if (endCursorId && data?.items && data.items.length >= MAX_PAGE_SIZE) {
-        setEndCursorId(data.items.at(-1)?.id)
+      if (data?.items && data.items.length >= maxPageSize && totalCount !== data.items.length) {
+        setEndCursor(data.nextCursor)
       }
     },
     {
@@ -53,11 +68,18 @@ export const UsersListDialog = ({ disabled, onFollow, postId }: UserListProps) =
         if (data.items.length === i + 1) {
           return (
             <>
-              <UserItem disabled={disabled} key={user.id} onFollow={onFollow} ref={ref} {...user} />
+              <UserItem
+                disabled={disabled}
+                key={user.id}
+                onDeleteFollowers={onDeleteFollowers}
+                onFollow={onFollow}
+                ref={ref}
+                {...user}
+              />
 
               <li
                 className={s.smallLoader}
-                key={i + 2}
+                key={user.id + 'ldsr'}
                 style={{ display: data.totalCount === data.items.length ? 'none' : '' }}
               >
                 {isFetching && <Loader />}
@@ -66,7 +88,15 @@ export const UsersListDialog = ({ disabled, onFollow, postId }: UserListProps) =
           )
         }
 
-        return <UserItem disabled={disabled} key={user.id} onFollow={onFollow} {...user} />
+        return (
+          <UserItem
+            disabled={disabled}
+            key={user.id}
+            onDeleteFollowers={onDeleteFollowers}
+            onFollow={onFollow}
+            {...user}
+          />
+        )
       })}
     </ul>
   )

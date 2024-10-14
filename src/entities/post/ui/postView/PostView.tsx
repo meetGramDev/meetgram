@@ -10,6 +10,7 @@ import {
   useGetSinglePublicPostQuery,
 } from '@/entities/post'
 import { selectCurrentUserId } from '@/entities/user'
+import { useFollowUserMutation } from '@/features/follow'
 import { Comments, getTimeAgo } from '@/features/posts/comments'
 import { LikeButton } from '@/features/posts/likePost'
 import { PostViewSelect } from '@/features/posts/postViewSelect'
@@ -45,6 +46,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
   const [isFavourite, setIsFavourite] = useState(false)
   const [textContent, setTextContent] = useState('')
   const [commentId, setCommentId] = useState<null | number>(null)
+  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
   const answerCommentRef = useRef<HTMLTextAreaElement>(null)
 
@@ -114,6 +116,8 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
     setCommentId(commentId)
   }
 
+  const handleOnFollow = (userId: number) => followUser({ selectedUserId: userId })
+
   const ownerProfile = `${HOME}/${userId}`
 
   if (postLoading) {
@@ -151,9 +155,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                 </Link>
               </div>
               <PostViewSelect
+                disableFollow={isFollowLoading}
                 id={`${postId}`}
                 isFollowing={isFollowing}
                 onEdit={onEdit}
+                onFollow={handleOnFollow}
                 onOpenPost={isOpen}
                 ownerId={userId}
                 userId={authUserId!}

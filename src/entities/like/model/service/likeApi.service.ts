@@ -1,5 +1,4 @@
 import { baseApi } from '@/shared/api'
-import { getProvidesTags } from '@/shared/lib'
 
 import {
   GetWhoLikedPostRequest,
@@ -11,18 +10,24 @@ export const likePostApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     getWhoLikedPost: builder.query<GetWhoLikedPostResponse, GetWhoLikedPostRequest>({
       forceRefetch: ({ currentArg, previousArg }) => {
-        return currentArg?.params?.cursor !== previousArg?.params?.cursor
+        return currentArg?.cursor !== previousArg?.cursor
       },
       merge(currentCacheData, responseData, otherArgs) {
-        if (!otherArgs.arg.params?.cursor) {
+        if (!otherArgs.arg.cursor) {
           return responseData
         }
 
         Object.assign(currentCacheData, responseData)
         currentCacheData.items.push(...responseData.items)
       },
-      providesTags: res => getProvidesTags(res?.items, 'PostLikes'),
-      query: ({ params, postId }) => ({
+      providesTags: res =>
+        res
+          ? [
+              { id: 'LIST', type: 'PostLikes' },
+              ...res.items.map(item => ({ id: item.userId, type: 'PostLikes' as const })),
+            ]
+          : [{ id: 'LIST', type: 'PostLikes' }],
+      query: ({ postId, ...params }) => ({
         params,
         url: `/posts/${postId}/likes`,
       }),

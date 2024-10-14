@@ -1,0 +1,17 @@
+@use '@/app/styles/mixins' as mixins;
+
+.triggerBtn {
+  @include mixins.flex(column, flex-start, flex-start);
+
+  font: var(--font-regular-link);
+  color: var(--light-color);
+
+  > span {
+    font-weight: 700;
+  }
+}
+
+.container {
+  min-width: 50vw !important;
+  max-width: 70vw !important;
+}

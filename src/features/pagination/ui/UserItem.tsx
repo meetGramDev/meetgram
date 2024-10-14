@@ -1,34 +1,22 @@
 import { forwardRef } from 'react'
 
-import { UserWhoLikedPost } from '@/entities/like'
-import { UserLink, selectCurrentUser } from '@/entities/user'
-import { useAppSelector } from '@/shared/config/storeHooks'
-import { Button } from '@/shared/ui'
+import { FollowButton } from '@/entities/follow-btn'
+import { UserLink } from '@/entities/user'
+import { FollowLikeItemType } from '@/shared/types'
 
 import s from './UsersListDialog.module.scss'
 
 import { UserListProps } from './UsersListDialog'
 
-type Props = Partial<UserListProps> & UserWhoLikedPost
+type Props = FollowLikeItemType & Partial<Omit<UserListProps, 'data'>>
 
 export const UserItem = forwardRef<HTMLLIElement, Props>(
-  ({ avatars, id, isFollowedBy, isFollowing, onFollow, userId, userName }, ref) => {
-    const authUser = useAppSelector(selectCurrentUser)
-    const isAuthUser = authUser.userId !== userId
-
+  ({ avatars, id, userId, userName, ...btnFollowProps }, ref) => {
     return (
-      <li className={s.user} key={id} ref={ref}>
+      <li className={s.user} ref={ref}>
         <UserLink avatars={avatars} userId={userId} userName={userName} />
         <div className={'ml-auto'}>
-          {isAuthUser && (
-            <Button
-              className={s.followBtn}
-              onClick={() => onFollow?.(userId)}
-              variant={isFollowing ? 'outlined' : 'primary'}
-            >
-              {isFollowing ? 'Unfollow' : 'Follow'}
-            </Button>
-          )}
+          <FollowButton userId={userId} userName={userName} {...btnFollowProps} />
         </div>
       </li>
     )
