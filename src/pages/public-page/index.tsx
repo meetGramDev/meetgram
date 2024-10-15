@@ -21,14 +21,19 @@ import s from './index.module.scss'
 //   }
 // }
 
-type PropsType = {
-  data: GetPublicPostsResponse
-}
+// type PropsType = {
+//   data: GetPublicPostsResponse
+// }
 
-const PublicPage = (props: PropsType) => {
-  const { data } = props
+const PublicPage = () => {
+  const { data } = useGetAllPublicPostsQuery({})
+
+  // const { data } = props
 
   console.log(data)
+  // if (!data) {
+  //   return <div>hello</div>
+  // }
 
   return (
     <div className={'w-full px-[9.5rem]'}>
