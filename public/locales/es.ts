@@ -1,4 +1,5 @@
-import { LenType } from './en';
+import {LenType} from './en';
+
 
 export const es: LenType = {
     "About me": "Sobre mí",
@@ -7,6 +8,7 @@ export const es: LenType = {
     "Add a Profile Photo": "Añadir una foto de perfil",
     "Add a profile photo": "Añadir una foto de perfil",
     "April": "Abril",
+    "Are you really want to log out of your account": "¿Realmente deseas cerrar sesión en tu cuenta ",
     "Are you sure you want to delete the photo?": "¿Estás seguro de que quieres eliminar la foto?",
     "August": "Agosto",
     "Avatar": "Avatar",
@@ -21,9 +23,13 @@ export const es: LenType = {
     "Devices": "Dispositivos",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "¿Seguro que quieres cerrar la creación de una publicación? Si la cierras, se eliminará todo.",
     "Email sent": "Correo enviado",
+
     "Email verification link expired": "El enlace ha caducado",
     "February": "Febrero",
     "First Name": "Nombre",
+
+    "Followers": "Seguidores",
+    "Following": "Siguiendo",
     "General Information": "Información general",
     "January": "Enero",
     "July": "Julio",
@@ -31,7 +37,7 @@ export const es: LenType = {
     "Last Name": "Apellido",
     "Like": 'Gusta',
     "Likes": 'Gusta',
-    "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
+    "Log Out": "Cerrar sesión", "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
     "March": "Marzo",
     "May": "Mayo",
     "My Payments": "Mis pagos",
@@ -40,12 +46,14 @@ export const es: LenType = {
     "November": "Noviembre",
     "October": "Octubre",
     "Ok": "Ok",
+    "Profile Settings": "Configuración del perfil",
+    "Publications": "Publicaciones",
     "Resend verification link": "Reenviar enlace de verificación",
     "Save changes": "Guardar cambios",
     "Select from computer": "Seleccionar desde la computadora",
     "Select your city": "Selecciona tu ciudad",
     "Select your country": "Selecciona tu país",
-        "September": "Septiembre",
+    "September": "Septiembre",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",
