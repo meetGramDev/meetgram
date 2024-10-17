@@ -1,4 +1,5 @@
 import { Photo } from '@/entities/photo'
+import { AnswersItems } from '@/entities/post/model/types/answersType'
 import { Heart } from '@/shared/assets/icons/Heart'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
@@ -9,7 +10,6 @@ import { useRouter } from 'next/router'
 import s from './Answers.module.scss'
 
 import { getTimeAgo } from '../../comments/lib/getTimeAgo'
-import { AnswersItems } from '../../comments/model/types/answersType'
 
 type Props = {
   answer: AnswersItems

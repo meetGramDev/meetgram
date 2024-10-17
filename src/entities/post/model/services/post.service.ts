@@ -2,7 +2,7 @@ import {
   AddAnswerResponse,
   AddAnswersArgs,
   GetAnswersResponse,
-} from '@/features/posts/comments/model/types/answersType'
+} from '@/entities/post/model/types/answersType'
 import { baseApi } from '@/shared/api'
 
 import { AddCommentResponse, GetCommentsResponse } from '../types/postTypes'
@@ -26,9 +26,7 @@ export const postApi = baseApi.injectEndpoints({
       void,
       { commentId: number; likeStatus: string; postId: number }
     >({
-      invalidatesTags: (res, error, { commentId, likeStatus, postId }) => [
-        { commentId, likeStatus, postId, type: 'post' },
-      ],
+      invalidatesTags: (res, error, { commentId }) => [{ commentId, type: 'commentLike' }],
       async onQueryStarted({ commentId, likeStatus, postId }, { dispatch, queryFulfilled }) {
         const likeComment = dispatch(
           postApi.util.updateQueryData(
@@ -120,8 +118,10 @@ export const postApi = baseApi.injectEndpoints({
       providesTags: postId => [{ postId, type: 'post' }],
       query: ({ pageNumber, pageSize, postId }) =>
         `posts/${postId}/comments?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName
+      serializeQueryArgs: ({ queryArgs }) => {
+        return {
+          id: queryArgs.postId,
+        }
       },
     }),
 
