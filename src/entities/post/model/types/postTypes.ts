@@ -1,7 +1,6 @@
 import { CommentsItems } from '@/features/posts/comments/model/types/commentsType'
 
 export type GetCommentsResponse = {
-  find(arg0: (comment: { id: number }) => boolean): unknown
   items: CommentsItems[]
   pageSize: number
   totalCount: number
@@ -12,5 +11,16 @@ export type AddCommentArgs = {
 }
 
 export type AddCommentResponse = {
-  items: CommentsItems
+  answerCount: number
+  content: string
+  createdAt: string
+  from: {
+    avatars: []
+    id: number
+    username: string
+  }
+  id: number
+  isLiked: boolean
+  likeCount: number
+  postId: number
 }

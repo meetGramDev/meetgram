@@ -37,7 +37,6 @@ type Avatars = {
 export type AddAnswersArgs = {
   content: string
 }
-
 export type AddAnswerResponse = {
   items: AnswersItems
 }

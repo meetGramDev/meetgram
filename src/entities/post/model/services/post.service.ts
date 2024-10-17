@@ -2,10 +2,10 @@ import {
   AddAnswerResponse,
   AddAnswersArgs,
   GetAnswersResponse,
-} from '@/features/posts/comments/model/types/answersType'
+} from '@/entities/post/model/types/answersType'
 import { baseApi } from '@/shared/api'
 
-import { AddCommentArgs, AddCommentResponse, GetCommentsResponse } from '../types/postTypes'
+import { AddCommentResponse, GetCommentsResponse } from '../types/postTypes'
 import { PublicPost } from '../types/posts.types'
 
 export const postApi = baseApi.injectEndpoints({
@@ -26,22 +26,29 @@ export const postApi = baseApi.injectEndpoints({
       void,
       { commentId: number; likeStatus: string; postId: number }
     >({
-      invalidatesTags: (res, error, { commentId, likeStatus, postId }) => [
-        { commentId, likeStatus, postId: postId, type: 'post' },
-      ],
+      invalidatesTags: (res, error, { commentId }) => [{ commentId, type: 'commentLike' }],
       async onQueryStarted({ commentId, likeStatus, postId }, { dispatch, queryFulfilled }) {
         const likeComment = dispatch(
-          postApi.util.updateQueryData('getPostComments', { postId }, state => {
-            state.items.map(
-              comment => comment.id === commentId && (comment.isLiked = likeStatus === 'LIKE')
-            )
-            try {
-              queryFulfilled
-            } catch (error) {
-              likeComment.undo()
+          postApi.util.updateQueryData(
+            'getPostComments',
+            {
+              pageNumber: 0,
+              pageSize: 0,
+              postId,
+            },
+            state => {
+              state.items.map(
+                comment => comment.id === commentId && (comment.isLiked = likeStatus === 'LIKE')
+              )
             }
-          })
+          )
         )
+
+        try {
+          queryFulfilled
+        } catch (error) {
+          likeComment.undo()
+        }
       },
       query: ({ commentId, likeStatus, postId }) => ({
         body: { likeStatus },
@@ -49,8 +56,33 @@ export const postApi = baseApi.injectEndpoints({
         url: `posts/${postId}/comments/${commentId}/like-status`,
       }),
     }),
-    addPostComment: builder.mutation<AddCommentResponse, { body: AddCommentArgs; postId: number }>({
-      invalidatesTags: postId => [{ postId, type: 'post' }],
+
+    addPostComment: builder.mutation<
+      AddCommentResponse,
+      { body: { content: string }; pageNumber: number; postId: number }
+    >({
+      async onQueryStarted({ pageNumber, postId }, { dispatch, queryFulfilled }) {
+        try {
+          const { data: newPost } = await queryFulfilled
+
+          dispatch(
+            postApi.util.updateQueryData(
+              'getPostComments',
+              {
+                pageNumber,
+                pageSize: 0,
+                postId,
+              },
+              state => {
+                state.items.unshift(newPost)
+              }
+            )
+          )
+        } catch (error) {
+          console.error(error)
+        }
+      },
+
       query: ({ body, postId }) => ({ body, method: 'POST', url: `posts/${postId}/comments` }),
     }),
 
@@ -60,10 +92,39 @@ export const postApi = baseApi.injectEndpoints({
         url: `posts/${postId}/comments/${commentId}/answers`,
       }),
     }),
-    getPostComments: builder.query<GetCommentsResponse, { postId: number }>({
+    getPostComments: builder.query<
+      GetCommentsResponse,
+      { pageNumber: number; pageSize: number; postId: number }
+    >({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
+      },
+      merge: (currentCache, newItems, { arg }) => {
+        const { pageNumber } = arg
+
+        if (pageNumber === 1) {
+          return newItems
+        }
+        const uniqueNewItems = newItems.items.filter(
+          newItem => !currentCache.items.some(existingItem => existingItem.id === newItem.id)
+        )
+        const updatedData = [...currentCache.items, ...uniqueNewItems]
+
+        return {
+          ...newItems,
+          items: updatedData,
+        }
+      },
       providesTags: postId => [{ postId, type: 'post' }],
-      query: ({ postId }) => `posts/${postId}/comments`,
+      query: ({ pageNumber, pageSize, postId }) =>
+        `posts/${postId}/comments?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      serializeQueryArgs: ({ queryArgs }) => {
+        return {
+          id: queryArgs.postId,
+        }
+      },
     }),
+
     getSinglePublicPost: builder.query<PublicPost, string>({
       providesTags: (res, error, id) => [{ id, type: 'post' }],
       query: postId => ({
