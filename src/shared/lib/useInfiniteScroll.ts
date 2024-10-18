@@ -34,10 +34,10 @@ export function useInfiniteScroll(
   }, [])
 
   useEffect(() => {
-    if (inView || scroll > 0) {
+    if (inView) {
       callback()
     }
-  }, [inView, scroll, callback])
+  }, [inView])
 
   return { inView, ref, scroll }
 }

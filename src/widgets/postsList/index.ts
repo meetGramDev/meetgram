@@ -1,1 +1,1 @@
-export { PostsList } from './ui/PostsList'
+export { PAGE_SIZE, PostsList } from './ui/PostsList'
