@@ -1,55 +1,53 @@
-import { PublicProfile, selectCurrentUser } from '@/entities/user'
+import { PublicProfile } from '@/entities/user'
 import { Profile } from '@/fsd_pages/profile'
 import { BASE_URL } from '@/shared/api'
-import { useAppSelector } from '@/shared/config/storeHooks'
 import { SESSION_COOKIE_NAME } from '@/shared/const/consts'
 import { getMainLayout } from '@/widgets/layouts'
 import axios from 'axios'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
 export const getServerSideProps = async function (ctx) {
-  const params = ctx.params as { userId: string[] }
+  const { userId } = ctx.params as { userId: string[] }
 
-  if (!params.userId[0]) {
+  if (!userId || userId[0] === 'undefined') {
     return {
       notFound: true,
     }
   }
 
-  const resp = await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${params.userId[0]}`)
+  let resp
+
+  try {
+    resp = await axios<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`)
+  } catch (e) {
+    return {
+      notFound: true,
+    }
+  }
 
   const cookies = ctx.req.cookies as Record<typeof SESSION_COOKIE_NAME, string | undefined>
 
-  // if (cookies.token) {
-  //   const respMe = await axios.get(`${BASE_URL}/auth/me`, {
-  //     headers: {
-  //       Authorization: `Bearer ${cookies.token}`,
-  //     },
-  //   })
-
-  //   console.log(respMe.data)
-  // }
-
-  console.log(cookies.token)
-
   return {
     props: {
-      isAuth: !!cookies.token,
+      isAuth: cookies.token !== undefined,
       publicUserData: resp.data,
     },
   }
 } satisfies GetServerSideProps<{ isAuth: boolean; publicUserData: PublicProfile }>
 
-const UserId = ({ publicUserData }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const UserId = ({
+  isAuth,
+  publicUserData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   // const router = useRouter()
   // const userId = router.query.userId as string
   // const {
   //   data: userDataById,
   //   isError: isProfileByIdError,
   //   isLoading: isProfileByIdLoading,
-  // } = useGetPublicProfileByIdQuery(userId || skipToken)
+  // } = useGetPublicProfileByIdQuery(userId || skipToken, { skip: router.isFallback })
 
-  const authUser = useAppSelector(selectCurrentUser)
+  // const isAuth = useAppSelector(selectIsUserAuth)
   // const { data: userData, isLoading: userProfileLoading } = useFullUserProfileQuery(
   //   userDataById?.userName || authUsername || skipToken,
   //   { skip: isProfileByIdError || !authUsername }
@@ -81,11 +79,10 @@ const UserId = ({ publicUserData }: InferGetServerSidePropsType<typeof getServer
   //   </div>
   // )
 
-  return authUser.userId
-    ? getMainLayout(<Profile id={authUser.userId} userName={authUser.userName} />)
-    : getMainLayout(<Profile id={publicUserData.id} publicUserData={publicUserData} />, true)
+  return getMainLayout(
+    <Profile id={publicUserData.id} isPublic={!isAuth} publicUserData={publicUserData} />,
+    !isAuth
+  )
 }
-
-// UserId.getLayout = getMainLayout
 
 export default UserId

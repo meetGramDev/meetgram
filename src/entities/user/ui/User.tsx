@@ -11,23 +11,16 @@ import Link from 'next/link'
 
 import s from './User.module.scss'
 
-import { UserSkeleton } from './skeletons/UserSkeleton'
-
 type Props = {
-  isLoading?: boolean
   userData: FullUserProfile | PublicProfile
 }
 
-export const User = ({ isLoading, userData }: Props) => {
+export const User = ({ userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
   const t = useTranslate()
 
   const isMobile = useMediaQuery({ query: '(max-width:650px)' })
   const currentUserId = useAppSelector(selectCurrentUserId)
-
-  if (isLoading) {
-    return <UserSkeleton />
-  }
 
   return (
     <div className={s.userWrapper}>
@@ -48,9 +41,11 @@ export const User = ({ isLoading, userData }: Props) => {
           {!isMobile && (
             <div className={s.userName}>
               <h1 className={s.userNameTitle}>{userData.userName}</h1>
-              <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
-                {t('Profile Settings')}
-              </Button>
+              {currentUserId === userData.id && (
+                <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
+                  {t('Profile Settings')}
+                </Button>
+              )}
             </div>
           )}
           {'publicationsCount' in userData && (
