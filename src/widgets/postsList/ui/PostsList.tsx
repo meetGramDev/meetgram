@@ -1,40 +1,52 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
-import { useGetPublicPostsQuery } from '@/entities/post/model/services/posts.service'
-import { useFullUserProfileQuery } from '@/entities/user'
-import { cn, useInfiniteScroll } from '@/shared/lib'
+import { PublicPost, useGetPublicPostsQuery, useLazyGetPublicPostsQuery } from '@/entities/post'
+import { useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
-import { skipToken } from '@reduxjs/toolkit/query'
 
-import { PostsListDesktop } from './postsListDesktop/PostsListDesktop'
-import { PostsListMobile } from './postsListMobile/PostsListMobile'
+import { Posts } from './Posts'
 
-type Props = {
+export type PostsListProps = {
+  isFollowing?: boolean
+  isPublic: boolean
+  posts?: PublicPost[]
   userId: number
   userName?: string
 }
 
-const PAGE_SIZE = 12
+export const PAGE_SIZE = 12
 
-export const PostsList = ({ userId }: Props) => {
+export const PostsList = ({ isFollowing, isPublic, posts, userId }: PostsListProps) => {
   const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
-  // const {
-  //   data: currentUser,
-  //   isError: userProfileQueryError,
-  //   isSuccess: isUserSuccess,
-  // } = useFullUserProfileQuery(userName || skipToken)
+
+  const [getPosts, { data: lazyPublicPosts, isFetching, isLoading, isSuccess }] =
+    useLazyGetPublicPostsQuery()
 
   // =========== //
-  const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(undefined)
+  const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(
+    isPublic ? posts?.at(-1)?.id : undefined
+  )
 
-  const { ref, scroll } = useInfiniteScroll(
+  const firstRenderSkipPagination = useRef(true)
+  const postsScrollRef = useRef<HTMLElement>(null)
+  const { ref } = useInfiniteScroll(
     () => {
-      if (publicPosts?.items && publicPosts.items.length >= PAGE_SIZE) {
+      if (isPublic && !firstRenderSkipPagination.current && posts && posts?.length >= PAGE_SIZE) {
+        console.log(endCursorPostId)
+        getPosts({
+          endCursorPostId: posts.at(-1)?.id,
+          id: String(userId),
+          params: { pageSize: PAGE_SIZE },
+        })
+      }
+      firstRenderSkipPagination.current = false
+
+      if (!isPublic && publicPosts && publicPosts.items && publicPosts.items.length >= PAGE_SIZE) {
         setEndCursorPostId(publicPosts?.items.at(-1)?.id)
       }
     },
-    { threshold: 1 }
+    { root: postsScrollRef.current, threshold: 0.9 }
   )
 
   const {
@@ -48,36 +60,30 @@ export const PostsList = ({ userId }: Props) => {
       id: String(userId),
       params: { pageSize: PAGE_SIZE },
     },
-    { skip: !userId && !endCursorPostId }
+    { skip: (!userId && !endCursorPostId) || isPublic }
   )
 
   return (
     <>
-      {publicPostsSuccess && (
-        <>
-          {isMobile ? (
-            <PostsListMobile
-              // isFollowing={currentUser.isFollowing}
-              posts={publicPosts.items}
-              userId={userId}
-            />
-          ) : (
-            <PostsListDesktop
-              // isFollowing={currentUser.isFollowing}
-              posts={publicPosts.items}
-              userId={userId}
-            />
-          )}
-        </>
+      {isPublic && (
+        <Posts
+          isFollowing={isFollowing}
+          isHasData={isSuccess}
+          isLoading={isLoading || isFetching}
+          posts={posts}
+          ref={ref}
+          userId={userId}
+        />
       )}
-      {publicPosts && publicPosts.items.length === 0 && (
-        <p className={'w-full text-center leading-loose'}>
-          No posts yet <br />
-        </p>
-      )}
-
-      {!publicPostsLoading && scroll > 0 && (
-        <div className={'invisible h-4 w-full'} ref={ref}></div>
+      {!isPublic && publicPosts && (
+        <Posts
+          isFollowing={isFollowing}
+          isHasData={publicPostsSuccess}
+          isLoading={publicPostsLoading || publicPostsFetching}
+          posts={publicPosts.items}
+          ref={ref}
+          userId={userId}
+        />
       )}
 
       {publicPostsFetching && (

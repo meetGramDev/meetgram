@@ -1,8 +1,10 @@
+import { GetPublicPostsResponse } from '@/entities/post'
 import { PublicProfile } from '@/entities/user'
 import { Profile } from '@/fsd_pages/profile'
 import { BASE_URL } from '@/shared/api'
 import { SESSION_COOKIE_NAME } from '@/shared/const/consts'
 import { getMainLayout } from '@/widgets/layouts'
+import { PAGE_SIZE } from '@/widgets/postsList'
 import axios from 'axios'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
@@ -15,10 +17,14 @@ export const getServerSideProps = async function (ctx) {
     }
   }
 
-  let resp
+  let respUser
+  let respPosts
 
   try {
-    resp = await axios<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`)
+    respUser = await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`)
+    respPosts = await axios.get<GetPublicPostsResponse>(
+      `${BASE_URL}/public-posts/user/${userId[0]}?pageSize=${PAGE_SIZE}`
+    )
   } catch (e) {
     return {
       notFound: true,
@@ -30,13 +36,19 @@ export const getServerSideProps = async function (ctx) {
   return {
     props: {
       isAuth: cookies.token !== undefined,
-      publicUserData: resp.data,
+      posts: respPosts.data,
+      publicUserData: respUser.data,
     },
   }
-} satisfies GetServerSideProps<{ isAuth: boolean; publicUserData: PublicProfile }>
+} satisfies GetServerSideProps<{
+  isAuth: boolean
+  posts: GetPublicPostsResponse
+  publicUserData: PublicProfile
+}>
 
 const UserId = ({
   isAuth,
+  posts,
   publicUserData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   // const router = useRouter()
@@ -80,7 +92,12 @@ const UserId = ({
   // )
 
   return getMainLayout(
-    <Profile id={publicUserData.id} isPublic={!isAuth} publicUserData={publicUserData} />,
+    <Profile
+      id={publicUserData.id}
+      isPublic={!isAuth}
+      posts={posts}
+      publicUserData={publicUserData}
+    />,
     !isAuth
   )
 }
