@@ -14,25 +14,19 @@ import s from './User.module.scss'
 
 import { selectCurrentUserId } from '../model/selectors/selectCurrentUser'
 import { FullUserProfile, PublicProfile } from '../model/types/services'
-import { UserSkeleton } from './skeletons/UserSkeleton'
 
 type Props = {
   disabledFollowBtn?: boolean
-  isLoading?: boolean
   onFollow?: (id: number) => void
   userData: FullUserProfile | PublicProfile
 }
 
-export const User = ({ disabledFollowBtn, isLoading, onFollow, userData }: Props) => {
+export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
   const t = useTranslate()
 
   const isMobile = useMediaQuery({ query: '(max-width:650px)' })
   const currentUserId = useAppSelector(selectCurrentUserId)
-
-  if (isLoading) {
-    return <UserSkeleton />
-  }
 
   return (
     <div className={s.userWrapper}>
