@@ -8,20 +8,13 @@ import Link from 'next/link'
 
 import s from './User.module.scss'
 
-import { UserSkeleton } from './skeletons/UserSkeleton'
-
 type Props = {
-  isLoading?: boolean
   userData: FullUserProfile | PublicProfile
 }
 
-export const User = ({ isLoading, userData }: Props) => {
-  const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
+export const User = ({ userData }: Props) => {
+  const userPhoto = userData?.avatars ? userData.avatars[0] : notUserPhoto
   const currentUserId = useAppSelector(selectCurrentUserId)
-
-  if (isLoading) {
-    return <UserSkeleton />
-  }
 
   return (
     <div className={s.userWrapper}>
