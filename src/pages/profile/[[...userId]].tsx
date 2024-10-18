@@ -1,9 +1,10 @@
-import { PublicPost } from '@/entities/post'
+import { GetPublicPostsResponse, PublicPost } from '@/entities/post'
 import { PublicProfile } from '@/entities/user'
 import { Profile } from '@/fsd_pages/profile'
 import { BASE_URL } from '@/shared/api'
 import { SESSION_COOKIE_NAME } from '@/shared/const/consts'
 import { getMainLayout } from '@/widgets/layouts'
+import { PAGE_SIZE } from '@/widgets/postsList'
 import axios from 'axios'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
@@ -17,10 +18,14 @@ export const getServerSideProps = async function (ctx) {
     }
   }
 
-  let resp
+  let respUser
+  let respPosts
 
   try {
-    resp = await axios<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`)
+    respUser = await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`)
+    respPosts = await axios.get<GetPublicPostsResponse>(
+      `${BASE_URL}/public-posts/user/${userId[0]}?pageSize=${PAGE_SIZE}`
+    )
   } catch (e) {
     return {
       notFound: true,
@@ -39,30 +44,25 @@ export const getServerSideProps = async function (ctx) {
     }
   }
 
-  // if (cookies.token) {
-  //   const respMe = await axios.get(`${BASE_URL}/auth/me`, {
-  //     headers: {
-  //       Authorization: `Bearer ${cookies.token}`,
-  //     },
-  //   })
-
-  //   console.log(respMe.data)
-  // }
-
-  console.log(cookies.token)
-
   return {
     props: {
       isAuth: cookies.token !== undefined,
       post,
-      publicUserData: resp.data,
+      posts: respPosts.data,
+      publicUserData: respUser.data,
     },
   }
-} satisfies GetServerSideProps<{ isAuth: boolean; post: PublicPost; publicUserData: PublicProfile }>
+} satisfies GetServerSideProps<{
+  isAuth: boolean
+  post: PublicPost
+  posts: GetPublicPostsResponse
+  publicUserData: PublicProfile
+}>
 
 const UserId = ({
   isAuth,
   post,
+  posts,
   publicUserData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   // const router = useRouter()
@@ -110,6 +110,7 @@ const UserId = ({
       id={publicUserData.id}
       isPublic={!isAuth}
       post={post}
+      posts={posts}
       publicUserData={publicUserData}
     />,
     !isAuth

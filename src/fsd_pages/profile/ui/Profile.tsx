@@ -1,4 +1,4 @@
-import { PublicPost } from '@/entities/post'
+import { GetPublicPostsResponse, PublicPost } from '@/entities/post'
 import { PublicProfile, User, useFullUserProfileQuery } from '@/entities/user'
 import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
 import { useFollowUserMutation } from '@/features/follow'
@@ -7,23 +7,23 @@ import { PostsList } from '@/widgets/postsList'
 
 type Props = {
   id: number
-  isPublic?: boolean
+  isPublic: boolean
   post: PublicPost
+  posts?: GetPublicPostsResponse
   publicUserData: PublicProfile
   userName?: string
 }
 
-export const Profile = ({ id, isPublic = false, post, publicUserData, userName }: Props) => {
+export const Profile = ({ id, isPublic = false, post, posts, publicUserData, userName }: Props) => {
   const {
     data: userData,
     isError: isUserProfileError,
     isLoading: userProfileLoading,
-    isSuccess,
   } = useFullUserProfileQuery(publicUserData.userName, { skip: isPublic })
 
   const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
-  if (!isSuccess || isUserProfileError) {
+  if (isUserProfileError) {
     return <p className={'mt-40 text-center text-h1'}>Profile was not found</p>
   }
 
@@ -32,7 +32,7 @@ export const Profile = ({ id, isPublic = false, post, publicUserData, userName }
       {isPublic && publicUserData && <User userData={publicUserData} />}
       {!isPublic && (
         <>
-          {!userProfileLoading ? (
+          {!userProfileLoading && userData ? (
             <User
               disabledFollowBtn={isFollowLoading}
               onFollow={userId => followUser({ selectedUserId: userId })}
@@ -45,8 +45,11 @@ export const Profile = ({ id, isPublic = false, post, publicUserData, userName }
       )}
 
       <PostsList
+        isFollowing={userData?.isFollowing}
+        isPublic={isPublic}
         // userName={userName || publicUserData?.userName || ''}
         post={post}
+        posts={posts?.items}
         userId={userData?.id || id}
       />
       <AddingPostView />
