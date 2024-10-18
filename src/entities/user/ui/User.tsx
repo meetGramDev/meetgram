@@ -13,7 +13,7 @@ type Props = {
 }
 
 export const User = ({ userData }: Props) => {
-  const userPhoto = userData?.avatars ? userData.avatars[0] : notUserPhoto
+  const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
   const currentUserId = useAppSelector(selectCurrentUserId)
 
   return (

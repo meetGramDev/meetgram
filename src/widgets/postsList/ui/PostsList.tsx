@@ -32,6 +32,7 @@ export const PostsList = ({ isFollowing, isPublic, posts, userId }: PostsListPro
   const postsScrollRef = useRef<HTMLElement>(null)
   const { ref } = useInfiniteScroll(
     () => {
+      // TODO TODO TODO скролл с SSR постами
       if (isPublic && !firstRenderSkipPagination.current && posts && posts?.length >= PAGE_SIZE) {
         console.log(endCursorPostId)
         getPosts({
