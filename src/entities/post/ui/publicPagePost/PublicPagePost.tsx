@@ -43,7 +43,7 @@ export const PublicPagePost = ({
       <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>Created post</p>
       <div className={'inline'}>
         <div className={`${s.publicPost} ${isExpanted ? s.textExpanded : ''}`}>
-          {postMessage(`${description}`, 80, 237, isExpanted)}
+          {postMessage(`${description}`, 70, 237, isExpanted)}
           <Button className={'text-[14px]'} onClick={onToggleText} variant={'link'}>
             {isExpanted ? 'Hide' : 'Show more'}
           </Button>

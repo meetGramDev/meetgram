@@ -2,35 +2,41 @@ import { GetPublicPostsResponse } from '@/entities/post'
 import { useGetAllPublicPostsQuery } from '@/entities/post/model/services/posts.service'
 import { PublicPagePost } from '@/entities/post/ui/publicPagePost/PublicPagePost'
 import { TotalUsersCount } from '@/features/user/totalUsersCount/ui/totalUsersCount'
+import { BASE_URL } from '@/shared/api'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
 
 import s from './index.module.scss'
 
-// export const getServerSideProps = async () => {
-//   const { data: publicPosts } = useGetAllPublicPostsQuery({})
-//
-//   if (!publicPosts) {
-//     return {
-//       notFound: true,
-//     }
-//   }
-//
-//   return {
-//     props: { publicPosts },
-//   }
-// }
+export const getServerSideProps = async () => {
+  const res = await fetch(`${BASE_URL}/public-posts/all/`)
+  const data = await res.json()
 
-// type PropsType = {
-//   data: GetPublicPostsResponse
-// }
+  // const { data: publicPosts } = useGetAllPublicPostsQuery({})
+  //
+  // if (!publicPosts) {
+  //   return {
+  //     notFound: true,
+  //   }
+  // }
 
-const PublicPage = () => {
-  const { data } = useGetAllPublicPostsQuery({})
+  return {
+    props: {
+      data,
+    },
+  }
+}
+
+type PropsType = {
+  data: GetPublicPostsResponse
+}
+
+const PublicPage = ({ data }: PropsType) => {
+  //const { data } = useGetAllPublicPostsQuery({})
 
   // const { data } = props
 
-  console.log(data)
+  //console.log(data)
   // if (!data) {
   //   return <div>hello</div>
   // }
