@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { ImageType } from '@/entities/post'
-import { Button } from '@/shared/ui'
+import { Button, ImageCarousel } from '@/shared/ui'
 import Image from 'next/image'
 
 import s from './PublicPagePost.module.scss'
@@ -29,9 +29,12 @@ export const PublicPagePost = ({
     setIsExpanted(!isExpanted)
   }
 
+  const createdTime = timeAfterCreatedPost(createdAt)
+
   return (
     <div className={s.publicPostWrapper}>
-      <Image alt={'Some photo posts'} height={240} src={images[0].url} width={234} />
+      <ImageCarousel images={images} />
+      {/*<Image alt={'Some photo posts'} height={240} src={images[0].url} width={234} />*/}
       <div className={'mt-[12px] flex'}>
         <Photo alt={'Friend avatar'} height={36} src={avatarOwner} width={36} />
         <h2
@@ -40,13 +43,17 @@ export const PublicPagePost = ({
           {userName}
         </h2>
       </div>
-      <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>Created post</p>
+      <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>{createdTime}</p>
       <div className={'inline'}>
         <div className={`${s.publicPost} ${isExpanted ? s.textExpanded : ''}`}>
-          {postMessage(`${description}`, 70, 237, isExpanted)}
-          <Button className={'text-[14px]'} onClick={onToggleText} variant={'link'}>
-            {isExpanted ? 'Hide' : 'Show more'}
-          </Button>
+          {postMessage(`${description}`, 100, 237, isExpanted)}
+          {description.length === 0 || description.length < 93 ? (
+            <></>
+          ) : (
+            <Button className={'text-[14px]'} onClick={onToggleText} variant={'link'}>
+              {isExpanted ? 'Hide' : 'Show more'}
+            </Button>
+          )}
         </div>
       </div>
     </div>
@@ -61,11 +68,27 @@ const postMessage = (
 ) => {
   const messageLength = message.length
 
-  if (messageLength > hideCount && !isExpanted) {
-    return <>{`${message.slice(0, hideCount - 11)}... `}</>
-  } else if (messageLength < showedCount && isExpanted) {
+  if (messageLength === 0) {
+    return <></>
+  } else if (messageLength < showedCount) {
     return <>{`${message} `}</>
-  } else {
+  } else if (messageLength > hideCount && !isExpanted) {
+    return <>{`${message.slice(0, hideCount - 11)}... `}</>
+  } else if (messageLength > showedCount && isExpanted) {
     return <>{`${message.slice(0, showedCount - 11)}... `}</>
   }
+}
+
+//пока что будет просто отображение времени и даты создания поста
+const timeAfterCreatedPost = (timeCreatedPostData: string) => {
+  const timeCount = timeCreatedPostData.indexOf('T')
+  const date = timeCreatedPostData.substring(0, timeCount).split('-').reverse().join('.')
+  const time = timeCreatedPostData
+    .substring(10)
+    .slice(1, -1)
+    .split(':')
+    .map(t => Math.trunc(Number(t)))
+    .join(':')
+
+  return `${time}  ${date}`
 }

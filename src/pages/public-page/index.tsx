@@ -5,42 +5,42 @@ import { TotalUsersCount } from '@/features/user/totalUsersCount/ui/totalUsersCo
 import { BASE_URL } from '@/shared/api'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
+import axios from 'axios'
+import { GetStaticProps } from 'next'
 
 import s from './index.module.scss'
-
-export const getServerSideProps = async () => {
-  const res = await fetch(`${BASE_URL}/public-posts/all/`)
-  const data = await res.json()
-
-  // const { data: publicPosts } = useGetAllPublicPostsQuery({})
-  //
-  // if (!publicPosts) {
-  //   return {
-  //     notFound: true,
-  //   }
-  // }
-
-  return {
-    props: {
-      data,
-    },
-  }
-}
 
 type PropsType = {
   data: GetPublicPostsResponse
 }
 
+//static props
+export const getStaticProps: GetStaticProps<PropsType> = async () => {
+  const res = await fetch(`${BASE_URL}/public-posts/all/?pageSize=4`)
+  const data = await res.json()
+
+  return {
+    props: {
+      data,
+    },
+    revalidate: 60,
+  }
+}
+
+//server side props
+
+// export const getServerSideProps = async () => {
+//   const res = await fetch(`${BASE_URL}/public-posts/all/?pageSize=4`)
+//   const data = await res.json()
+//
+//   return {
+//     props: {
+//       data,
+//     },
+//   }
+// }
+
 const PublicPage = ({ data }: PropsType) => {
-  //const { data } = useGetAllPublicPostsQuery({})
-
-  // const { data } = props
-
-  //console.log(data)
-  // if (!data) {
-  //   return <div>hello</div>
-  // }
-
   return (
     <div className={'w-full px-[9.5rem]'}>
       <TotalUsersCount usersCount={data ? data.totalUsers : 0} />
