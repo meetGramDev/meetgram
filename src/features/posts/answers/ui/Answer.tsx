@@ -1,7 +1,9 @@
 import { Photo } from '@/entities/photo'
+import { useAddLikeToPostAnswerMutation } from '@/entities/post/model/services/post.service'
 import { Heart } from '@/shared/assets/icons/Heart'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
+import { serverErrorHandler } from '@/shared/lib/errorHandlers'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -14,12 +16,26 @@ import { AnswersItems } from '../../comments/model/types/answersType'
 type Props = {
   answer: AnswersItems
   onClick: () => void
+  postId: number
 }
 
-export const Answer = ({ answer, onClick }: Props) => {
+export const Answer = ({ answer, onClick, postId }: Props) => {
   const tr = useRouter().locale
+  const [likeAnswer] = useAddLikeToPostAnswerMutation()
 
   const isAnswer = answer.content.includes(answer.from.username)
+  const setLikeHandler = async (status: string) => {
+    try {
+      likeAnswer({
+        answerId: answer.id,
+        commentId: answer.commentId,
+        likeStatus: status,
+        postId,
+      })
+    } catch (error) {
+      serverErrorHandler(error)
+    }
+  }
 
   return (
     <div className={s.answerWrapper} key={answer.id}>
@@ -29,7 +45,7 @@ export const Answer = ({ answer, onClick }: Props) => {
             alt={'user photo'}
             className={s.photo}
             height={36}
-            src={answer.from.avatars[0].url || withoutPhoto}
+            src={answer.from.avatars[0]?.url || withoutPhoto}
             width={36}
           />
         </div>
@@ -49,7 +65,11 @@ export const Answer = ({ answer, onClick }: Props) => {
           </div>
           <div className={s.hearts}>
             <Button className={s.heartButton} variant={'text'}>
-              {answer.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
+              {answer.isLiked ? (
+                <SketchedHeart className={s.heart} onClick={() => setLikeHandler('DISLIKE')} />
+              ) : (
+                <Heart onClick={() => setLikeHandler('LIKE')} />
+              )}
             </Button>
           </div>
         </div>
