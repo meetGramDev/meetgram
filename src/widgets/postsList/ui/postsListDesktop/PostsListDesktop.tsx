@@ -12,7 +12,7 @@ import s from './PostsList.module.scss'
 
 import { PostListProps } from '../props.type'
 
-export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
+export const PostsListDesktop = ({ isFollowing, post, posts, userId }: PostListProps) => {
   const router = useRouter()
   const isOpenPost = router.query.isOpenPost as string
   const postId = router.query.postId as string
@@ -52,10 +52,7 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
       {posts?.map(post => {
         return (
           <div className={s.item} key={post.id}>
-            <Link
-              href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}
-              shallow
-            >
+            <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
               <Post
                 alt={post.description}
                 className={s.image}
@@ -72,6 +69,7 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
           isOpen={handleCloseModalDialog}
           onEdit={() => setOpenEdit(true)}
           open={isOpenPost === 'true'}
+          post={post}
           postId={+postId}
           userId={userId}
         />

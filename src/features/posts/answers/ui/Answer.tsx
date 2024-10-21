@@ -1,7 +1,9 @@
 import { Photo } from '@/entities/photo'
+import { selectIsUserAuth } from '@/entities/user'
 import { Heart } from '@/shared/assets/icons/Heart'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -19,6 +21,7 @@ type Props = {
 export const Answer = ({ answer, onClick }: Props) => {
   const tr = useRouter().locale
 
+  const isAuth = useAppSelector(selectIsUserAuth)
   const isAnswer = answer.content.includes(answer.from.username)
 
   return (
@@ -47,20 +50,26 @@ export const Answer = ({ answer, onClick }: Props) => {
               <span> {answer.content}</span>
             )}
           </div>
-          <div className={s.hearts}>
-            <Button className={s.heartButton} variant={'text'}>
-              {answer.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
-            </Button>
-          </div>
+          {isAuth && (
+            <div className={s.hearts}>
+              <Button className={s.heartButton} variant={'text'}>
+                {answer.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <div className={s.answerFooter}>
         <span>{getTimeAgo(tr ?? 'en', answer.createdAt)}</span>
-        {answer.isLiked && <span className={s.like}>Like:</span>}
-        {answer.likeCount !== 0 && answer.likeCount}
-        <Button className={s.button} onClick={onClick} variant={'text'}>
-          Answer
-        </Button>
+        {isAuth && (
+          <>
+            {answer.isLiked && <span className={s.like}>Like:</span>}
+            {answer.likeCount !== 0 && answer.likeCount}
+            <Button className={s.button} onClick={onClick} variant={'text'}>
+              Answer
+            </Button>
+          </>
+        )}
       </div>
     </div>
   )
