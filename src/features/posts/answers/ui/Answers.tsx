@@ -1,9 +1,12 @@
 import { useState } from 'react'
 
+import { Button } from '@/shared/ui'
+
 import s from './Answers.module.scss'
 
 import { AnswersType } from '../../comments/model/types/answersType'
 import { Answer } from './Answer'
+
 type Props = {
   answers: AnswersType
   onClick: () => void
@@ -13,15 +16,16 @@ export const Answers = ({ answers: answers, onClick }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const setOpenHandle = () => {
-    setIsOpen(prev => !prev)
+    setIsOpen(!isOpen)
   }
 
   return (
     <>
       {answers.items.length > 0 && (
-        <div className={`${s.answersHide} `} onClick={setOpenHandle}>
-          Hide answers ({answers.items.length})
-        </div>
+        <Button className={s.answersHide} onClick={setOpenHandle} variant={'text'}>
+          <hr className={s.line} />
+          View answers ({answers.items.length})
+        </Button>
       )}
       {isOpen && (
         <div className={s.answersContainer}>

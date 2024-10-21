@@ -32,7 +32,7 @@ export const LikesView = ({ likesCount, postId }: Props) => {
                   alt={'user'}
                   height={24}
                   key={item.userId}
-                  src={item.avatars.length ? item.avatars[1].url : noPhoto}
+                  src={item.avatars[1].url || noPhoto}
                   variant={'round'}
                   width={24}
                 />

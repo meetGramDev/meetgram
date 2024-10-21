@@ -9,7 +9,7 @@ type Props = {
 export const Comments = ({ comments, onClick }: Props) => {
   return (
     <>
-      {comments &&
+      {comments.items &&
         comments.items.map(comment => (
           <div key={comment.id}>
             <Comment comment={comment} onClick={onClick} />
