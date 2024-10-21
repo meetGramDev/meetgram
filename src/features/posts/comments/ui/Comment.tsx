@@ -32,13 +32,9 @@ export const Comment = ({ comment, onClick }: Props) => {
 
   const [likeComment] = useAddLikeToPostCommentMutation()
 
-  const addLikeToComment = async () => {
+  const setLikeHandler = async (status: string) => {
     try {
-      if (!comment.isLiked) {
-        likeComment({ commentId: comment.id, likeStatus: 'LIKE', postId: comment.postId })
-      } else {
-        likeComment({ commentId: comment.id, likeStatus: 'NONE', postId: comment.postId })
-      }
+      likeComment({ commentId: comment.id, likeStatus: status, postId: comment.postId })
     } catch (error) {
       serverErrorHandler(error)
     }
@@ -65,8 +61,12 @@ export const Comment = ({ comment, onClick }: Props) => {
               {comment.content}
             </div>
             <div className={s.hearts}>
-              <Button className={s.heartButton} onClick={addLikeToComment} variant={'text'}>
-                {comment.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
+              <Button className={s.heartButton} variant={'text'}>
+                {comment.isLiked ? (
+                  <SketchedHeart className={s.heart} onClick={() => setLikeHandler('NONE')} />
+                ) : (
+                  <Heart onClick={() => setLikeHandler('LIKE')} />
+                )}
               </Button>
             </div>
           </div>
