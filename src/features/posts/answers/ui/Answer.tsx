@@ -24,23 +24,14 @@ export const Answer = ({ answer, onClick, postId }: Props) => {
   const [likeAnswer] = useAddLikeToPostAnswerMutation()
 
   const isAnswer = answer.content.includes(answer.from.username)
-  const addLikeToAnswer = async () => {
+  const setLikeHandler = async (status: string) => {
     try {
-      if (!answer.isLiked) {
-        likeAnswer({
-          answerId: answer.id,
-          commentId: answer.commentId,
-          likeStatus: 'LIKE',
-          postId,
-        })
-      } else {
-        likeAnswer({
-          answerId: answer.id,
-          commentId: answer.commentId,
-          likeStatus: 'NONE',
-          postId,
-        })
-      }
+      likeAnswer({
+        answerId: answer.id,
+        commentId: answer.commentId,
+        likeStatus: status,
+        postId,
+      })
     } catch (error) {
       serverErrorHandler(error)
     }
@@ -73,8 +64,12 @@ export const Answer = ({ answer, onClick, postId }: Props) => {
             )}
           </div>
           <div className={s.hearts}>
-            <Button className={s.heartButton} onClick={addLikeToAnswer} variant={'text'}>
-              {answer.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
+            <Button className={s.heartButton} variant={'text'}>
+              {answer.isLiked ? (
+                <SketchedHeart className={s.heart} onClick={() => setLikeHandler('DISLIKE')} />
+              ) : (
+                <Heart onClick={() => setLikeHandler('LIKE')} />
+              )}
             </Button>
           </div>
         </div>

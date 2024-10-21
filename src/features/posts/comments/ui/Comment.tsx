@@ -36,6 +36,8 @@ export const Comment = ({ comment, onClick }: Props) => {
     try {
       if (!comment.isLiked) {
         likeComment({ commentId: comment.id, likeStatus: 'LIKE', postId: comment.postId })
+      } else {
+        likeComment({ commentId: comment.id, likeStatus: 'NONE', postId: comment.postId })
       }
     } catch (error) {
       serverErrorHandler(error)
