@@ -37,7 +37,7 @@ export const PostsList = ({ isFollowing, userId, post }: PostsListProps) => {
       }
       // firstRenderSkipPagination.current = false
     },
-    { root: postsScrollRef.current, threshold: 1 }
+    { root: postsScrollRef.current, threshold: 0.9 }
   )
 
   const {

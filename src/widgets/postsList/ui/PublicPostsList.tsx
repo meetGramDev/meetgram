@@ -20,16 +20,13 @@ export const PublicPostsList = ({ post, posts, userId }: Props) => {
   const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
 
   const [currentPosts, setCurrentPosts] = useState<GetPublicPostsResponse>(posts)
+  const hasMore = currentPosts.items.length !== currentPosts.totalCount
 
   const firstRenderSkipPagination = useRef(true)
   const postsScrollRef = useRef<HTMLElement>(null)
   const { ref } = useInfiniteScroll(
     async () => {
-      if (
-        !firstRenderSkipPagination.current &&
-        currentPosts.items.length >= PAGE_SIZE &&
-        currentPosts.items.length !== currentPosts.totalCount
-      ) {
+      if (!firstRenderSkipPagination.current && currentPosts.items.length >= PAGE_SIZE && hasMore) {
         try {
           const data = await getPublicPosts({
             endCursorPostId: currentPosts.items.at(-1)?.id,
@@ -45,7 +42,7 @@ export const PublicPostsList = ({ post, posts, userId }: Props) => {
 
       firstRenderSkipPagination.current = false
     },
-    { root: postsScrollRef.current, threshold: 1 }
+    { root: postsScrollRef.current, threshold: 0.9 }
   )
 
   return (
@@ -56,7 +53,7 @@ export const PublicPostsList = ({ post, posts, userId }: Props) => {
         <PostsListDesktop post={post} posts={currentPosts.items} userId={userId} />
       )}
 
-      {currentPosts.items.length !== posts?.totalCount && (
+      {hasMore && (
         <div className={'flex justify-center py-5'} ref={ref}>
           <Loader />
         </div>
