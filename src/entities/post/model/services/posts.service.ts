@@ -16,7 +16,7 @@ export const postsApi = baseApi.injectEndpoints({
       forceRefetch: ({ currentArg, previousArg }) => {
         return (
           currentArg?.endCursorPostId !== previousArg?.endCursorPostId ||
-          currentArg?.params !== previousArg?.params
+          currentArg?.id !== previousArg?.id
         )
       },
       merge: (currentCacheData, responseData, { arg }) => {
