@@ -142,8 +142,8 @@ CarouselItem.displayName = 'CarouselItem'
 
 const CarouselPrevious = forwardRef<
   HTMLButtonElement,
-  { onPrev?: () => void } & ComponentProps<typeof ButtonIcon>
->(({ className, onPrev, ...restProps }, ref) => {
+  { btnClassName?: string; onPrev?: () => void } & ComponentProps<typeof ButtonIcon>
+>(({ btnClassName, className, onPrev, ...restProps }, ref) => {
   const { canScrollPrev, scrollPrev } = useCarousel()
 
   const handlePrev = () => {
@@ -162,7 +162,7 @@ const CarouselPrevious = forwardRef<
       {...restProps}
     >
       <span className={s.srOnly}>Previous slide</span>
-      <ArrowPrev />
+      <ArrowPrev className={btnClassName} />
     </ButtonIcon>
   )
 })
@@ -171,8 +171,8 @@ CarouselPrevious.displayName = 'CarouselPrevious'
 
 const CarouselNext = forwardRef<
   HTMLButtonElement,
-  { onNext?: () => void } & ComponentProps<typeof ButtonIcon>
->(({ className, onNext, ...restProps }, ref) => {
+  { btnClassName?: string; onNext?: () => void } & ComponentProps<typeof ButtonIcon>
+>(({ btnClassName, className, onNext, ...restProps }, ref) => {
   const { canScrollNext, scrollNext } = useCarousel()
 
   const handleNext = () => {
@@ -191,7 +191,7 @@ const CarouselNext = forwardRef<
       {...restProps}
     >
       <span className={s.srOnly}>Next slide</span>
-      <ArrowNext />
+      <ArrowNext className={btnClassName} />
     </ButtonIcon>
   )
 })

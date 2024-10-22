@@ -34,7 +34,8 @@ export const PublicPagePost = ({
   return (
     <div className={s.publicPostWrapper}>
       <ImageCarousel
-        buttonCarouselClassname={s.buttonCarousel}
+        btnIconCarousel={s.buttonIconCarousel}
+        buttonCarouselClassname={s.buttonWrapperCarousel}
         className={s.carouselWrapper}
         contentClassname={s.carouselWrapper}
         images={images}
