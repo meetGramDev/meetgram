@@ -44,5 +44,6 @@ export const PostsListMobileComponent: Story = {
     isFollowing: false,
     posts: [post, post, post, post, post, post, post, post],
     userId: 1297,
+    post: post,
   },
 }
