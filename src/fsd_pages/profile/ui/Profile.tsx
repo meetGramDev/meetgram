@@ -3,13 +3,16 @@ import { PublicProfile, User, useFullUserProfileQuery } from '@/entities/user'
 import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
 import { useFollowUserMutation } from '@/features/follow'
 import { AddingPostView } from '@/widgets/addingPostView'
-import { PostsList } from '@/widgets/postsList'
+import { PostsList, PublicPostsList } from '@/widgets/postsList'
 
 type Props = {
   id: number
+  /**
+   * Authorized or Unauthorized
+   */
   isPublic: boolean
   post: PublicPost
-  posts?: GetPublicPostsResponse
+  posts: GetPublicPostsResponse
   publicUserData: PublicProfile
   userName?: string
 }
@@ -44,14 +47,11 @@ export const Profile = ({ id, isPublic = false, post, posts, publicUserData, use
         </>
       )}
 
-      <PostsList
-        isFollowing={userData?.isFollowing}
-        isPublic={isPublic}
-        // userName={userName || publicUserData?.userName || ''}
-        post={post}
-        posts={posts?.items}
-        userId={userData?.id || id}
-      />
+      {!isPublic ? (
+        <PostsList post={post} isFollowing={userData?.isFollowing} userId={userData?.id || id} />
+      ) : (
+        <PublicPostsList post={post} posts={posts} userId={id} />
+      )}
       <AddingPostView />
     </div>
   )

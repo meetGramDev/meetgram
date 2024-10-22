@@ -1,10 +1,11 @@
 import { GetPublicPostsResponse, PublicPost } from '@/entities/post'
-import { PublicProfile } from '@/entities/user'
+import { PublicProfile, selectIsUserAuth } from '@/entities/user'
 import { Profile } from '@/fsd_pages/profile'
 import { BASE_URL } from '@/shared/api'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { SESSION_COOKIE_NAME } from '@/shared/const/consts'
 import { getMainLayout } from '@/widgets/layouts'
-import { PAGE_SIZE } from '@/widgets/postsList'
+import { PAGE_SIZE, getPublicPosts } from '@/widgets/postsList'
 import axios from 'axios'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
@@ -18,14 +19,13 @@ export const getServerSideProps = async function (ctx) {
     }
   }
 
-  let respUser
-  let respPosts
+  let resp
 
   try {
-    respUser = await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`)
-    respPosts = await axios.get<GetPublicPostsResponse>(
-      `${BASE_URL}/public-posts/user/${userId[0]}?pageSize=${PAGE_SIZE}`
-    )
+    resp = await Promise.all([
+      await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`),
+      await getPublicPosts({ id: userId[0], params: { pageSize: PAGE_SIZE } }),
+    ])
   } catch (e) {
     return {
       notFound: true,
@@ -48,8 +48,8 @@ export const getServerSideProps = async function (ctx) {
     props: {
       isAuth: cookies.token !== undefined,
       post,
-      posts: respPosts.data,
-      publicUserData: respUser.data,
+      posts: resp[1],
+      publicUserData: resp[0].data,
     },
   }
 } satisfies GetServerSideProps<{
@@ -65,45 +65,7 @@ const UserId = ({
   posts,
   publicUserData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  // const router = useRouter()
-  // const userId = router.query.userId as string
-  // const {
-  //   data: userDataById,
-  //   isError: isProfileByIdError,
-  //   isLoading: isProfileByIdLoading,
-  // } = useGetPublicProfileByIdQuery(userId || skipToken, { skip: router.isFallback })
-
   // const isAuth = useAppSelector(selectIsUserAuth)
-  // const { data: userData, isLoading: userProfileLoading } = useFullUserProfileQuery(
-  //   userDataById?.userName || authUsername || skipToken,
-  //   { skip: isProfileByIdError || !authUsername }
-  // )
-
-  // if (isProfileByIdError) {
-  //   return <p className={'mt-40 text-center text-h1'}>Profile was not found</p>
-  // }
-
-  // return (
-  //   <div className={'h-full'}>
-  //     {(!userProfileLoading || !isProfileByIdLoading) && (userData || userDataById) ? (
-  //       <User userData={userData || userDataById} />
-  //     ) : (
-  //       <UserSkeleton />
-  //     )}
-
-  //     <Suspense
-  //       fallback={
-  //         <div className={'flex justify-center'}>
-  //           <Loader />
-  //         </div>
-  //       }
-  //     >
-  //       <PostsList userName={userDataById?.userName || authUsername} />
-  //     </Suspense>
-
-  //     <AddingPostView />
-  //   </div>
-  // )
 
   return getMainLayout(
     <Profile

@@ -13,7 +13,7 @@ import s from './PostsList.module.scss'
 import { PostListProps } from '../props.type'
 
 export const PostsListDesktop = forwardRef<HTMLDivElement, PostListProps>(
-  ({ isFollowing, isHasData, isLoading, posts, userId, post }, ref) => {
+  ({ isFollowing, post, posts, userId }, ref) => {
     const router = useRouter()
     const isOpenPost = router.query.isOpenPost as string
     const postId = router.query.postId as string
@@ -50,50 +50,21 @@ export const PostsListDesktop = forwardRef<HTMLDivElement, PostListProps>(
 
     return (
       <div className={s.postsList}>
-        {posts?.map((post, i) => {
-          if (posts.length === i + 1) {
-            return (
-              <div key={post.id}>
-                <div className={s.item}>
-                  <Link
-                    href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}
-                    shallow
-                  >
-                    <Post
-                      alt={post.description}
-                      className={s.image}
-                      isGallery={post.images.length > 1}
-                      src={post.images[0].url}
-                    />
-                  </Link>
-                </div>
-                <div className={'invisible h-4 w-full'} ref={ref}></div>
-              </div>
-            )
-          }
-
-          return (
-            <div className={s.item} key={post.id}>
-              <Link
-                href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}
-                shallow
-              >
-                <Post
-                  alt={post.description}
-                  className={s.image}
-                  isGallery={post.images.length > 1}
-                  src={post.images[0].url}
-                />
-              </Link>
-            </div>
-          )
-        })}
-
-        {!isLoading && (!isHasData || posts?.length === 0) && (
-          <p className={'w-full text-center leading-loose'}>
-            No posts yet <br />
-          </p>
-        )}
+        {posts?.map((post, i) => (
+          <div className={s.item} key={post.id}>
+            <Link
+              href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}
+              shallow
+            >
+              <Post
+                alt={post.description}
+                className={s.image}
+                isGallery={post.images.length > 1}
+                src={post.images[0].url}
+              />
+            </Link>
+          </div>
+        ))}
 
         {isOpenPost && postId && (
           <PostView
