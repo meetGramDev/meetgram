@@ -23,7 +23,6 @@ export const PublicPostsList = ({ post, posts, userId }: Props) => {
   const hasMore = currentPosts.items.length !== currentPosts.totalCount
 
   const firstRenderSkipPagination = useRef(true)
-  const postsScrollRef = useRef<HTMLElement>(null)
   const { ref } = useInfiniteScroll(
     async () => {
       if (!firstRenderSkipPagination.current && currentPosts.items.length >= PAGE_SIZE && hasMore) {
@@ -40,9 +39,11 @@ export const PublicPostsList = ({ post, posts, userId }: Props) => {
         }
       }
 
-      firstRenderSkipPagination.current = false
+      if (firstRenderSkipPagination.current) {
+        firstRenderSkipPagination.current = false
+      }
     },
-    { root: postsScrollRef.current, threshold: 0.9 }
+    { threshold: 0.9 }
   )
 
   return (

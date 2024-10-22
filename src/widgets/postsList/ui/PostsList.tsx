@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
 import { PublicPost, useGetPublicPostsQuery } from '@/entities/post'
@@ -22,12 +22,11 @@ export const PostsList = ({ isFollowing, userId, post }: PostsListProps) => {
   // =========== //
   const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(undefined)
 
-  // const firstRenderSkipPagination = useRef(true)
-  const postsScrollRef = useRef<HTMLElement>(null)
+  const firstRenderSkipPagination = useRef(true)
   const { ref } = useInfiniteScroll(
     () => {
       if (
-        // !firstRenderSkipPagination.current &&
+        !firstRenderSkipPagination.current &&
         publicPosts &&
         publicPosts?.items &&
         publicPosts.items.length >= PAGE_SIZE &&
@@ -35,9 +34,12 @@ export const PostsList = ({ isFollowing, userId, post }: PostsListProps) => {
       ) {
         setEndCursorPostId(publicPosts?.items.at(-1)?.id)
       }
-      // firstRenderSkipPagination.current = false
+
+      if (firstRenderSkipPagination.current) {
+        firstRenderSkipPagination.current = false
+      }
     },
-    { root: postsScrollRef.current, threshold: 0.9 }
+    { threshold: 0.9 }
   )
 
   const {
@@ -53,6 +55,12 @@ export const PostsList = ({ isFollowing, userId, post }: PostsListProps) => {
     },
     { skip: !userId && !endCursorPostId }
   )
+
+  useEffect(() => {
+    if (userId && endCursorPostId !== undefined) {
+      setEndCursorPostId(undefined)
+    }
+  }, [userId])
 
   return (
     <>
