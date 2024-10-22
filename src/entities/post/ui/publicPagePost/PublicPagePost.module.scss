@@ -35,3 +35,19 @@
 
   -webkit-line-clamp: unset;
 }
+
+.carouselWrapper {
+  --slide-height-desktop: 15rem;
+
+  width: 234px;
+  margin: 0;
+}
+
+.carouselContent {
+  padding: 8px;
+}
+
+.buttonCarousel {
+  width: 1.5rem;
+  height: 1.5rem;
+}

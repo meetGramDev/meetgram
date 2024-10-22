@@ -33,7 +33,14 @@ export const PublicPagePost = ({
 
   return (
     <div className={s.publicPostWrapper}>
-      <ImageCarousel images={images} />
+      <ImageCarousel
+        buttonCarouselClassname={s.buttonCarousel}
+        className={s.carouselWrapper}
+        contentClassname={s.carouselWrapper}
+        images={images}
+        itemClassname={s.carouselItem}
+      />
+
       {/*<Image alt={'Some photo posts'} height={240} src={images[0].url} width={234} />*/}
       <div className={'mt-[12px] flex'}>
         <Photo alt={'Friend avatar'} height={36} src={avatarOwner} width={36} />
