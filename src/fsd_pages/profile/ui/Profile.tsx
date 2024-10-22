@@ -1,13 +1,16 @@
-import { GetPublicPostsResponse } from '@/entities/post'
+import { GetPublicPostsResponse, PublicPost } from '@/entities/post'
 import { PublicProfile, User, useFullUserProfileQuery } from '@/entities/user'
 import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
 import { AddingPostView } from '@/widgets/addingPostView'
-import { PostsList } from '@/widgets/postsList'
+import { PostsList, PublicPostsList } from '@/widgets/postsList'
 
 type Props = {
   id: number
+  /**
+   * Authorized or Unauthorized
+   */
   isPublic: boolean
-  posts?: GetPublicPostsResponse
+  posts: GetPublicPostsResponse
   publicUserData: PublicProfile
   userName?: string
 }
@@ -30,13 +33,11 @@ export const Profile = ({ id, isPublic = false, posts, publicUserData, userName 
         <>{!userProfileLoading && userData ? <User userData={userData} /> : <UserSkeleton />}</>
       )}
 
-      <PostsList
-        isFollowing={userData?.isFollowing}
-        isPublic={isPublic}
-        posts={posts?.items}
-        userId={userData?.id || id}
-        // userName={userName || publicUserData?.userName || ''}
-      />
+      {!isPublic ? (
+        <PostsList isFollowing={userData?.isFollowing} userId={userData?.id || id} />
+      ) : (
+        <PublicPostsList posts={posts} userId={id} />
+      )}
       <AddingPostView />
     </div>
   )
