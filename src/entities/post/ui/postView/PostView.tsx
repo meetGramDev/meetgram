@@ -28,7 +28,7 @@ import s from './PostView.module.scss'
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
 
 type Props = {
-  isFollowing: boolean
+  isFollowing?: boolean
   isOpen: (open: boolean) => void
   onEdit?: () => void
   open: boolean

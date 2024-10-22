@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 
 import { Post, PostView } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
@@ -12,45 +12,45 @@ import s from './PostsList.module.scss'
 
 import { PostListProps } from '../props.type'
 
-export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
-  const router = useRouter()
-  const isOpenPost = router.query.isOpenPost as string
-  const postId = router.query.postId as string
+export const PostsListDesktop = forwardRef<HTMLDivElement, PostListProps>(
+  ({ isFollowing, posts, userId }, ref) => {
+    const router = useRouter()
+    const isOpenPost = router.query.isOpenPost as string
+    const postId = router.query.postId as string
 
-  const [openEdit, setOpenEdit] = useState(false)
-  const [openCloseEditingPost, setOpenCloseEditingPost] = useState(false)
+    const [openEdit, setOpenEdit] = useState(false)
+    const [openCloseEditingPost, setOpenCloseEditingPost] = useState(false)
 
-  const handleEditPostDialog = ({ isDirty, isSuccess }: OnOpenChangeArgs) => {
-    if (!isDirty) {
-      setOpenEdit(false)
+    const handleEditPostDialog = ({ isDirty, isSuccess }: OnOpenChangeArgs) => {
+      if (!isDirty) {
+        setOpenEdit(false)
 
-      return
+        return
+      }
+
+      if (isSuccess) {
+        setOpenEdit(false)
+      } else {
+        setOpenCloseEditingPost(true)
+      }
     }
 
-    if (isSuccess) {
-      setOpenEdit(false)
-    } else {
-      setOpenCloseEditingPost(true)
+    const handleCloseEditDialog = (isConfirm: boolean) => {
+      if (isConfirm) {
+        setOpenCloseEditingPost(false)
+        setOpenEdit(false)
+      } else {
+        setOpenCloseEditingPost(false)
+      }
     }
-  }
 
-  const handleCloseEditDialog = (isConfirm: boolean) => {
-    if (isConfirm) {
-      setOpenCloseEditingPost(false)
-      setOpenEdit(false)
-    } else {
-      setOpenCloseEditingPost(false)
+    const handleCloseModalDialog = (open: boolean) => {
+      !open && router.push(`${HOME}/${userId}`, undefined, { shallow: true })
     }
-  }
 
-  const handleCloseModalDialog = (open: boolean) => {
-    !open && router.push(`${HOME}/${userId}`, undefined, { shallow: true })
-  }
-
-  return (
-    <div className={s.postsList}>
-      {posts?.map(post => {
-        return (
+    return (
+      <div className={s.postsList}>
+        {posts?.map((post, i) => (
           <div className={s.item} key={post.id}>
             <Link
               href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}
@@ -64,37 +64,40 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
               />
             </Link>
           </div>
-        )
-      })}
-      {isOpenPost && postId && (
-        <PostView
-          isFollowing={isFollowing}
-          isOpen={handleCloseModalDialog}
-          onEdit={() => setOpenEdit(true)}
-          open={isOpenPost === 'true'}
-          postId={+postId}
-          userId={userId}
-        />
-      )}
+        ))}
 
-      {openEdit && postId && (
-        <EditPostDialog onOpenChange={handleEditPostDialog} open={openEdit} postId={+postId} />
-      )}
-
-      {openCloseEditingPost && (
-        <Dialog
-          onOpenChange={() => setOpenCloseEditingPost(false)}
-          open={openCloseEditingPost}
-          title={'Close Post'}
-        >
-          <ConfirmClosingDialog
-            message={
-              'Do you really want to finish editing? If you close the changes you have made will not be saved.'
-            }
-            onConfirm={handleCloseEditDialog}
+        {isOpenPost && postId && (
+          <PostView
+            isFollowing={isFollowing}
+            isOpen={handleCloseModalDialog}
+            onEdit={() => setOpenEdit(true)}
+            open={isOpenPost === 'true'}
+            postId={+postId}
+            userId={userId}
           />
-        </Dialog>
-      )}
-    </div>
-  )
-}
+        )}
+
+        {openEdit && postId && (
+          <EditPostDialog onOpenChange={handleEditPostDialog} open={openEdit} postId={+postId} />
+        )}
+
+        {openCloseEditingPost && (
+          <Dialog
+            onOpenChange={() => setOpenCloseEditingPost(false)}
+            open={openCloseEditingPost}
+            title={'Close Post'}
+          >
+            <ConfirmClosingDialog
+              message={
+                'Do you really want to finish editing? If you close the changes you have made will not be saved.'
+              }
+              onConfirm={handleCloseEditDialog}
+            />
+          </Dialog>
+        )}
+      </div>
+    )
+  }
+)
+
+PostsListDesktop.displayName = 'PostsListDesktop'

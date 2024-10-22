@@ -1,7 +1,7 @@
 import { PublicPost } from '@/entities/post'
 
 export type PostListProps = {
-  isFollowing: boolean
+  isFollowing?: boolean
   posts: PublicPost[]
   userId: number
 }

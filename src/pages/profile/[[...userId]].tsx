@@ -1,57 +1,67 @@
-import { Suspense } from 'react'
-
-import {
-  User,
-  selectCurrentUserName,
-  useFullUserProfileQuery,
-  useGetPublicProfileByIdQuery,
-} from '@/entities/user'
-import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
+import { GetPublicPostsResponse } from '@/entities/post'
+import { PublicProfile, selectIsUserAuth } from '@/entities/user'
+import { Profile } from '@/fsd_pages/profile'
+import { BASE_URL } from '@/shared/api'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { NextPageWithLayout } from '@/shared/types'
-import { Loader } from '@/shared/ui'
-import { AddingPostView } from '@/widgets/addingPostView'
+import { SESSION_COOKIE_NAME } from '@/shared/const/consts'
 import { getMainLayout } from '@/widgets/layouts'
-import { PostsList } from '@/widgets/postsList'
-import { skipToken } from '@reduxjs/toolkit/query'
-import { useRouter } from 'next/router'
+import { PAGE_SIZE, getPublicPosts } from '@/widgets/postsList'
+import axios from 'axios'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
-const UserId: NextPageWithLayout = () => {
-  const router = useRouter()
-  const userId = router.query.userId as string
-  const { data: userDataById, isError: isProfileByIdError } = useGetPublicProfileByIdQuery(
-    userId || skipToken
-  )
+export const getServerSideProps = async function (ctx) {
+  const { userId } = ctx.params as { userId: string[] }
 
-  const authUsername = useAppSelector(selectCurrentUserName)
-  const { data: userData, isLoading: userProfileLoading } = useFullUserProfileQuery(
-    userDataById?.userName || authUsername || skipToken,
-    { skip: isProfileByIdError }
-  )
-
-  if (isProfileByIdError) {
-    return <p className={'mt-40 text-center text-h1'}>Profile was not found</p>
+  if (!userId || userId[0] === 'undefined') {
+    return {
+      notFound: true,
+    }
   }
 
-  return (
-    <div className={'h-full'}>
-      {!userProfileLoading && userData ? <User userData={userData} /> : <UserSkeleton />}
+  let resp
 
-      <Suspense
-        fallback={
-          <div className={'flex justify-center'}>
-            <Loader />
-          </div>
-        }
-      >
-        <PostsList userName={userDataById?.userName || authUsername} />
-      </Suspense>
+  try {
+    resp = await Promise.all([
+      await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`),
+      await getPublicPosts({ id: userId[0], params: { pageSize: PAGE_SIZE } }),
+    ])
+  } catch (e) {
+    return {
+      notFound: true,
+    }
+  }
 
-      <AddingPostView />
-    </div>
+  const cookies = ctx.req.cookies as Record<typeof SESSION_COOKIE_NAME, string | undefined>
+
+  return {
+    props: {
+      isAuth: cookies.token !== undefined,
+      posts: resp[1],
+      publicUserData: resp[0].data,
+    },
+  }
+} satisfies GetServerSideProps<{
+  isAuth: boolean
+  posts: GetPublicPostsResponse
+  publicUserData: PublicProfile
+}>
+
+const UserId = ({
+  isAuth,
+  posts,
+  publicUserData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  // const isAuth = useAppSelector(selectIsUserAuth)
+
+  return getMainLayout(
+    <Profile
+      id={publicUserData.id}
+      isPublic={!isAuth}
+      posts={posts}
+      publicUserData={publicUserData}
+    />,
+    !isAuth
   )
 }
-
-UserId.getLayout = getMainLayout
 
 export default UserId

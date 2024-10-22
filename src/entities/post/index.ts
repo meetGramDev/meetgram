@@ -10,8 +10,10 @@ export {
   postsApi,
   useDeletePostMutation,
   useGetPublicPostsQuery,
+  useLazyGetPublicPostsQuery,
 } from './model/services/posts.service'
 export {
+  type GetPublicPostsArgs,
   type GetPublicPostsResponse,
   type ImageType,
   type PublicPost,

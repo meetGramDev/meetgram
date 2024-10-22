@@ -17,7 +17,7 @@ import s from './PostViewSelect.module.scss'
 
 type Props = {
   id?: string
-  isFollowing: boolean
+  isFollowing?: boolean
   onEdit?: () => void
   onOpenPost: (open: boolean) => void
   ownerId: number
@@ -99,14 +99,18 @@ export const PostViewSelect = memo(
             </div>
           ) : (
             <div className={s.menuContent}>
-              {isFollowing ? (
-                <Button className={s.button} variant={'text'}>
-                  <UnfollowIcon /> Unfollow
-                </Button>
-              ) : (
-                <Button className={s.button} variant={'text'}>
-                  <FollowIcon /> Follow
-                </Button>
+              {isFollowing !== undefined && (
+                <>
+                  {isFollowing ? (
+                    <Button className={s.button} variant={'text'}>
+                      <UnfollowIcon /> Unfollow
+                    </Button>
+                  ) : (
+                    <Button className={s.button} variant={'text'}>
+                      <FollowIcon /> Follow
+                    </Button>
+                  )}
+                </>
               )}
               <Button
                 className={s.button}
