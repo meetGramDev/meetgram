@@ -99,14 +99,18 @@ export const PostViewSelect = memo(
             </div>
           ) : (
             <div className={s.menuContent}>
-              {isFollowing ? (
-                <Button className={s.button} variant={'text'}>
-                  <UnfollowIcon /> Unfollow
-                </Button>
-              ) : (
-                <Button className={s.button} variant={'text'}>
-                  <FollowIcon /> Follow
-                </Button>
+              {isFollowing !== undefined && (
+                <>
+                  {isFollowing ? (
+                    <Button className={s.button} variant={'text'}>
+                      <UnfollowIcon /> Unfollow
+                    </Button>
+                  ) : (
+                    <Button className={s.button} variant={'text'}>
+                      <FollowIcon /> Follow
+                    </Button>
+                  )}
+                </>
               )}
               <Button
                 className={s.button}
