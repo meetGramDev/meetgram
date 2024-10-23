@@ -1,23 +1,38 @@
+import { useState } from 'react'
+
 import { useGetWhoLikedPostQuery } from '@/entities/like'
 import { Photo } from '@/entities/photo'
+import { useFollowUserMutation } from '@/features/follow'
 import { UsersListDialog } from '@/features/pagination'
-import { SearchDialog } from '@/features/search'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, Dialog, Loader } from '@/shared/ui'
 
 import s from './LikesView.module.scss'
 
 import noPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
+import { ContainerWithSearch } from '../../ui/ContainerWithSearch'
 
 type Props = {
   likesCount: number
   postId: number
 }
 
+const MAX_PAGE_SIZE = 8
+
 export const LikesView = ({ likesCount, postId }: Props) => {
-  const { data, isSuccess } = useGetWhoLikedPostQuery({ postId })
+  const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
+
+  const { data, isFetching, isLoading, isSuccess } = useGetWhoLikedPostQuery({
+    cursor: endCursorId,
+    pageSize: MAX_PAGE_SIZE,
+    postId,
+  })
+
+  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
   const t = useTranslate()
+
+  const handleFollowUser = (userId: number) => followUser({ selectedUserId: userId })
 
   return (
     <Dialog
@@ -45,12 +60,19 @@ export const LikesView = ({ likesCount, postId }: Props) => {
       {!isSuccess ? (
         <Loader />
       ) : (
-        <div className={s.container}>
-          <SearchDialog />
-          <div className={s.content}>
-            <UsersListDialog postId={postId} />
-          </div>
-        </div>
+        <ContainerWithSearch>
+          <UsersListDialog
+            data={data}
+            disabled={isFollowLoading}
+            endCursor={endCursorId}
+            isFetching={isFetching}
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            maxPageSize={MAX_PAGE_SIZE}
+            onFollow={handleFollowUser}
+            setEndCursor={setEndCursorId}
+          />
+        </ContainerWithSearch>
       )}
     </Dialog>
   )

@@ -9,6 +9,7 @@ import {
   useGetPostCommentsQuery,
 } from '@/entities/post'
 import { selectCurrentUserId, selectIsUserAuth } from '@/entities/user'
+import { useFollowUserMutation } from '@/features/follow'
 import { Comments, getTimeAgo } from '@/features/posts/comments'
 import { LikeButton } from '@/features/posts/likePost'
 import { PostViewSelect } from '@/features/posts/postViewSelect'
@@ -40,15 +41,14 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
   const [addComment] = useAddPostCommentMutation()
   const { data: comments } = useGetPostCommentsQuery({ postId })
   const [addAnswerComment] = useAddAnswerCommentMutation()
+  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
   const [isFavourite, setIsFavourite] = useState(false)
   const [textContent, setTextContent] = useState('')
   const [commentId, setCommentId] = useState<null | number>(null)
 
-  const answerCommentRef = useRef<HTMLTextAreaElement>(null)
-
   const tr = useRouter().locale
-
+  const answerCommentRef = useRef<HTMLTextAreaElement>(null)
   const authUserId = useAppSelector(selectCurrentUserId)
   const isAuth = useAppSelector(selectIsUserAuth)
 
@@ -114,6 +114,8 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     setCommentId(commentId)
   }
 
+  const handleOnFollow = (userId: number) => followUser({ selectedUserId: userId })
+
   const ownerProfile = `${HOME}/${userId}`
 
   return (
@@ -154,9 +156,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
               </div>
               {isAuth && (
                 <PostViewSelect
+                  disableFollow={isFollowLoading}
                   id={`${postId}`}
                   isFollowing={isFollowing}
                   onEdit={onEdit}
+                  onFollow={handleOnFollow}
                   onOpenPost={isOpen}
                   ownerId={userId}
                   userId={authUserId!}
