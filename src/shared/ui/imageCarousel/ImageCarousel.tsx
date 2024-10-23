@@ -28,6 +28,8 @@ type ImageType =
   | { url: StaticImport | string }
 
 type Props = {
+  btnIconCarousel?: string
+  buttonCarouselClassname?: string
   className?: string
   contentClassname?: string
   images: ImageType[]
@@ -43,6 +45,8 @@ type Props = {
 } & CarouselProps
 
 export const ImageCarousel = ({
+  btnIconCarousel,
+  buttonCarouselClassname,
   className,
   contentClassname,
   images,
@@ -154,8 +158,16 @@ export const ImageCarousel = ({
 
       {showNavigation && isManyItems && (
         <>
-          <CarouselPrevious className={s.navigationPrev} onPrev={onPrev} />
-          <CarouselNext className={s.navigationNext} onNext={onNext} />
+          <CarouselPrevious
+            btnClassName={btnIconCarousel}
+            className={clsx(buttonCarouselClassname, s.navigationPrev)}
+            onPrev={onPrev}
+          />
+          <CarouselNext
+            btnClassName={btnIconCarousel}
+            className={clsx(buttonCarouselClassname, s.navigationNext)}
+            onNext={onNext}
+          />
         </>
       )}
     </Carousel>

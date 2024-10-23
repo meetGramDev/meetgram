@@ -11,6 +11,7 @@ export type RootState = ReturnType<typeof rootReducer>
 
 export const makeStore = () => {
   return configureStore({
+    devTools: true,
     // and other useful features of `rtk-query`.
     middleware: getDefaultMiddleware => {
       return getDefaultMiddleware().concat(baseApi.middleware)
