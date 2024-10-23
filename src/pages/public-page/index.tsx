@@ -1,11 +1,8 @@
 import { GetPublicPostsResponse, PublicPost } from '@/entities/post'
-import { useGetAllPublicPostsQuery } from '@/entities/post/model/services/posts.service'
 import { PublicPagePost } from '@/entities/post/ui/publicPagePost/PublicPagePost'
 import { TotalUsersCount } from '@/features/user/totalUsersCount/ui/totalUsersCount'
 import { BASE_URL } from '@/shared/api'
-import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
-import axios from 'axios'
 import { GetStaticProps } from 'next'
 
 import s from './index.module.scss'
@@ -34,19 +31,6 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
     revalidate: 60,
   }
 }
-
-//server side props
-
-// export const getServerSideProps = async () => {
-//   const res = await fetch(`${BASE_URL}/public-posts/all/?pageSize=4`)
-//   const data = await res.json()
-//
-//   return {
-//     props: {
-//       data,
-//     },
-//   }
-// }
 
 const PublicPage = ({ data }: PropsType) => {
   return (
