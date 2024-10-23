@@ -13,7 +13,6 @@
 .main {
   width: 100%;
   min-height: 80vh;
-  margin-top: 60px;
 
   @media (width > $screen-size-mobile) {
     margin-left: var(--leftContentGapForSidebar);
