@@ -40,6 +40,7 @@ const post: PublicPost = {
 export const PostsListDesktopComponent: Story = {
   args: {
     isFollowing: false,
+    post: post,
     posts: [post, post, post, post, post, post, post, post],
     userId: 1297,
   },

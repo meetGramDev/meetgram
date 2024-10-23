@@ -18,6 +18,7 @@ import { AddingPostStage } from '../../model/types/addPostTypes'
 
 type Props = {
   header: string
+  isLoading?: boolean
   nextBtnText?: string
   onBack: () => void
   onNext: () => void
@@ -25,7 +26,7 @@ type Props = {
 
 export const DialogHeader = (props: Props) => {
   const t = useTranslate()
-  const { header, nextBtnText = t('Next'), onBack, onNext } = props
+  const { header, isLoading, nextBtnText = t('Next'), onBack, onNext } = props
 
   const addingPostStage = useAppSelector(selectAddingPostStage)
   const imagesNumber = useAppSelector(selectNumberOfImages)
@@ -57,7 +58,7 @@ export const DialogHeader = (props: Props) => {
           <ArrowBack />
         </ButtonIcon>
         <div>{header}</div>
-        <Button onClick={onNext} variant={'text'}>
+        <Button disabled={isLoading} onClick={onNext} variant={'text'}>
           {nextBtnText as string}
         </Button>
       </div>

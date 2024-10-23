@@ -3,9 +3,11 @@ import {
   useAddLikeToPostCommentMutation,
   useGetAnswerCommentsQuery,
 } from '@/entities/post/model/services/post.service'
+import { selectIsUserAuth } from '@/entities/user'
 import { Heart } from '@/shared/assets/icons/Heart'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
@@ -32,6 +34,8 @@ export const Comment = ({ comment, onClick }: Props) => {
 
   const [likeComment] = useAddLikeToPostCommentMutation()
 
+  const isAuth = useAppSelector(selectIsUserAuth)
+
   const addLikeToComment = async () => {
     try {
       if (!comment.isLiked) {
@@ -50,41 +54,46 @@ export const Comment = ({ comment, onClick }: Props) => {
 
   return (
     <>
-      <div key={comment.id}>
-        <div className={s.commentsContainer}>
-          <div className={s.avatars}>
-            <Photo
-              alt={'user photo'}
-              className={s.photo}
-              height={36}
-              src={comment.from.avatars.length ? comment.from.avatars[0].url : withoutPhoto}
-              width={36}
-            />
+      <div className={s.commentsContainer} key={comment.id}>
+        <div className={s.avatars}>
+          <Photo
+            alt={'user photo'}
+            className={s.photo}
+            height={36}
+            src={comment.from.avatars.length ? comment.from.avatars[0].url : withoutPhoto}
+            width={36}
+          />
+        </div>
+        <div className={s.commentItems}>
+          <div className={s.commentContent}>
+            <Link className={s.userName} href={`/profile/${comment.from.id}`}>
+              {comment.from.username}
+            </Link>
+            {comment.content}
           </div>
-          <div className={s.commentItems}>
-            <div className={s.commentContent}>
-              <Link className={s.userName} href={`/profile/${comment.from.id}`}>
-                {comment.from.username}
-              </Link>
-              {comment.content}
-            </div>
+          {isAuth && (
             <div className={s.hearts}>
               <Button className={s.heartButton} onClick={addLikeToComment} variant={'text'}>
                 {comment.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
               </Button>
             </div>
-          </div>
+          )}
         </div>
-        <div className={s.commentFooter}>
-          <span>{getTimeAgo(tr ?? 'en', comment.createdAt)}</span>
-          {comment.isLiked && <span className={s.like}>Like:</span>}
-          {comment.likeCount !== 0 && comment.likeCount}
-          <Button className={s.button} onClick={() => onClick(comment.id)} variant={'text'}>
-            Answer
-          </Button>
-        </div>
-        {answers && <Answers answers={answers} onClick={() => onClick(comment.id)} />}
       </div>
+      <div className={s.commentFooter}>
+        <span>{getTimeAgo(tr ?? 'en', comment.createdAt)}</span>
+        {isAuth && (
+          <>
+            {comment.isLiked && comment.likeCount !== 0 && (
+              <span className={s.like}>Like: {comment.likeCount}</span>
+            )}
+            <Button className={s.button} onClick={() => onClick(comment.id)} variant={'text'}>
+              Answer
+            </Button>
+          </>
+        )}
+      </div>
+      {answers && <Answers answers={answers} onClick={() => onClick(comment.id)} />}
     </>
   )
 }

@@ -46,6 +46,7 @@
   align-items: center;
   justify-content: space-between;
 
+  width: 38.75rem;
   height: 3.68rem;
 
   border-bottom: 1px solid var(--dark-color-100);
@@ -169,7 +170,11 @@
 
 .descriptionContent {
   scrollbar-width: none;
+
   overflow: auto;
+
+  width: 26.56rem;
+
   word-wrap: break-word;
   white-space: normal;
 
@@ -194,6 +199,7 @@
 }
 
 .footer {
+  height: 6.87rem;
   border-top: 1px solid var(--dark-color-100);
 }
 
@@ -238,6 +244,7 @@
 }
 
 .date {
+  height: min-content;
   padding-left: 1.87rem;
   font: var(--font-regular-small);
   color: #757575ff;
@@ -261,7 +268,7 @@
 
   overflow: auto;
 
-  width: 24.67rem;
+  width: 33.67rem;
   height: 3.68rem;
   padding-left: 0.75rem;
 

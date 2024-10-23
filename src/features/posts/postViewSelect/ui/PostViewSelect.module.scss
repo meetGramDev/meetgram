@@ -37,6 +37,10 @@
     color: var(--primary-color-700);
     outline: none;
   }
+
+  &:focus-visible {
+    outline: none;
+  }
 }
 
 .selectTrigger[data-state='open'][data-placeholder] {
@@ -45,6 +49,10 @@
 
   &:focus {
     color: var(--primary-color-700);
+    outline: none;
+  }
+
+  &:focus-visible {
     outline: none;
   }
 }

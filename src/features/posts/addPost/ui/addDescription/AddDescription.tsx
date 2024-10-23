@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { PostDescriptionField, PostDescriptionForm, PostDescriptionFormRef } from '@/entities/post'
@@ -23,7 +23,8 @@ export const AddDescription = () => {
 
   const { data: profile } = useGetProfileQuery()
   const [addImages, { isLoading: isLoadingAddImages }] = useAddImagesMutation()
-  const [createPost, { isLoading: isLoadingCreatePost }] = useCreatePostMutation()
+  const [createPost] = useCreatePostMutation()
+  const [isLoadingPostCreate, setIsLoadingPostCreate] = useState(false)
 
   const { closeAddingPost, setAddingPostStage } = useActions(addPostActions)
 
@@ -35,6 +36,7 @@ export const AddDescription = () => {
 
   const handlePublish = () => {
     postDescriptionRef.current?.onSubmitFormClick()
+    setIsLoadingPostCreate(!isLoadingPostCreate)
   }
 
   const handleOnSendPostImage = async ({ description }: PostDescriptionField) => {
@@ -85,6 +87,7 @@ export const AddDescription = () => {
     <>
       <DialogHeader
         header={'Publication'}
+        isLoading={isLoadingPostCreate}
         nextBtnText={'Publish'}
         onBack={handlePrevView}
         onNext={handlePublish}
