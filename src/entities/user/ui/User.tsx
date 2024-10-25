@@ -49,7 +49,7 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
               <h1 className={s.userNameTitle}>{userData.userName}</h1>
               {currentUserId === userData.id ? (
                 <Button as={Link} href={PROFILE_SETTINGS} variant={'secondary'}>
-                  Profile Settings
+                  {t('Profile Settings')}
                 </Button>
               ) : (
                 <div className={s.profileActions}>
@@ -60,7 +60,7 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
                     userId={userData.id}
                   />
                   <Button as={Link} href={'#'} variant={'secondary'}>
-                    Send message
+                    {t('Send message')}
                   </Button>
                 </div>
               )}

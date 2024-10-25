@@ -5,6 +5,7 @@ import { validateFile } from '@/features/posts/addPost/lib/validateFile'
 import { PlusCircle } from '@/shared/assets/icons/Plus'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { readFile } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
@@ -21,6 +22,8 @@ type Props = {
 export const AddButton = ({ onAdd }: Props) => {
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
   const currImgsNum = useAppSelector(selectNumberOfImages)
+  const t = useTranslate()
+  const validateFileTranslate = t('validateFileTranslate')
 
   const handleOnAddFiles = () => {
     dropzoneRef.current?.onSelectFile()
@@ -38,7 +41,7 @@ export const AddButton = ({ onAdd }: Props) => {
     let readFiles: ImageType[] = []
 
     for (let i = 0; i < fileArray.length; i++) {
-      const validationError = validateFile(fileArray[i])
+      const validationError = validateFile(fileArray[i], validateFileTranslate)
 
       if (validationError !== null) {
         toast.error(validationError)
