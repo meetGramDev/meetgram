@@ -1,15 +1,16 @@
 import { useRef } from 'react'
+import { toast } from 'react-toastify'
 
+import { validateFile } from '@/features/posts/addPost/lib/validateFile'
 import { PlusCircle } from '@/shared/assets/icons/Plus'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { ALLOWED_TYPES } from '@/shared/const/consts'
-import { isImgFileTypeValid, readFile } from '@/shared/lib'
+import { readFile } from '@/shared/lib'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
 import s from './ThumbsCarousel.module.scss'
 
-import { MAX_FILE_SIZE, MAX_FILES_LENGTH } from '../../const/consts'
+import { MAX_FILES_LENGTH } from '../../const/consts'
 import { selectNumberOfImages } from '../../model/selectors/addPost.selectors'
 import { ImageType } from '../../model/types/slice'
 
@@ -37,15 +38,11 @@ export const AddButton = ({ onAdd }: Props) => {
     let readFiles: ImageType[] = []
 
     for (let i = 0; i < fileArray.length; i++) {
-      if (!isImgFileTypeValid(fileArray[i], ALLOWED_TYPES)) {
-        return
-      }
+      const validationError = validateFile(fileArray[i])
 
-      if (fileArray[i].size < 1024) {
-        return
-      }
+      if (validationError !== null) {
+        toast.error(validationError)
 
-      if (fileArray[i].size > MAX_FILE_SIZE.bytes) {
         return
       }
 
