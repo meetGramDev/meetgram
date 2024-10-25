@@ -109,7 +109,7 @@ export const AddImages = () => {
         onClick={handleSelectFileClick}
         variant={'primary'}
       >
-        {t('Select from computer') as string}
+        {t('S' + 'elect from computer')}
       </Button>
     </div>
   )
