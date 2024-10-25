@@ -3,7 +3,6 @@ import {LenType} from './en';
 export const ru: LenType = {
 
     "About me": "О себе",
-
     "Account Management": "Управление аккаунтом",
     "Add Photo": "Добавить фото",
     "Add a Profile Photo": "Добавить фото профиля",
@@ -23,9 +22,11 @@ export const ru: LenType = {
     "Delete photo": "Удалить фото",
     "Devices": "Устройства",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы действительно хотите отменить публикацию? Если вы выйдете, изменения не будут сохранены.",
+    "Drag the photo here": "Перетащите фото сюда",
     "Email sent": "Письмо отправлено",
     "Email verification link expired": "Срок действия ссылки истек",
     "February": "Февраль",
+    "File must be at least 1 KB": "Файл должен быть не менее 1 КБ",
     "First Name": "Имя",
     "Followers": "Подписчики",
     "Following": "Подписки",
@@ -56,6 +57,7 @@ export const ru: LenType = {
     "September": "Сентябрь",
     "Sign In": "Войти",
     "Sign Up": "Регистрация",
+    "The image size mustn't exceed": "Размер изображения не должен превышать",
     "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",
     "Yes": "Да",
     "Your email has been confirmed": "Ваша электронная почта подтверждена",

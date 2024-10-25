@@ -70,15 +70,14 @@ export const AddImages = () => {
       }
 
       if (fileArray[i].size < 1024) {
-        setError('File must be at least 1 KB')
+        setError(t('File must be at least 1 KB'))
 
         setLoading(false)
 
         return
       }
-
       if (fileArray[i].size > MAX_FILE_SIZE.bytes) {
-        setError(`The image size mustn't exceed ${MAX_FILE_SIZE.size} MB`)
+        setError(`${t("The image size mustn't exceed")} ${MAX_FILE_SIZE.size} MB`)
 
         setLoading(false)
 
@@ -111,7 +110,7 @@ export const AddImages = () => {
                 <UploadMessage message={error} type={'error'} />
               </div>
             )}
-            {!error && <p className={s.dropdownMessage}>Перетащите сюда фото</p>}
+            {!error && <p className={s.dropdownMessage}>{t('Drag the photo here')}</p>}
             <Dropzone
               className={s.photo}
               multiple
@@ -129,7 +128,7 @@ export const AddImages = () => {
         onClick={handleSelectFileClick}
         variant={'primary'}
       >
-        {t('Select from computer') as string}
+        {t('S' + 'elect from computer')}
       </Button>
     </div>
   )
