@@ -1,7 +1,6 @@
 import {LenType} from './en';
 
 export const ru: LenType = {
-
     "About me": "О себе",
     "Account Management": "Управление аккаунтом",
     "Add Photo": "Добавить фото",

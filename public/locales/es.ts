@@ -23,11 +23,9 @@ export const es: LenType = {
     "Devices": "Dispositivos",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "¿Seguro que quieres cerrar la creación de una publicación? Si la cierras, se eliminará todo.",
     "Drag the photo here": "Arrastra la foto aquí",
-
     "Email sent": "Correo enviado",
     "Email verification link expired": "El enlace ha caducado",
     "February": "Febrero",
-
     "First Name": "Nombre",
     "Followers": "Seguidores",
     "Following": "Siguiendo",

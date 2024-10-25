@@ -3,7 +3,6 @@ import {LenType} from './en';
 
 export const be: LenType = {
     "About me": "Пра мяне",
-
     "Account Management": "Кіраванне акаўнтам",
     "Add Photo": "Дадаць фота",
     "Add a Profile Photo": "Дадаць фота профілю",
@@ -27,7 +26,6 @@ export const be: LenType = {
     "Email sent": "Ліст адпраўлены",
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
     'February': "Люты",
-
     "First Name": "Імя",
     "Followers": "Падпісанты",
     "Following": "Падпісаны",
@@ -59,7 +57,6 @@ export const be: LenType = {
     "September": "Верасень",
     "Sign In": "Увайсці",
     "Sign Up": "Рэгістрацыя",
-
     "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ",
     "Yes": "Так",
     "Your email has been confirmed": "Ваша электронная пошта была пацверджана",

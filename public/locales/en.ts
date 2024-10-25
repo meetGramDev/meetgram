@@ -1,6 +1,5 @@
 export const en = {
     "About me": "About me",
-
     "Account Management": "Account Management",
     'Add Photo': 'Add Photo',
     "Add a Profile Photo": "Add a Profile Photo",
@@ -24,12 +23,10 @@ export const en = {
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
     "February": "February",
-
     "First Name": "First Name",
     "Followers": "Followers",
     "Following": "Following",
     "General Information": "General Information",
-
     "January": "January",
     'July': "July",
     "June": "June",
@@ -48,7 +45,6 @@ export const en = {
     "Ok": "Ok",
     "Profile Settings": "Profile Settings",
     "Publications": "Publications",
-
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
     'Select from computer': "S" + "elect from computer",
@@ -58,7 +54,6 @@ export const en = {
     "September": "September",
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",
-
     "We have sent a link to confirm your email to": "We have sent a link to confirm your email to ",
     "Yes": "Yes",
     "Your email has been confirmed": "Your email has been confirmed",
