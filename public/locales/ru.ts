@@ -26,7 +26,6 @@ export const ru: LenType = {
     "Email sent": "Письмо отправлено",
     "Email verification link expired": "Срок действия ссылки истек",
     "February": "Февраль",
-    "File must be at least 1 KB": "Файл должен быть не менее 1 КБ",
     "First Name": "Имя",
     "Followers": "Подписчики",
     "Following": "Подписки",
@@ -57,7 +56,6 @@ export const ru: LenType = {
     "September": "Сентябрь",
     "Sign In": "Войти",
     "Sign Up": "Регистрация",
-    "The image size mustn't exceed": "Размер изображения не должен превышать",
     "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",
     "Yes": "Да",
     "Your email has been confirmed": "Ваша электронная почта подтверждена",
@@ -90,7 +88,8 @@ export const ru: LenType = {
             wrongLastName: 'Недопустимая фамилия',
             wrongUsername: 'Неправильное имя пользователя',
         },
-    }, forgoPasswordForm: {
+    },
+    forgoPasswordForm: {
         again: ' Еще Раз',
         backSignIn: 'Вернуться ко входу',
         email: 'Электронная почта',
@@ -101,13 +100,12 @@ export const ru: LenType = {
         sendAgain: 'Если вы не получили письмо, отправьте ссылку еще раз.',
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
-    },
-    language: 'Русский',
-
+    }, language: 'Русский',
     policies: {
         "Privacy Policy": "Политика конфиденциальности",
         "Terms Of Service": "Условия использования",
     },
+
     sidebarTr: {
         create: 'Создать',
         favorites: 'Избранное',
@@ -118,7 +116,6 @@ export const ru: LenType = {
         search: 'Поиск',
         statistics: 'Статистика',
     },
-
     signInLang: {
         anAccount: 'Нет аккаунта?',
         email: 'Электронная почта',
@@ -127,6 +124,7 @@ export const ru: LenType = {
         signIn: 'Войти',
         signUp: 'Регистрация',
     },
+
     signUpLang: {
         IAgree: 'Я согласен с',
         aler: 'Мы отправили ссылку для подтверждения вашей электронной почты на ',
@@ -144,5 +142,10 @@ export const ru: LenType = {
     },
     test: 'Lorem Ipsum — это просто текст-«рыба» в полиграфии',
     "text area": "текстовое поле",
+    validateFileTranslate: {
+        "File must be at least": "Файл должен быть не менее",
+        "Invalid file type. Failed to upload": "Неверный тип файла. Не удалось загрузить",
+        "The image size mustn't exceed": "Размер изображения не должен превышать",
+    },
 }
 

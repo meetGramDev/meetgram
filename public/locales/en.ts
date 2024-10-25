@@ -24,11 +24,12 @@ export const en = {
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
     "February": "February",
-    "File must be at least 1 KB": "File must be at least 1 KB",
+
     "First Name": "First Name",
     "Followers": "Followers",
     "Following": "Following",
     "General Information": "General Information",
+
     "January": "January",
     'July': "July",
     "June": "June",
@@ -47,8 +48,8 @@ export const en = {
     "Ok": "Ok",
     "Profile Settings": "Profile Settings",
     "Publications": "Publications",
-    "Resend verification link": "Resend verification link",
 
+    "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
     'Select from computer': "S" + "elect from computer",
     "Select your city": "Select your city",
@@ -56,7 +57,7 @@ export const en = {
     "September": "September",
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",
-    "The image size mustn't exceed": "The image size mustn't exceed",
+
     "We have sent a link to confirm your email to": "We have sent a link to confirm your email to ",
     "Yes": "Yes",
     "Your email has been confirmed": "Your email has been confirmed",
@@ -64,7 +65,6 @@ export const en = {
         Button: 'Button',
         Link: 'Link that looks like a button',
     },
-
     createNewPasswordForm: {
         createNewPassword: 'Create New Password',
         newPassword: 'New password',
@@ -93,6 +93,7 @@ export const en = {
             wrongUsername: 'Wrong username'
         },
     },
+
     forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
@@ -144,17 +145,22 @@ export const en = {
         username: 'Username',
     },
     test: 'Lorem Ipsum is simply dummy text of the printing',
-    "text area": "text area"
+    "text area": "text area",
+    validateFileTranslate: {
+        "File must be at least": "File must be at least",
+        "Invalid file type. Failed to upload": "Invalid file type. Failed to upload",
+        "The image size mustn't exceed": "The image size mustn't exceed",
+    }
 }
 
-const {errorsTr, sidebarTr} = en
+const {errorsTr, sidebarTr, validateFileTranslate} = en
 const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 
 
 export type ErrorsTr = typeof errorsTr
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
-
+export type TypeValidateFileTranslate = typeof validateFileTranslate;
 export type LenType = typeof en
 
 

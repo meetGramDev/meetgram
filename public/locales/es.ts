@@ -28,7 +28,6 @@ export const es: LenType = {
     "Email verification link expired": "El enlace ha caducado",
     "February": "Febrero",
 
-    "File must be at least 1 KB": "El archivo debe tener al menos 1 KB",
     "First Name": "Nombre",
     "Followers": "Seguidores",
     "Following": "Siguiendo",
@@ -36,8 +35,8 @@ export const es: LenType = {
     "January": "Enero",
     "July": "Julio",
     "June": "Junio",
-    "Last Name": "Apellido",
-    "Like": 'Gusta', "Likes": 'Gusta',
+    "Last Name": "Apellido", "Like": 'Gusta',
+    "Likes": 'Gusta',
     "Log Out": "Cerrar sesión",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Parece que el enlace de verificación ha caducado. No te preocupes, podemos enviar el enlace nuevamente",
     "March": "Marzo",
@@ -58,7 +57,6 @@ export const es: LenType = {
     "September": "Septiembre",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
-    "The image size mustn't exceed": "El tamaño de la imagen no debe exceder",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",
     "Yes": "Sí",
     "Your email has been confirmed": "Tu correo electrónico ha sido confirmado",
@@ -104,11 +102,11 @@ export const es: LenType = {
         sendLink: 'Enviar Enlace',
         sendLinkDialog: 'Hemos enviado un enlace para confirmar tu correo electrónico a',
     },
-    language: 'Español', policies: {
+    language: 'Español',
+    policies: {
         "Privacy Policy": "Política de Privacidad",
         "Terms Of Service": "Condiciones de uso",
-    },
-    sidebarTr: {
+    }, sidebarTr: {
         create: 'Crear',
         favorites: 'Favoritos',
         home: 'Inicio',
@@ -143,4 +141,9 @@ export const es: LenType = {
     },
     test: 'Lorem Ipsum es simplemente texto de relleno de la impresión',
     "text area": "área de texto",
+    validateFileTranslate: {
+        "File must be at least": "El archivo debe tener al menos",
+        "Invalid file type. Failed to upload": "Tipo de archivo no válido. Error al cargar",
+        "The image size mustn't exceed": "El tamaño de la imagen no debe exceder",
+    },
 }

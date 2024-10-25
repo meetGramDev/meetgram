@@ -27,7 +27,7 @@ export const be: LenType = {
     "Email sent": "Ліст адпраўлены",
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
     'February': "Люты",
-    "File must be at least 1 KB": "Файл павінен быць не менш за 1 КБ",
+
     "First Name": "Імя",
     "Followers": "Падпісанты",
     "Following": "Падпісаны",
@@ -58,7 +58,7 @@ export const be: LenType = {
     "September": "Верасень",
     "Sign In": "Увайсці",
     "Sign Up": "Рэгістрацыя",
-    "The image size mustn't exceed": "Памер выявы не павінен перавышаць",
+
     "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ",
     "Yes": "Так",
     "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
@@ -105,11 +105,11 @@ export const be: LenType = {
         sendLinkDialog: 'Мы адправілі спасылку для пацверджання вашай электроннай пошты на',
     },
     language: 'Беларуская',
-
     policies: {
         "Privacy Policy": "Палітыка прыватнасці",
         "Terms Of Service": "Умовы выкарыстоўвання",
     },
+
     sidebarTr: {
         create: 'Стварыць',
         favorites: 'Абранае',
@@ -120,7 +120,6 @@ export const be: LenType = {
         search: 'Пошук',
         statistics: 'Статыстыка',
     },
-
     signInLang: {
         anAccount: 'Няма ўліковага запісу?',
         email: 'Электронная пошта',
@@ -129,6 +128,7 @@ export const be: LenType = {
         signIn: 'Увайсці',
         signUp: 'Рэгістрацыя',
     },
+
     signUpLang: {
         IAgree: 'Я згодны з',
         aler: 'Мы адправілі спасылку для пацверджання вашай электроннай пошты на ',
@@ -146,4 +146,9 @@ export const be: LenType = {
     },
     test: 'Lorem Ipsum — гэта проста тэкст-запаўняльнік у друку',
     "text area": "тэкставае поле",
+    validateFileTranslate: {
+        "File must be at least": "Файл павінен быць не менш за",
+        "Invalid file type. Failed to upload": "Няправільны тып файла. Немагчыма загрузіць",
+        "The image size mustn't exceed": "Памер выявы не павінен перавышаць",
+    },
 }
