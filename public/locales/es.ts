@@ -54,6 +54,7 @@ export const es: LenType = {
     "Select from computer": "Seleccionar desde la computadora",
     "Select your city": "Selecciona tu ciudad",
     "Select your country": "Selecciona tu país",
+    "Send message": "Enviar mensaje",
     "September": "Septiembre",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",

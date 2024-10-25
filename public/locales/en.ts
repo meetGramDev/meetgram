@@ -54,6 +54,7 @@ export const en = {
     'Select from computer': "S" + "elect from computer",
     "Select your city": "Select your city",
     "Select your country": "Select your country",
+    "Send message": "Send message",
     "September": "September",
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",

@@ -53,6 +53,7 @@ export const uk: LenType = {
     "Select from computer": "Виберіть з комп’ютера",
     "Select your city": "Виберіть ваше місто",
     "Select your country": "Виберіть вашу країну",
+    "Send message": "Відправити повідомлення",
     "September": "Вересень",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",

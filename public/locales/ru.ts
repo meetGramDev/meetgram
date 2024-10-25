@@ -53,6 +53,7 @@ export const ru: LenType = {
     "Select from computer": "Выбрать на компьютере",
     "Select your city": "Выберите ваш город",
     "Select your country": "Выберите вашу страну",
+    "Send message": "Отправить сообщение",
     "September": "Сентябрь",
     "Sign In": "Войти",
     "Sign Up": "Регистрация",

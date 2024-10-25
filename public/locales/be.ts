@@ -55,6 +55,7 @@ export const be: LenType = {
     "Select from computer": "Выбраць на кампутары",
     "Select your city": "Абярыце ваш горад",
     "Select your country": "Абярыце вашу краіну",
+    "Send message": "Адправіць паведамленне",
     "September": "Верасень",
     "Sign In": "Увайсці",
     "Sign Up": "Рэгістрацыя",
