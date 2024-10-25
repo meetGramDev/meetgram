@@ -47,7 +47,7 @@ export const en = {
     "Publications": "Publications",
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
-    'Select from computer': "S" + "elect from computer",
+    'Select from computer': "Select from computer",
     "Select your city": "Select your city",
     "Select your country": "Select your country",
     "Send message": "Send message",
