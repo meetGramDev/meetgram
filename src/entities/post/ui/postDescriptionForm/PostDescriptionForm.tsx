@@ -22,14 +22,18 @@ export type PostDescriptionFormRef = {
 type Props = {
   disabled?: boolean
   error?: ServerMessagesType[] | string
-  onSubmit: (data: PostDescriptionField, isDirty?: boolean) => void
+  /**
+   * Return isDirty property of the form state
+   */
+  onChange?: (isDirty: boolean) => void
+  onSubmit: (data: PostDescriptionField) => void
   ownerAvatar?: string
   ownerUsername?: string
   post?: PublicPost
 }
 
 export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
-  ({ disabled, error, onSubmit, ownerAvatar, ownerUsername, post }, forwardedRef) => {
+  ({ disabled, error, onChange, onSubmit, ownerAvatar, ownerUsername, post }, forwardedRef) => {
     const buttonRef = useRef<Nullable<HTMLButtonElement>>(null)
 
     const {
@@ -59,7 +63,7 @@ export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
     })
 
     const handleOnSubmitText = handleSubmit(data => {
-      onSubmit(data, isDirty)
+      onSubmit(data)
     })
 
     useEffect(() => {
@@ -67,6 +71,13 @@ export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
         setError(error[0].field as keyof PostDescriptionField, { message: error[0].message })
       }
     }, [error, setError, getValues])
+
+    useEffect(() => {
+      if (onChange) {
+        onChange(isDirty)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDirty])
 
     return (
       <form className={s.form} onSubmit={handleOnSubmitText}>

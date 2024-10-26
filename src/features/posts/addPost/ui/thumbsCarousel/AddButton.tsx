@@ -1,15 +1,17 @@
 import { useRef } from 'react'
+import { toast } from 'react-toastify'
 
+import { validateFile } from '@/features/posts/addPost/lib/validateFile'
 import { PlusCircle } from '@/shared/assets/icons/Plus'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { ALLOWED_TYPES } from '@/shared/const/consts'
-import { isImgFileTypeValid, readFile } from '@/shared/lib'
+import { readFile } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
 
 import s from './ThumbsCarousel.module.scss'
 
-import { MAX_FILE_SIZE, MAX_FILES_LENGTH } from '../../const/consts'
+import { MAX_FILES_LENGTH } from '../../const/consts'
 import { selectNumberOfImages } from '../../model/selectors/addPost.selectors'
 import { ImageType } from '../../model/types/slice'
 
@@ -20,6 +22,8 @@ type Props = {
 export const AddButton = ({ onAdd }: Props) => {
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
   const currImgsNum = useAppSelector(selectNumberOfImages)
+  const t = useTranslate()
+  const validateFileTranslate = t('validateFileTranslate')
 
   const handleOnAddFiles = () => {
     dropzoneRef.current?.onSelectFile()
@@ -37,15 +41,11 @@ export const AddButton = ({ onAdd }: Props) => {
     let readFiles: ImageType[] = []
 
     for (let i = 0; i < fileArray.length; i++) {
-      if (!isImgFileTypeValid(fileArray[i], ALLOWED_TYPES)) {
-        return
-      }
+      const validationError = validateFile(fileArray[i], validateFileTranslate)
 
-      if (fileArray[i].size < 1024) {
-        return
-      }
+      if (validationError !== null) {
+        toast.error(validationError)
 
-      if (fileArray[i].size > MAX_FILE_SIZE.bytes) {
         return
       }
 

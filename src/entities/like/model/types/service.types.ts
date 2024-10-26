@@ -1,35 +1,12 @@
-import { Avatar } from '@/shared/types'
-
-export type UserWhoLikedPost = {
-  avatars: Avatar[]
-  createdAt: string
-  id: number
-  isFollowedBy: boolean
-  isFollowing: boolean
-  userId: number
-  userName: string
-}
+import { FollowLikeItemType, PaginationQueriesType, PaginationType } from '@/shared/types'
 
 export type GetWhoLikedPostRequest = {
-  params?: {
-    cursor?: number
-    pageNumber?: number
-    pageSize?: number
-    searchQuery?: string
-  }
   postId: number
-}
+} & PaginationQueriesType
 
 export type GetWhoLikedPostResponse = {
   isLiked: boolean
-  items: UserWhoLikedPost[]
-  nextCursor: null | number
-  page: number
-  pageSize: number
-  pagesCount: number
-  prevCursor: number
-  totalCount: number
-}
+} & PaginationType<FollowLikeItemType>
 
 export type LikeStatus = 'DISLIKE' | 'LIKE' | 'NONE'
 

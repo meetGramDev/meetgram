@@ -32,13 +32,13 @@ export const EditPostDialog = ({ onOpenChange, open, postId }: Props) => {
   const [error, setError] = useState<ServerMessagesType[] | string>('')
   const isDirtyField = useRef(false)
 
-  const submitHandler = async (data: PostDescriptionField, isDirty?: boolean) => {
+  const handleSetIsDirty = (isDirty: boolean) => {
+    isDirtyField.current = isDirty
+  }
+
+  const submitHandler = async (data: PostDescriptionField) => {
     if (!post) {
       return
-    }
-
-    if (isDirty !== undefined) {
-      isDirtyField.current = isDirty
     }
 
     try {
@@ -65,6 +65,7 @@ export const EditPostDialog = ({ onOpenChange, open, postId }: Props) => {
           <PostDescriptionForm
             disabled={editPostLoading}
             error={error}
+            onChange={handleSetIsDirty}
             onSubmit={submitHandler}
             post={post}
           />
