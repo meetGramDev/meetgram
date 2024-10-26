@@ -3,7 +3,6 @@ import {LenType} from './en';
 
 export const be: LenType = {
     "About me": "Пра мяне",
-
     "Account Management": "Кіраванне акаўнтам",
     "Add Photo": "Дадаць фота",
     "Add a Profile Photo": "Дадаць фота профілю",
@@ -23,6 +22,7 @@ export const be: LenType = {
     "Delete photo": "Выдаліць фота",
     "Devices": "Прылады",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы сапраўды хочаце спыніць стварэнне публікацыі? Калі вы закрыеце, усё будзе выдалена",
+    "Drag the photo here": "Перацягніце фота сюды",
     "Email sent": "Ліст адпраўлены",
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
     'February': "Люты",
@@ -53,6 +53,7 @@ export const be: LenType = {
     "Select from computer": "Выбраць на кампутары",
     "Select your city": "Абярыце ваш горад",
     "Select your country": "Абярыце вашу краіну",
+    "Send message": "Адправіць паведамленне",
     "September": "Верасень",
     "Sign In": "Увайсці",
     "Sign Up": "Рэгістрацыя",
@@ -102,11 +103,11 @@ export const be: LenType = {
         sendLinkDialog: 'Мы адправілі спасылку для пацверджання вашай электроннай пошты на',
     },
     language: 'Беларуская',
-
     policies: {
         "Privacy Policy": "Палітыка прыватнасці",
         "Terms Of Service": "Умовы выкарыстоўвання",
     },
+
     sidebarTr: {
         create: 'Стварыць',
         favorites: 'Абранае',
@@ -117,7 +118,6 @@ export const be: LenType = {
         search: 'Пошук',
         statistics: 'Статыстыка',
     },
-
     signInLang: {
         anAccount: 'Няма ўліковага запісу?',
         email: 'Электронная пошта',
@@ -126,6 +126,7 @@ export const be: LenType = {
         signIn: 'Увайсці',
         signUp: 'Рэгістрацыя',
     },
+
     signUpLang: {
         IAgree: 'Я згодны з',
         aler: 'Мы адправілі спасылку для пацверджання вашай электроннай пошты на ',
@@ -143,4 +144,9 @@ export const be: LenType = {
     },
     test: 'Lorem Ipsum — гэта проста тэкст-запаўняльнік у друку',
     "text area": "тэкставае поле",
+    validateFileTranslate: {
+        "File must be at least": "Файл павінен быць не менш за",
+        "Invalid file type. Failed to upload": "Няправільны тып файла. Немагчыма загрузіць",
+        "The image size mustn't exceed": "Памер выявы не павінен перавышаць",
+    },
 }
