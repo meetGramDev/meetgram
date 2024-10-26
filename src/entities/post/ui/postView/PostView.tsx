@@ -6,7 +6,6 @@ import {
   PublicPost,
   useAddAnswerCommentMutation,
   useAddPostCommentMutation,
-  useGetPostCommentsQuery,
   useGetSinglePublicPostQuery,
 } from '@/entities/post'
 import { selectCurrentUserId } from '@/entities/user'
@@ -41,11 +40,12 @@ type Props = {
 export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
   const { data: post, isLoading: postLoading, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
   const [addComment] = useAddPostCommentMutation()
-  const { data: comments } = useGetPostCommentsQuery({ postId })
+
   const [addAnswerComment] = useAddAnswerCommentMutation()
   const [isFavourite, setIsFavourite] = useState(false)
   const [textContent, setTextContent] = useState('')
   const [commentId, setCommentId] = useState<null | number>(null)
+  const [pageNumber, setPageNumber] = useState(0)
   const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
 
   const answerCommentRef = useRef<HTMLTextAreaElement>(null)
@@ -68,11 +68,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
     setTextContent(e.currentTarget.value)
   }
 
-  const addCommentHandler = () => {
+  const addCommentHandler = (pageNumber: number) => {
     try {
       setTextContent('')
       if (textContent !== '') {
-        addComment({ body: { content: textContent }, postId })
+        addComment({ body: { content: textContent }, pageNumber, postId })
       }
     } catch (err) {
       const message = serverErrorHandler(err)
@@ -103,7 +103,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
     if (commentId) {
       addAnswerHandler(commentId)
     } else {
-      addCommentHandler()
+      addCommentHandler(pageNumber)
     }
     setTextContent('')
   }
@@ -165,7 +165,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                 userId={authUserId!}
               />
             </div>
-            <div className={s.commentsField}>
+            <div className={s.commentsField} id={`${postId}`}>
               {post.description && (
                 <div className={s.description}>
                   <div className={s.descriptionItems}>
@@ -190,7 +190,12 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                   </span>
                 </div>
               )}
-              {comments && <Comments comments={comments} onClick={answerHandler} />}
+              <Comments
+                onClick={answerHandler}
+                pageNumber={pageNumber}
+                postId={postId}
+                setPageNumber={setPageNumber}
+              />
             </div>
             <div className={s.footer}>
               <div className={s.footerButtons}>
