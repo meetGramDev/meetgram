@@ -1,8 +1,9 @@
 import { useState } from 'react'
 
+import { AnswersType } from '@/entities/post/model/types/answersType'
+
 import s from './Answers.module.scss'
 
-import { AnswersType } from '../../../../entities/post/model/types/answersType'
 import { Answer } from './Answer'
 type Props = {
   answers: AnswersType
