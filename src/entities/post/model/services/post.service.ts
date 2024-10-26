@@ -1,10 +1,6 @@
-import {
-  AddAnswerResponse,
-  AddAnswersArgs,
-  GetAnswersResponse,
-} from '@/entities/post/model/types/answersType'
 import { baseApi } from '@/shared/api'
 
+import { AddAnswerResponse, AddAnswersArgs, GetAnswersResponse } from '../types/answersType'
 import { AddCommentResponse, GetCommentsResponse } from '../types/postTypes'
 import { PublicPost } from '../types/posts.types'
 
@@ -22,11 +18,44 @@ export const postApi = baseApi.injectEndpoints({
       }),
     }),
 
+    addLikeToPostAnswer: builder.mutation<
+      void,
+      { answerId: number; commentId: number; likeStatus: string; postId: number }
+    >({
+      invalidatesTags: (res, error, { answerId, commentId, likeStatus, postId }) => [
+        { answerId, commentId, likeStatus, postId, type: 'commentAnswerLike' },
+      ],
+      async onQueryStarted(
+        { answerId, commentId, likeStatus, postId },
+        { dispatch, queryFulfilled }
+      ) {
+        const likeAnswer = dispatch(
+          postApi.util.updateQueryData('getAnswerComments', { commentId, postId }, state => {
+            state.items.map(
+              answer => answer.id === answerId && (answer.isLiked = likeStatus === 'LIKE')
+            )
+          })
+        )
+
+        try {
+          queryFulfilled
+        } catch (error) {
+          likeAnswer.undo()
+        }
+      },
+      query: ({ answerId, commentId, likeStatus, postId }) => ({
+        body: { likeStatus },
+        method: 'PUT',
+        url: `posts/${postId}/comments/${commentId}/answers/${answerId}/like-status`,
+      }),
+    }),
     addLikeToPostComment: builder.mutation<
       void,
       { commentId: number; likeStatus: string; postId: number }
     >({
-      invalidatesTags: (res, error, { commentId }) => [{ commentId, type: 'commentLike' }],
+      invalidatesTags: (res, error, { commentId, likeStatus, postId }) => [
+        { commentId, likeStatus, postId, type: 'commentLike' },
+      ],
       async onQueryStarted({ commentId, likeStatus, postId }, { dispatch, queryFulfilled }) {
         const likeComment = dispatch(
           postApi.util.updateQueryData(
@@ -118,10 +147,8 @@ export const postApi = baseApi.injectEndpoints({
       providesTags: postId => [{ postId, type: 'post' }],
       query: ({ pageNumber, pageSize, postId }) =>
         `posts/${postId}/comments?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-      serializeQueryArgs: ({ queryArgs }) => {
-        return {
-          id: queryArgs.postId,
-        }
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
       },
     }),
 
@@ -136,6 +163,7 @@ export const postApi = baseApi.injectEndpoints({
 
 export const {
   useAddAnswerCommentMutation,
+  useAddLikeToPostAnswerMutation,
   useAddLikeToPostCommentMutation,
   useAddPostCommentMutation,
   useGetAnswerCommentsQuery,
