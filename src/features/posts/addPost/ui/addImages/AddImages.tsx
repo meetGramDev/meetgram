@@ -1,23 +1,24 @@
 import { ReactElement, useRef, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
+import { validateFile } from '@/features/posts/addPost/lib/validateFile'
 import { UploadMessage } from '@/shared/components/dialog'
 import { useActions } from '@/shared/config/storeHooks'
-import { ALLOWED_TYPES } from '@/shared/const/consts'
-import { isImgFileTypeValid, readFile, sleep } from '@/shared/lib'
+import { readFile, sleep } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef, Loader } from '@/shared/ui'
 
 import s from './AddImages.module.scss'
 
-import { MAX_FILE_SIZE, MAX_FILES_LENGTH } from '../../const/consts'
+import { MAX_FILES_LENGTH } from '../../const/consts'
 import { addPostActions } from '../../model/slice/addPostSlice'
 import { AddingPostStage } from '../../model/types/addPostTypes'
 import { ImageType } from '../../model/types/slice'
 
 export const AddImages = () => {
   const t = useTranslate()
+  const validateFileTranslate = t('validateFileTranslate')
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
 
   const { setAddingPostStage, startEditing } = useActions(addPostActions)
@@ -56,30 +57,10 @@ export const AddImages = () => {
     let readFiles: ImageType[] = []
 
     for (let i = 0; i < fileArray.length; i++) {
-      if (!isImgFileTypeValid(fileArray[i], ALLOWED_TYPES)) {
-        setError(
-          <p>
-            Invalid file type. Failed to upload{' '}
-            <span className={'font-bold'}>{fileArray[i].name}</span>
-          </p>
-        )
+      const validationError = validateFile(fileArray[i], validateFileTranslate)
 
-        setLoading(false)
-
-        return
-      }
-
-      if (fileArray[i].size < 1024) {
-        setError('File must be at least 1 KB')
-
-        setLoading(false)
-
-        return
-      }
-
-      if (fileArray[i].size > MAX_FILE_SIZE.bytes) {
-        setError(`The image size mustn't exceed ${MAX_FILE_SIZE.size} MB`)
-
+      if (validationError !== null) {
+        setError(validationError)
         setLoading(false)
 
         return
@@ -111,7 +92,7 @@ export const AddImages = () => {
                 <UploadMessage message={error} type={'error'} />
               </div>
             )}
-            {!error && <p className={s.dropdownMessage}>Перетащите сюда фото</p>}
+            {!error && <p className={s.dropdownMessage}>{t('Drag the photo here')}</p>}
             <Dropzone
               className={s.photo}
               multiple
@@ -129,7 +110,7 @@ export const AddImages = () => {
         onClick={handleSelectFileClick}
         variant={'primary'}
       >
-        {t('Select from computer') as string}
+        {t('S' + 'elect from computer') as string}
       </Button>
     </div>
   )
