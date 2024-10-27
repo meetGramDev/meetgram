@@ -28,7 +28,6 @@ export const PublicPagePost = ({
   userName,
 }: Props) => {
   const tr = useRouter().locale
-  const router = useRouter()
   const [isExpanted, setIsExpanted] = useState(false)
 
   const onToggleText = () => {
