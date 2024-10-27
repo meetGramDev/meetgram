@@ -44,11 +44,12 @@ export const en = {
     "October": "October",
     "Ok": "Ok",
     "Profile Settings": "Profile Settings",
+    "Public Page": "Public Page",
     "Publications": "Publications",
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
-    'Select from computer': "Select from computer",
 
+    'Select from computer': "Select from computer",
     "Select your city": "Select your city",
     "Select your country": "Select your country",
     "September": "September",

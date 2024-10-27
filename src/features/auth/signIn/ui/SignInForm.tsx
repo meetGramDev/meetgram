@@ -85,9 +85,6 @@ export const SignInForm = ({ error, onSubmit }: Props) => {
           </Button>
         </div>
       </form>
-      <Button as={Link} href={'/public-page'} variant={'link'}>
-        Public page
-      </Button>
     </Card>
   )
 }

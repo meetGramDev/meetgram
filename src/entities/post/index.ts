@@ -1,3 +1,4 @@
+export { getPostMessage } from './lib/getPostMessage'
 export {
   useAddAnswerCommentMutation,
   useAddLikeToPostCommentMutation,
@@ -22,4 +23,5 @@ export {
   type PostDescriptionFormRef,
 } from './ui/postDescriptionForm/PostDescriptionForm'
 export { PostView } from './ui/postView/PostView'
+export { PublicPagePost } from './ui/publicPagePost/PublicPagePost'
 export { type PostDescriptionField } from './validation/schema'

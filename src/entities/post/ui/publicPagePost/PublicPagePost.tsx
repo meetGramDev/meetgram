@@ -1,9 +1,12 @@
 import { useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { ImageType } from '@/entities/post'
+import { ImageType, getPostMessage } from '@/entities/post'
 import { getTimeAgo } from '@/features/posts/comments'
+import { HOME } from '@/shared/config/router'
 import { Button, ImageCarousel } from '@/shared/ui'
+import clsx from 'clsx'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './PublicPagePost.module.scss'
@@ -31,9 +34,6 @@ export const PublicPagePost = ({
   const onToggleText = () => {
     setIsExpanted(!isExpanted)
   }
-  const onUserPageHandler = () => {
-    router.push(`/profile/${ownerId}`)
-  }
 
   return (
     <div className={s.publicPostWrapper}>
@@ -46,8 +46,9 @@ export const PublicPagePost = ({
         // itemClassname={s.carouselItem}
       />
       <Button
+        as={Link}
         className={'flex items-start justify-start text-light-100'}
-        onClick={onUserPageHandler}
+        href={`${HOME}/${ownerId}`}
         variant={'text'}
       >
         <div className={'mt-[12px] flex'}>
@@ -64,11 +65,9 @@ export const PublicPagePost = ({
         {getTimeAgo(tr ?? 'en', createdAt)}
       </p>
       <div className={'inline'}>
-        <div className={`${s.publicPost} ${isExpanted ? s.textExpanded : ''}`}>
-          {postMessage(`${description}`, 90, 237, isExpanted)}
-          {description.length === 0 || description.length < 93 ? (
-            <></>
-          ) : (
+        <div className={clsx(s.publicPost, isExpanted ? s.textExpanded : '')}>
+          <> {getPostMessage(`${description}`, 77, 237, isExpanted)}</>
+          {description.length > 77 && (
             <Button className={'text-[14px]'} onClick={onToggleText} variant={'link'}>
               {isExpanted ? 'Hide' : 'Show more'}
             </Button>
@@ -77,23 +76,4 @@ export const PublicPagePost = ({
       </div>
     </div>
   )
-}
-
-const postMessage = (
-  message: string,
-  hideCount: number,
-  showedCount: number,
-  isExpanted: boolean
-) => {
-  const messageLength = message.length
-
-  if (messageLength === 0) {
-    return <></>
-  } else if (messageLength < showedCount) {
-    return <>{`${message} `}</>
-  } else if (messageLength > hideCount && !isExpanted) {
-    return <>{`${message.slice(0, hideCount - 11)}... `}</>
-  } else if (messageLength > showedCount && isExpanted) {
-    return <>{`${message.slice(0, showedCount - 11)}... `}</>
-  }
 }

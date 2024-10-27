@@ -1,7 +1,7 @@
-import { GetPublicPostsResponse, PublicPost } from '@/entities/post'
-import { PublicPagePost } from '@/entities/post/ui/publicPagePost/PublicPagePost'
-import { TotalUsersCount } from '@/features/user/totalUsersCount/ui/totalUsersCount'
+import { GetPublicPostsResponse, PublicPagePost, PublicPost } from '@/entities/post'
+import { TotalUsersCount } from '@/features/user'
 import { BASE_URL } from '@/shared/api'
+import { ALL_PUBLIC_POSTS } from '@/shared/config/router'
 import { getAuthLayout } from '@/widgets/layouts'
 import { GetStaticProps } from 'next'
 
@@ -13,15 +13,15 @@ type PropsType = {
 
 //static props
 export const getStaticProps: GetStaticProps<PropsType> = async () => {
-  const res = await fetch(`${BASE_URL}/public-posts/all/`)
+  const res = await fetch(`${BASE_URL}${ALL_PUBLIC_POSTS}`)
   const data = await res.json()
 
   const newItems = data.items
-  const filteredItems = newItems.filter((item: PublicPost) => item.images.length > 0)
+  const filteredItems = newItems?.filter((item: PublicPost) => item.images.length > 0)
 
   const newData = {
     ...data,
-    items: filteredItems.filter((item: PublicPost, count: number) => count < 4),
+    items: filteredItems?.filter((item: PublicPost, count: number) => count < 4),
   }
 
   return {
