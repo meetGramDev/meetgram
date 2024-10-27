@@ -14,7 +14,13 @@ type PropsType = {
 //static props
 export const getStaticProps: GetStaticProps<PropsType> = async () => {
   const res = await fetch(`${BASE_URL}${ALL_PUBLIC_POSTS}`)
-  const data = await res.json()
+  const data = (await res.json()) || null
+
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
 
   const newItems = data.items
   const filteredItems = newItems?.filter((item: PublicPost) => item.images.length > 0)
