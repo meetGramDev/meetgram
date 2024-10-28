@@ -27,6 +27,8 @@ type Props = {
 export const Comment = ({ comment, onClick }: Props) => {
   const tr = useRouter().locale
 
+  const isAuth = useAppSelector(selectIsUserAuth)
+
   const { data: answers } = useGetAnswerCommentsQuery({
     commentId: comment.id,
     postId: comment.postId,
@@ -34,19 +36,9 @@ export const Comment = ({ comment, onClick }: Props) => {
 
   const [likeComment] = useAddLikeToPostCommentMutation()
 
-  const isAuth = useAppSelector(selectIsUserAuth)
-
-  const addLikeToComment = async () => {
+  const setLikeHandler = async (status: string) => {
     try {
-      if (!comment.isLiked) {
-        likeComment({ commentId: comment.id, likeStatus: 'LIKE', postId: comment.postId })
-      } else {
-        likeComment({
-          commentId: comment.id,
-          likeStatus: 'NONE',
-          postId: comment.postId,
-        })
-      }
+      likeComment({ commentId: comment.id, likeStatus: status, postId: comment.postId })
     } catch (error) {
       serverErrorHandler(error)
     }
@@ -73,8 +65,12 @@ export const Comment = ({ comment, onClick }: Props) => {
           </div>
           {isAuth && (
             <div className={s.hearts}>
-              <Button className={s.heartButton} onClick={addLikeToComment} variant={'text'}>
-                {comment.isLiked ? <SketchedHeart className={s.heart} /> : <Heart />}
+              <Button className={s.heartButton} variant={'text'}>
+                {comment.isLiked ? (
+                  <SketchedHeart className={s.heart} onClick={() => setLikeHandler('NONE')} />
+                ) : (
+                  <Heart onClick={() => setLikeHandler('LIKE')} />
+                )}
               </Button>
             </div>
           )}
@@ -93,7 +89,9 @@ export const Comment = ({ comment, onClick }: Props) => {
           </>
         )}
       </div>
-      {answers && <Answers answers={answers} onClick={() => onClick(comment.id)} />}
+      {answers && (
+        <Answers answers={answers} onClick={() => onClick(comment.id)} postId={comment.postId} />
+      )}
     </>
   )
 }

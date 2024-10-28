@@ -75,7 +75,6 @@ const UserId: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSid
       ) : (
         <UserSkeleton />
       )}
-      {!userProfileLoading && userData ? <User userData={userData} /> : <UserSkeleton />}
       <PostsList post={post} userName={userDataById?.userName || authUsername} />
       <AddingPostView />
     </div>

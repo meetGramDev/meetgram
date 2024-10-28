@@ -1,20 +1,52 @@
-import { CommentsType } from '../model/types/commentsType'
+import React, { useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
+
+import { useGetPostCommentsQuery } from '@/entities/post/model/services/post.service'
+
 import { Comment } from './Comment'
 
 type Props = {
-  comments: CommentsType
   onClick: (commentId: number) => void
+  pageNumber: number
+  postId: number
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>
 }
 
-export const Comments = ({ comments, onClick }: Props) => {
+export const Comments = ({ onClick, pageNumber, postId, setPageNumber }: Props) => {
+  const pageSize = 10
+
+  const { data, isFetching } = useGetPostCommentsQuery({ pageNumber, pageSize, postId })
+  const [hasMore, setHasMore] = useState(true)
+  const { inView, ref } = useInView({
+    threshold: 0.1,
+  })
+
+  useEffect(() => {
+    if (inView && !isFetching && hasMore) {
+      setPageNumber(prevPage => prevPage + 1)
+    }
+  }, [inView, isFetching, hasMore, setPageNumber])
+
+  useEffect(() => {
+    if (data?.items) {
+      if (data.items.length === data.totalCount) {
+        setHasMore(false)
+      } else {
+        setHasMore(true)
+      }
+    }
+  }, [data?.items, isFetching])
+
   return (
     <>
-      {comments.items &&
-        comments.items.map(comment => (
-          <div key={comment.id}>
-            <Comment comment={comment} onClick={onClick} />
-          </div>
-        ))}
+      {data?.items.map(comment => (
+        <div key={comment.id}>
+          <Comment comment={comment} onClick={onClick} />
+        </div>
+      ))}
+      {isFetching && <p>Загрузка...</p>}
+      {!hasMore && <p>Больше комментариев нет.</p>}
+      <div ref={ref} style={{ height: '1px' }}></div>
     </>
   )
 }
