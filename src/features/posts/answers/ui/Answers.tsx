@@ -3,9 +3,9 @@ import { useState } from 'react'
 import { AnswersType } from '@/entities/post/model/types/answersType'
 import { Button } from '@/shared/ui'
 
-import { Answer } from './Answer'
-
 import s from './Answers.module.scss'
+
+import { Answer } from './Answer'
 
 type Props = {
   answers: AnswersType

@@ -1,7 +1,7 @@
 import { Photo } from '@/entities/photo'
 import { useAddLikeToPostAnswerMutation } from '@/entities/post/model/services/post.service'
-import { selectIsUserAuth } from '@/entities/user'
 import { AnswersItems } from '@/entities/post/model/types/answersType'
+import { selectIsUserAuth } from '@/entities/user'
 import { Heart } from '@/shared/assets/icons/Heart'
 import { SketchedHeart } from '@/shared/assets/icons/SketchedHeart'
 import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
