@@ -1,10 +1,6 @@
-import {
-  AddAnswerResponse,
-  AddAnswersArgs,
-  GetAnswersResponse,
-} from '@/features/posts/comments/model/types/answersType'
 import { baseApi } from '@/shared/api'
 
+import { AddAnswerResponse, AddAnswersArgs, GetAnswersResponse } from '../types/answersType'
 import { AddCommentResponse, GetCommentsResponse } from '../types/postTypes'
 import { PublicPost } from '../types/posts.types'
 

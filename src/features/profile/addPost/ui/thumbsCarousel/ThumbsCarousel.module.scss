@@ -1,0 +1,101 @@
+@use '@/app/styles/mixins' as mixins;
+
+.carousel {
+  --slide-spacing: 0.75rem;
+  --carousel-height: 7.375rem;
+
+  min-width: 5rem;
+  max-width: 100%;
+  height: var(--carousel-height);
+}
+
+.slide {
+  touch-action: manipulation;
+}
+
+.imageContainer {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: transparent;
+  box-shadow: rgb(0 0 0 / 0%) 0 2px 6px 2px;
+}
+
+.thumb {
+  cursor: pointer;
+
+  min-width: 6rem;
+  max-width: 100%;
+  min-height: 6rem;
+  max-height: 100%;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 2px;
+}
+
+.navigationPrev,
+.navigationNext {
+  width: 26px;
+  height: 26px;
+  color: var(--light-color-100);
+  border-radius: 50%;
+
+  & > svg {
+    width: 50%;
+    height: 50%;
+  }
+}
+
+.navigationPrev {
+  left: 0.5rem;
+}
+
+.navigationNext {
+  right: 0.5rem;
+}
+
+.btnCloseContainer {
+  @include mixins.flex(row, center, center);
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  opacity: 0.8;
+  background-color: var(--dark-color-500);
+  border-radius: 2px;
+}
+
+.btnClose {
+  width: 100%;
+  height: 100%;
+  color: var(--light-color-100);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--primary-color-100);
+  }
+}
+
+.btnAdd {
+  @include mixins.flex(row, center, center);
+
+  width: 36px;
+  height: 36px;
+  color: var(--light-color-100);
+  transition: all 0.3s;
+
+  & > svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  :hover,
+  :focus-visible {
+    color: var(--primary-color-100);
+  }
+}
