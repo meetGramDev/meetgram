@@ -17,6 +17,7 @@ type Props = {
   description: string
   images: ImageType[]
   ownerId: number
+  postId: number
   userName: string
 }
 export const PublicPagePost = ({
@@ -25,6 +26,7 @@ export const PublicPagePost = ({
   description,
   images,
   ownerId,
+  postId,
   userName,
 }: Props) => {
   const tr = useRouter().locale
@@ -42,8 +44,11 @@ export const PublicPagePost = ({
         className={s.carouselWrapper}
         contentClassname={s.carouselWrapper}
         images={images}
+        isPictureAsLink
+        isPictureAsLinkTo={`${HOME}/${ownerId}?postId=${postId}&isOpenPost=true`}
         // itemClassname={s.carouselItem}
       />
+
       <Button
         as={Link}
         className={'flex items-start justify-start text-light-100'}

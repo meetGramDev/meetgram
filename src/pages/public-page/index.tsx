@@ -52,6 +52,7 @@ const PublicPage = ({ data }: PropsType) => {
               images={item.images}
               key={item.id}
               ownerId={item.ownerId}
+              postId={item.id}
               userName={item.userName}
             />
           ))}

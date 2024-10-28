@@ -1,6 +1,7 @@
 import { ReactEventHandler, useEffect, useRef, useState } from 'react'
 
 import {
+  Button,
   Carousel,
   CarouselApi,
   CarouselContent,
@@ -12,6 +13,7 @@ import {
 import clsx from 'clsx'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import s from './ImageCarousel.module.scss'
 
@@ -33,6 +35,8 @@ type Props = {
   className?: string
   contentClassname?: string
   images: ImageType[]
+  isPictureAsLink?: boolean
+  isPictureAsLinkTo?: string
   itemClassname?: string
   keyName?: 'filter' | 'image'
   onNext?: () => void
@@ -50,6 +54,8 @@ export const ImageCarousel = ({
   className,
   contentClassname,
   images,
+  isPictureAsLink = false,
+  isPictureAsLinkTo,
   itemClassname,
   keyName,
   onCurrentSlide,
@@ -142,13 +148,25 @@ export const ImageCarousel = ({
             <CarouselItem className={clsx(itemClassname, s.item)} key={i}>
               <div className={s.itemContainer}>
                 <div className={s.picture}>
-                  <Image
-                    alt={`Image-${i + 1}`}
-                    className={s.photo}
-                    onLoad={handleOnImageLoad}
-                    ref={imageRef}
-                    {...imgProps}
-                  />
+                  {isPictureAsLink && isPictureAsLinkTo ? (
+                    <Button as={Link} href={isPictureAsLinkTo} variant={'link'}>
+                      <Image
+                        alt={`Image-${i + 1}`}
+                        className={s.photo}
+                        onLoad={handleOnImageLoad}
+                        ref={imageRef}
+                        {...imgProps}
+                      />
+                    </Button>
+                  ) : (
+                    <Image
+                      alt={`Image-${i + 1}`}
+                      className={s.photo}
+                      onLoad={handleOnImageLoad}
+                      ref={imageRef}
+                      {...imgProps}
+                    />
+                  )}
                 </div>
               </div>
             </CarouselItem>
