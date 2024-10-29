@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Photo } from '@/entities/photo'
 import { ImageType, getPostMessage } from '@/entities/post'
 import { getTimeAgo } from '@/features/posts/comments'
+import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { HOME } from '@/shared/config/router'
 import { Button, ImageCarousel } from '@/shared/ui'
 import clsx from 'clsx'
@@ -56,7 +57,7 @@ export const PublicPagePost = ({
         variant={'text'}
       >
         <div className={'mt-[12px] flex'}>
-          <Photo alt={'Friend avatar'} height={36} src={avatarOwner} width={36} />
+          <Photo alt={'Friend avatar'} height={36} src={avatarOwner || notUserPhoto} width={36} />
           <h2
             className={'ml-[12px] flex items-center justify-center text-[16px] font-bold leading-6'}
           >
