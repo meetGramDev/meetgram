@@ -12,6 +12,12 @@ export const postsApi = baseApi.injectEndpoints({
         url: `posts/${args.postId}`,
       }),
     }),
+    getAllPublicPosts: builder.query<GetPublicPostsResponse, {}>({
+      query: args => ({
+        method: 'GET',
+        url: `/public-posts/all/`,
+      }),
+    }),
     getPublicPosts: builder.query<GetPublicPostsResponse, GetPublicPostsArgs>({
       forceRefetch: ({ currentArg, previousArg }) => {
         return (
@@ -50,4 +56,4 @@ export const postsApi = baseApi.injectEndpoints({
     }),
   }),
 })
-export const { useDeletePostMutation, useGetPublicPostsQuery } = postsApi
+export const { useDeletePostMutation, useGetAllPublicPostsQuery, useGetPublicPostsQuery } = postsApi

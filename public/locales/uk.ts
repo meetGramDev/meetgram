@@ -47,6 +47,7 @@ export const uk: LenType = {
     "October": "Жовтень",
     "Ok": "Гаразд",
     "Profile Settings": "Налаштування профілю",
+    "Public Page": "Публічна сторінка",
     "Publications": "Публікації",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Save changes": "Зберегти зміни",

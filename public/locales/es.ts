@@ -46,6 +46,7 @@ export const es: LenType = {
     "October": "Octubre",
     "Ok": "Ok",
     "Profile Settings": "Configuración del perfil",
+    "Public Page": "Pagina Publica",
     "Publications": "Publicaciones",
     "Resend verification link": "Reenviar enlace de verificación",
     "Save changes": "Guardar cambios",

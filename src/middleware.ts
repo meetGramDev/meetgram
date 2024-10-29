@@ -1,4 +1,4 @@
-import { PROFILE, SIGN_IN } from '@/shared/config/router'
+import { PROFILE, PUBLIC_PAGE, SIGN_IN } from '@/shared/config/router'
 import { authenticate, extractAuthorizedUserData } from '@/shared/lib/authenticate'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -30,6 +30,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - page redirected from github OAuth
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|github|terms-of-service|privacy-policy).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|github|terms-of-service|privacy-policy|public-page|profile/*).*)',
   ],
 }

@@ -46,6 +46,7 @@ export const ru: LenType = {
     "October": "Октябрь",
     "Ok": "Хорошо",
     "Profile Settings": "Настройки профиля",
+    "Public Page": "Публичная страница",
     "Publications": "Публикации",
     "Resend verification link": "Отправить ссылку для подтверждения еще раз",
     "Save changes": "Сохранить изменения",

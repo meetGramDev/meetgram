@@ -47,6 +47,7 @@ export const be: LenType = {
     "October": "Кастрычнік",
     "Ok": "Добра",
     "Profile Settings": "Налады профілю",
+    "Public Page": "Публічная старонка",
     "Publications": "Публікацыі",
     "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
     "Save changes": "Захаваць змены",
