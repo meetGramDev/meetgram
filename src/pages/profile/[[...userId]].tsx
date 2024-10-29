@@ -1,5 +1,4 @@
-import { Suspense } from 'react'
-
+import { PublicPost } from '@/entities/post'
 import {
   User,
   selectCurrentUserName,
@@ -8,18 +7,44 @@ import {
 } from '@/entities/user'
 import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
 import { useFollowUserMutation } from '@/features/follow'
+import { BASE_URL } from '@/shared/api'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { NextPageWithLayout } from '@/shared/types'
-import { Loader } from '@/shared/ui'
 import { AddingPostView } from '@/widgets/addingPostView'
 import { getMainLayout } from '@/widgets/layouts'
 import { PostsList } from '@/widgets/postsList'
 import { skipToken } from '@reduxjs/toolkit/query'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 
-const UserId: NextPageWithLayout = () => {
+type ServerSideProps = {
+  post: PublicPost
+}
+
+export const getServerSideProps: GetServerSideProps<ServerSideProps> = async context => {
+  const postId = context.query?.postId
+
+  const postRes = await fetch(`${BASE_URL}/public-posts/${postId}`)
+
+  const post = (await postRes.json()) || null
+
+  if (!post) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: { post },
+  }
+}
+
+const UserId: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
+  post,
+}) => {
   const router = useRouter()
   const userId = router.query.userId as string
+
   const { data: userDataById, isError: isProfileByIdError } = useGetPublicProfileByIdQuery(
     userId || skipToken
   )
@@ -50,17 +75,7 @@ const UserId: NextPageWithLayout = () => {
       ) : (
         <UserSkeleton />
       )}
-
-      <Suspense
-        fallback={
-          <div className={'flex justify-center'}>
-            <Loader />
-          </div>
-        }
-      >
-        <PostsList userName={userDataById?.userName || authUsername} />
-      </Suspense>
-
+      <PostsList post={post} userName={userDataById?.userName || authUsername} />
       <AddingPostView />
     </div>
   )

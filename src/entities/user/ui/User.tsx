@@ -72,12 +72,6 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
               type={'following'}
               userName={userData.userName}
             />
-
-            <FollowersView
-              followCount={userData.followersCount}
-              type={'followers'}
-              userName={userData.userName}
-            />
             <Link className={s.userLinks} href={'#'}>
               <span>{userData ? userData.publicationsCount : 0}</span>
               <br />
