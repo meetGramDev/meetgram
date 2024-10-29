@@ -2,13 +2,8 @@ import { ChangeEvent, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Photo } from '@/entities/photo'
-import {
-  PublicPost,
-  useAddAnswerCommentMutation,
-  useAddPostCommentMutation,
-  useGetSinglePublicPostQuery,
-} from '@/entities/post'
-import { selectCurrentUserId } from '@/entities/user'
+import { PublicPost, useAddAnswerCommentMutation, useAddPostCommentMutation } from '@/entities/post'
+import { selectCurrentUserId, selectIsUserAuth } from '@/entities/user'
 import { useFollowUserMutation } from '@/features/follow'
 import { Comments, getTimeAgo } from '@/features/posts/comments'
 import { LikeButton } from '@/features/posts/likePost'
@@ -18,7 +13,7 @@ import { HOME } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
 import { isErrorMessageString } from '@/shared/types'
-import { Button, Dialog, ImageCarousel, Loader, TextArea } from '@/shared/ui'
+import { Button, Dialog, ImageCarousel, TextArea } from '@/shared/ui'
 import { LikesView } from '@/widgets/likesFollowersView'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -27,32 +22,30 @@ import s from './PostView.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
 
-type Props = {
+export type Props = {
   isFollowing: boolean
   isOpen: (open: boolean) => void
   onEdit?: () => void
   open: boolean
-  post?: PublicPost
+  post: PublicPost
   postId: number
   userId: number
 }
 
-export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: Props) => {
-  const { data: post, isLoading: postLoading, isSuccess } = useGetSinglePublicPostQuery(`${postId}`)
+export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, userId }: Props) => {
   const [addComment] = useAddPostCommentMutation()
-
+  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
   const [addAnswerComment] = useAddAnswerCommentMutation()
+
   const [isFavourite, setIsFavourite] = useState(false)
   const [textContent, setTextContent] = useState('')
   const [commentId, setCommentId] = useState<null | number>(null)
   const [pageNumber, setPageNumber] = useState(0)
-  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
-
   const answerCommentRef = useRef<HTMLTextAreaElement>(null)
 
   const tr = useRouter().locale
-
   const authUserId = useAppSelector(selectCurrentUserId)
+  const isAuth = useAppSelector(selectIsUserAuth)
 
   const dateOfCreate = (postCreate: string) => {
     const date = new Date(postCreate)
@@ -120,13 +113,9 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
 
   const ownerProfile = `${HOME}/${userId}`
 
-  if (postLoading) {
-    return <Loader loaderClassName={s.loader} />
-  }
-
   return (
     <Dialog onOpenChange={isOpen} open={open}>
-      {isSuccess && (
+      {post && (
         <div className={s.container}>
           <Button className={s.iconClose} variant={'text'}>
             <CloseIcon
@@ -136,7 +125,13 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
             />
           </Button>
 
-          <ImageCarousel className={s.post} images={post.images} options={{ align: 'start' }} />
+          {post.images && (
+            <ImageCarousel
+              className={s.post}
+              images={post && post?.images}
+              options={{ align: 'start' }}
+            />
+          )}
 
           <div className={s.content}>
             <div className={s.title}>
@@ -154,16 +149,18 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
                   {post.userName}
                 </Link>
               </div>
-              <PostViewSelect
-                disableFollow={isFollowLoading}
-                id={`${postId}`}
-                isFollowing={isFollowing}
-                onEdit={onEdit}
-                onFollow={handleOnFollow}
-                onOpenPost={isOpen}
-                ownerId={userId}
-                userId={authUserId!}
-              />
+              {isAuth && (
+                <PostViewSelect
+                  disableFollow={isFollowLoading}
+                  id={`${postId}`}
+                  isFollowing={isFollowing}
+                  onEdit={onEdit}
+                  onFollow={handleOnFollow}
+                  onOpenPost={isOpen}
+                  ownerId={userId}
+                  userId={authUserId!}
+                />
+              )}
             </div>
             <div className={s.commentsField} id={`${postId}`}>
               {post.description && (
@@ -198,45 +195,50 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, postId, userId }: 
               />
             </div>
             <div className={s.footer}>
-              <div className={s.footerButtons}>
-                <div className={s.leftSideButtons}>
-                  <LikeButton postId={post.id} />
-
-                  <Button className={s.footerButton} variant={'text'}>
-                    <PaperPlane />
+              {isAuth && (
+                <div className={s.footerButtons}>
+                  <div className={s.leftSideButtons}>
+                    <LikeButton postId={post.id} />
+                    <Button className={s.footerButton} variant={'text'}>
+                      <PaperPlane />
+                    </Button>
+                  </div>
+                  <Button
+                    className={s.footerButton}
+                    onClick={() => {
+                      setIsFavourite(!isFavourite)
+                    }}
+                    variant={'text'}
+                  >
+                    {isFavourite ? (
+                      <SketchedFavourites className={s.favourite} />
+                    ) : (
+                      <FavoritesIcon />
+                    )}
                   </Button>
                 </div>
-                <Button
-                  className={s.footerButton}
-                  onClick={() => {
-                    setIsFavourite(!isFavourite)
-                  }}
-                  variant={'text'}
-                >
-                  {isFavourite ? <SketchedFavourites className={s.favourite} /> : <FavoritesIcon />}
+              )}
+              <div className={s.postLikes}>
+                {!!post.likesCount && <LikesView likesCount={post.likesCount} postId={post.id} />}
+              </div>
+              <div className={s.date}>{dateOfCreate(post.createdAt)}</div>
+            </div>
+            {isAuth && (
+              <div className={s.commentContainer}>
+                <TextArea
+                  className={s.commentTextArea}
+                  label={!textContent && 'Add a Comment...'}
+                  labelClassName={s.label}
+                  maxLength={500}
+                  onChange={changeTextAreaHandler}
+                  ref={answerCommentRef}
+                  value={textContent}
+                />
+                <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
+                  Publish
                 </Button>
               </div>
-              {!!post.likesCount && (
-                <div className={s.postLikes}>
-                  <LikesView likesCount={post.likesCount} postId={post.id} />
-                </div>
-              )}
-              <span className={s.date}>{dateOfCreate(post.createdAt)}</span>
-            </div>
-            <div className={s.commentContainer}>
-              <TextArea
-                className={s.commentTextArea}
-                label={!textContent && 'Add a Comment...'}
-                labelClassName={s.label}
-                maxLength={500}
-                onChange={changeTextAreaHandler}
-                ref={answerCommentRef}
-                value={textContent}
-              />
-              <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
-                Publish
-              </Button>
-            </div>
+            )}
           </div>
         </div>
       )}

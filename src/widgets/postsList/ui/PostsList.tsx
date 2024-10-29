@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
+import { PublicPost } from '@/entities/post'
 import { useGetPublicPostsQuery } from '@/entities/post/model/services/posts.service'
 import { useFullUserProfileQuery } from '@/entities/user'
-import { cn, useInfiniteScroll } from '@/shared/lib'
+import { useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
 import { skipToken } from '@reduxjs/toolkit/query'
 
@@ -11,12 +12,13 @@ import { PostsListDesktop } from './postsListDesktop/PostsListDesktop'
 import { PostsListMobile } from './postsListMobile/PostsListMobile'
 
 type Props = {
+  post: PublicPost
   userName: string
 }
 
 const PAGE_SIZE = 12
 
-export const PostsList = ({ userName }: Props) => {
+export const PostsList = ({ post, userName }: Props) => {
   const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
   const {
     data: currentUser,
@@ -59,6 +61,7 @@ export const PostsList = ({ userName }: Props) => {
                 <>
                   <PostsListMobile
                     isFollowing={currentUser.isFollowing}
+                    post={post}
                     posts={publicPosts.items}
                     userId={currentUser.id}
                   />
@@ -68,6 +71,7 @@ export const PostsList = ({ userName }: Props) => {
                 <>
                   <PostsListDesktop
                     isFollowing={currentUser.isFollowing}
+                    post={post}
                     posts={publicPosts.items}
                     userId={currentUser.id}
                   />
