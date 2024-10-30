@@ -32,6 +32,7 @@ export const getServerSideProps = async function (ctx) {
     resp = await Promise.all([
       await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`),
       await getPublicPosts({ id: userId[0], params: { pageSize: PAGE_SIZE } }),
+      await fetch(`${BASE_URL}/public-posts/${postId}`),
     ])
   } catch (e) {
     return {
@@ -41,9 +42,7 @@ export const getServerSideProps = async function (ctx) {
 
   const cookies = ctx.req.cookies as Record<typeof SESSION_COOKIE_NAME, string | undefined>
 
-  const postRes = await fetch(`${BASE_URL}/public-posts/${postId}`)
-
-  const post = (await postRes.json()) || null
+  const post = (await resp[2].json()) || null
 
   if (!post) {
     return {

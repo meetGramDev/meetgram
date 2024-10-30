@@ -51,7 +51,7 @@ export const PostsListDesktop = ({ isFollowing, post, posts, userId }: PostListP
     <div className={s.postsList}>
       {posts?.map((post, i) => (
         <div className={s.item} key={post.id}>
-          <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`} shallow>
+          <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
             <Post
               alt={post.description}
               className={s.image}
