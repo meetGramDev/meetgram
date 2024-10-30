@@ -37,6 +37,7 @@ export function useInfiniteScroll(
     if (inView) {
       callback()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
   return { inView, ref, scroll }

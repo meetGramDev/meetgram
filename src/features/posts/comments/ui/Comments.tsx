@@ -35,7 +35,7 @@ export const Comments = ({ onClick, pageNumber, postId, setPageNumber }: Props) 
         setHasMore(true)
       }
     }
-  }, [data?.items, isFetching])
+  }, [data?.items, isFetching, data?.totalCount])
 
   return (
     <>

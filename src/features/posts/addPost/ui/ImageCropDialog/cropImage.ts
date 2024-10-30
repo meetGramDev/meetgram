@@ -1,5 +1,5 @@
 // create the image with a src of the base64 string
-export const createImage = (url: string): Promise<CanvasImageSource> =>
+export const createImage = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const image = new Image()
 
