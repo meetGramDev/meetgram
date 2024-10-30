@@ -17,7 +17,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        destination: '/profile',
+        destination: '/public-page',
         permanent: true,
         source: '/',
       },
