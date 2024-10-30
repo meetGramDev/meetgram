@@ -1,12 +1,8 @@
 import { Ref, SVGProps, forwardRef } from 'react'
 
-const SvgComponent = (
-  props: SVGProps<SVGSVGElement>,
-  ref: Ref<SVGSVGElement>,
-  className?: string
-) => (
+const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
-    className={className}
+    className={props.className}
     fill={'none'}
     height={'28'}
     ref={ref}

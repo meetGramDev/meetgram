@@ -9,6 +9,13 @@ import { PAGE_SIZE, getPublicPosts } from '@/widgets/postsList'
 import axios from 'axios'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
+type ServerSideProps = {
+  isAuth: boolean
+  post: PublicPost
+  posts: GetPublicPostsResponse
+  publicUserData: PublicProfile
+}
+
 export const getServerSideProps = async function (ctx) {
   const { userId } = ctx.params as { userId: string[] }
   const postId = ctx.query?.postId
@@ -52,12 +59,7 @@ export const getServerSideProps = async function (ctx) {
       publicUserData: resp[0].data,
     },
   }
-} satisfies GetServerSideProps<{
-  isAuth: boolean
-  post: PublicPost
-  posts: GetPublicPostsResponse
-  publicUserData: PublicProfile
-}>
+} satisfies GetServerSideProps<ServerSideProps>
 
 const UserId = ({
   isAuth,

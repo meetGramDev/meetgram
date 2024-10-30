@@ -17,7 +17,7 @@ export type PostsListProps = {
 
 export const PAGE_SIZE = 12
 
-export const PostsList = ({ isFollowing, userId, post }: PostsListProps) => {
+export const PostsList = ({ isFollowing, post, userId }: PostsListProps) => {
   const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
   // =========== //
   const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(undefined)
@@ -60,6 +60,7 @@ export const PostsList = ({ isFollowing, userId, post }: PostsListProps) => {
     if (userId && endCursorPostId !== undefined) {
       setEndCursorPostId(undefined)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
 
   return (
@@ -69,17 +70,15 @@ export const PostsList = ({ isFollowing, userId, post }: PostsListProps) => {
           {isMobile ? (
             <PostsListMobile
               isFollowing={isFollowing}
-              posts={publicPosts.items}
               post={post}
-              // ref={ref}
+              posts={publicPosts.items}
               userId={userId}
             />
           ) : (
             <PostsListDesktop
               isFollowing={isFollowing}
-              posts={publicPosts.items}
               post={post}
-              // ref={ref}
+              posts={publicPosts.items}
               userId={userId}
             />
           )}

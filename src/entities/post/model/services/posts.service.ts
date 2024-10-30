@@ -56,4 +56,9 @@ export const postsApi = baseApi.injectEndpoints({
     }),
   }),
 })
-export const { useDeletePostMutation, useGetAllPublicPostsQuery, useGetPublicPostsQuery, useLazyGetPublicPostsQuery } = postsApi
+export const {
+  useDeletePostMutation,
+  useGetAllPublicPostsQuery,
+  useGetPublicPostsQuery,
+  useLazyGetPublicPostsQuery,
+} = postsApi

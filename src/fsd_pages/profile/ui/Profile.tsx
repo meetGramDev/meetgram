@@ -48,7 +48,7 @@ export const Profile = ({ id, isPublic = false, post, posts, publicUserData, use
       )}
 
       {!isPublic ? (
-        <PostsList post={post} isFollowing={userData?.isFollowing} userId={userData?.id || id} />
+        <PostsList isFollowing={userData?.isFollowing} post={post} userId={userData?.id || id} />
       ) : (
         <PublicPostsList post={post} posts={posts} userId={id} />
       )}
