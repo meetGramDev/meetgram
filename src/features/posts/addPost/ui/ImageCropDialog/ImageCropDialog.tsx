@@ -25,7 +25,7 @@ const aspectRatios: AspectRatiosType = [
   {
     icon: <ImageIcon />,
     text: 'Оригинал',
-    value: 4 / 3,
+    value: 3 / 4,
   },
   {
     icon: <Rectangular />,
