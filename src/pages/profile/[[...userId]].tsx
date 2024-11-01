@@ -1,32 +1,48 @@
-import { PublicPost } from '@/entities/post'
-import {
-  User,
-  selectCurrentUserName,
-  useFullUserProfileQuery,
-  useGetPublicProfileByIdQuery,
-} from '@/entities/user'
-import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
-import { useFollowUserMutation } from '@/features/follow'
+import { GetPublicPostsResponse, PublicPost } from '@/entities/post'
+import { PublicProfile, selectIsUserAuth } from '@/entities/user'
+import { Profile } from '@/fsd_pages/profile'
 import { BASE_URL } from '@/shared/api'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { NextPageWithLayout } from '@/shared/types'
-import { AddingPostView } from '@/widgets/addingPostView'
+import { SESSION_COOKIE_NAME } from '@/shared/const/consts'
 import { getMainLayout } from '@/widgets/layouts'
-import { PostsList } from '@/widgets/postsList'
-import { skipToken } from '@reduxjs/toolkit/query'
+import { PAGE_SIZE, getPublicPosts } from '@/widgets/postsList'
+import axios from 'axios'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { useRouter } from 'next/router'
 
 type ServerSideProps = {
+  isAuth: boolean
   post: PublicPost
+  posts: GetPublicPostsResponse
+  publicUserData: PublicProfile
 }
 
-export const getServerSideProps: GetServerSideProps<ServerSideProps> = async context => {
-  const postId = context.query?.postId
+export const getServerSideProps = async function (ctx) {
+  const { userId } = ctx.params as { userId: string[] }
+  const postId = ctx.query?.postId
 
-  const postRes = await fetch(`${BASE_URL}/public-posts/${postId}`)
+  if (!userId || userId[0] === 'undefined') {
+    return {
+      notFound: true,
+    }
+  }
 
-  const post = (await postRes.json()) || null
+  let resp
+
+  try {
+    resp = await Promise.all([
+      await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`),
+      await getPublicPosts({ id: userId[0], params: { pageSize: PAGE_SIZE } }),
+      await fetch(`${BASE_URL}/public-posts/${postId}`),
+    ])
+  } catch (e) {
+    return {
+      notFound: true,
+    }
+  }
+
+  const cookies = ctx.req.cookies as Record<typeof SESSION_COOKIE_NAME, string | undefined>
+
+  const post = (await resp[2].json()) || null
 
   if (!post) {
     return {
@@ -35,52 +51,33 @@ export const getServerSideProps: GetServerSideProps<ServerSideProps> = async con
   }
 
   return {
-    props: { post },
+    props: {
+      isAuth: cookies.token !== undefined,
+      post,
+      posts: resp[1],
+      publicUserData: resp[0].data,
+    },
   }
-}
+} satisfies GetServerSideProps<ServerSideProps>
 
-const UserId: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
+const UserId = ({
+  isAuth,
   post,
-}) => {
-  const router = useRouter()
-  const userId = router.query.userId as string
+  posts,
+  publicUserData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  // const isAuth = useAppSelector(selectIsUserAuth)
 
-  const { data: userDataById, isError: isProfileByIdError } = useGetPublicProfileByIdQuery(
-    userId || skipToken
-  )
-
-  const authUsername = useAppSelector(selectCurrentUserName)
-  const {
-    data: userData,
-    isFetching: userProfileFetching,
-    isLoading: userProfileLoading,
-  } = useFullUserProfileQuery(userDataById?.userName || authUsername || skipToken, {
-    skip: isProfileByIdError,
-  })
-
-  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
-
-  if (isProfileByIdError) {
-    return <p className={'mt-40 text-center text-h1'}>Profile was not found</p>
-  }
-
-  return (
-    <div className={'h-full'}>
-      {!userProfileLoading && userData ? (
-        <User
-          disabledFollowBtn={isFollowLoading}
-          onFollow={userId => followUser({ selectedUserId: userId })}
-          userData={userData}
-        />
-      ) : (
-        <UserSkeleton />
-      )}
-      <PostsList post={post} userName={userDataById?.userName || authUsername} />
-      <AddingPostView />
-    </div>
+  return getMainLayout(
+    <Profile
+      id={publicUserData.id}
+      isPublic={!isAuth}
+      post={post}
+      posts={posts}
+      publicUserData={publicUserData}
+    />,
+    !isAuth
   )
 }
-
-UserId.getLayout = getMainLayout
 
 export default UserId

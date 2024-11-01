@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 
 import { Post, PostView } from '@/entities/post'
 import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
@@ -49,20 +49,19 @@ export const PostsListDesktop = ({ isFollowing, post, posts, userId }: PostListP
 
   return (
     <div className={s.postsList}>
-      {posts?.map(post => {
-        return (
-          <div className={s.item} key={post.id}>
-            <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
-              <Post
-                alt={post.description}
-                className={s.image}
-                isGallery={post.images.length > 1}
-                src={post.images[0].url}
-              />
-            </Link>
-          </div>
-        )
-      })}
+      {posts?.map((post, i) => (
+        <div className={s.item} key={post.id}>
+          <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
+            <Post
+              alt={post.description}
+              className={s.image}
+              isGallery={post.images.length > 1}
+              src={post.images[0].url}
+            />
+          </Link>
+        </div>
+      ))}
+
       {isOpenPost && postId && (
         <PostView
           isFollowing={isFollowing}
@@ -96,3 +95,5 @@ export const PostsListDesktop = ({ isFollowing, post, posts, userId }: PostListP
     </div>
   )
 }
+
+PostsListDesktop.displayName = 'PostsListDesktop'

@@ -146,7 +146,7 @@ export const postApi = baseApi.injectEndpoints({
       },
       providesTags: postId => [{ postId, type: 'post' }],
       query: ({ pageNumber, pageSize, postId }) =>
-        `posts/${postId}/comments?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+        `/public-posts/${postId}/comments?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName
       },

@@ -1,5 +1,4 @@
 import { FC, SVGProps } from 'react'
-import { useDispatch } from 'react-redux'
 import { useMediaQuery } from 'react-responsive'
 
 import { addPostActions } from '@/features/posts/addPost'
@@ -25,7 +24,6 @@ type Props = {
 }
 
 export const SidebarItem = ({ className, item }: Props) => {
-  const dispatch = useDispatch()
   const { setOpenAddingPost } = useActions(addPostActions)
   const router = useRouter()
   const userId = useAppSelector(state => state.user.accountData.userId)
