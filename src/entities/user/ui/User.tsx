@@ -14,6 +14,7 @@ import s from './User.module.scss'
 
 import { selectCurrentUserId } from '../model/selectors/selectCurrentUser'
 import { FullUserProfile, PublicProfile } from '../model/types/services'
+import { PublicUserMetadata } from './userMetadata/PublicUserMetadata'
 
 type Props = {
   disabledFollowBtn?: boolean
@@ -87,6 +88,14 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
                 {t('Publications')}
               </div>
             </div>
+          )}
+
+          {'userMetadata' in userData && (
+            <PublicUserMetadata
+              followersCount={userData.userMetadata.followers}
+              followingCount={userData.userMetadata.following}
+              publicationsCount={userData.userMetadata.publications}
+            />
           )}
 
           {!isMobile && <div className={s.aboutMeText}>{userData?.aboutMe}</div>}
