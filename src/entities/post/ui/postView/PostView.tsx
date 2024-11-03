@@ -219,7 +219,9 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                 </div>
               )}
               <div className={s.postLikes}>
-                {!!post.likesCount && <LikesView likesCount={post.likesCount} postId={post.id} />}
+                {!!post.likesCount && (
+                  <LikesView disabled={!isAuth} likesCount={post.likesCount} postId={post.id} />
+                )}
               </div>
               <div className={s.date}>{dateOfCreate(post.createdAt)}</div>
             </div>
