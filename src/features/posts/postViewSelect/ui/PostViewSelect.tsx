@@ -16,22 +16,26 @@ import { useRouter } from 'next/router'
 import s from './PostViewSelect.module.scss'
 
 type Props = {
+  disableFollow?: boolean
   id?: string
-  isFollowing: boolean
+  isFollowing?: boolean
   onEdit?: () => void
+  onFollow?: (userId: number) => void
   onOpenPost: (open: boolean) => void
   ownerId: number
   userId: number
 }
 
 export const PostViewSelect = memo(
-  ({ id, isFollowing, onEdit, onOpenPost, ownerId, userId }: Props) => {
+  ({ disableFollow, id, isFollowing, onEdit, onFollow, onOpenPost, ownerId, userId }: Props) => {
     const router = useRouter()
     const [deletePost, { isSuccess }] = useDeletePostMutation()
     const isOwner = ownerId === userId
 
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [openSelect, setOpenSelect] = useState(false)
+
+    const handleOnFollow = () => onFollow?.(ownerId)
 
     return (
       <div>
@@ -99,14 +103,28 @@ export const PostViewSelect = memo(
             </div>
           ) : (
             <div className={s.menuContent}>
-              {isFollowing ? (
-                <Button className={s.button} variant={'text'}>
-                  <UnfollowIcon /> Unfollow
-                </Button>
-              ) : (
-                <Button className={s.button} variant={'text'}>
-                  <FollowIcon /> Follow
-                </Button>
+              {isFollowing !== undefined && (
+                <>
+                  {isFollowing ? (
+                    <Button
+                      className={s.button}
+                      disabled={disableFollow}
+                      onClick={handleOnFollow}
+                      variant={'text'}
+                    >
+                      <UnfollowIcon /> Unfollow
+                    </Button>
+                  ) : (
+                    <Button
+                      className={s.button}
+                      disabled={disableFollow}
+                      onClick={handleOnFollow}
+                      variant={'text'}
+                    >
+                      <FollowIcon /> Follow
+                    </Button>
+                  )}
+                </>
               )}
               <Button
                 className={s.button}

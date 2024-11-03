@@ -8,12 +8,9 @@ export async function middleware(req: NextRequest) {
   const userId = extractAuthorizedUserData(req)
 
   if (isAuth && isAuthRoute) {
-    return NextResponse.redirect(new URL(PROFILE, req.url + req.nextUrl.locale))
-  }
-  if (isAuth && req.nextUrl.pathname.match(new RegExp('^\\' + PROFILE + '$'))) {
     return NextResponse.redirect(new URL(`${PROFILE}/${userId}`, req.url + req.nextUrl.locale))
   }
-  if (!isAuth && !isAuthRoute) {
+  if (!isAuth && !isAuthRoute && !req.nextUrl.pathname.startsWith(PROFILE)) {
     return NextResponse.redirect(new URL(SIGN_IN, req.url + req.nextUrl.locale))
   }
 
@@ -28,8 +25,10 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - webmanifest file
+     * - public/images (static images)
      * - page redirected from github OAuth
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|github|terms-of-service|privacy-policy).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|icon.svg|apple-touch-icon.png|site.webmanifest|images|github|terms-of-service|privacy-policy|public-page|profile).*)',
   ],
 }

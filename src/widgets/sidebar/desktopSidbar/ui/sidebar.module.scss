@@ -1,0 +1,19 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+
+  width: var(--sidebarWidth);
+  height: calc(100vh - var(--header-height));
+
+  border-right: 1px solid var(--dark-color-300);
+}
+
+.itemsList {
+  display: flex;
+  flex-flow: column wrap;
+  gap: 1.5rem;
+  align-content: center;
+
+  margin-top: 4.5rem;
+}

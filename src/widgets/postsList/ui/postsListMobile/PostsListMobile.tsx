@@ -53,3 +53,5 @@ export const PostsListMobile = ({ isFollowing, posts, userId }: PostListProps) =
     </div>
   )
 }
+
+PostsListMobile.displayName = 'PostsListMobile'

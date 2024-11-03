@@ -1,0 +1,27 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none"
+  xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @media (prefers-color-scheme: dark) {
+     #rect {
+      fill: #FFFFFF;
+     }
+
+     #circle {
+      stroke: #333333;
+     }
+    }
+
+    @media (prefers-color-scheme: light) {
+     #rect {
+      fill: #333333;
+     }
+
+     #circle {
+      stroke: white;
+     }
+    }
+  </style>
+
+  <rect id='rect' width="48" height="48" rx="10" fill="#333333"/>
+  <circle id='circle' cx="24" cy="24" r="9.5" fill="#4C8DFF" stroke="white" stroke-width="5"/>
+</svg>

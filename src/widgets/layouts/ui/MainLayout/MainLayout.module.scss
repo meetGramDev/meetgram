@@ -1,7 +1,36 @@
+@import 'src/app/styles/screens';
+
+.head {
+  position: fixed;
+  z-index: 1000;
+  background-color: var(--dark-color-900);
+}
+
 .page {
   display: flex;
 }
 
 .main {
   width: 100%;
+  min-height: 80vh;
+
+  @media (width > $screen-size-mobile) {
+    margin-left: var(--leftContentGapForSidebar);
+  }
+}
+
+.fixedSidebar {
+  position: fixed;
+
+  @media (width <= $screen-size-mobile) {
+    z-index: 1000;
+    bottom: 0;
+    left: 0;
+    background-color: var(--dark-color-900);
+  }
+}
+
+.public {
+  width: 80%;
+  margin: 0 auto;
 }

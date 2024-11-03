@@ -1,3 +1,5 @@
+@import '../../../app/styles/screens';
+
 .userWrapper {
   position: relative;
   width: 100%;
@@ -50,4 +52,44 @@
 .aboutMeText {
   min-width: 100%;
   word-break: break-word;
+}
+
+@media (width <= $screen-size-mobile) {
+  .userPhoto {
+    width: 4.68rem;
+    height: 4.68rem;
+  }
+
+  .buttonPublications {
+    gap: 10%;
+    margin: 0;
+  }
+
+  .userLinks {
+    font: var(--font-small-link);
+  }
+
+  .userInformation {
+    justify-content: center;
+    margin-left: 7%;
+  }
+
+  .userWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2.25rem 1.5rem 0;
+  }
+
+  .userName {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font: var(--font-regular-small);
+  }
+}
+
+.profileActions {
+  display: flex;
+  gap: 0.75rem;
 }

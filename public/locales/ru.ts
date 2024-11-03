@@ -1,4 +1,4 @@
-import { LenType } from './en';
+import {LenType} from './en';
 
 export const ru: LenType = {
     "About me": "О себе",
@@ -7,6 +7,7 @@ export const ru: LenType = {
     "Add a Profile Photo": "Добавить фото профиля",
     "Add a profile photo": "Добавить фото профиля",
     "April": "Апрель",
+    "Are you really want to log out of your account": "Вы действительно хотите выйти из своего аккаунта ",
     "Are you sure you want to delete the photo?": "Вы уверены, что хотите удалить фото?",
     "August": "Август",
     "Avatar": "Аватар",
@@ -20,10 +21,13 @@ export const ru: LenType = {
     "Delete photo": "Удалить фото",
     "Devices": "Устройства",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы действительно хотите отменить публикацию? Если вы выйдете, изменения не будут сохранены.",
+    "Drag the photo here": "Перетащите фото сюда",
     "Email sent": "Письмо отправлено",
     "Email verification link expired": "Срок действия ссылки истек",
     "February": "Февраль",
     "First Name": "Имя",
+    "Followers": "Подписчики",
+    "Following": "Подписки",
     "General Information": "Общая информация",
     "January": "Январь",
     "July": "Июль",
@@ -31,6 +35,7 @@ export const ru: LenType = {
     "Last Name": "Фамилия",
     "Like": "Нравится",
     "Likes": "Нравится",
+    "Log Out": "Выйти",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Похоже, что ссылка для подтверждения истекла. Не волнуйтесь, мы можем отправить ссылку снова",
     "March": "Март",
     "May": "Май",
@@ -40,12 +45,16 @@ export const ru: LenType = {
     "November": "Ноябрь",
     "October": "Октябрь",
     "Ok": "Хорошо",
+    "Profile Settings": "Настройки профиля",
+    "Public Page": "Публичная страница",
+    "Publications": "Публикации",
     "Resend verification link": "Отправить ссылку для подтверждения еще раз",
     "Save changes": "Сохранить изменения",
     "Select from computer": "Выбрать на компьютере",
     "Select your city": "Выберите ваш город",
     "Select your country": "Выберите вашу страну",
-        "September": "Сентябрь",
+    "Send message": "Отправить сообщение",
+    "September": "Сентябрь",
     "Sign In": "Войти",
     "Sign Up": "Регистрация",
     "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",
@@ -80,7 +89,8 @@ export const ru: LenType = {
             wrongLastName: 'Недопустимая фамилия',
             wrongUsername: 'Неправильное имя пользователя',
         },
-    }, forgoPasswordForm: {
+    },
+    forgoPasswordForm: {
         again: ' Еще Раз',
         backSignIn: 'Вернуться ко входу',
         email: 'Электронная почта',
@@ -91,13 +101,12 @@ export const ru: LenType = {
         sendAgain: 'Если вы не получили письмо, отправьте ссылку еще раз.',
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
-    },
-    language: 'Русский',
-
+    }, language: 'Русский',
     policies: {
         "Privacy Policy": "Политика конфиденциальности",
         "Terms Of Service": "Условия использования",
     },
+
     sidebarTr: {
         create: 'Создать',
         favorites: 'Избранное',
@@ -108,7 +117,6 @@ export const ru: LenType = {
         search: 'Поиск',
         statistics: 'Статистика',
     },
-
     signInLang: {
         anAccount: 'Нет аккаунта?',
         email: 'Электронная почта',
@@ -117,6 +125,7 @@ export const ru: LenType = {
         signIn: 'Войти',
         signUp: 'Регистрация',
     },
+
     signUpLang: {
         IAgree: 'Я согласен с',
         aler: 'Мы отправили ссылку для подтверждения вашей электронной почты на ',
@@ -134,5 +143,10 @@ export const ru: LenType = {
     },
     test: 'Lorem Ipsum — это просто текст-«рыба» в полиграфии',
     "text area": "текстовое поле",
+    validateFileTranslate: {
+        "File must be at least": "Файл должен быть не менее",
+        "Invalid file type. Failed to upload": "Неверный тип файла. Не удалось загрузить",
+        "The image size mustn't exceed": "Размер изображения не должен превышать",
+    },
 }
 

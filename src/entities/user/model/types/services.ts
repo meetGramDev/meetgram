@@ -34,9 +34,16 @@ export type FullUserProfile = {
   region: string
 } & Profile
 
+type UserMetadataType = {
+  followers: number
+  following: number
+  publications: number
+}
+
 export type PublicProfile = {
   aboutMe: string
   avatars: Avatar[]
   id: number
+  userMetadata: UserMetadataType
   userName: string
 }

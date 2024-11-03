@@ -37,7 +37,7 @@ type Props = {
   /**
    * Toggle date selector in range
    */
-  selectsRange?: boolean
+  selectsRange?: true | undefined
   startDate: Date | undefined
 }
 
@@ -99,6 +99,7 @@ export const DatePicker = ({
   return (
     <div className={s.dateContainer}>
       <label className={classes.label}>{label}</label>
+      {/* @ts-ignore */}
       <ReactDatePicker
         calendarClassName={s.calendar}
         className={classes.hasError}
@@ -182,9 +183,8 @@ export const DatePicker = ({
           )
         }}
         selected={startDate}
-        /* Prop disables ts error */
         selectsMultiple={undefined}
-        selectsRange={selectsRange || undefined}
+        selectsRange={selectsRange}
         shouldCloseOnSelect={!selectsRange}
         showIcon
         showPopperArrow={false}

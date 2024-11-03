@@ -33,10 +33,10 @@ export function useLoginGoogle() {
     },
 
     onNonOAuthError: (nonOAuthErr: NonOAuthError) =>
-      console.log(`⛔ Non Auth error ${nonOAuthErr.type}`),
+      console.warn(`⛔ Non Auth error ${nonOAuthErr.type}`),
 
     onSuccess: async (codeResponse: CodeResponse) => {
-      console.log('🟢 Success', codeResponse)
+      // console.log('🟢 Success', codeResponse)
       if (state === codeResponse.state) {
         setState('')
         try {
