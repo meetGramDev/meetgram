@@ -154,6 +154,7 @@ export const ImageCarousel = ({
                         alt={`Image-${i + 1}`}
                         className={s.photo}
                         onLoad={handleOnImageLoad}
+                        priority
                         ref={imageRef}
                         {...imgProps}
                       />
@@ -163,6 +164,7 @@ export const ImageCarousel = ({
                       alt={`Image-${i + 1}`}
                       className={s.photo}
                       onLoad={handleOnImageLoad}
+                      priority
                       ref={imageRef}
                       {...imgProps}
                     />
