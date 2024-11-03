@@ -60,6 +60,7 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
                       isFollowing={userData.isFollowing}
                       onFollow={onFollow}
                       userId={userData.id}
+                      userName={userData.userName}
                     />
                     <Button as={Link} href={'#'} variant={'secondary'}>
                       {t('Send message')}
