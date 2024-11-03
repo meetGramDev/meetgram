@@ -1,5 +1,3 @@
-import React from 'react'
-
 import SignInImg from '@/shared/assets/img/sign-up_bro.png'
 import { SIGN_IN } from '@/shared/config/router'
 import { translate } from '@/shared/lib/langSwitcher'
@@ -22,7 +20,7 @@ export const ConfirmEmail = () => {
           {t['Sign In']}
         </Button>
       </div>
-      <Image alt={'img'} className={s.img} src={SignInImg} />
+      <Image alt={'img'} className={s.img} priority src={SignInImg} />
     </div>
   )
 }

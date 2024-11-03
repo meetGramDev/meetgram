@@ -21,7 +21,7 @@ export const Post = ({
 }: PostType) => {
   return (
     <div className={'relative w-fit'}>
-      <Image alt={alt} className={className} height={height} src={src} width={width} />
+      <Image alt={alt} className={className} height={height} priority src={src} width={width} />
 
       {isGallery && (
         <div className={'absolute right-0 top-0 z-0 m-2 text-light-100'}>

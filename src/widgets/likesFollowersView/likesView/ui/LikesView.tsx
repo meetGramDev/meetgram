@@ -16,13 +16,14 @@ import { selectIsUserAuth } from '@/entities/user'
 import { clsx } from 'clsx'
 
 type Props = {
+  disabled?: boolean
   likesCount: number
   postId: number
 }
 
 const MAX_PAGE_SIZE = 8
 
-export const LikesView = ({ likesCount, postId }: Props) => {
+export const LikesView = ({ disabled = false, likesCount, postId }: Props) => {
   const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
   const isAuth = useAppSelector(selectIsUserAuth)
 
