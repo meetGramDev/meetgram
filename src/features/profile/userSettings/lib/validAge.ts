@@ -1,6 +1,9 @@
-export const validAge = (date: Date | number): boolean => {
-  const timeMs = typeof date === 'number' ? date : date.getTime()
-  const dateToCompare = new Date(timeMs)
+export const validAge = (date: Date | number) => {
+  const timeMs = typeof date === 'number' ? date : undefined
+  let dateToCompare
+  if (timeMs !== undefined) {
+    dateToCompare = new Date(timeMs)
+  }
 
   const currentDate = new Date()
   const pastDate = new Date(
@@ -8,6 +11,5 @@ export const validAge = (date: Date | number): boolean => {
     currentDate.getMonth(),
     currentDate.getDate()
   )
-
-  return dateToCompare < pastDate
+  if (dateToCompare) return dateToCompare < pastDate
 }

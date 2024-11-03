@@ -62,7 +62,6 @@ const Settings: NextPageWithLayout = () => {
           delete data[key]
         }
       }
-
       await updateProfile(data).unwrap()
       toast.success('Profile has successfully updated')
     } catch (e) {
@@ -73,7 +72,6 @@ const Settings: NextPageWithLayout = () => {
       }
     }
   }
-
   return (
     <div>
       <TabSwitcher onValueChange={setActiveTab} tabs={tabs} value={activeTab} />

@@ -43,7 +43,7 @@ export const likePostApi = baseApi.injectEndpoints({
       onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
         const getGiveLikePostPatch = dispatch(
           likePostApi.util.updateQueryData('getWhoLikedPost', { postId: args.postId }, state => {
-            state.isLiked = args.likeStatus === 'NONE' ? true : false
+            state.isLiked = args.likeStatus === 'NONE'
           })
         )
 

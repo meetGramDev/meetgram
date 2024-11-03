@@ -218,9 +218,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                   </Button>
                 </div>
               )}
-              <div className={s.postLikes}>
-                {!!post.likesCount && <LikesView likesCount={post.likesCount} postId={post.id} />}
-              </div>
+              {!!post.likesCount && (
+                <div className={s.postLikes}>
+                  <LikesView likesCount={post.likesCount} postId={post.id} />
+                </div>
+              )}
               <div className={s.date}>{dateOfCreate(post.createdAt)}</div>
             </div>
             {isAuth && (
