@@ -13,12 +13,13 @@ import Link from 'next/link'
 import s from './User.module.scss'
 
 import { selectCurrentUserId } from '../model/selectors/selectCurrentUser'
-import { FullUserProfile } from '../model/types/services'
+import { FullUserProfile, PublicProfile } from '../model/types/services'
+import { PublicUserMetadata } from './userMetadata/PublicUserMetadata'
 
 type Props = {
   disabledFollowBtn?: boolean
   onFollow?: (id: number) => void
-  userData: FullUserProfile
+  userData: FullUserProfile | PublicProfile
 }
 
 export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
@@ -52,32 +53,51 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
                   {t('Profile Settings')}
                 </Button>
               ) : (
-                <div className={s.profileActions}>
-                  <FollowButton
-                    disabled={disabledFollowBtn}
-                    isFollowing={userData.isFollowing}
-                    onFollow={onFollow}
-                    userId={userData.id}
-                  />
-                  <Button as={Link} href={'#'} variant={'secondary'}>
-                    {t('Send message')}
-                  </Button>
-                </div>
+                'isFollowing' in userData && (
+                  <div className={s.profileActions}>
+                    <FollowButton
+                      disabled={disabledFollowBtn}
+                      isFollowing={userData.isFollowing}
+                      onFollow={onFollow}
+                      userId={userData.id}
+                      userName={userData.userName}
+                    />
+                    <Button as={Link} href={'#'} variant={'secondary'}>
+                      {t('Send message')}
+                    </Button>
+                  </div>
+                )
               )}
             </div>
           )}
-          <div className={s.buttonPublications}>
-            <FollowersView
-              followCount={userData.followingCount}
-              type={'following'}
-              userName={userData.userName}
+          {'publicationsCount' in userData && (
+            <div className={s.buttonPublications}>
+              <FollowersView
+                followCount={userData.followingCount}
+                type={'following'}
+                userName={userData.userName}
+              />
+
+              <FollowersView
+                followCount={userData.followersCount}
+                type={'followers'}
+                userName={userData.userName}
+              />
+              <div className={s.userLinks}>
+                <span>{userData ? userData.publicationsCount : 0}</span>
+                <br />
+                {t('Publications')}
+              </div>
+            </div>
+          )}
+
+          {'userMetadata' in userData && (
+            <PublicUserMetadata
+              followersCount={userData.userMetadata.followers}
+              followingCount={userData.userMetadata.following}
+              publicationsCount={userData.userMetadata.publications}
             />
-            <Link className={s.userLinks} href={'#'}>
-              <span>{userData ? userData.publicationsCount : 0}</span>
-              <br />
-              {t('Publications')}
-            </Link>
-          </div>
+          )}
 
           {!isMobile && <div className={s.aboutMeText}>{userData?.aboutMe}</div>}
         </div>

@@ -21,7 +21,7 @@ export const followService = baseApi.injectEndpoints({
         !error?.data
           ? [
               { id: args.selectedUserId, type: 'PostLikes' },
-              { id: args.selectedUserId, type: 'follow' },
+              { id: 'LIST', type: 'follow' },
               { type: 'profile' },
             ]
           : [],

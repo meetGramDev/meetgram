@@ -74,7 +74,7 @@ export const ResendEmail = () => {
           </Button>
         </div>
       </Dialog>
-      <Image alt={'img'} className={s.img} src={Img} />
+      <Image alt={'img'} className={s.img} priority src={Img} />
     </div>
   )
 }

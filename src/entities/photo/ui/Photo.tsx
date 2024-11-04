@@ -62,7 +62,7 @@ export const Photo = <T extends PhotoType = 'fill'>({
         </div>
       ) : (
         <>
-          <Image alt={alt} className={clsx(s[variant], className)} src={src} {...rest} />
+          <Image alt={alt} className={clsx(s[variant], className)} priority src={src} {...rest} />
           {onDelete && (
             <Button className={s.delete} onClick={onDelete} variant={'text'}>
               <Delete className={clsx(s.deleteIcon, iconClassname)} />

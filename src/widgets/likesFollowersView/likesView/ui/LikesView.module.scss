@@ -6,4 +6,8 @@
 
   font-weight: var(--fw-700);
   color: var(--light-color-100);
+
+  &:disabled {
+    color: var(--light-color-100);
+  }
 }

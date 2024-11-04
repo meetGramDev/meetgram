@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { ImageType, getPostMessage } from '@/entities/post'
@@ -32,10 +32,16 @@ export const PublicPagePost = ({
 }: Props) => {
   const tr = useRouter().locale
   const [isExpanted, setIsExpanted] = useState(false)
+  const [timeAgoStamp, setTimeAgoStamp] = useState('')
 
   const onToggleText = () => {
     setIsExpanted(!isExpanted)
   }
+
+  useEffect(() => {
+    setTimeAgoStamp(getTimeAgo(tr ?? 'en', createdAt))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createdAt])
 
   return (
     <div className={s.publicPostWrapper}>
@@ -66,9 +72,7 @@ export const PublicPagePost = ({
         </div>
       </Button>
 
-      <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>
-        {getTimeAgo(tr ?? 'en', createdAt)}
-      </p>
+      <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>{timeAgoStamp}</p>
       <div className={'inline'}>
         <div className={clsx(s.publicPost, isExpanted ? s.textExpanded : '')}>
           <> {getPostMessage(`${description}`, 77, 237, isExpanted)}</>

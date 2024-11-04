@@ -35,7 +35,7 @@ export const Comments = ({ onClick, pageNumber, postId, setPageNumber }: Props) 
         setHasMore(true)
       }
     }
-  }, [data?.items, isFetching])
+  }, [data?.items, isFetching, data?.totalCount])
 
   return (
     <>
@@ -45,7 +45,7 @@ export const Comments = ({ onClick, pageNumber, postId, setPageNumber }: Props) 
         </div>
       ))}
       {isFetching && <p>Загрузка...</p>}
-      {!hasMore && <p>Больше комментариев нет.</p>}
+      {/* {!hasMore && <p>Больше комментариев нет.</p>} */}
       <div ref={ref} style={{ height: '1px' }}></div>
     </>
   )

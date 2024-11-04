@@ -22,8 +22,8 @@ import s from './PostView.module.scss'
 
 import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
 
-export type Props = {
-  isFollowing: boolean
+type Props = {
+  isFollowing?: boolean
   isOpen: (open: boolean) => void
   onEdit?: () => void
   open: boolean
@@ -219,7 +219,9 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                 </div>
               )}
               <div className={s.postLikes}>
-                {!!post.likesCount && <LikesView likesCount={post.likesCount} postId={post.id} />}
+                {!!post.likesCount && (
+                  <LikesView disabled={!isAuth} likesCount={post.likesCount} postId={post.id} />
+                )}
               </div>
               <div className={s.date}>{dateOfCreate(post.createdAt)}</div>
             </div>
