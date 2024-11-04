@@ -23,7 +23,7 @@ type Props = {
 }
 
 export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
-  const [start, setStart] = useState<Date | undefined>(new Date(0o000))
+  const [start, setStart] = useState<Date | undefined>()
 
   const { locale } = useRouter()
 
@@ -33,7 +33,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   const { control, errors, getValues, handleSubmit, isDirty, isValid, register, setError } =
     useUserSettings(errorsTr, data)
 
-  const isDisabled = !isValid || !isDirty || !validAge(Number(start))
+  const isDisabled = !isValid || !isDirty || (start && !validAge(Number(start)))
 
   useEffect(() => {
     type fieldKeys = keyof UserSettingsFormData
@@ -102,7 +102,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
               )
             }}
           />
-          {!validAge(Number(start)) && (
+          {start && !validAge(Number(start)) && (
             <span className={s.errorMessage}>
               {errorsTr.errorValidationFields.wrongDateOfBirth}
               &nbsp;
