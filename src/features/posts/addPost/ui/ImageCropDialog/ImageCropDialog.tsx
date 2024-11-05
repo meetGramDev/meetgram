@@ -1,6 +1,7 @@
 import { FormEvent, ReactNode, useState } from 'react'
 import Cropper, { Area, Point } from 'react-easy-crop'
 
+import { Photo } from '@/entities/photo'
 import { onCrop } from '@/features/posts/addPost/ui/ImageCropDialog/cropImage'
 import { AddPostSettingsSelect } from '@/features/posts/addPost/ui/addPostSettingsSelect/AddPostSettingsSelect'
 import { Expand } from '@/shared/assets/icons/Expand'
@@ -12,6 +13,7 @@ import { Rectangle } from '@/shared/assets/icons/Rectangle'
 import { Rectangular } from '@/shared/assets/icons/Rectangular'
 import { Button, Slider } from '@/shared/ui'
 import { clsx } from 'clsx'
+import Image from 'next/image'
 
 import s from './ImageCropDialog.module.scss'
 
@@ -116,17 +118,35 @@ export const ImageCropDialog = ({
 
   return (
     <div className={s.cropperWrapper}>
-      <Cropper
-        aspect={aspect.value}
-        crop={crop}
-        cropShape={'rect'}
-        image={imageUrl}
-        onCropChange={onCropChange}
-        onCropComplete={handleOnCropComplete}
-        //onZoomChange={onZoomChange}
-        zoom={zoom[0]}
-        zoomWithScroll={false}
-      />
+      {aspect.value === aspectRatios[0].value && imageUrl ? (
+        <div className={s.imageWrapper}>
+          <Image alt={`img`} height={564} src={imageUrl} width={492} />
+        </div>
+      ) : (
+        <Cropper
+          aspect={aspect.value}
+          crop={crop}
+          cropShape={'rect'}
+          image={imageUrl}
+          onCropChange={onCropChange}
+          onCropComplete={handleOnCropComplete}
+          //onZoomChange={onZoomChange}
+          zoom={zoom[0]}
+          zoomWithScroll={false}
+        />
+      )}
+      {/*<Cropper*/}
+      {/*  aspect={aspect.value}*/}
+      {/*  crop={crop}*/}
+      {/*  cropShape={'rect'}*/}
+      {/*  image={imageUrl}*/}
+      {/*  onCropChange={onCropChange}*/}
+      {/*  onCropComplete={handleOnCropComplete}*/}
+      {/*  //onZoomChange={onZoomChange}*/}
+      {/*  zoom={zoom[0]}*/}
+      {/*  zoomWithScroll={false}*/}
+      {/*/>*/}
+
       <div className={s.controlCropperWrapper}>
         <div className={s.buttonCroppingWrapper}>
           <div className={s.buttonContainer}>
@@ -151,24 +171,26 @@ export const ImageCropDialog = ({
               </div>
             </AddPostSettingsSelect>
           </div>
-          <div className={s.buttonContainer}>
-            <AddPostSettingsSelect
-              placeholder={<MaxinizeOutline />}
-              secondPlaceholder={<Maxinize />}
-            >
-              <div className={s.sliderWrapper}>
-                <Slider
-                  className={s.slider}
-                  max={3}
-                  min={1}
-                  onValueChange={onZoomChange}
-                  onValueCommit={onZoomCommit}
-                  step={0.1}
-                  value={zoom}
-                />
-              </div>
-            </AddPostSettingsSelect>
-          </div>
+          {aspect.value !== aspectRatios[0].value && (
+            <div className={s.buttonContainer}>
+              <AddPostSettingsSelect
+                placeholder={<MaxinizeOutline />}
+                secondPlaceholder={<Maxinize />}
+              >
+                <div className={s.sliderWrapper}>
+                  <Slider
+                    className={s.slider}
+                    max={3}
+                    min={0.45}
+                    onValueChange={onZoomChange}
+                    onValueCommit={onZoomCommit}
+                    step={0.05}
+                    value={zoom}
+                  />
+                </div>
+              </AddPostSettingsSelect>
+            </div>
+          )}
         </div>
       </div>
     </div>

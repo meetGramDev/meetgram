@@ -32,6 +32,7 @@
 }
 
 .imageCropContainer {
+  position: relative;
   width: var(--cropping-area-width);
   height: var(--cropping-area-height);
 }
