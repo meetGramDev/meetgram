@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { ArrowBack } from '@/shared/assets/icons/ArrowBack'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, Dialog } from '@/shared/ui'
