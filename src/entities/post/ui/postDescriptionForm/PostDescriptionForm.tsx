@@ -14,7 +14,7 @@ import notPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
 import { PublicPost } from '../../model/types/posts.types'
 import { type PostDescriptionField, getPostDescriptionSchema } from '../../validation/schema'
 
-const MAX_DESCRIPTION_LENGTH = 500
+const MAX_DESCRIPTION_LENGTH = 501
 
 export type PostDescriptionFormRef = {
   onSubmitFormClick: () => void
