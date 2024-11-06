@@ -1,7 +1,6 @@
 import { FormEvent, ReactNode, useState } from 'react'
 import Cropper, { Area, Point } from 'react-easy-crop'
 
-import { Photo } from '@/entities/photo'
 import { onCrop } from '@/features/posts/addPost/ui/ImageCropDialog/cropImage'
 import { AddPostSettingsSelect } from '@/features/posts/addPost/ui/addPostSettingsSelect/AddPostSettingsSelect'
 import { Expand } from '@/shared/assets/icons/Expand'
@@ -149,7 +148,7 @@ export const ImageCropDialog = ({
 
       <div className={s.controlCropperWrapper}>
         <div className={s.buttonCroppingWrapper}>
-          <div className={s.buttonContainer}>
+          <div>
             <AddPostSettingsSelect placeholder={<Expand />}>
               <div className={s.menuContent}>
                 {aspectRatios.map(aspectRatio => (
@@ -160,7 +159,14 @@ export const ImageCropDialog = ({
                     )}
                     key={aspectRatio.text}
                     onClick={() => {
-                      setAspect(aspectRatio)
+                      if (aspectRatio.text === 'Оригинал' && imageUrl !== undefined) {
+                        if (onCropComplete) {
+                          onCropComplete(imageUrl, id)
+                        }
+                        setAspect(aspectRatio)
+                      } else {
+                        setAspect(aspectRatio)
+                      }
                     }}
                     variant={'text'}
                   >
@@ -172,16 +178,16 @@ export const ImageCropDialog = ({
             </AddPostSettingsSelect>
           </div>
           {aspect.value !== aspectRatios[0].value && (
-            <div className={s.buttonContainer}>
+            <div>
               <AddPostSettingsSelect
                 placeholder={<MaxinizeOutline />}
                 secondPlaceholder={<Maxinize />}
               >
-                <div className={s.sliderWrapper}>
+                <div>
                   <Slider
                     className={s.slider}
                     max={3}
-                    min={0.45}
+                    min={1}
                     onValueChange={onZoomChange}
                     onValueCommit={onZoomCommit}
                     step={0.05}

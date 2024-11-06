@@ -140,7 +140,7 @@ export const AddScropping = () => {
                       id={index}
                       imageUrl={image.orig}
                       onCropComplete={handleSaveCropImg}
-                      zoomInit={[0.45]}
+                      zoomInit={[1]}
                     />
                   </div>
                 </CarouselItem>
