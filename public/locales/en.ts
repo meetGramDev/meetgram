@@ -1,6 +1,5 @@
 export const en = {
     "About me": "About me",
-
     "Account Management": "Account Management",
     'Add Photo': 'Add Photo',
     "Add a Profile Photo": "Add a Profile Photo",
@@ -20,6 +19,7 @@ export const en = {
     "Delete photo": "Delete photo",
     "Devices": "Devices",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Do you really want to close the creation of a publication? If you close everything will be deleted",
+    "Drag the photo here": "Drag the photo here",
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
     "February": "February",
@@ -44,13 +44,14 @@ export const en = {
     "October": "October",
     "Ok": "Ok",
     "Profile Settings": "Profile Settings",
+    "Public Page": "Public Page",
     "Publications": "Publications",
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
     'Select from computer': "S" + "elect from computer",
-
     "Select your city": "Select your city",
     "Select your country": "Select your country",
+    "Send message": "Send message",
     "September": "September",
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",
@@ -61,7 +62,6 @@ export const en = {
         Button: 'Button',
         Link: 'Link that looks like a button',
     },
-
     createNewPasswordForm: {
         createNewPassword: 'Create New Password',
         newPassword: 'New password',
@@ -90,6 +90,7 @@ export const en = {
             wrongUsername: 'Wrong username'
         },
     },
+
     forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
@@ -141,17 +142,22 @@ export const en = {
         username: 'Username',
     },
     test: 'Lorem Ipsum is simply dummy text of the printing',
-    "text area": "text area"
+    "text area": "text area",
+    validateFileTranslate: {
+        "File must be at least": "File must be at least",
+        "Invalid file type. Failed to upload": "Invalid file type. Failed to upload",
+        "The image size mustn't exceed": "The image size mustn't exceed",
+    }
 }
 
-const {errorsTr, sidebarTr} = en
+const {errorsTr, sidebarTr, validateFileTranslate} = en
 const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 
 
 export type ErrorsTr = typeof errorsTr
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
-
+export type TypeValidateFileTranslate = typeof validateFileTranslate;
 export type LenType = typeof en
 
 

@@ -1,39 +1,45 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
-import { useGetPublicPostsQuery } from '@/entities/post/model/services/posts.service'
-import { useFullUserProfileQuery } from '@/entities/user'
-import { cn, useInfiniteScroll } from '@/shared/lib'
+import { PublicPost, useGetPublicPostsQuery } from '@/entities/post'
+import { useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
-import { skipToken } from '@reduxjs/toolkit/query'
 
 import { PostsListDesktop } from './postsListDesktop/PostsListDesktop'
 import { PostsListMobile } from './postsListMobile/PostsListMobile'
 
-type Props = {
-  userName: string
+export type PostsListProps = {
+  isFollowing?: boolean
+  post: PublicPost
+  userId: number
+  userName?: string
 }
 
-const PAGE_SIZE = 12
+export const PAGE_SIZE = 12
 
-export const PostsList = ({ userName }: Props) => {
+export const PostsList = ({ isFollowing, post, userId }: PostsListProps) => {
   const isMobile = useMediaQuery({ query: '(max-width: 650px)' })
-  const {
-    data: currentUser,
-    isError: userProfileQueryError,
-    isSuccess: isUserSuccess,
-  } = useFullUserProfileQuery(userName || skipToken)
-
   // =========== //
   const [endCursorPostId, setEndCursorPostId] = useState<number | undefined>(undefined)
 
-  const { ref, scroll } = useInfiniteScroll(
+  const firstRenderSkipPagination = useRef(true)
+  const { ref } = useInfiniteScroll(
     () => {
-      if (publicPosts?.items && publicPosts.items.length >= PAGE_SIZE) {
+      if (
+        !firstRenderSkipPagination.current &&
+        publicPosts &&
+        publicPosts?.items &&
+        publicPosts.items.length >= PAGE_SIZE &&
+        publicPosts.items.length !== publicPosts.totalCount
+      ) {
         setEndCursorPostId(publicPosts?.items.at(-1)?.id)
       }
+
+      if (firstRenderSkipPagination.current) {
+        firstRenderSkipPagination.current = false
+      }
     },
-    { threshold: 1 }
+    { threshold: 0.9 }
   )
 
   const {
@@ -44,35 +50,44 @@ export const PostsList = ({ userName }: Props) => {
   } = useGetPublicPostsQuery(
     {
       endCursorPostId,
-      id: String(currentUser?.id),
+      id: String(userId),
       params: { pageSize: PAGE_SIZE },
     },
-    { skip: (!currentUser?.id && !endCursorPostId) || userProfileQueryError }
+    { skip: !userId && !endCursorPostId }
   )
+
+  useEffect(() => {
+    //TODO: check is it possible replace undefined with null
+    if (userId && endCursorPostId !== undefined) {
+      setEndCursorPostId(undefined)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId])
 
   return (
     <>
       {publicPostsSuccess && (
         <>
-          {isMobile
-            ? isUserSuccess && (
-                <>
-                  <PostsListMobile
-                    isFollowing={currentUser.isFollowing}
-                    posts={publicPosts.items}
-                    userId={currentUser.id}
-                  />
-                </>
-              )
-            : isUserSuccess && (
-                <>
-                  <PostsListDesktop
-                    isFollowing={currentUser.isFollowing}
-                    posts={publicPosts.items}
-                    userId={currentUser.id}
-                  />
-                </>
-              )}
+          {isMobile ? (
+            <PostsListMobile
+              isFollowing={isFollowing}
+              post={post}
+              posts={publicPosts.items}
+              userId={userId}
+            />
+          ) : (
+            <PostsListDesktop
+              isFollowing={isFollowing}
+              post={post}
+              posts={publicPosts.items}
+              userId={userId}
+            />
+          )}
+          {publicPosts?.items.length !== publicPosts?.totalCount && (
+            <div className={'flex justify-center py-5'} ref={ref}>
+              <Loader />
+            </div>
+          )}
         </>
       )}
       {publicPosts && publicPosts.items.length === 0 && (
@@ -81,11 +96,7 @@ export const PostsList = ({ userName }: Props) => {
         </p>
       )}
 
-      {!publicPostsLoading && scroll > 0 && (
-        <div className={'invisible h-4 w-full'} ref={ref}></div>
-      )}
-
-      {publicPostsFetching && (
+      {publicPostsLoading && (
         <div className={'flex justify-center py-3'}>
           <Loader />
         </div>

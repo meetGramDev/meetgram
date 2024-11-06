@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import { Post, PostView } from '@/entities/post'
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { HOME } from '@/shared/config/router'
 import { Dialog } from '@/shared/ui'
 import Link from 'next/link'
@@ -12,7 +12,7 @@ import s from './PostsList.module.scss'
 
 import { PostListProps } from '../props.type'
 
-export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) => {
+export const PostsListDesktop = ({ isFollowing, post, posts, userId }: PostListProps) => {
   const router = useRouter()
   const isOpenPost = router.query.isOpenPost as string
   const postId = router.query.postId as string
@@ -49,29 +49,26 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
 
   return (
     <div className={s.postsList}>
-      {posts?.map(post => {
-        return (
-          <div className={s.item} key={post.id}>
-            <Link
-              href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}
-              shallow
-            >
-              <Post
-                alt={post.description}
-                className={s.image}
-                isGallery={post.images.length > 1}
-                src={post.images[0].url}
-              />
-            </Link>
-          </div>
-        )
-      })}
+      {posts?.map((post, i) => (
+        <div className={s.item} key={post.id}>
+          <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
+            <Post
+              alt={post.description}
+              className={s.image}
+              isGallery={post.images.length > 1}
+              src={post.images[0].url}
+            />
+          </Link>
+        </div>
+      ))}
+
       {isOpenPost && postId && (
         <PostView
           isFollowing={isFollowing}
           isOpen={handleCloseModalDialog}
           onEdit={() => setOpenEdit(true)}
           open={isOpenPost === 'true'}
+          post={post}
           postId={+postId}
           userId={userId}
         />
@@ -98,3 +95,5 @@ export const PostsListDesktop = ({ isFollowing, posts, userId }: PostListProps) 
     </div>
   )
 }
+
+PostsListDesktop.displayName = 'PostsListDesktop'

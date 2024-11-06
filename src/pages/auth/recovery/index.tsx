@@ -73,7 +73,7 @@ const Recovery: NextPageWithLayout = () => {
               {t.forgoPasswordForm.forgotPassword}{' '}
             </Button>
           </div>
-          <Image alt={'img'} className={style.img} src={Img} />
+          <Image alt={'img'} className={style.img} priority src={Img} />
         </div>
       )}
     </div>

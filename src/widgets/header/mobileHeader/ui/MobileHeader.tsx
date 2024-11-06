@@ -1,7 +1,8 @@
 'use client'
-import { selectIsUserAuth } from '@/entities/user'
-import { HOME } from '@/shared/config/router'
+import { selectCurrentUserId, selectIsUserAuth } from '@/entities/user'
+import { HOME, PROFILE, PUBLIC_PAGE } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
+import { Button } from '@/shared/ui'
 import { LangSwitcher } from '@/widgets/langSwitcher'
 import { MobileSidebarSelector } from '@/widgets/sidebar'
 import clsx from 'clsx'
@@ -15,10 +16,11 @@ type Props = {
 
 export const MobileHeader = ({ className }: Props) => {
   const isAuth = useAppSelector(selectIsUserAuth)
+  const userId = useAppSelector(selectCurrentUserId)
 
   return (
     <header className={clsx(s.header, className)}>
-      <Link className={s.title} href={HOME}>
+      <Link className={s.title} href={!isAuth ? PUBLIC_PAGE : `${PROFILE}/${userId}`}>
         Meetgram
       </Link>
       <div className={s.controls}>

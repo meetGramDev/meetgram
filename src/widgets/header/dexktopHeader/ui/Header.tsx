@@ -1,6 +1,6 @@
-import { selectIsUserAuth } from '@/entities/user'
+import { selectCurrentUserId, selectIsUserAuth } from '@/entities/user'
 import { Notification } from '@/shared/assets/icons/Notification'
-import { HOME, SIGN_IN, SIGN_UP } from '@/shared/config/router'
+import { HOME, PROFILE, PUBLIC_PAGE, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui/button/button'
@@ -20,6 +20,7 @@ export const Header = ({ className, notification }: Props) => {
   const t = useTranslate()
 
   const isAuth = useAppSelector(selectIsUserAuth)
+  const userId = useAppSelector(selectCurrentUserId)
 
   return (
     <header
@@ -28,7 +29,10 @@ export const Header = ({ className, notification }: Props) => {
         className
       )}
     >
-      <Link className={'text-large font-semibold'} href={HOME}>
+      <Link
+        className={'text-large font-semibold'}
+        href={!isAuth ? PUBLIC_PAGE : `${PROFILE}/${userId}`}
+      >
         Meetgram
       </Link>
       <div className={'flex items-center justify-between gap-[2.25rem]'}>

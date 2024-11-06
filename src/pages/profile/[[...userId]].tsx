@@ -1,71 +1,83 @@
-import { Suspense } from 'react'
-
-import {
-  User,
-  selectCurrentUserName,
-  useFullUserProfileQuery,
-  useGetPublicProfileByIdQuery,
-} from '@/entities/user'
-import { UserSkeleton } from '@/entities/user/ui/skeletons/UserSkeleton'
-import { useFollowUserMutation } from '@/features/follow'
+import { GetPublicPostsResponse, PublicPost } from '@/entities/post'
+import { PublicProfile, selectIsUserAuth } from '@/entities/user'
+import { Profile } from '@/fsd_pages/profile'
+import { BASE_URL } from '@/shared/api'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { NextPageWithLayout } from '@/shared/types'
-import { Loader } from '@/shared/ui'
-import { AddingPostView } from '@/widgets/addingPostView'
+import { SESSION_COOKIE_NAME } from '@/shared/const/consts'
 import { getMainLayout } from '@/widgets/layouts'
-import { PostsList } from '@/widgets/postsList'
-import { skipToken } from '@reduxjs/toolkit/query'
-import { useRouter } from 'next/router'
+import { PAGE_SIZE, getPublicPosts } from '@/widgets/postsList'
+import axios from 'axios'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 
-const UserId: NextPageWithLayout = () => {
-  const router = useRouter()
-  const userId = router.query.userId as string
-  const { data: userDataById, isError: isProfileByIdError } = useGetPublicProfileByIdQuery(
-    userId || skipToken
-  )
-
-  const authUsername = useAppSelector(selectCurrentUserName)
-  const {
-    data: userData,
-    isFetching: userProfileFetching,
-    isLoading: userProfileLoading,
-  } = useFullUserProfileQuery(userDataById?.userName || authUsername || skipToken, {
-    skip: isProfileByIdError,
-  })
-
-  const [followUser, { isLoading: isFollowLoading }] = useFollowUserMutation()
-
-  if (isProfileByIdError) {
-    return <p className={'mt-40 text-center text-h1'}>Profile was not found</p>
-  }
-
-  return (
-    <div className={'h-full'}>
-      {!userProfileLoading && userData ? (
-        <User
-          disabledFollowBtn={isFollowLoading}
-          onFollow={userId => followUser({ selectedUserId: userId })}
-          userData={userData}
-        />
-      ) : (
-        <UserSkeleton />
-      )}
-
-      <Suspense
-        fallback={
-          <div className={'flex justify-center'}>
-            <Loader />
-          </div>
-        }
-      >
-        <PostsList userName={userDataById?.userName || authUsername} />
-      </Suspense>
-
-      <AddingPostView />
-    </div>
-  )
+type ServerSideProps = {
+  isAuth: boolean
+  post: PublicPost
+  posts: GetPublicPostsResponse
+  publicUserData: PublicProfile
 }
 
-UserId.getLayout = getMainLayout
+export const getServerSideProps = async function (ctx) {
+  const { userId } = ctx.params as { userId: string[] }
+  const postId = ctx.query?.postId
+
+  if (!userId || userId[0] === 'undefined') {
+    return {
+      notFound: true,
+    }
+  }
+
+  let resp
+
+  try {
+    resp = await Promise.all([
+      await axios.get<PublicProfile>(`${BASE_URL}/public-user/profile/${userId[0]}`),
+      await getPublicPosts({ id: userId[0], params: { pageSize: PAGE_SIZE } }),
+      await fetch(`${BASE_URL}/public-posts/${postId}`),
+    ])
+  } catch (e) {
+    return {
+      notFound: true,
+    }
+  }
+
+  const cookies = ctx.req.cookies as Record<typeof SESSION_COOKIE_NAME, string | undefined>
+
+  const post = (await resp[2].json()) || null
+
+  if (!post) {
+    return {
+      notFound: true,
+    }
+  }
+
+  return {
+    props: {
+      isAuth: cookies.token !== undefined,
+      post,
+      posts: resp[1],
+      publicUserData: resp[0].data,
+    },
+  }
+} satisfies GetServerSideProps<ServerSideProps>
+
+const UserId = ({
+  isAuth,
+  post,
+  posts,
+  publicUserData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  // const isAuth = useAppSelector(selectIsUserAuth)
+
+  return getMainLayout(
+    <Profile
+      id={publicUserData.id}
+      isPublic={!isAuth}
+      post={post}
+      posts={posts}
+      publicUserData={publicUserData}
+    />,
+    !isAuth
+  )
+}
 
 export default UserId

@@ -2,13 +2,13 @@ import { memo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { useDeletePostMutation } from '@/entities/post'
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { CopyLinkIcon } from '@/shared/assets/icons/CopyLink'
 import { EditIcon } from '@/shared/assets/icons/Edit'
 import { FollowIcon } from '@/shared/assets/icons/Follow'
 import { MoreIcon } from '@/shared/assets/icons/More'
 import { UnfollowIcon } from '@/shared/assets/icons/Unfollow'
 import { Wastebasket } from '@/shared/assets/icons/Wastebasket'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { HOME } from '@/shared/config/router'
 import { Button, Dialog, Select } from '@/shared/ui'
 import { useRouter } from 'next/router'
@@ -18,7 +18,7 @@ import s from './PostViewSelect.module.scss'
 type Props = {
   disableFollow?: boolean
   id?: string
-  isFollowing: boolean
+  isFollowing?: boolean
   onEdit?: () => void
   onFollow?: (userId: number) => void
   onOpenPost: (open: boolean) => void
@@ -103,24 +103,28 @@ export const PostViewSelect = memo(
             </div>
           ) : (
             <div className={s.menuContent}>
-              {isFollowing ? (
-                <Button
-                  className={s.button}
-                  disabled={disableFollow}
-                  onClick={handleOnFollow}
-                  variant={'text'}
-                >
-                  <UnfollowIcon /> Unfollow
-                </Button>
-              ) : (
-                <Button
-                  className={s.button}
-                  disabled={disableFollow}
-                  onClick={handleOnFollow}
-                  variant={'text'}
-                >
-                  <FollowIcon /> Follow
-                </Button>
+              {isFollowing !== undefined && (
+                <>
+                  {isFollowing ? (
+                    <Button
+                      className={s.button}
+                      disabled={disableFollow}
+                      onClick={handleOnFollow}
+                      variant={'text'}
+                    >
+                      <UnfollowIcon /> Unfollow
+                    </Button>
+                  ) : (
+                    <Button
+                      className={s.button}
+                      disabled={disableFollow}
+                      onClick={handleOnFollow}
+                      variant={'text'}
+                    >
+                      <FollowIcon /> Follow
+                    </Button>
+                  )}
+                </>
               )}
               <Button
                 className={s.button}

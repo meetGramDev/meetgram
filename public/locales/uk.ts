@@ -22,6 +22,7 @@ export const uk: LenType = {
     "Delete photo": "Видалити фото",
     "Devices": "Пристрої",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Ви дійсно хочете закрити створення публікації? Якщо ви закриєте, усе буде видалено",
+    "Drag the photo here": "Перетягніть фото сюди",
     "Email sent": "Лист відправлено",
     "Email verification link expired": "Термін дії посилання завершився",
     "February": "Лютий",
@@ -46,12 +47,14 @@ export const uk: LenType = {
     "October": "Жовтень",
     "Ok": "Гаразд",
     "Profile Settings": "Налаштування профілю",
+    "Public Page": "Публічна сторінка",
     "Publications": "Публікації",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Save changes": "Зберегти зміни",
     "Select from computer": "Виберіть з комп’ютера",
     "Select your city": "Виберіть ваше місто",
     "Select your country": "Виберіть вашу країну",
+    "Send message": "Відправити повідомлення",
     "September": "Вересень",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
@@ -87,7 +90,6 @@ export const uk: LenType = {
             wrongUsername: "Неправильне ім'я користувача",
         }
     },
-
     forgoPasswordForm: {
         again: ' Ще Раз',
         backSignIn: 'Повернутися до входу',
@@ -100,13 +102,14 @@ export const uk: LenType = {
         sendLink: 'Надіслати Посилання',
         sendLinkDialog: 'Ми відправили посилання для підтвердження вашої електронної пошти на',
     },
+
     language: 'Українська',
-
-
     policies: {
         "Privacy Policy": "Політика конфіденційності",
         "Terms Of Service": "Умови використання",
     },
+
+
     sidebarTr: {
         create: 'Створити',
         favorites: 'Вибране',
@@ -117,7 +120,6 @@ export const uk: LenType = {
         search: 'Пошук',
         statistics: 'Статистика',
     },
-
     signInLang: {
         anAccount: 'Немаєш акаунт?',
         email: 'Електронна пошта',
@@ -126,6 +128,7 @@ export const uk: LenType = {
         signIn: 'Увійти',
         signUp: 'Реєстрація',
     },
+
     signUpLang: {
         IAgree: 'Я погоджуюсь з',
         aler: 'Ми відправили посилання для підтвердження вашої електронної пошти на ',
@@ -143,4 +146,9 @@ export const uk: LenType = {
     },
     test: 'Lorem Ipsum — це просто текст-«риба» у поліграфії',
     "text area": "текстове поле",
+    validateFileTranslate: {
+        "File must be at least": "Файл повинен бути не менше",
+        "Invalid file type. Failed to upload": "Неверный тип файла. Не удалось загрузить",
+        "The image size mustn't exceed": "Розмір зображення не повинен перевищувати",
+    },
 }

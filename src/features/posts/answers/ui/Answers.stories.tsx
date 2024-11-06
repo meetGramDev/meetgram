@@ -56,5 +56,7 @@ export const CommentsOfPost: Story = {
       ],
     },
     onClick: () => {},
+
+    postId: 0,
   },
 }

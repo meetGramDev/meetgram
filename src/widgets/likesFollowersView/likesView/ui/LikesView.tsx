@@ -13,13 +13,14 @@ import noPhoto from '../../../../shared/assets/img/not-photo-user.jpg'
 import { ContainerWithSearch } from '../../ui/ContainerWithSearch'
 
 type Props = {
+  disabled?: boolean
   likesCount: number
   postId: number
 }
 
 const MAX_PAGE_SIZE = 8
 
-export const LikesView = ({ likesCount, postId }: Props) => {
+export const LikesView = ({ disabled = false, likesCount, postId }: Props) => {
   const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
 
   const { data, isFetching, isLoading, isSuccess } = useGetWhoLikedPostQuery({
@@ -38,7 +39,7 @@ export const LikesView = ({ likesCount, postId }: Props) => {
     <Dialog
       title={t('Likes') as string}
       trigger={
-        <Button className={s.likeCount} variant={'text'}>
+        <Button className={s.likeCount} disabled={disabled} variant={'text'}>
           <div className={'flex -space-x-2'}>
             {data?.items
               .slice(0, 3)

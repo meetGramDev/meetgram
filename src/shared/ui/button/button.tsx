@@ -4,6 +4,7 @@ import {
   ElementType,
   ForwardedRef,
   ReactNode,
+  Ref,
   forwardRef,
 } from 'react'
 
@@ -16,7 +17,7 @@ export type ButtonVariant = 'link' | 'outlined' | 'primary' | 'secondary' | 'tex
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
-  children: ReactNode
+  children?: ReactNode
   className?: string
   disabled?: boolean
   fullWidth?: boolean
@@ -25,7 +26,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
 
 const ButtonComponent = <T extends ElementType = 'button'>(
   props: ButtonProps<T>,
-  forwardRef?: PolymorphicRef<T>
+  ref?: Ref<PolymorphicRef<T>>
 ) => {
   const { as, className, disabled = false, fullWidth, variant = 'primary', ...rest } = props
 
@@ -33,11 +34,7 @@ const ButtonComponent = <T extends ElementType = 'button'>(
 
   const Component = as || 'button'
 
-  return (
-    <Component className={classNames.root} disabled={disabled} ref={forwardRef} {...rest}>
-      {props.children}
-    </Component>
-  )
+  return <Component className={classNames.root} disabled={disabled} ref={ref} {...rest} />
 }
 
 export const Button = forwardRef(ButtonComponent) as <T extends ElementType = 'button'>(
