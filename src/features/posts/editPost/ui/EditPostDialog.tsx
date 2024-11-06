@@ -7,6 +7,7 @@ import {
 } from '@/entities/post'
 import { ServerMessagesType } from '@/shared/api'
 import { serverErrorHandler } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Dialog, ImageCarousel } from '@/shared/ui'
 
 import s from './EditPost.module.scss'
@@ -31,6 +32,7 @@ export const EditPostDialog = ({ onOpenChange, open, postId }: Props) => {
 
   const [error, setError] = useState<ServerMessagesType[] | string>('')
   const isDirtyField = useRef(false)
+  const t = useTranslate()
 
   const handleSetIsDirty = (isDirty: boolean) => {
     isDirtyField.current = isDirty
@@ -57,7 +59,7 @@ export const EditPostDialog = ({ onOpenChange, open, postId }: Props) => {
       modal
       onOpenChange={open => onOpenChange({ isDirty: isDirtyField.current, open })}
       open={open}
-      title={'Edit Post'}
+      title={t('Edit Post')}
     >
       {isSuccess && (
         <div className={'flex'}>

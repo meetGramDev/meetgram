@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Photo } from '@/entities/photo'
 import { ServerMessagesType } from '@/shared/api'
 import { cn } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable, isErrorServerMessagesType } from '@/shared/types'
 import { Button, TextArea } from '@/shared/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,6 +36,7 @@ type Props = {
 export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
   ({ disabled, error, onChange, onSubmit, ownerAvatar, ownerUsername, post }, forwardedRef) => {
     const buttonRef = useRef<Nullable<HTMLButtonElement>>(null)
+    const t = useTranslate()
 
     const {
       formState: { errors, isDirty, isSubmitting, isValid },
@@ -84,7 +86,7 @@ export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
         <div className={'mb-6'}>
           <div className={'flex items-center gap-3'}>
             <Photo
-              alt={'Owner avatar'}
+              alt={t('Owner avatar')}
               height={36}
               src={post?.avatarOwner || ownerAvatar || notPhoto}
               width={36}
@@ -102,7 +104,7 @@ export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
                 rows={5}
                 {...register('description')}
                 error={errors.description?.message}
-                label={'Add publication description'}
+                label={t('Add publication description')}
               />
               <div className={'-mt-1 text-end'}>
                 <span
@@ -116,7 +118,7 @@ export const PostDescriptionForm = forwardRef<PostDescriptionFormRef, Props>(
               disabled={!isValid || isSubmitting || !!errors.description || disabled}
               ref={buttonRef}
             >
-              Save changes
+              {t('Save changes')}
             </Button>
           </div>
         </div>
