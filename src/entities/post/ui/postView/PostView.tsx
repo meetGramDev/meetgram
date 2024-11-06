@@ -12,6 +12,7 @@ import { CloseIcon, FavoritesIcon, PaperPlane, SketchedFavourites } from '@/shar
 import { HOME } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { isErrorMessageString } from '@/shared/types'
 import { Button, Dialog, ImageCarousel, TextArea } from '@/shared/ui'
 import { LikesView } from '@/widgets/likesFollowersView'
@@ -43,14 +44,15 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
   const [pageNumber, setPageNumber] = useState(0)
   const answerCommentRef = useRef<HTMLTextAreaElement>(null)
 
-  const tr = useRouter().locale
+  const locale = useRouter().locale
   const authUserId = useAppSelector(selectCurrentUserId)
   const isAuth = useAppSelector(selectIsUserAuth)
+  const t = useTranslate()
 
   const dateOfCreate = (postCreate: string) => {
     const date = new Date(postCreate)
 
-    return date.toLocaleDateString(tr ?? 'en-US', {
+    return date.toLocaleDateString(locale ?? 'en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -138,7 +140,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
               <div className={s.userLink}>
                 <Link className={s.linkAvatar} href={ownerProfile}>
                   <Photo
-                    alt={'Owner avatar'}
+                    alt={t('Owner avatar')}
                     className={s.avatar}
                     height={36}
                     src={post.avatarOwner || notPhoto}
@@ -168,7 +170,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                   <div className={s.descriptionItems}>
                     <Link className={s.descriptionAvatar} href={ownerProfile}>
                       <Photo
-                        alt={'Owner avatar'}
+                        alt={t('Owner avatar')}
                         className={s.avatar}
                         height={36}
                         src={post.avatarOwner || notPhoto}
@@ -183,7 +185,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                     </div>
                   </div>
                   <span className={s.descriptionDate}>
-                    {getTimeAgo(tr ?? 'en', post.updatedAt || post.createdAt)}
+                    {getTimeAgo(locale ?? 'en', post.updatedAt || post.createdAt)}
                   </span>
                 </div>
               )}
@@ -229,7 +231,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
               <div className={s.commentContainer}>
                 <TextArea
                   className={s.commentTextArea}
-                  label={!textContent && 'Add a Comment...'}
+                  label={!textContent && t('Add a Comment') + '...'}
                   labelClassName={s.label}
                   maxLength={500}
                   onChange={changeTextAreaHandler}
@@ -237,7 +239,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                   value={textContent}
                 />
                 <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
-                  Publish
+                  {t('Publish')}
                 </Button>
               </div>
             )}
