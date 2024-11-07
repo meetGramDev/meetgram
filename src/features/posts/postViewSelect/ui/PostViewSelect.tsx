@@ -2,14 +2,15 @@ import { memo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { useDeletePostMutation } from '@/entities/post'
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { CopyLinkIcon } from '@/shared/assets/icons/CopyLink'
 import { EditIcon } from '@/shared/assets/icons/Edit'
 import { FollowIcon } from '@/shared/assets/icons/Follow'
 import { MoreIcon } from '@/shared/assets/icons/More'
 import { UnfollowIcon } from '@/shared/assets/icons/Unfollow'
 import { Wastebasket } from '@/shared/assets/icons/Wastebasket'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { HOME } from '@/shared/config/router'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, Dialog, Select } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
@@ -34,7 +35,7 @@ export const PostViewSelect = memo(
 
     const [openModal, setOpenModal] = useState<boolean>(false)
     const [openSelect, setOpenSelect] = useState(false)
-
+    const t = useTranslate()
     const handleOnFollow = () => onFollow?.(ownerId)
 
     return (
@@ -48,9 +49,9 @@ export const PostViewSelect = memo(
           showArrow={false}
         >
           {openModal && (
-            <Dialog onOpenChange={setOpenModal} open={openModal} title={'Delete Post'}>
+            <Dialog onOpenChange={setOpenModal} open={openModal} title={t('Delete Post')}>
               <ConfirmClosingDialog
-                message={'Are you sure you want to delete this post?'}
+                message={t('Are you sure you want to delete this post?')}
                 onConfirm={(isConfirm: boolean) => {
                   if (isConfirm) {
                     deletePost({ postId: id ?? '' }).then(() => {
@@ -95,10 +96,10 @@ export const PostViewSelect = memo(
           {isOwner ? (
             <div className={s.menuContent}>
               <Button className={s.button} onClick={onEdit} variant={'text'}>
-                <EditIcon /> Edit Post
+                <EditIcon /> {t('Edit Post')}
               </Button>
               <Button className={s.button} onClick={() => setOpenModal(true)} variant={'text'}>
-                <Wastebasket /> Delete Post
+                <Wastebasket /> {t('Delete Post')}
               </Button>
             </div>
           ) : (
@@ -112,7 +113,7 @@ export const PostViewSelect = memo(
                       onClick={handleOnFollow}
                       variant={'text'}
                     >
-                      <UnfollowIcon /> Unfollow
+                      <UnfollowIcon /> {t('Unfollow')}
                     </Button>
                   ) : (
                     <Button
@@ -121,7 +122,7 @@ export const PostViewSelect = memo(
                       onClick={handleOnFollow}
                       variant={'text'}
                     >
-                      <FollowIcon /> Follow
+                      <FollowIcon /> {t('Follow')}
                     </Button>
                   )}
                 </>
@@ -135,7 +136,7 @@ export const PostViewSelect = memo(
                 }}
                 variant={'text'}
               >
-                <CopyLinkIcon /> Copy Link
+                <CopyLinkIcon /> {t('Copy Link')}
               </Button>
             </div>
           )}

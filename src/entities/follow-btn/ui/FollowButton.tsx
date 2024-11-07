@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { selectCurrentUser } from '@/entities/user'
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { Button, Dialog } from '@/shared/ui'
 import { useRouter } from 'next/router'

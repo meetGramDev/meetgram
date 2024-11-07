@@ -57,6 +57,7 @@ export const PostsList = ({ isFollowing, post, userId }: PostsListProps) => {
   )
 
   useEffect(() => {
+    //TODO: check is it possible replace undefined with null
     if (userId && endCursorPostId !== undefined) {
       setEndCursorPostId(undefined)
     }

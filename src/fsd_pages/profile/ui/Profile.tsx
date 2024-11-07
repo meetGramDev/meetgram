@@ -30,6 +30,8 @@ export const Profile = ({ id, isPublic = false, post, posts, publicUserData, use
     return <p className={'mt-40 text-center text-h1'}>Profile was not found</p>
   }
 
+  // TODO: мерджить стейт с SSR и RTQ;
+  // избавиться от публичных приватных постов
   return (
     <div className={'h-full'}>
       {isPublic && publicUserData && <User userData={publicUserData} />}

@@ -5,7 +5,7 @@ import {
   useDeleteProfilePhotoMutation,
   useUploadProfilePhotoMutation,
 } from '@/entities/photo'
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { isErrorServerMessagesType } from '@/shared/types'

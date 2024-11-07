@@ -1,8 +1,8 @@
-import { forwardRef, useState } from 'react'
+import { useState } from 'react'
 
 import { Post, PostView } from '@/entities/post'
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import { EditPostDialog, OnOpenChangeArgs } from '@/features/posts/editPost'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { HOME } from '@/shared/config/router'
 import { Dialog } from '@/shared/ui'
 import Link from 'next/link'
