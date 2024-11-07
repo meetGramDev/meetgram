@@ -16,6 +16,7 @@ import { useTranslate } from '@/shared/lib/useTranslate'
 import { isErrorMessageString } from '@/shared/types'
 import { Button, Dialog, ImageCarousel, TextArea } from '@/shared/ui'
 import { LikesView } from '@/widgets/likesFollowersView'
+import { clsx } from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -220,7 +221,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                   </Button>
                 </div>
               )}
-              <div className={s.postLikes}>
+              <div className={clsx(s.postLikes, !isAuth && !post.likesCount && s.withoutLikes)}>
                 {!!post.likesCount && (
                   <LikesView disabled={!isAuth} likesCount={post.likesCount} postId={post.id} />
                 )}
