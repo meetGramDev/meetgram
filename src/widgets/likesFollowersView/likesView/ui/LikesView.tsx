@@ -6,6 +6,7 @@ import { useFollowUserMutation } from '@/features/follow'
 import { UsersListDialog } from '@/features/pagination'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, Dialog, Loader } from '@/shared/ui'
+import { clsx } from 'clsx'
 
 import s from './LikesView.module.scss'
 
@@ -40,7 +41,7 @@ export const LikesView = ({ disabled = false, likesCount, postId }: Props) => {
       title={t('Likes') as string}
       trigger={
         <Button className={s.likeCount} disabled={disabled} variant={'text'}>
-          <div className={'flex -space-x-2'}>
+          <div className={clsx('flex -space-x-2', disabled && '-ml-3.5')}>
             {data?.items
               .slice(0, 3)
               .map(item => (
