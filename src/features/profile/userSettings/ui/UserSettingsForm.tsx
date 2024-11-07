@@ -23,7 +23,7 @@ type Props = {
 }
 
 export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
-  const [start, setStart] = useState<Date | undefined>()
+  const [start, setStart] = useState<Date | null | undefined>(null)
 
   const { locale } = useRouter()
 
@@ -33,7 +33,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   const { control, errors, getValues, handleSubmit, isDirty, isValid, register, setError } =
     useUserSettings(errorsTr, data)
 
-  const isDisabled = !isValid || !isDirty || (start && !validAge(Number(start)))
+  const isDisabled = !isValid || !isDirty || (start !== null && !validAge(Number(start)))
 
   useEffect(() => {
     type fieldKeys = keyof UserSettingsFormData
