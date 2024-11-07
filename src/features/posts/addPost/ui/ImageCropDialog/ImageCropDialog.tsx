@@ -134,18 +134,6 @@ export const ImageCropDialog = ({
           zoomWithScroll={false}
         />
       )}
-      {/*<Cropper*/}
-      {/*  aspect={aspect.value}*/}
-      {/*  crop={crop}*/}
-      {/*  cropShape={'rect'}*/}
-      {/*  image={imageUrl}*/}
-      {/*  onCropChange={onCropChange}*/}
-      {/*  onCropComplete={handleOnCropComplete}*/}
-      {/*  //onZoomChange={onZoomChange}*/}
-      {/*  zoom={zoom[0]}*/}
-      {/*  zoomWithScroll={false}*/}
-      {/*/>*/}
-
       <div className={s.controlCropperWrapper}>
         <div className={s.buttonCroppingWrapper}>
           <div>
