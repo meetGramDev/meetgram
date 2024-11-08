@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { UploadPhoto, UploadedPhotoType } from '@/features/profile/uploadUserPhoto'
+import { UserManagement } from '@/features/profile/userManagement'
 import {
   FormSkeleton,
   PhotoSkeleton,
@@ -74,16 +75,23 @@ const Settings: NextPageWithLayout = () => {
     }
   }
 
+  console.log(activeTab)
+
   return (
     <div>
       <TabSwitcher onValueChange={setActiveTab} tabs={tabs} value={activeTab} />
       <div className={s.settingsWrapper}>
         {data && !getProfileLoading ? (
           <>
-            <div>
-              <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
-            </div>
-            <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
+            {activeTab === 'generalInformation' && (
+              <>
+                <div>
+                  <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
+                </div>
+                <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
+              </>
+            )}
+            {activeTab === 'accountManagement' && <UserManagement />}
           </>
         ) : (
           <>
