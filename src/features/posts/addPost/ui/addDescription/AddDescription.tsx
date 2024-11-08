@@ -63,8 +63,7 @@ export const AddDescription = () => {
         childrenMetadata,
         description,
       }).unwrap()
-
-      toast.success('Post added successfully.')
+      toast.success(t('Post added successfully.'))
       closeAddingPost()
     } catch (e) {
       const message = serverErrorHandler(e)
@@ -86,9 +85,9 @@ export const AddDescription = () => {
   return (
     <>
       <DialogHeader
-        header={'Publication'}
+        header={t('Publication')}
         isLoading={isLoadingPostCreate}
-        nextBtnText={'Publish'}
+        nextBtnText={t('Publish')}
         onBack={handlePrevView}
         onNext={handlePublish}
       />
