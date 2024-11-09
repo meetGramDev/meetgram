@@ -75,8 +75,6 @@ const Settings: NextPageWithLayout = () => {
     }
   }
 
-  console.log(activeTab)
-
   return (
     <div>
       <TabSwitcher onValueChange={setActiveTab} tabs={tabs} value={activeTab} />
