@@ -3,6 +3,7 @@ import { useRef, useState } from 'react'
 import { Post } from '@/entities/post'
 import { AddingPostStage, addPostActions } from '@/features/posts/addPost'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { ImageCarousel } from '@/shared/ui'
 import { clsx } from 'clsx'
 
@@ -20,6 +21,7 @@ export const AddFilter = () => {
   const [smallImageIndex, setSmallImageIndex] = useState<number>(0)
   const [bigImageIndex, setBigImageIndex] = useState<number>(0)
   const filteredImages = useRef(new Map())
+  const t = useTranslate()
 
   const selectImage = (filter: string, index: number) => {
     const canvas = canvasRef.current
@@ -164,7 +166,7 @@ export const AddFilter = () => {
 
   return (
     <div className={s.container}>
-      <DialogHeader header={'Filters'} onBack={handlePrevStep} onNext={handleNextView} />
+      <DialogHeader header={t('Filters')} onBack={handlePrevStep} onNext={handleNextView} />
       <div className={s.content}>
         <div className={s.leftSide}>
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
