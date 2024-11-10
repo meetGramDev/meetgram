@@ -21,3 +21,15 @@
   margin-bottom: 1.125rem;
   font: var(--font-h3);
 }
+
+.paymentWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.paymentButton {
+  width: 96px;
+  height: 64px;
+  padding: 0;
+}

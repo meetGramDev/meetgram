@@ -1,11 +1,22 @@
 import { useState } from 'react'
 
+import { PayPal } from '@/shared/assets/icons/PayPal'
+import { Stripe } from '@/shared/assets/icons/Stripe'
 import { Button, Card } from '@/shared/ui'
+import { RadioGroup, RadioGroupProps } from '@/shared/ui/radioGroup'
+import Link from 'next/link'
 
 import s from './UserManagement.module.scss'
 
 export const UserManagement = () => {
   const [subscription, setSubscription] = useState<boolean>(false)
+
+  const radioOptions: RadioGroupProps = {
+    options: [
+      { label: 'Personal', value: 'Personal' },
+      { label: 'Business', value: 'Business' },
+    ],
+  }
 
   return (
     <div className={s.wrapper}>
@@ -13,6 +24,8 @@ export const UserManagement = () => {
         My subscriptions
       </AccountManagerField>
       <AccountManagerField fieldTitle={'Account type:'}>
+        <RadioGroup options={radioOptions.options}></RadioGroup>
+
         <Button onClick={() => setSubscription(false)} variant={'text'}>
           Personal
         </Button>
@@ -36,6 +49,25 @@ export const UserManagement = () => {
           </Button>
         </AccountManagerField>
       )}
+      <div className={s.paymentWrapper}>
+        <Button
+          as={Link}
+          className={s.paymentButton}
+          href={'https://www.paypal.com/ru/home'}
+          variant={'outlined'}
+        >
+          <PayPal />
+        </Button>
+        or
+        <Button
+          as={Link}
+          className={s.paymentButton}
+          href={'https://stripe.com/'}
+          variant={'outlined'}
+        >
+          <Stripe />
+        </Button>
+      </div>
     </div>
   )
 }
