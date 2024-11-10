@@ -7,11 +7,14 @@
 
 .labelWrapper {
   cursor: default;
+
   display: flex;
   align-items: center;
-  color: var(--light-color-100);
-  font: var(--font-regular-bold);
+
   width: min-content;
+
+  font: var(--font-regular-bold);
+  color: var(--light-color-100);
 
   &:hover {
     color: var(--light-color-100);
@@ -27,9 +30,11 @@
   cursor: pointer;
 
   position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 1rem;
   height: 1rem;
   margin-right: 0.75rem;
@@ -84,6 +89,7 @@
 
 .indicator {
   position: absolute;
+
   &::after {
     content: '';
 
