@@ -34,9 +34,11 @@
 
 .item {
   position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   width: 1rem;
   height: 1rem;
   margin-right: 0.75rem;
@@ -90,8 +92,9 @@
 }
 
 .indicator {
-  position: absolute;
   cursor: pointer;
+  position: absolute;
+
   &::after {
     content: '';
 
