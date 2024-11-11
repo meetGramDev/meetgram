@@ -6,7 +6,6 @@
 }
 
 .labelWrapper {
-  cursor: default;
   display: flex;
   align-items: center;
   color: var(--light-color-100);
@@ -23,9 +22,11 @@
   }
 }
 
-.item {
+.label {
   cursor: pointer;
+}
 
+.item {
   position: relative;
   display: flex;
   align-items: center;
