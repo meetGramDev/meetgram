@@ -25,7 +25,11 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadixRadioGroup.Root>, Ra
         {options.map((el, index) => (
           <span className={clsx(s.labelWrapper, el.disabled && s.disabled, className)} key={index}>
             <RadioItem {...el} id={el.value} />
-            <label className={s.label} onClick={() => document.getElementById(el.value)?.click()}>
+            <label
+              aria-disabled={el.disabled}
+              className={clsx(s.label, el.disabled && s.disabled)}
+              onClick={() => document.getElementById(el.value)?.click()}
+            >
               {el.label}
             </label>
           </span>
