@@ -14,9 +14,10 @@ import { ServerMessagesType } from '@/shared/api'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { NextPageWithLayout, isErrorServerMessagesType } from '@/shared/types'
-import { TabSwitcher } from '@/shared/ui'
-import { TabType } from '@/shared/ui/tabSwitcher/TabSwitcher'
+import { TabContent, TabSwitcher, TabType } from '@/shared/ui'
 import { getMainLayout } from '@/widgets/layouts/ui/MainLayout/MainLayout'
+import { AccountManagement } from '@/widgets/settings-tabs/account-management'
+import { MyPayments } from '@/widgets/settings-tabs/my-payments'
 import { useRouter } from 'next/router'
 
 import s from './index.module.scss'
@@ -74,26 +75,38 @@ const Settings: NextPageWithLayout = () => {
     }
   }
 
+  // TODO сделать отдельную компоненту для настроек профиля
   return (
     <div>
-      <TabSwitcher onValueChange={setActiveTab} tabs={tabs} value={activeTab} />
-      <div className={s.settingsWrapper}>
-        {data && !getProfileLoading ? (
-          <>
-            <div>
-              <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
-            </div>
-            <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
-          </>
-        ) : (
-          <>
-            <div>
-              <PhotoSkeleton />
-            </div>
-            <FormSkeleton />
-          </>
-        )}
-      </div>
+      <TabSwitcher onValueChange={setActiveTab} tabs={tabs} value={activeTab}>
+        <TabContent value={activeTab}>
+          <div className={s.settingsWrapper}>
+            {data && !getProfileLoading ? (
+              <>
+                <div>
+                  <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
+                </div>
+                <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
+              </>
+            ) : (
+              <>
+                <div>
+                  <PhotoSkeleton />
+                </div>
+                <FormSkeleton />
+              </>
+            )}
+          </div>
+        </TabContent>
+
+        <TabContent value={activeTab}>
+          <AccountManagement />
+        </TabContent>
+
+        <TabContent value={activeTab}>
+          <MyPayments />
+        </TabContent>
+      </TabSwitcher>
     </div>
   )
 }

@@ -29,6 +29,6 @@ export const config = {
      * - public/images (static images)
      * - page redirected from github OAuth
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|icon.svg|apple-touch-icon.png|site.webmanifest|images|github|terms-of-service|privacy-policy|public-page|profile).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|icon.svg|apple-touch-icon.png|site.webmanifest|images|github|terms-of-service|privacy-policy|public-page|profile|payment).*)',
   ],
 }

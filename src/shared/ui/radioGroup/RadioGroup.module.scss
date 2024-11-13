@@ -34,6 +34,7 @@
 
 .item {
   position: relative;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,8 +92,9 @@
 }
 
 .indicator {
-  position: absolute;
   cursor: pointer;
+  position: absolute;
+
   &::after {
     content: '';
 
