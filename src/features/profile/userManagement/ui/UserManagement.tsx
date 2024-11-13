@@ -9,13 +9,26 @@ import Link from 'next/link'
 import s from './UserManagement.module.scss'
 
 export const UserManagement = () => {
-  const [subscription, setSubscription] = useState<boolean>(false)
-
-  const radioOptions: RadioGroupProps = {
+  const [radioOptions, setRadioOptions] = useState({
     options: [
-      { label: 'Personal', value: 'Personal' },
-      { label: 'Business', value: 'Business' },
+      { checked: true, disabled: false, label: 'Personal', value: 'Personal' },
+      { checked: false, disabled: false, label: 'Business', value: 'Business' },
     ],
+  })
+
+  // const radioOptions: RadioGroupProps = {
+  //   options: [
+  //     { checked: true, disabled: false, label: 'Personal', value: 'Personal' },
+  //     { checked: false, disabled: false, label: 'Business', value: 'Business' },
+  //   ],
+  // }
+
+  const onValueChange = (value: string) => {
+    radioOptions.options.map(option => {
+      if (option.value === value) {
+        setRadioOptions({ ...radioOptions, options: [...radioOptions.options] })
+      }
+    })
   }
 
   return (
@@ -24,17 +37,17 @@ export const UserManagement = () => {
         My subscriptions
       </AccountManagerField>
       <AccountManagerField fieldTitle={'Account type:'}>
-        <RadioGroup options={radioOptions.options}></RadioGroup>
+        <RadioGroup onValueChange={onValueChange} options={radioOptions.options}></RadioGroup>
 
-        <Button onClick={() => setSubscription(false)} variant={'text'}>
-          Personal
-        </Button>
-        <br />
-        <Button onClick={() => setSubscription(true)} variant={'text'}>
-          Business
-        </Button>
+        {/*<Button onClick={() => setSubscription(false)} variant={'text'}>*/}
+        {/*  Personal*/}
+        {/*</Button>*/}
+        {/*<br />*/}
+        {/*<Button onClick={() => setSubscription(true)} variant={'text'}>*/}
+        {/*  Business*/}
+        {/*</Button>*/}
       </AccountManagerField>
-      {subscription && (
+      {radioOptions.options[1].value && (
         <AccountManagerField fieldTitle={'Change your subscription:'}>
           <Button onClick={() => {}} variant={'text'}>
             $10 per 1 day
