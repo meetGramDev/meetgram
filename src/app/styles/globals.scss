@@ -9,6 +9,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-family: Inter, system-ui, sans-serif;
+  }
+}
+
 body {
   font: var(--font-regular);
   color: var(--light-color-100);
