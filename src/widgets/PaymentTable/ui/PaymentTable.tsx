@@ -1,4 +1,4 @@
-import { PaymentModel } from '@/features/subscriptions'
+import { PaymentModel } from '@/features/profile/subscriptions'
 import { cn } from '@/shared/lib'
 import {
   Table,

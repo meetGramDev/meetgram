@@ -1,4 +1,4 @@
-import { SubscriptionType } from '@/features/subscriptions'
+import { SubscriptionType } from '@/features/profile/subscriptions'
 
 export function formatSubscriptionType(subscription: SubscriptionType) {
   switch (subscription) {
