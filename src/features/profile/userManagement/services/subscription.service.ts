@@ -13,6 +13,13 @@ type DataResponseType = {
 }
 export const subscriptionServiceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    getCostOfPaymentSubscription: builder.query<any, any>({
+      query: body => ({
+        method: 'GET',
+        url: '/subscriptions/cost-of-payment-subscriptions',
+      }),
+    }),
+
     getCurrentPayment: builder.query<CurrentPaymentType, void>({
       query: body => ({
         method: 'GET',
@@ -46,4 +53,5 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
 //   }),
 // })
 
-export const { useGetCurrentPaymentQuery } = subscriptionServiceApi
+export const { useGetCostOfPaymentSubscriptionQuery, useGetCurrentPaymentQuery } =
+  subscriptionServiceApi

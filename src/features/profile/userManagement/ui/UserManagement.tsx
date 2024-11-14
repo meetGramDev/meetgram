@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
-import { useGetCurrentPaymentQuery } from '@/features/profile/userManagement/services/subscription.service'
+import {
+  useGetCostOfPaymentSubscriptionQuery,
+  useGetCurrentPaymentQuery,
+} from '@/features/profile/userManagement/services/subscription.service'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
 import { Button, Card } from '@/shared/ui'
@@ -11,14 +14,13 @@ import s from './UserManagement.module.scss'
 
 export const UserManagement = () => {
   const { data } = useGetCurrentPaymentQuery()
+  const { data: getCostOfPayment } = useGetCostOfPaymentSubscriptionQuery()
   const [radioOptions, setRadioOptions] = useState<RadioGroupProps>({
     options: [
       { checked: true, disabled: false, label: 'Personal', value: 'Personal' },
       { checked: false, disabled: false, label: 'Business', value: 'Business' },
     ],
   })
-
-  console.log(data)
 
   // const radioOptions: RadioGroupProps = {
   //   options: [
@@ -41,6 +43,8 @@ export const UserManagement = () => {
     }
     setRadioOptions(copyOptions)
   }
+
+  console.log(getCostOfPayment)
 
   return (
     <div className={s.wrapper}>
