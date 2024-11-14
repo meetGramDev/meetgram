@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { UploadPhoto, UploadedPhotoType } from '@/features/profile/uploadUserPhoto'
+import { UserManagement } from '@/features/profile/userManagement'
 import {
   FormSkeleton,
   PhotoSkeleton,
@@ -113,7 +114,8 @@ const Settings: NextPageWithLayout = () => {
         </TabContent>
 
         <TabContent value={tabs[2].value}>
-          <AccountManagement />
+          {/*<AccountManagement />*/}
+          <UserManagement />
         </TabContent>
 
         <TabContent value={tabs[3].value}>

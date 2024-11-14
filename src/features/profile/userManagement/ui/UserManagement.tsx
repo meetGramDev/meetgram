@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useGetCurrentPaymentQuery } from '@/features/profile/userManagement/services/subscription.service'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
 import { Button, Card } from '@/shared/ui'
@@ -9,12 +10,15 @@ import Link from 'next/link'
 import s from './UserManagement.module.scss'
 
 export const UserManagement = () => {
-  const [radioOptions, setRadioOptions] = useState({
+  const { data } = useGetCurrentPaymentQuery()
+  const [radioOptions, setRadioOptions] = useState<RadioGroupProps>({
     options: [
       { checked: true, disabled: false, label: 'Personal', value: 'Personal' },
       { checked: false, disabled: false, label: 'Business', value: 'Business' },
     ],
   })
+
+  console.log(data)
 
   // const radioOptions: RadioGroupProps = {
   //   options: [
@@ -24,17 +28,24 @@ export const UserManagement = () => {
   // }
 
   const onValueChange = (value: string) => {
-    radioOptions.options.map(option => {
-      if (option.value === value) {
-        setRadioOptions({ ...radioOptions, options: [...radioOptions.options] })
-      }
-    })
+    const copyOptions = { ...radioOptions, options: radioOptions.options.map(option => option) }
+
+    if (value === 'Personal') {
+      copyOptions.options[0].checked = true
+      copyOptions.options[1].checked = false
+    }
+
+    if (value === 'Business') {
+      copyOptions.options[0].checked = false
+      copyOptions.options[1].checked = true
+    }
+    setRadioOptions(copyOptions)
   }
 
   return (
     <div className={s.wrapper}>
       <AccountManagerField fieldTitle={'Current Subscription:'}>
-        My subscriptions
+        {data?.data?.length ? data?.data : 'You do not have subscriptions'}
       </AccountManagerField>
       <AccountManagerField fieldTitle={'Account type:'}>
         <RadioGroup onValueChange={onValueChange} options={radioOptions.options}></RadioGroup>
@@ -47,7 +58,7 @@ export const UserManagement = () => {
         {/*  Business*/}
         {/*</Button>*/}
       </AccountManagerField>
-      {radioOptions.options[1].value && (
+      {radioOptions.options[1].checked && (
         <AccountManagerField fieldTitle={'Change your subscription:'}>
           <Button onClick={() => {}} variant={'text'}>
             $10 per 1 day
@@ -62,25 +73,27 @@ export const UserManagement = () => {
           </Button>
         </AccountManagerField>
       )}
-      <div className={s.paymentWrapper}>
-        <Button
-          as={Link}
-          className={s.paymentButton}
-          href={'https://www.paypal.com/ru/home'}
-          variant={'outlined'}
-        >
-          <PayPal />
-        </Button>
-        or
-        <Button
-          as={Link}
-          className={s.paymentButton}
-          href={'https://stripe.com/'}
-          variant={'outlined'}
-        >
-          <Stripe />
-        </Button>
-      </div>
+      {radioOptions.options[1].checked && (
+        <div className={s.paymentWrapper}>
+          <Button
+            as={Link}
+            className={s.paymentButton}
+            href={'https://www.paypal.com/ru/home'}
+            variant={'outlined'}
+          >
+            <PayPal />
+          </Button>
+          or
+          <Button
+            as={Link}
+            className={s.paymentButton}
+            href={'https://stripe.com/'}
+            variant={'outlined'}
+          >
+            <Stripe />
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
