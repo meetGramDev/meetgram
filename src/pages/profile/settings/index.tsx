@@ -11,12 +11,14 @@ import {
   useUpdateProfileMutation,
 } from '@/features/profile/userSettings'
 import { ServerMessagesType } from '@/shared/api'
+import { PROFILE_SETTINGS } from '@/shared/config/router'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { NextPageWithLayout, isErrorServerMessagesType } from '@/shared/types'
-import { TabSwitcher } from '@/shared/ui'
-import { TabType } from '@/shared/ui/tabSwitcher/TabSwitcher'
+import { TabContent, TabSwitcher, TabType } from '@/shared/ui'
 import { getMainLayout } from '@/widgets/layouts/ui/MainLayout/MainLayout'
+import { AccountManagement } from '@/widgets/settings-tabs/account-management'
+import { MyPayments } from '@/widgets/settings-tabs/my-payments'
 import { useRouter } from 'next/router'
 
 import s from './index.module.scss'
@@ -27,19 +29,20 @@ const useTabs = () => {
 
   return useMemo(() => {
     return [
-      { text: t('General Information'), value: 'generalInformation' },
+      { text: t('General Information'), value: 'general-information' },
       { text: t('Devices'), value: 'devices' },
-      { text: t('Account Management'), value: 'accountManagement' },
-      { text: t('My Payments'), value: 'myPayments' },
+      { text: t('Account Management'), value: 'account-management' },
+      { text: t('My Payments'), value: 'my-payments' },
     ]
   }, [locale])
 }
 
 const Settings: NextPageWithLayout = () => {
   const tabs: TabType[] = useTabs()
-  const { data, isLoading: getProfileLoading } = useGetProfileQuery()
+  const router = useRouter()
+  const activeTab = Object.keys(router.query)[0] as string | undefined
 
-  const [activeTab, setActiveTab] = useState(tabs[0].value)
+  const { data, isLoading: getProfileLoading } = useGetProfileQuery()
   const [error, setError] = useState<ServerMessagesType[]>([])
 
   const profileAvatar: UploadedPhotoType | undefined =
@@ -74,26 +77,49 @@ const Settings: NextPageWithLayout = () => {
     }
   }
 
+  const handleTabChange = (value: string) => {
+    if (value === tabs[0].value) {
+      router.push(PROFILE_SETTINGS, undefined, { locale: router.locale, shallow: true })
+    } else {
+      router.push(`${router.pathname}?${value}`, undefined, {
+        locale: router.locale,
+        shallow: true,
+      })
+    }
+  }
+
+  // TODO сделать отдельную компоненту для настроек профиля
   return (
     <div>
-      <TabSwitcher onValueChange={setActiveTab} tabs={tabs} value={activeTab} />
-      <div className={s.settingsWrapper}>
-        {data && !getProfileLoading ? (
-          <>
-            <div>
-              <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
-            </div>
-            <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
-          </>
-        ) : (
-          <>
-            <div>
-              <PhotoSkeleton />
-            </div>
-            <FormSkeleton />
-          </>
-        )}
-      </div>
+      <TabSwitcher onValueChange={handleTabChange} tabs={tabs} value={activeTab ?? tabs[0].value}>
+        <TabContent value={tabs[0].value}>
+          <div className={s.settingsWrapper}>
+            {data && !getProfileLoading ? (
+              <>
+                <div>
+                  <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
+                </div>
+                <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
+              </>
+            ) : (
+              <>
+                <div>
+                  <PhotoSkeleton />
+                </div>
+                <FormSkeleton />
+              </>
+            )}
+          </div>
+        </TabContent>
+
+        <TabContent value={tabs[2].value}>
+          <AccountManagement />
+        </TabContent>
+
+        <TabContent value={tabs[3].value}>
+          <MyPayments />
+        </TabContent>
+      </TabSwitcher>
     </div>
   )
 }
