@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 
 import { selectIsUserAuth } from '@/entities/user'
-import { PROFILE_SETTINGS } from '@/shared/config/router'
+import { ACCOUNT_MANAGEMENT } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
+import { sleep } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
 import { AccountManagementProps, PaymentParams } from '@/widgets/settings-tabs/account-management'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
@@ -38,8 +39,9 @@ export default function Index({ success }: InferGetServerSidePropsType<typeof ge
 
   useEffect(() => {
     if (isAuth) {
-      // router.replace(ACCOUNT_MANAGEMENT)
-      router.replace(PROFILE_SETTINGS)
+      sleep(2000).then(() => {
+        router.replace(`${ACCOUNT_MANAGEMENT}=''&success=${success}`)
+      })
     }
   }, [isAuth])
 

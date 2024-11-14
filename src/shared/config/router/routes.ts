@@ -12,7 +12,7 @@ export const {
   SIGN_UP,
   TERMS_OF_SERVICE,
 } = {
-  ACCOUNT_MANAGEMENT: '/profile/settings/account-management',
+  ACCOUNT_MANAGEMENT: '/profile/settings?account-management',
   ALL_PUBLIC_POSTS: '/public-posts/all',
   CREATE_NEW_PASSWORD: '/auth/create-new-password',
   FORGOT_PASSWORD: '/auth/forgot-password',
