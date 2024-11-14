@@ -5,7 +5,7 @@ import { ACCOUNT_MANAGEMENT } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { sleep } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
-import { AccountManagementProps, PaymentParams } from '@/widgets/settings-tabs/account-management'
+import { PaymentParams } from '@/widgets/settings-tabs/account-management'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 
@@ -31,7 +31,7 @@ export const getServerSideProps = async function (ctx) {
       success: true,
     },
   }
-} satisfies GetServerSideProps<AccountManagementProps>
+} satisfies GetServerSideProps<{ success: boolean }>
 
 export default function Index({ success }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter()

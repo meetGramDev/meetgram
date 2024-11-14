@@ -1,5 +1,1 @@
-export {
-  AccountManagement,
-  type AccountManagementProps,
-  type PaymentParams,
-} from './ui/AccountManagement'
+export { AccountManagement, type PaymentParams } from './ui/AccountManagement'
