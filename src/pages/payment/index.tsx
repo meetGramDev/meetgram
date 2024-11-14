@@ -47,7 +47,6 @@ export default function Index({ success }: InferGetServerSidePropsType<typeof ge
 
   return (
     <div className={'w-full'}>
-      Payment: {success ? 'Оплата прошла' : 'Оплата не прошла'}
       <div className={'m-auto mt-[30dvh] flex w-1/2 items-center justify-center'}>
         <Loader />
       </div>
