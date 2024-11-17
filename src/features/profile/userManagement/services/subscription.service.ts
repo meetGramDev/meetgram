@@ -1,10 +1,10 @@
 import { baseApi } from '@/shared/api'
 
-type CurrentPaymentType = {
+export type CurrentPaymentType = {
   data?: DataResponseType[]
   hasAutoRenewal: boolean
 }
-type DataResponseType = {
+export type DataResponseType = {
   autoRenewal: boolean
   dateOfPayment: string
   endDateOfSubscription: string
@@ -12,10 +12,10 @@ type DataResponseType = {
   userId: number
 }
 
-type GetCostOfPaymentSubscriptionType = {
+export type GetCostOfPaymentSubscriptionType = {
   data: CostOfPaymant[]
 }
-type CostOfPaymant = {
+export type CostOfPaymant = {
   amount: number
   typeDescription: Period
 }
@@ -66,5 +66,8 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
 //   }),
 // })
 
-export const { useGetCostOfPaymentSubscriptionQuery, useGetCurrentPaymentQuery } =
-  subscriptionServiceApi
+export const {
+  useGetCostOfPaymentSubscriptionQuery,
+  useGetCurrentPaymentQuery,
+  useLazyGetCostOfPaymentSubscriptionQuery,
+} = subscriptionServiceApi
