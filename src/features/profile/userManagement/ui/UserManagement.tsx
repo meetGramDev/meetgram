@@ -12,15 +12,29 @@ import Link from 'next/link'
 
 import s from './UserManagement.module.scss'
 
+const managerItems: CreateDataProps[] = [
+  { label: 'Personal', value: 'Personal' },
+  { label: 'Business', value: 'Business' },
+]
+
 export const UserManagement = () => {
   const { data } = useGetCurrentPaymentQuery()
   const { data: getCostOfPayment } = useGetCostOfPaymentSubscriptionQuery()
-  const [radioOptions, setRadioOptions] = useState<RadioGroupProps>({
-    options: [
-      { checked: true, disabled: false, label: 'Personal', value: 'Personal' },
-      { checked: false, disabled: false, label: 'Business', value: 'Business' },
-    ],
-  })
+
+  const [radioOptions, setRadioOptions] = useState<RadioGroupProps>(
+    createRadioGroupData(managerItems)
+  )
+
+  const costOfPaymentData = getCostOfPayment?.data.map(cost => ({
+    checked: false,
+    disabled: false,
+    label: cost.typeDescription,
+    value: cost.amount,
+  }))
+
+  // const [paymentData, setPaymentData] = useState<RadioGroupProps>({ options: costOfPaymentData })
+
+  console.log(radioOptions)
 
   // const radioOptions: RadioGroupProps = {
   //   options: [
@@ -44,8 +58,6 @@ export const UserManagement = () => {
     setRadioOptions(copyOptions)
   }
 
-  console.log(getCostOfPayment)
-
   return (
     <div className={s.wrapper}>
       <AccountManagerField fieldTitle={'Current Subscription:'}>
@@ -64,6 +76,7 @@ export const UserManagement = () => {
       </AccountManagerField>
       {radioOptions.options[1].checked && (
         <AccountManagerField fieldTitle={'Change your subscription:'}>
+          {/*<RadioGroup options={} />*/}
           <Button onClick={() => {}} variant={'text'}>
             $10 per 1 day
           </Button>
@@ -113,6 +126,44 @@ const AccountManagerField = ({ children, fieldTitle }: AccountManagementProps) =
       <Card className={s.card}>{children}</Card>
     </div>
   )
+}
+
+type CreateDataProps = {
+  label: string
+  value: string
+}
+const createRadioGroupData = (valueData: CreateDataProps[]): RadioGroupProps => {
+  let returnedData
+
+  if (valueData.length <= 1) {
+    returnedData = {
+      options: [
+        { checked: true, disabled: false, label: valueData[0].label, value: valueData[0].value },
+      ],
+    }
+  } else {
+    returnedData = {
+      options: valueData.map((el, index) => {
+        if (index === 0) {
+          return {
+            checked: true,
+            disabled: false,
+            label: el.label,
+            value: el.value,
+          }
+        } else {
+          return {
+            checked: false,
+            disabled: false,
+            label: el.label,
+            value: el.value,
+          }
+        }
+      }),
+    }
+  }
+
+  return returnedData
 }
 
 //позже переписать на switch case

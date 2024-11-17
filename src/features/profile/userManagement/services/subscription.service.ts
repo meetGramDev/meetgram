@@ -11,9 +11,22 @@ type DataResponseType = {
   subscriptionId: string
   userId: number
 }
+
+type GetCostOfPaymentSubscriptionType = {
+  data: CostOfPaymant[]
+}
+type CostOfPaymant = {
+  amount: number
+  typeDescription: Period
+}
+enum Period {
+  day = 'DAY',
+  month = 'MONTHLY',
+  week = 'WEEKLY',
+}
 export const subscriptionServiceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getCostOfPaymentSubscription: builder.query<any, any>({
+    getCostOfPaymentSubscription: builder.query<GetCostOfPaymentSubscriptionType, void>({
       query: body => ({
         method: 'GET',
         url: '/subscriptions/cost-of-payment-subscriptions',
