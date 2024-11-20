@@ -24,6 +24,11 @@
 
 .radioGroup {
   width: max-content;
+  padding-bottom: 12px;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
 }
 
 .paymentWrapper {
