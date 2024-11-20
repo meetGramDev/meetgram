@@ -22,6 +22,10 @@
   font: var(--font-h3);
 }
 
+.radioGroup {
+  width: max-content;
+}
+
 .paymentWrapper {
   display: flex;
   align-items: center;

@@ -66,8 +66,5 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
 //   }),
 // })
 
-export const {
-  useGetCostOfPaymentSubscriptionQuery,
-  useGetCurrentPaymentQuery,
-  useLazyGetCostOfPaymentSubscriptionQuery,
-} = subscriptionServiceApi
+export const { useGetCostOfPaymentSubscriptionQuery, useGetCurrentPaymentQuery } =
+  subscriptionServiceApi

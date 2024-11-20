@@ -1,10 +1,9 @@
-import { useCallback, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   GetCostOfPaymentSubscriptionType,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,
-  useLazyGetCostOfPaymentSubscriptionQuery,
 } from '@/features/profile/userManagement/services/subscription.service'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
@@ -21,40 +20,71 @@ const managerItems: CreateDataProps[] = [
 
 export const UserManagement = () => {
   const { data } = useGetCurrentPaymentQuery()
-  const { data: getCostOfPayment } = useGetCostOfPaymentSubscriptionQuery()
-  let newCostOfPayment
+  const { data: getCostOfPayment, isSuccess } = useGetCostOfPaymentSubscriptionQuery()
 
-  if (getCostOfPayment) {
-    newCostOfPayment = changeCostOfPayment(getCostOfPayment)
+  const changeCostOfPayment = (data: GetCostOfPaymentSubscriptionType): CreateDataProps[] => {
+    if (data === undefined) {
+      return
+    }
+    const newData: CreateDataProps[] = data.data.map(item => {
+      let changedLabel: string = item.typeDescription
+
+      if (item.typeDescription === 'DAY') {
+        changedLabel = `$${item.amount} per 1 day`
+        // changedLabel = '$10 per 1 day'
+      } else if (item.typeDescription === 'WEEKLY') {
+        changedLabel = `$${item.amount} per 7 day`
+      } else if (item.typeDescription === 'MONTHLY') {
+        changedLabel = `$${item.amount} per month`
+      }
+
+      return {
+        label: changedLabel,
+        value: `${item.amount}`,
+      }
+    })
+
+    return newData
   }
-
-  const [cost, setCost] = useState<RadioGroupProps>(createRadioGroupData(newCostOfPayment))
+  let newCostOfPayment
 
   const [radioOptions, setRadioOptions] = useState<RadioGroupProps>(
     createRadioGroupData(managerItems)
   )
 
-  // const [paymentData, setPaymentData] = useState<RadioGroupProps>({ options: costOfPaymentData })
-  // const radioOptions: RadioGroupProps = {
-  //   options: [
-  //     { checked: true, disabled: false, label: 'Personal', value: 'Personal' },
-  //     { checked: false, disabled: false, label: 'Business', value: 'Business' },
-  //   ],
-  // }
+  const [cost, setCost] = useState<RadioGroupProps | undefined>(
+    createRadioGroupData(changeCostOfPayment(newCostOfPayment))
+  )
+
+  useEffect(() => {
+    newCostOfPayment = changeCostOfPayment(getCostOfPayment)
+    setCost(createRadioGroupData(newCostOfPayment))
+  }, [getCostOfPayment])
 
   const onValueChange = (value: string) => {
-    const copyOptions = { ...radioOptions, options: radioOptions.options.map(option => option) }
+    setRadioOptions({
+      ...radioOptions,
+      options: radioOptions.options.map(option => {
+        if (option.value === value) {
+          return { ...option, checked: true }
+        } else {
+          return { ...option, checked: false }
+        }
+      }),
+    })
+  }
 
-    if (value === 'Personal') {
-      copyOptions.options[0].checked = true
-      copyOptions.options[1].checked = false
-    }
-
-    if (value === 'Business') {
-      copyOptions.options[0].checked = false
-      copyOptions.options[1].checked = true
-    }
-    setRadioOptions(copyOptions)
+  const onValueChangeSubscriptionHandler = (value: string) => {
+    setCost({
+      ...cost,
+      options: cost.options.map((item, count) => {
+        if (item.value === value) {
+          return { ...item, checked: true }
+        } else {
+          return { ...item, checked: false }
+        }
+      }),
+    })
   }
 
   return (
@@ -63,31 +93,15 @@ export const UserManagement = () => {
         {data?.data?.length ? data?.data : 'You do not have subscriptions'}
       </AccountManagerField>
       <AccountManagerField fieldTitle={'Account type:'}>
-        <RadioGroup onValueChange={onValueChange} options={radioOptions.options}></RadioGroup>
-
-        {/*<Button onClick={() => setSubscription(false)} variant={'text'}>*/}
-        {/*  Personal*/}
-        {/*</Button>*/}
-        {/*<br />*/}
-        {/*<Button onClick={() => setSubscription(true)} variant={'text'}>*/}
-        {/*  Business*/}
-        {/*</Button>*/}
+        <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
       </AccountManagerField>
       {radioOptions.options[1].checked && (
         <AccountManagerField fieldTitle={'Change your subscription:'}>
-          {cost && <RadioGroup options={cost.options} />}
-
-          {/*<Button onClick={() => {}} variant={'text'}>*/}
-          {/*  $10 per 1 day*/}
-          {/*</Button>*/}
-          {/*<br />*/}
-          {/*<Button onClick={() => {}} variant={'text'}>*/}
-          {/*  $50 per 7 day*/}
-          {/*</Button>*/}
-          {/*<br />*/}
-          {/*<Button onClick={() => {}} variant={'text'}>*/}
-          {/*  $100 per month*/}
-          {/*</Button>*/}
+          <RadioGroup
+            className={s.radioGroup}
+            onValueChange={onValueChangeSubscriptionHandler}
+            options={cost.options}
+          />
         </AccountManagerField>
       )}
       {radioOptions.options[1].checked && (
@@ -167,28 +181,6 @@ const createRadioGroupData = (valueData: CreateDataProps[]): RadioGroupProps => 
   }
 
   return returnedData
-}
-
-const changeCostOfPayment = (data: GetCostOfPaymentSubscriptionType): CreateDataProps[] => {
-  const newData: CreateDataProps[] = data.data.map(item => {
-    let changedLabel: string = item.typeDescription
-
-    if (item.typeDescription === 'DAY') {
-      //changedLabel = `$${item.amount} per 1 day}`
-      changedLabel = '$10 per 1 day'
-    } else if (item.typeDescription === 'WEEKLY') {
-      changedLabel = `$${item.amount} per 7 day}`
-    } else if (item.typeDescription === 'MONTHLY') {
-      changedLabel = `$${item.amount} per month}`
-    }
-
-    return {
-      label: changedLabel,
-      value: `${item.amount}`,
-    }
-  })
-
-  return newData
 }
 
 //позже переписать на switch case
