@@ -106,23 +106,25 @@ export const UserManagement = () => {
       )}
       {radioOptions.options[1].checked && (
         <div className={s.paymentWrapper}>
-          <Button
-            as={Link}
-            className={s.paymentButton}
-            href={'https://www.paypal.com/ru/home'}
-            variant={'outlined'}
-          >
-            <PayPal />
-          </Button>
-          or
-          <Button
-            as={Link}
-            className={s.paymentButton}
-            href={'https://stripe.com/'}
-            variant={'outlined'}
-          >
-            <Stripe />
-          </Button>
+          <div className={s.paymentButtonWrapper}>
+            <Button
+              as={Link}
+              className={s.paymentButton}
+              href={'https://www.paypal.com/ru/home'}
+              variant={'outlined'}
+            >
+              <PayPal />
+            </Button>
+            or
+            <Button
+              as={Link}
+              className={s.paymentButton}
+              href={'https://stripe.com/'}
+              variant={'outlined'}
+            >
+              <Stripe />
+            </Button>
+          </div>
         </div>
       )}
     </div>
