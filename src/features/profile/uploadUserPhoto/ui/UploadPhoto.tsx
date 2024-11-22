@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 
 import {
   Photo,
@@ -10,6 +11,7 @@ import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { isErrorServerMessagesType } from '@/shared/types'
 import { Button, Dialog } from '@/shared/ui'
+import clsx from 'clsx'
 
 import s from './UploadPhoto.module.scss'
 
@@ -29,6 +31,7 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
   const [openDelete, setOpenDelete] = useState(false)
   const [error, setError] = useState('')
   const t = useTranslate()
+  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
 
   useClientProgress(isUploadLoading || isRemoveLoading)
 
@@ -76,7 +79,12 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
   }
 
   return (
-    <div className={'flex h-full w-full flex-col items-center gap-6 text-center'}>
+    <div
+      className={clsx(
+        'flex h-full w-full flex-col items-center gap-6 text-center',
+        isMobile && s.isMobile
+      )}
+    >
       {!avatar ? (
         <Photo type={'empty'} />
       ) : (

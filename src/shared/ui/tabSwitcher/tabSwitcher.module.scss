@@ -63,3 +63,16 @@
 .text {
   font: var(--font-h3);
 }
+
+@media (width <= 650px) {
+  .list {
+    position: absolute;
+    overflow: auto;
+    width: 100vw;
+    white-space: nowrap;
+  }
+
+  .content {
+    padding-top: 35px;
+  }
+}
