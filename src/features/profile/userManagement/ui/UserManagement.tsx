@@ -1,18 +1,28 @@
 import { useEffect, useState } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 import {
+  CostOfPaymant,
+  CreatePaymentRequestType,
   GetCostOfPaymentSubscriptionType,
+  PaymentMethod,
+  useCreatePaymentSubscriptionMutation,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,
 } from '@/features/profile/userManagement/services/subscription.service'
+import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
+import { serverErrorHandler, useClientProgress } from '@/shared/lib'
 import { Button, Card } from '@/shared/ui'
 import { RadioGroup, RadioGroupProps } from '@/shared/ui/radioGroup'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './UserManagement.module.scss'
+
+export type CreateDataProps = {
+  label: string
+  value: string
+}
 
 const managerItems: CreateDataProps[] = [
   { label: 'Personal', value: 'Personal' },
@@ -29,17 +39,16 @@ type UseFormType = {
 export const UserManagement = () => {
   const { data } = useGetCurrentPaymentQuery()
   const { data: getCostOfPayment, isSuccess } = useGetCostOfPaymentSubscriptionQuery()
+  const [createPayment, { isLoading }] = useCreatePaymentSubscriptionMutation()
+
+  const router = useRouter()
 
   const changeCostOfPayment = (data: GetCostOfPaymentSubscriptionType): CreateDataProps[] => {
-    if (data === undefined) {
-      return
-    }
     const newData: CreateDataProps[] = data.data.map(item => {
       let changedLabel: string = item.typeDescription
 
       if (item.typeDescription === 'DAY') {
         changedLabel = `$${item.amount} per 1 day`
-        // changedLabel = '$10 per 1 day'
       } else if (item.typeDescription === 'WEEKLY') {
         changedLabel = `$${item.amount} per 7 day`
       } else if (item.typeDescription === 'MONTHLY') {
@@ -60,13 +69,15 @@ export const UserManagement = () => {
     createRadioGroupData(managerItems)
   )
 
-  const [cost, setCost] = useState<RadioGroupProps | undefined>(
-    createRadioGroupData(changeCostOfPayment(newCostOfPayment))
-  )
+  const [cost, setCost] = useState<RadioGroupProps>({} as RadioGroupProps)
+
+  const [error, setError] = useState<ServerMessagesType[] | string>('')
 
   useEffect(() => {
-    newCostOfPayment = changeCostOfPayment(getCostOfPayment)
-    setCost(createRadioGroupData(newCostOfPayment))
+    if (getCostOfPayment) {
+      newCostOfPayment = changeCostOfPayment(getCostOfPayment)
+      setCost(createRadioGroupData(newCostOfPayment))
+    }
   }, [getCostOfPayment])
 
   const onValueChange = (value: string) => {
@@ -95,18 +106,48 @@ export const UserManagement = () => {
     })
   }
 
-  // const { control, handleSubmit, register } = useForm<UseFormType>({
-  //   defaultValues: {
-  //     Payments: {},
-  //   },
-  // })
+  const handleSubmitForm = async (data: CreatePaymentRequestType) => {
+    try {
+      await createPayment(data)
+        .unwrap()
+        .then(res => {
+          if (res) {
+            router.push(res.url)
+          }
+        })
+    } catch (error) {
+      const err = serverErrorHandler(error)
 
-  // const onSubmit: SubmitHandler<Buttons> = data => console.log(data)
+      setError(err)
+    }
+  }
+
+  const dataPacking = (paymentMethod: PaymentMethod): CreatePaymentRequestType => {
+    const subscribeAmount = cost.options.find(option => option.checked)
+    const subscribeCash = subscribeAmount?.value as string
+
+    const getSubscribeAmount = getCostOfPayment?.data?.find(
+      getCost => getCost.amount === +subscribeCash
+    ) as CostOfPaymant
+
+    const requestData: CreatePaymentRequestType = {
+      amount: getSubscribeAmount.amount,
+      baseUrl: process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL as string,
+      paymentType: paymentMethod,
+      typeSubscription: getSubscribeAmount.typeDescription,
+    }
+
+    return requestData
+  }
+
+  useClientProgress(isLoading)
 
   return (
     <div className={s.wrapper}>
       <AccountManagerField fieldTitle={'Current Subscription:'}>
-        {data?.data?.length ? data?.data : 'You do not have subscriptions'}
+        {data?.data?.length
+          ? data?.data.map(val => <div key={val.subscriptionId}>{val.dateOfPayment}</div>)
+          : 'You do not have subscriptions'}
       </AccountManagerField>
       <AccountManagerField fieldTitle={'Account type:'}>
         <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
@@ -121,14 +162,19 @@ export const UserManagement = () => {
             />
           </AccountManagerField>
         )}
+        {typeof error === 'string' && <div>{error}</div>}
         {radioOptions.options[1].checked && (
           <div className={s.paymentWrapper}>
             <div className={s.paymentButtonWrapper}>
               <Button
                 className={s.paymentButton}
-                // href={'https://www.paypal.com/ru/home'}
                 onClick={d => {
                   d.preventDefault()
+                  if (getCostOfPayment) {
+                    const requestData = dataPacking('PAYPAL' as PaymentMethod)
+
+                    handleSubmitForm(requestData)
+                  }
                 }}
                 type={'submit'}
                 variant={'outlined'}
@@ -138,9 +184,13 @@ export const UserManagement = () => {
               or
               <Button
                 className={s.paymentButton}
-                // href={'https://stripe.com/'}
                 onClick={d => {
                   d.preventDefault()
+                  if (getCostOfPayment) {
+                    const requestData = dataPacking('STRIPE' as PaymentMethod)
+
+                    handleSubmitForm(requestData)
+                  }
                 }}
                 type={'submit'}
                 variant={'outlined'}
@@ -168,16 +218,9 @@ const AccountManagerField = ({ children, fieldTitle }: AccountManagementProps) =
   )
 }
 
-export type CreateDataProps = {
-  label: string
-  value: string
-}
 const createRadioGroupData = (valueData: CreateDataProps[]): RadioGroupProps => {
   let returnedData
 
-  if (!valueData) {
-    return
-  }
   if (valueData.length <= 1) {
     returnedData = {
       options: [

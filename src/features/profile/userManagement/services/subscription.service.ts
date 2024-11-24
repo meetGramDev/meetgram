@@ -20,15 +20,33 @@ export type CostOfPaymant = {
   amount: number
   typeDescription: Period
 }
-enum Period {
+export enum Period {
   day = 'DAY',
   month = 'MONTHLY',
   week = 'WEEKLY',
 }
+export enum PaymentMethod {
+  creditCard = 'CREDIT_CARD',
+  paypal = 'PAYPAL',
+  stripe = 'STRIPE',
+}
+export type CreatePaymentRequestType = {
+  amount: number
+  baseUrl: string
+  paymentType: PaymentMethod
+  typeSubscription: Period
+}
+
+export type ResponseCreatePaymentType = {
+  url: string
+}
 
 export const subscriptionServiceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    createPaymentSubscription: builder.mutation<any, any>({
+    createPaymentSubscription: builder.mutation<
+      ResponseCreatePaymentType,
+      CreatePaymentRequestType
+    >({
       query: body => ({
         body,
         method: 'POST',
@@ -75,5 +93,8 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
 //   }),
 // })
 
-export const { useGetCostOfPaymentSubscriptionQuery, useGetCurrentPaymentQuery } =
-  subscriptionServiceApi
+export const {
+  useCreatePaymentSubscriptionMutation,
+  useGetCostOfPaymentSubscriptionQuery,
+  useGetCurrentPaymentQuery,
+} = subscriptionServiceApi
