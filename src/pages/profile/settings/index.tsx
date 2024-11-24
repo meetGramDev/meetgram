@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import { toast } from 'react-toastify'
 
 import { UploadPhoto, UploadedPhotoType } from '@/features/profile/uploadUserPhoto'
@@ -39,6 +40,7 @@ const useTabs = () => {
 }
 
 const Settings: NextPageWithLayout = () => {
+  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
   const tabs: TabType[] = useTabs()
   const router = useRouter()
   const activeTab = Object.keys(router.query)[0] as string | undefined
@@ -94,7 +96,7 @@ const Settings: NextPageWithLayout = () => {
     <div>
       <TabSwitcher onValueChange={handleTabChange} tabs={tabs} value={activeTab ?? tabs[0].value}>
         <TabContent value={tabs[0].value}>
-          <div className={s.settingsWrapper}>
+          <div className={!isMobile ? s.settingsWrapper : ''}>
             {data && !getProfileLoading ? (
               <>
                 <div>
