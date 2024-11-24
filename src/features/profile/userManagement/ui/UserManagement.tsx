@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   GetCostOfPaymentSubscriptionType,
@@ -18,6 +19,13 @@ const managerItems: CreateDataProps[] = [
   { label: 'Business', value: 'Business' },
 ]
 
+type Buttons = {
+  paypal: string
+  stripe: string
+}
+type UseFormType = {
+  Payments: RadioGroupProps
+}
 export const UserManagement = () => {
   const { data } = useGetCurrentPaymentQuery()
   const { data: getCostOfPayment, isSuccess } = useGetCostOfPaymentSubscriptionQuery()
@@ -87,6 +95,14 @@ export const UserManagement = () => {
     })
   }
 
+  // const { control, handleSubmit, register } = useForm<UseFormType>({
+  //   defaultValues: {
+  //     Payments: {},
+  //   },
+  // })
+
+  // const onSubmit: SubmitHandler<Buttons> = data => console.log(data)
+
   return (
     <div className={s.wrapper}>
       <AccountManagerField fieldTitle={'Current Subscription:'}>
@@ -95,38 +111,46 @@ export const UserManagement = () => {
       <AccountManagerField fieldTitle={'Account type:'}>
         <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
       </AccountManagerField>
-      {radioOptions.options[1].checked && (
-        <AccountManagerField fieldTitle={'Change your subscription:'}>
-          <RadioGroup
-            className={s.radioGroup}
-            onValueChange={onValueChangeSubscriptionHandler}
-            options={cost.options}
-          />
-        </AccountManagerField>
-      )}
-      {radioOptions.options[1].checked && (
-        <div className={s.paymentWrapper}>
-          <div className={s.paymentButtonWrapper}>
-            <Button
-              as={Link}
-              className={s.paymentButton}
-              href={'https://www.paypal.com/ru/home'}
-              variant={'outlined'}
-            >
-              <PayPal />
-            </Button>
-            or
-            <Button
-              as={Link}
-              className={s.paymentButton}
-              href={'https://stripe.com/'}
-              variant={'outlined'}
-            >
-              <Stripe />
-            </Button>
+      <form>
+        {radioOptions.options[1].checked && (
+          <AccountManagerField fieldTitle={'Change your subscription:'}>
+            <RadioGroup
+              className={s.radioGroup}
+              onValueChange={onValueChangeSubscriptionHandler}
+              options={cost.options}
+            />
+          </AccountManagerField>
+        )}
+        {radioOptions.options[1].checked && (
+          <div className={s.paymentWrapper}>
+            <div className={s.paymentButtonWrapper}>
+              <Button
+                className={s.paymentButton}
+                // href={'https://www.paypal.com/ru/home'}
+                onClick={d => {
+                  d.preventDefault()
+                }}
+                type={'submit'}
+                variant={'outlined'}
+              >
+                <PayPal />
+              </Button>
+              or
+              <Button
+                className={s.paymentButton}
+                // href={'https://stripe.com/'}
+                onClick={d => {
+                  d.preventDefault()
+                }}
+                type={'submit'}
+                variant={'outlined'}
+              >
+                <Stripe />
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </form>
     </div>
   )
 }

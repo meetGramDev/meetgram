@@ -1,4 +1,5 @@
 import { baseApi } from '@/shared/api'
+import { BaseQueryArg } from '@reduxjs/toolkit/query'
 
 export type CurrentPaymentType = {
   data?: DataResponseType[]
@@ -24,15 +25,23 @@ enum Period {
   month = 'MONTHLY',
   week = 'WEEKLY',
 }
+
 export const subscriptionServiceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    createPaymentSubscription: builder.mutation<any, any>({
+      query: body => ({
+        body,
+        method: 'POST',
+        url: '/subscriptions',
+      }),
+    }),
+
     getCostOfPaymentSubscription: builder.query<GetCostOfPaymentSubscriptionType, void>({
       query: body => ({
         method: 'GET',
         url: '/subscriptions/cost-of-payment-subscriptions',
       }),
     }),
-
     getCurrentPayment: builder.query<CurrentPaymentType, void>({
       query: body => ({
         method: 'GET',
