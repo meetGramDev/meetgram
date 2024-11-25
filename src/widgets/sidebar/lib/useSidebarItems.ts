@@ -25,7 +25,7 @@ export function useGetSidebarItems() {
       { Svg: CreateIcon, isCreatePost: true, name: sidebarTr.create, path: `` },
       { Svg: MyProfileIcon, name: sidebarTr.myProfile, path: `${HOME}/${userId}` },
       { Svg: MessengerIcon, name: sidebarTr.messenger, path: '' },
-      { Svg: Search, name: sidebarTr.search, path: '' },
+      { Svg: Search, name: sidebarTr.search, path: `/search` },
 
       { Svg: FavoritesIcon, name: sidebarTr.favorites, path: '' },
       { Svg: StatisticsIcon, name: sidebarTr.statistics, path: '' },
