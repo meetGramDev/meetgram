@@ -15,7 +15,7 @@ import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
-import { Button, Card } from '@/shared/ui'
+import { Button } from '@/shared/ui'
 import { RadioGroup, RadioGroupProps } from '@/shared/ui/radioGroup'
 import { useRouter } from 'next/router'
 
