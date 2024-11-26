@@ -15,7 +15,6 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
 
   font-size: 14px;
   line-height: 24px;
@@ -25,6 +24,7 @@
   white-space: normal;
 
   -webkit-box-lines: unset;
+  -webkit-line-clamp: 3;
 }
 
 .textExpanded {
