@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
+import { changeCostOfPayment } from '@/features/profile/userManagement/lib/changeCostOfPayment'
+import { createRadioGroupData } from '@/features/profile/userManagement/lib/createRadioGroupData'
 import {
-  CostOfPaymant,
   CreatePaymentRequestType,
-  GetCostOfPaymentSubscriptionType,
   PaymentMethod,
   useCreatePaymentSubscriptionMutation,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,
 } from '@/features/profile/userManagement/services/subscription.service'
+import { AccountManagerField } from '@/features/profile/userManagement/ui/accountManagerField/AccountManagerField'
 import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
@@ -19,50 +21,17 @@ import { useRouter } from 'next/router'
 
 import s from './UserManagement.module.scss'
 
-export type CreateDataProps = {
-  label: string
-  value: string
-}
-
-const managerItems: CreateDataProps[] = [
+const managerItems: RadioGroupProps['options'] = [
   { label: 'Personal', value: 'Personal' },
   { label: 'Business', value: 'Business' },
 ]
 
-type Buttons = {
-  paypal: string
-  stripe: string
-}
-type UseFormType = {
-  Payments: RadioGroupProps
-}
 export const UserManagement = () => {
   const { data } = useGetCurrentPaymentQuery()
-  const { data: getCostOfPayment, isSuccess } = useGetCostOfPaymentSubscriptionQuery()
+  const { data: costOfPaymentData } = useGetCostOfPaymentSubscriptionQuery()
   const [createPayment, { isLoading }] = useCreatePaymentSubscriptionMutation()
 
   const router = useRouter()
-
-  const changeCostOfPayment = (data: GetCostOfPaymentSubscriptionType): CreateDataProps[] => {
-    const newData: CreateDataProps[] = data.data.map(item => {
-      let changedLabel: string = item.typeDescription
-
-      if (item.typeDescription === 'DAY') {
-        changedLabel = `$${item.amount} per 1 day`
-      } else if (item.typeDescription === 'WEEKLY') {
-        changedLabel = `$${item.amount} per 7 day`
-      } else if (item.typeDescription === 'MONTHLY') {
-        changedLabel = `$${item.amount} per month`
-      }
-
-      return {
-        label: changedLabel,
-        value: `${item.amount}`,
-      }
-    })
-
-    return newData
-  }
   let newCostOfPayment
 
   const [radioOptions, setRadioOptions] = useState<RadioGroupProps>(
@@ -74,21 +43,17 @@ export const UserManagement = () => {
   const [error, setError] = useState<ServerMessagesType[] | string>('')
 
   useEffect(() => {
-    if (getCostOfPayment) {
-      newCostOfPayment = changeCostOfPayment(getCostOfPayment)
+    if (costOfPaymentData) {
+      newCostOfPayment = changeCostOfPayment(costOfPaymentData)
       setCost(createRadioGroupData(newCostOfPayment))
     }
-  }, [getCostOfPayment])
+  }, [costOfPaymentData])
 
   const onValueChange = (value: string) => {
     setRadioOptions({
       ...radioOptions,
       options: radioOptions.options.map(option => {
-        if (option.value === value) {
-          return { ...option, checked: true }
-        } else {
-          return { ...option, checked: false }
-        }
+        return { ...option, checked: option.value === value }
       }),
     })
   }
@@ -97,26 +62,24 @@ export const UserManagement = () => {
     setCost({
       ...cost,
       options: cost.options.map((item, count) => {
-        if (item.value === value) {
-          return { ...item, checked: true }
-        } else {
-          return { ...item, checked: false }
-        }
+        return { ...item, checked: item.value === value }
       }),
     })
   }
 
   const handleSubmitForm = async (data: CreatePaymentRequestType) => {
     try {
-      await createPayment(data)
-        .unwrap()
-        .then(res => {
-          if (res) {
-            router.push(res.url)
-          }
-        })
+      const res = await createPayment(data).unwrap()
+
+      if (res) {
+        router.push(res.url)
+      }
     } catch (error) {
       const err = serverErrorHandler(error)
+
+      if (typeof err === 'string') {
+        toast.error(err)
+      }
 
       setError(err)
     }
@@ -124,15 +87,25 @@ export const UserManagement = () => {
 
   const dataPacking = (paymentMethod: PaymentMethod): CreatePaymentRequestType => {
     const subscribeAmount = cost.options.find(option => option.checked)
-    const subscribeCash = subscribeAmount?.value as string
+    const subscribeCash = subscribeAmount?.value
 
-    const getSubscribeAmount = getCostOfPayment?.data?.find(
+    if (!subscribeCash) {
+      throw new Error('Subscribe cash is not defined')
+    }
+    if (!costOfPaymentData) {
+      throw new Error('costOfPaymentData is not defined')
+    }
+
+    const getSubscribeAmount = costOfPaymentData.data.find(
       getCost => getCost.amount === +subscribeCash
-    ) as CostOfPaymant
+    )
 
+    if (!getSubscribeAmount) {
+      throw new Error('getSubscribeAmount is not defined')
+    }
     const requestData: CreatePaymentRequestType = {
       amount: getSubscribeAmount.amount,
-      baseUrl: process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL as string,
+      baseUrl: process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL || '',
       paymentType: paymentMethod,
       typeSubscription: getSubscribeAmount.typeDescription,
     }
@@ -162,16 +135,16 @@ export const UserManagement = () => {
             />
           </AccountManagerField>
         )}
-        {typeof error === 'string' && <div>{error}</div>}
+        {typeof error === 'string' && <div className={s.error}>{error}</div>}
         {radioOptions.options[1].checked && (
           <div className={s.paymentWrapper}>
             <div className={s.paymentButtonWrapper}>
               <Button
                 className={s.paymentButton}
-                onClick={d => {
-                  d.preventDefault()
-                  if (getCostOfPayment) {
-                    const requestData = dataPacking('PAYPAL' as PaymentMethod)
+                onClick={e => {
+                  e.preventDefault()
+                  if (costOfPaymentData !== undefined) {
+                    const requestData = dataPacking(PaymentMethod.paypal)
 
                     handleSubmitForm(requestData)
                   }
@@ -184,10 +157,10 @@ export const UserManagement = () => {
               or
               <Button
                 className={s.paymentButton}
-                onClick={d => {
-                  d.preventDefault()
-                  if (getCostOfPayment) {
-                    const requestData = dataPacking('STRIPE' as PaymentMethod)
+                onClick={e => {
+                  e.preventDefault()
+                  if (costOfPaymentData !== undefined) {
+                    const requestData = dataPacking(PaymentMethod.stripe)
 
                     handleSubmitForm(requestData)
                   }
@@ -204,52 +177,3 @@ export const UserManagement = () => {
     </div>
   )
 }
-
-type AccountManagementProps = {
-  children: React.ReactNode
-  fieldTitle: string
-}
-const AccountManagerField = ({ children, fieldTitle }: AccountManagementProps) => {
-  return (
-    <div className={s.fieldWrapper}>
-      <h3 className={s.fieldTitle}>{fieldTitle}</h3>
-      <Card className={s.card}>{children}</Card>
-    </div>
-  )
-}
-
-const createRadioGroupData = (valueData: CreateDataProps[]): RadioGroupProps => {
-  let returnedData
-
-  if (valueData.length <= 1) {
-    returnedData = {
-      options: [
-        { checked: true, disabled: false, label: valueData[0].label, value: valueData[0].value },
-      ],
-    }
-  } else {
-    returnedData = {
-      options: valueData.map((el, index) => {
-        if (index === 0) {
-          return {
-            checked: true,
-            disabled: false,
-            label: el.label,
-            value: el.value,
-          }
-        } else {
-          return {
-            checked: false,
-            disabled: false,
-            label: el.label,
-            value: el.value,
-          }
-        }
-      }),
-    }
-  }
-
-  return returnedData
-}
-
-//позже переписать на switch case

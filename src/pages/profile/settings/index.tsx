@@ -3,7 +3,6 @@ import { useMediaQuery } from 'react-responsive'
 import { toast } from 'react-toastify'
 
 import { UploadPhoto, UploadedPhotoType } from '@/features/profile/uploadUserPhoto'
-import { UserManagement } from '@/features/profile/userManagement'
 import {
   FormSkeleton,
   PhotoSkeleton,
@@ -116,8 +115,7 @@ const Settings: NextPageWithLayout = () => {
         </TabContent>
 
         <TabContent value={tabs[2].value}>
-          {/*<AccountManagement />*/}
-          <UserManagement />
+          <AccountManagement />
         </TabContent>
 
         <TabContent value={tabs[3].value}>
