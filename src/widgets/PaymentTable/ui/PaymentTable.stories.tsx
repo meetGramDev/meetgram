@@ -1,4 +1,4 @@
-import { PaymentModel } from '@/features/profile/subscriptions'
+import { PaymentModel } from '@/features/profile/userManagement/model/types/services'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { PaymentTable } from './PaymentTable'

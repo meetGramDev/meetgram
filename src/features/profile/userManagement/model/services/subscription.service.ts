@@ -1,14 +1,15 @@
-import { PaymentSessionResponse } from '@/features/profile/subscription/model/types/services'
 import {
   CreatePaymentRequestType,
   CurrentPaymentType,
   GetCostOfPaymentSubscriptionType,
+  PaymentSessionResponse,
 } from '@/features/profile/userManagement/model/types/services'
 import { baseApi } from '@/shared/api'
 
 export const subscriptionServiceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
     createPaymentSubscription: builder.mutation<PaymentSessionResponse, CreatePaymentRequestType>({
+      invalidatesTags: (result, error, arg) => (!error ? ['subscriptions'] : []),
       query: body => ({
         body,
         method: 'POST',

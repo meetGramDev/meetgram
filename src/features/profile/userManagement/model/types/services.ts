@@ -1,4 +1,5 @@
-import { PaymentType, SubscriptionType } from '@/features/profile/subscriptions'
+export type PaymentType = 'CREDIT_CARD' | 'PAYPAL' | 'STRIPE'
+export type SubscriptionType = 'DAY' | 'MONTHLY' | 'WEEKLY'
 
 export type CurrentPaymentType = {
   data?: DataResponseType[]
@@ -25,4 +26,18 @@ export type CreatePaymentRequestType = {
   baseUrl: string
   paymentType: PaymentType
   typeSubscription: SubscriptionType
+}
+
+export type PaymentModel = {
+  dateOfPayment: string
+  endDateOfSubscription: string
+  paymentType: PaymentType
+  price: number
+  subscriptionId: string
+  subscriptionType: SubscriptionType
+  userId: number | string
+}
+
+export type PaymentSessionResponse = {
+  url: string
 }

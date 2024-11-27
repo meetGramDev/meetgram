@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { PaymentType } from '@/features/profile/subscription/model/types/services'
 import { changeCostOfPayment } from '@/features/profile/userManagement/lib/changeCostOfPayment'
 import { createRadioGroupData } from '@/features/profile/userManagement/lib/createRadioGroupData'
 import {
-  CreatePaymentRequestType,
   useCreatePaymentSubscriptionMutation,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,
 } from '@/features/profile/userManagement/model/services/subscription.service'
+import {
+  CreatePaymentRequestType,
+  PaymentType,
+} from '@/features/profile/userManagement/model/types/services'
 import { AccountManagerField } from '@/features/profile/userManagement/ui/accountManagerField/AccountManagerField'
 import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
