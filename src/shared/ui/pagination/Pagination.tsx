@@ -19,12 +19,7 @@ type Props = {
   pageCount: number
 }
 
-export const Pagination = ({
-  currentPage,
-  onPageChange,
-  onPerPageChange,
-  pageCount = 100,
-}: Props) => {
+export const Pagination = ({ currentPage, onPageChange, onPerPageChange, pageCount }: Props) => {
   const [pageNumbers, setPageNumbers] = useState<(number | string)[]>([])
   const [page, setPage] = useState<number>(currentPage)
   const [perPage, setPerPage] = useState<number>(10)
@@ -41,7 +36,7 @@ export const Pagination = ({
     const pagesRow: (number | string)[] = []
 
     if (page <= 4) {
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= pageCount; i++) {
         pagesRow.push(i)
       }
       pagesRow.push('...')
