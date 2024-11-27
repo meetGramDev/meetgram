@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { PaymentType } from '@/features/profile/subscription/model/types/services'
 import { changeCostOfPayment } from '@/features/profile/userManagement/lib/changeCostOfPayment'
 import { createRadioGroupData } from '@/features/profile/userManagement/lib/createRadioGroupData'
 import {
   CreatePaymentRequestType,
-  PaymentMethod,
   useCreatePaymentSubscriptionMutation,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,
-} from '@/features/profile/userManagement/services/subscription.service'
+} from '@/features/profile/userManagement/model/services/subscription.service'
 import { AccountManagerField } from '@/features/profile/userManagement/ui/accountManagerField/AccountManagerField'
 import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
@@ -85,7 +85,7 @@ export const UserManagement = () => {
     }
   }
 
-  const dataPacking = (paymentMethod: PaymentMethod): CreatePaymentRequestType => {
+  const dataPacking = (paymentMethod: PaymentType): CreatePaymentRequestType => {
     const subscribeAmount = cost.options.find(option => option.checked)
     const subscribeCash = subscribeAmount?.value
 
@@ -144,7 +144,7 @@ export const UserManagement = () => {
                 onClick={e => {
                   e.preventDefault()
                   if (costOfPaymentData !== undefined) {
-                    const requestData = dataPacking(PaymentMethod.paypal)
+                    const requestData = dataPacking('PAYPAL')
 
                     handleSubmitForm(requestData)
                   }
@@ -160,7 +160,7 @@ export const UserManagement = () => {
                 onClick={e => {
                   e.preventDefault()
                   if (costOfPaymentData !== undefined) {
-                    const requestData = dataPacking(PaymentMethod.stripe)
+                    const requestData = dataPacking('STRIPE')
 
                     handleSubmitForm(requestData)
                   }
