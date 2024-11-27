@@ -13,7 +13,7 @@ export type DataResponseType = {
   userId: number
 }
 
-export type GetCostOfPaymentSubscriptionType = {
+export type CostOfPaymentSubscriptionType = {
   data: CostOfPaymant[]
 }
 export type CostOfPaymant = {

@@ -1,8 +1,8 @@
-import { GetCostOfPaymentSubscriptionType } from '@/features/profile/userManagement/model/services/subscription.service'
+import { CostOfPaymentSubscriptionType } from '@/features/profile/userManagement'
 import { RadioGroupProps } from '@/shared/ui/radioGroup'
 
 export const changeCostOfPayment = (
-  data: GetCostOfPaymentSubscriptionType
+  data: CostOfPaymentSubscriptionType
 ): RadioGroupProps['options'] => {
   const newData: RadioGroupProps['options'] = data.data.map(item => {
     let changedLabel: string = item.typeDescription

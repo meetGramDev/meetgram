@@ -1,7 +1,7 @@
 import {
+  CostOfPaymentSubscriptionType,
   CreatePaymentRequestType,
   CurrentPaymentType,
-  GetCostOfPaymentSubscriptionType,
   PaymentSessionResponse,
 } from '@/features/profile/userManagement/model/types/services'
 import { baseApi } from '@/shared/api'
@@ -17,7 +17,7 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
       }),
     }),
 
-    getCostOfPaymentSubscription: builder.query<GetCostOfPaymentSubscriptionType, void>({
+    getCostOfPaymentSubscription: builder.query<CostOfPaymentSubscriptionType, void>({
       query: body => ({
         method: 'GET',
         url: '/subscriptions/cost-of-payment-subscriptions',
