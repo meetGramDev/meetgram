@@ -12,7 +12,7 @@ import {
   CreatePaymentRequestType,
   PaymentType,
 } from '@/features/profile/userManagement/model/types/services'
-import { AccountManagerField } from '@/features/profile/userManagement/ui/accountManagerField/AccountManagerField'
+import { AccountManagerField } from '@/features/profile/userManagement/ui/accountManagerField'
 import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
