@@ -1,7 +1,7 @@
-import {LenType} from './en';
+import { LanguagesObjType } from './en';
 
 
-export const es: LenType = {
+export const es: LanguagesObjType = {
     "About me": "Sobre mí",
     "Account Management": "Gestión de la cuenta",
     "Add Photo": "Añadir foto",

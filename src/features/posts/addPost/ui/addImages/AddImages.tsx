@@ -18,7 +18,6 @@ import { ImageType } from '../../model/types/slice'
 
 export const AddImages = () => {
   const t = useTranslate()
-  const validateFileTranslate = t('validateFileTranslate')
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
 
   const { setAddingPostStage, startEditing } = useActions(addPostActions)
@@ -57,7 +56,7 @@ export const AddImages = () => {
     let readFiles: ImageType[] = []
 
     for (let i = 0; i < fileArray.length; i++) {
-      const validationError = validateFile(fileArray[i], validateFileTranslate)
+      const validationError = validateFile(fileArray[i], t)
 
       if (validationError !== null) {
         setError(validationError)
@@ -110,7 +109,7 @@ export const AddImages = () => {
         onClick={handleSelectFileClick}
         variant={'primary'}
       >
-        {t('S' + 'elect from computer')}
+        {t('Select from computer')}
       </Button>
     </div>
   )
