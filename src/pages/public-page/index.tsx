@@ -11,7 +11,6 @@ type PropsType = {
   data: GetPublicPostsResponse
 }
 
-//static props
 export const getStaticProps: GetStaticProps<PropsType> = async () => {
   const res = await fetch(`${BASE_URL}${ALL_PUBLIC_POSTS}`)
   const data = (await res.json()) || null
