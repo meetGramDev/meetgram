@@ -23,7 +23,6 @@ export const AddButton = ({ onAdd }: Props) => {
   const dropzoneRef = useRef<Nullable<DropzoneRef>>(null)
   const currImgsNum = useAppSelector(selectNumberOfImages)
   const t = useTranslate()
-  const validateFileTranslate = t('validateFileTranslate')
 
   const handleOnAddFiles = () => {
     dropzoneRef.current?.onSelectFile()
@@ -41,7 +40,7 @@ export const AddButton = ({ onAdd }: Props) => {
     let readFiles: ImageType[] = []
 
     for (let i = 0; i < fileArray.length; i++) {
-      const validationError = validateFile(fileArray[i], validateFileTranslate)
+      const validationError = validateFile(fileArray[i], t)
 
       if (validationError !== null) {
         toast.error(validationError)

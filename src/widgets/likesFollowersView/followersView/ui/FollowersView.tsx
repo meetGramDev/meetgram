@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 
 import s from './FollowersView.module.scss'
 
+import { formatTitle } from '../lib/formatTitle'
 import { FollowersContent } from './FollowersContent'
 
 export type FollowersProps = {
@@ -38,11 +39,11 @@ export const FollowersView = ({ followCount, type, userName }: FollowersProps) =
       modal
       onOpenChange={handleOpenDialog}
       open={shouldOpen}
-      title={t(type.slice(0, 1).toUpperCase() + type.slice(1)) as string}
+      title={t(formatTitle(type))}
       trigger={
         <Button className={s.triggerBtn} variant={'text'}>
           <span>{followCount || 0}</span>
-          {t(type.slice(0, 1).toUpperCase() + type.slice(1))}
+          {t(formatTitle(type))}
         </Button>
       }
     >
