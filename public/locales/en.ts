@@ -171,7 +171,6 @@ const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 export type ErrorsTr = typeof errorsTr
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
-export type TypeValidateFileTranslate = typeof validateFileTranslate;
-export type LenType = typeof en
+export type LanguagesObjType = typeof en
 
 

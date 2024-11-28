@@ -1,7 +1,7 @@
-import {LenType} from './en';
+import { LanguagesObjType } from './en';
 
 
-export const be: LenType = {
+export const be: LanguagesObjType = {
     "About me": "Пра мяне",
     "Account Management": "Кіраванне акаўнтам",
     "Add Photo": "Дадаць фота",
