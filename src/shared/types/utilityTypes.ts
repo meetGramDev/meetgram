@@ -24,3 +24,5 @@ export type PolymorphicRef<E extends ElementType> = ComponentPropsWithRef<E>['re
 export type PolymorphicComponentPropsWithRef<E extends ElementType, Props = {}> = {
   forwardRef?: PolymorphicRef<E>
 } & Props
+
+export type IsKeyString<K> = K extends string ? K : never

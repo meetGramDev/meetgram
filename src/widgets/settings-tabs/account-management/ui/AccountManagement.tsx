@@ -1,3 +1,4 @@
+import { UserManagement } from '@/features/profile/userManagement'
 import { ACCOUNT_MANAGEMENT } from '@/shared/config/router'
 import { Button, Dialog } from '@/shared/ui'
 import { useRouter } from 'next/router'
@@ -17,7 +18,7 @@ export const AccountManagement = () => {
 
   return (
     <div>
-      AccountManagementTab
+      <UserManagement />
       <Dialog
         defaultOpen={false}
         onOpenChange={handleCloseDialog}
