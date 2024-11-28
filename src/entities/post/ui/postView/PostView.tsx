@@ -64,7 +64,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     setTextContent(e.currentTarget.value)
   }
 
-  const addCommentHandler = (pageNumber: number) => {
+  const addCommentHandler = async (pageNumber: number) => {
     try {
       setTextContent('')
       if (textContent !== '') {
@@ -79,7 +79,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     }
   }
 
-  const addAnswerHandler = (commentId: number) => {
+  const addAnswerHandler = async (commentId: number) => {
     try {
       setTextContent(`${post?.userName} `)
       if (textContent !== '') {
