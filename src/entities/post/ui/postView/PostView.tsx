@@ -68,7 +68,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     try {
       setTextContent('')
       if (textContent !== '') {
-        addComment({ body: { content: textContent }, pageNumber, postId })
+        await addComment({ body: { content: textContent }, pageNumber, postId })
       }
     } catch (err) {
       const message = serverErrorHandler(err)
@@ -83,7 +83,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     try {
       setTextContent(`${post?.userName} `)
       if (textContent !== '') {
-        addAnswerComment({ body: { content: textContent }, commentId, postId })
+        await addAnswerComment({ body: { content: textContent }, commentId, postId })
         setCommentId(null)
       }
     } catch (err) {
@@ -136,7 +136,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
             />
           )}
 
-          <div className={s.content}>
+          <div className={clsx(s.content, !isAuth && s.isNotAuthWidth)}>
             <div className={s.title}>
               <div className={s.userLink}>
                 <Link className={s.linkAvatar} href={ownerProfile}>
