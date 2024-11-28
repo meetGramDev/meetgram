@@ -41,8 +41,6 @@ export const getStaticProps: GetStaticProps<PropsType> = async () => {
 const PublicPage = ({ data }: PropsType) => {
   return (
     <div className={'w-full px-[9.5rem]'}>
-      {/*<TotalUsersCount usersCount={data ? data.totalUsers : 0} /> убираю этот блок для Славы)))*/}
-      {/*так убирай :)*/}
       <TotalUsersCount usersCount={data ? 1 : 0} />
       <div className={s.postWrapper}>
         {data &&
