@@ -132,7 +132,7 @@ export const UserManagement = () => {
     }
   }
 
-  const dateOf = (dateOf: string, options?: { addDays?: number }) => {
+  const humanReadableDate = (dateOf: string, options?: { addDays?: number }) => {
     const date = new Date(dateOf)
 
     const daysToAdd = options?.addDays ?? 0
@@ -145,7 +145,7 @@ export const UserManagement = () => {
       year: 'numeric',
     })
 
-    return formattedDate.replace(/\//g, '.')
+    return formattedDate.replaceAll('/', '.')
   }
 
   const lastDate = data?.data?.length ? data.data[data.data.length - 1] : null
@@ -159,12 +159,12 @@ export const UserManagement = () => {
           <div className={'flex flex-row gap-16'}>
             <div className={'flex flex-col gap-3'}>
               <p className={'text-light-1000'}>Expire at</p>
-              <span>{dateOf(lastDate.endDateOfSubscription)}</span>
+              <span>{humanReadableDate(lastDate.endDateOfSubscription)}</span>
             </div>
             {lastDate.autoRenewal && (
               <div className={'flex flex-col gap-3'}>
                 <p className={'text-light-1000'}>Next payment</p>
-                <span>{dateOf(lastDate.endDateOfSubscription, { addDays: 1 })}</span>
+                <span>{humanReadableDate(lastDate.endDateOfSubscription, { addDays: 1 })}</span>
               </div>
             )}
           </div>

@@ -1,4 +1,4 @@
-import { FC, SVGProps } from 'react'
+import { FC, SVGProps, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
 import { addPostActions } from '@/features/posts/addPost'
@@ -33,6 +33,7 @@ export const SidebarItem = ({ className, item }: Props) => {
       setOpenAddingPost(true)
     }
   }
+
   const isMobile = useMediaQuery({ query: '(max-width:650px)' })
 
   return (
