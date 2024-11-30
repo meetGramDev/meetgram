@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { selectIsUserAuth } from '@/entities/user'
 import { ACCOUNT_MANAGEMENT } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { sleep } from '@/shared/lib'
+import { sleep, useTranslate } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
 import { PaymentParams } from '@/widgets/settings-tabs/account-management'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
@@ -35,6 +35,7 @@ export const getServerSideProps = async function (ctx) {
 
 export default function Index({ success }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const router = useRouter()
+  const t = useTranslate()
   const isAuth = useAppSelector(selectIsUserAuth)
 
   useEffect(() => {
@@ -51,10 +52,11 @@ export default function Index({ success }: InferGetServerSidePropsType<typeof ge
         <Loader />
       </div>
       <p className={'mt-7 px-6 text-center text-regular16'}>
-        You will be redirected to the Meetgram. It might take a few seconds.
+        {t('subscription.You will be redirected to the Meetgram. It might take a few seconds.')}
         <br />
-        Please do not refresh the page or click the &quot;Back&quot; or &quot;Close&quot; button of
-        your browser.
+        {t(
+          "subscription.Please do not refresh the page or click the 'Back' or 'Close' button of your browser."
+        )}
       </p>
     </div>
   )
