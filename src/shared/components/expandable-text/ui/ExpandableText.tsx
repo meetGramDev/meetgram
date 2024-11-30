@@ -1,3 +1,4 @@
+import { useTranslate } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import clsx from 'clsx'
 
@@ -22,12 +23,14 @@ export const ExpandableText = ({
   onExpand,
   showedCount = 237,
 }: Props) => {
+  const t = useTranslate()
+
   return (
     <div className={clsx(s.container, isExpanded && s.textExpanded, className)}>
       <>{getPostMessageTruncated({ cutTextEnd, hideCount, isExpanded, message, showedCount })}</>
       {message.length > hideCount && (
         <Button className={'text-[14px]'} onClick={onExpand} variant={'link'}>
-          {isExpanded ? 'Hide' : 'Show more'}
+          {isExpanded ? t('Hide') : t('Show more')}
         </Button>
       )}
     </div>
