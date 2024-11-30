@@ -9,6 +9,7 @@ import { Comments, getTimeAgo } from '@/features/posts/comments'
 import { LikeButton } from '@/features/posts/likePost'
 import { PostViewSelect } from '@/features/posts/postViewSelect'
 import { CloseIcon, FavoritesIcon, PaperPlane, SketchedFavourites } from '@/shared/assets'
+import { ExpandableText } from '@/shared/components/expandable-text'
 import { HOME } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
@@ -49,6 +50,8 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
   const authUserId = useAppSelector(selectCurrentUserId)
   const isAuth = useAppSelector(selectIsUserAuth)
   const t = useTranslate()
+
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const dateOfCreate = (postCreate: string) => {
     const date = new Date(postCreate)
@@ -113,6 +116,10 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
   }
 
   const handleOnFollow = (userId: number) => followUser({ selectedUserId: userId })
+
+  const onToggleDescription = () => {
+    setIsExpanded(!isExpanded)
+  }
 
   const ownerProfile = `${HOME}/${userId}`
 
@@ -182,7 +189,13 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                       <Link className={s.descriptionUserName} href={ownerProfile}>
                         {post.userName}
                       </Link>
-                      {post.description}
+                      <ExpandableText
+                        hideCount={120}
+                        isExpanded={isExpanded}
+                        message={post.description}
+                        onExpand={onToggleDescription}
+                        showedCount={post.description.length}
+                      />
                     </div>
                   </div>
                   <span className={s.descriptionDate}>

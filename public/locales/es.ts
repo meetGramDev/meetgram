@@ -38,6 +38,7 @@ export const es: LanguagesObjType = {
     "Followers": "Seguidores",
     "Following": "Siguiendo",
     "General Information": "Información general",
+    "Hide": "Esconder",
     "January": "Enero",
     "July": "Julio",
     "June": "Junio",
@@ -68,8 +69,10 @@ export const es: LanguagesObjType = {
     "Select your country": "Selecciona tu país",
     "Send message": "Enviar mensaje",
     "September": "Septiembre",
+    "Show more": "Mostrar más",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
+    "Success": "El éxito",
     "Unfollow": "Dejar de seguir",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",
     "Yes": "Sí",
@@ -120,7 +123,8 @@ export const es: LanguagesObjType = {
     policies: {
         "Privacy Policy": "Política de Privacidad",
         "Terms Of Service": "Condiciones de uso",
-    }, sidebarTr: {
+    },
+    sidebarTr: {
         create: 'Crear',
         favorites: 'Favoritos',
         home: 'Inicio',
@@ -129,8 +133,7 @@ export const es: LanguagesObjType = {
         myProfile: 'Mi perfil',
         search: 'Buscar',
         statistics: 'Estadísticas',
-    },
-    signInLang: {
+    }, signInLang: {
         anAccount: '¿No tienes una cuenta?',
         email: 'Correo electrónico',
         forgoPassword: '¿Olvidaste la contraseña?',
@@ -152,6 +155,19 @@ export const es: LanguagesObjType = {
         signUp: 'Registrarse',
         termServ: 'Términos de servicio',
         username: 'Nombre de usuario',
+    },
+    subscription: {
+        "Failed": "Fracasado",
+        "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.": "No actualice la página ni haga clic en el botón “Atrás” o “Cerrar” de su navegador.",
+        "You will be redirected to the Meetgram. It might take a few seconds.": "Serás redirigido a Meetgram. Puede tardar unos segundos.",
+        buttons: {
+            "Back to payment": "Volver al pago",
+            "Ok": "Ok",
+        },
+        message: {
+            "Payment was successful!": "¡El pago fue exitoso!",
+            "Transaction failed. Please, write to support.": "La transacción falló. Por favor, escribe al soporte."
+        },
     },
     test: 'Lorem Ipsum es simplemente texto de relleno de la impresión',
     "text area": "área de texto",

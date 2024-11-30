@@ -1,5 +1,6 @@
 import { UserManagement } from '@/features/profile/userManagement'
 import { ACCOUNT_MANAGEMENT } from '@/shared/config/router'
+import { useTranslate } from '@/shared/lib'
 import { Button, Dialog } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
@@ -8,6 +9,7 @@ export type PaymentParams = {
 }
 
 export const AccountManagement = () => {
+  const t = useTranslate()
   const router = useRouter()
   const query = router.query as PaymentParams
   const isPaymentDialogOpen = query.success !== undefined
@@ -23,14 +25,16 @@ export const AccountManagement = () => {
         defaultOpen={false}
         onOpenChange={handleCloseDialog}
         open={isPaymentDialogOpen}
-        title={isSuccess ? 'Success' : 'Failed'}
+        title={isSuccess ? t('Success') : t('subscription.Failed')}
       >
         <div className={'min-w-[160px] p-6 sm:min-w-80'}>
           <p className={'mb-14 text-regular16'}>
-            {isSuccess ? 'Payment was successful!' : 'Transaction failed. Please, write to support'}
+            {isSuccess
+              ? t('subscription.message.Payment was successful!')
+              : t('subscription.message.Transaction failed. Please, write to support.')}
           </p>
           <Button fullWidth onClick={handleCloseDialog}>
-            {isSuccess ? 'Ok' : 'Back to payment'}
+            {isSuccess ? t('subscription.buttons.Ok') : t('subscription.buttons.Back to payment')}
           </Button>
         </div>
       </Dialog>

@@ -39,6 +39,7 @@ export const be: LanguagesObjType = {
     "Followers": "Падпісанты",
     "Following": "Падпісаны",
     "General Information": "Агульная інфармацыя",
+    "Hide": "Схаваць",
     "January": "Студзень",
     "July": "Ліпень",
     "June": "Чэрвень",
@@ -69,8 +70,10 @@ export const be: LanguagesObjType = {
     "Select your country": "Абярыце вашу краіну",
     "Send message": "Адправіць паведамленне",
     "September": "Верасень",
+    "Show more": "Паказаць",
     "Sign In": "Увайсці",
     "Sign Up": "Рэгістрацыя",
+    "Success": "Поспех",
     "Unfollow": "Спыніць сачэнне",
     "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ",
     "Yes": "Так",
@@ -122,7 +125,6 @@ export const be: LanguagesObjType = {
         "Privacy Policy": "Палітыка прыватнасці",
         "Terms Of Service": "Умовы выкарыстоўвання",
     },
-
     sidebarTr: {
         create: 'Стварыць',
         favorites: 'Абранае',
@@ -133,6 +135,7 @@ export const be: LanguagesObjType = {
         search: 'Пошук',
         statistics: 'Статыстыка',
     },
+
     signInLang: {
         anAccount: 'Няма ўліковага запісу?',
         email: 'Электронная пошта',
@@ -141,7 +144,6 @@ export const be: LanguagesObjType = {
         signIn: 'Увайсці',
         signUp: 'Рэгістрацыя',
     },
-
     signUpLang: {
         IAgree: 'Я згодны з',
         aler: 'Мы адправілі спасылку для пацверджання вашай электроннай пошты на ',
@@ -156,6 +158,20 @@ export const be: LanguagesObjType = {
         signUp: 'Рэгістрацыя',
         termServ: 'Умовамі карыстання',
         username: 'Імя карыстальніка',
+    },
+
+    subscription: {
+        "Failed": "Адхілены",
+        "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.": "Калі ласка, не абнаўляйце старонку, не закрывайце браўзэр і не націскайце кнопку назад.",
+        "You will be redirected to the Meetgram. It might take a few seconds.": "Вы будзеце перанакіраваны на Meetgram. Гэта можа заняць некалькі секунд.",
+        buttons: {
+            "Back to payment": "Назад да плацяжоў",
+            "Ok": "Ок",
+        },
+        message: {
+            "Payment was successful!": "Аплата прайшла паспяхова!",
+            "Transaction failed. Please, write to support.": "Аплата не прайшла. Калі ласка, звярніцеся ў падтрымку."
+        }
     },
     test: 'Lorem Ipsum — гэта проста тэкст-запаўняльнік у друку',
     "text area": "тэкставае поле",

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { ImageType, getPostMessage } from '@/entities/post'
+import { ImageType } from '@/entities/post'
 import { getTimeAgo } from '@/features/posts/comments'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
+import { ExpandableText } from '@/shared/components/expandable-text'
 import { HOME } from '@/shared/config/router'
 import { Button, ImageCarousel } from '@/shared/ui'
-import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -31,11 +31,11 @@ export const PublicPagePost = ({
   userName,
 }: Props) => {
   const tr = useRouter().locale
-  const [isExpanted, setIsExpanted] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
   const [timeAgoStamp, setTimeAgoStamp] = useState('')
 
   const onToggleText = () => {
-    setIsExpanted(!isExpanted)
+    setIsExpanded(!isExpanded)
   }
 
   useEffect(() => {
@@ -74,14 +74,14 @@ export const PublicPagePost = ({
 
       <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>{timeAgoStamp}</p>
       <div className={'inline'}>
-        <div className={clsx(s.publicPost, isExpanted ? s.textExpanded : '')}>
-          <> {getPostMessage(`${description}`, 77, 237, isExpanted)}</>
-          {description.length > 77 && (
-            <Button className={'text-[14px]'} onClick={onToggleText} variant={'link'}>
-              {isExpanted ? 'Hide' : 'Show more'}
-            </Button>
-          )}
-        </div>
+        <ExpandableText
+          cutTextEnd={11}
+          hideCount={77}
+          isExpanded={isExpanded}
+          message={description}
+          onExpand={onToggleText}
+          showedCount={237}
+        />
       </div>
     </div>
   )
