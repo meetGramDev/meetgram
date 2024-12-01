@@ -1,4 +1,5 @@
 @import '@/app/styles/mixins';
+@import '@/app/styles/screens';
 
 .dialog {
   overflow-y: auto;
@@ -24,4 +25,9 @@
 
 .button {
   background-color: transparent;
+}
+
+.isMobile {
+  margin-top: 1.5rem;
+  padding: 0 $mobile-profile-setting-padding-left-right;
 }
