@@ -15,7 +15,7 @@ const meta = {
   },
   component: Pagination,
   tags: ['autodocs'],
-  title: 'components/Pagination',
+  title: 'shared/Pagination',
 } satisfies Meta<typeof Pagination>
 
 export default meta
