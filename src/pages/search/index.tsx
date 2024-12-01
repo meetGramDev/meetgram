@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { SearchDialog } from '@/features/search'
 import { useSearchUsersQuery } from '@/features/search/model/services/search.services'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { HOME } from '@/shared/config/router'
@@ -12,10 +11,19 @@ import Link from 'next/link'
 
 const SearchUser: NextPageWithLayout = () => {
   const [str, setStr] = useState('')
-  const { data } = useSearchUsersQuery({ searchQuery: str })
+  const [searchStr, setSearchStr] = useState('')
+  const [timerId, setTimerId] = useState(0)
+  const { data } = useSearchUsersQuery({ searchQuery: searchStr })
 
-  console.log(data?.items[0])
-  console.log(str)
+  useEffect(() => {
+    setTimerId(
+      +setTimeout(() => {
+        setSearchStr(str)
+      }, 1500)
+    )
+
+    return clearTimeout(timerId)
+  }, [str])
 
   return (
     <div>
