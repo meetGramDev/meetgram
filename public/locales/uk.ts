@@ -63,6 +63,7 @@ export const uk: LanguagesObjType = {
     "Publication": "Публікація",
     "Publications": "Публікації",
     "Publish": "Опублікувати",
+    "Registered users:": "Зареєстровані користувачі:",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Save changes": "Зберегти зміни",
     "Select from computer": "Виберіть з комп’ютера",

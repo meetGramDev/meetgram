@@ -60,6 +60,7 @@ export const en = {
     "Publication": "Publication",
     "Publications": "Publications",
     "Publish": "Publish",
+    "Registered users:": "Registered users:",
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
     'Select from computer': "S" + "elect from computer",

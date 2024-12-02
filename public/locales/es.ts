@@ -62,6 +62,7 @@ export const es: LanguagesObjType = {
     "Publication": "Publicación",
     "Publications": "Publicaciones",
     "Publish": "Publicar",
+    "Registered users:": "Usuarios registrados:",
     "Resend verification link": "Reenviar enlace de verificación",
     "Save changes": "Guardar cambios",
     "Select from computer": "Seleccionar desde la computadora",

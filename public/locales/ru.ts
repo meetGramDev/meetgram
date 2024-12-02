@@ -62,6 +62,7 @@ export const ru: LanguagesObjType = {
     "Publication": "Публикация",
     "Publications": "Публикации",
     "Publish": "Опубликовать",
+    "Registered users:": "Зарегистрированные пользователи:",
     "Resend verification link": "Отправить ссылку для подтверждения еще раз",
     "Save changes": "Сохранить изменения",
     "Select from computer": "Выбрать на компьютере",
