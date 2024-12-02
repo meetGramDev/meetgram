@@ -8,14 +8,14 @@ import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
-import { Button, Checkbox } from '@/shared/ui'
+import { Button } from '@/shared/ui'
 import { RadioGroup, RadioGroupProps } from '@/shared/ui/radioGroup'
 import { useRouter } from 'next/router'
 
 import s from './UserManagement.module.scss'
 
 import {
-  useAutoRenewalMutation,
+  useCancelAutoRenewalMutation,
   useCreatePaymentSubscriptionMutation,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,
@@ -31,7 +31,8 @@ export const UserManagement = () => {
   const { data } = useGetCurrentPaymentQuery()
   const { data: costOfPaymentData } = useGetCostOfPaymentSubscriptionQuery()
   const [createPayment, { isLoading }] = useCreatePaymentSubscriptionMutation()
-  const [cancelAutoRenewal, { isLoading: autoRenewalLoading }] = useAutoRenewalMutation()
+  const [cancelAutoRenewal, { isLoading: cancelAutoRenewalLoading }] =
+    useCancelAutoRenewalMutation()
   const locale = useRouter().locale
 
   const router = useRouter()
@@ -120,6 +121,7 @@ export const UserManagement = () => {
     try {
       if (data?.hasAutoRenewal) {
         await cancelAutoRenewal().unwrap()
+        toast.success('Auto-renewal has been turned off')
       }
     } catch (error) {
       const err = serverErrorHandler(error)
@@ -150,7 +152,7 @@ export const UserManagement = () => {
 
   const lastDate = data?.data?.length ? data.data[data.data.length - 1] : null
 
-  useClientProgress(isLoading || autoRenewalLoading)
+  useClientProgress(isLoading || cancelAutoRenewalLoading)
 
   return (
     <div className={s.wrapper}>
@@ -172,13 +174,14 @@ export const UserManagement = () => {
           'You do not have subscriptions'
         )}
       </AccountManagerField>
-      <Checkbox
-        checked={data?.hasAutoRenewal}
-        className={'-mt-2 mb-4'}
-        disabled={autoRenewalLoading}
-        label={'Auto-Renewal'}
-        onValueChange={cancelAutoRenewalHandler}
-      />
+      <Button
+        className={'-mt-2 mb-4 w-min whitespace-nowrap'}
+        disabled={data?.hasAutoRenewal === false || cancelAutoRenewalLoading}
+        onClick={cancelAutoRenewalHandler}
+        variant={'secondary'}
+      >
+        {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
+      </Button>
       <AccountManagerField fieldTitle={'Account type:'}>
         <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
       </AccountManagerField>

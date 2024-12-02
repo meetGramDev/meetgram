@@ -23,7 +23,7 @@ export const postApi = baseApi.injectEndpoints({
       { answerId: number; commentId: number; likeStatus: string; postId: number }
     >({
       invalidatesTags: (res, error, { answerId, commentId, likeStatus, postId }) => [
-        { answerId, commentId, likeStatus, postId, type: 'post' },
+        { answerId, commentId, likeStatus, postId, type: 'commentAnswerLike' },
       ],
       async onQueryStarted(
         { answerId, commentId, likeStatus, postId },
@@ -54,7 +54,7 @@ export const postApi = baseApi.injectEndpoints({
       { commentId: number; likeStatus: string; postId: number }
     >({
       invalidatesTags: (res, error, { commentId, likeStatus, postId }) => [
-        { commentId, likeStatus, postId, type: 'post' },
+        { commentId, likeStatus, postId, type: 'commentLike' },
       ],
       async onQueryStarted({ commentId, likeStatus, postId }, { dispatch, queryFulfilled }) {
         const likeComment = dispatch(

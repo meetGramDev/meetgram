@@ -8,7 +8,7 @@ import { baseApi } from '@/shared/api'
 
 export const subscriptionServiceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    autoRenewal: builder.mutation<void, void>({
+    cancelAutoRenewal: builder.mutation<void, void>({
       invalidatesTags: (result, error, arg) => (!error ? ['subscriptions'] : []),
       query: () => ({
         method: 'POST',
@@ -41,7 +41,7 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
 })
 
 export const {
-  useAutoRenewalMutation,
+  useCancelAutoRenewalMutation,
   useCreatePaymentSubscriptionMutation,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,
