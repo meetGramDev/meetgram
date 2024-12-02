@@ -143,13 +143,11 @@ export const UserManagement = () => {
 
     date.setDate(date.getDate() + daysToAdd)
 
-    const formattedDate = date.toLocaleDateString(locale, {
+    return date.toLocaleDateString(locale, {
       day: 'numeric',
       month: 'numeric',
       year: 'numeric',
     })
-
-    return formattedDate.replaceAll('/', '.')
   }
 
   const lastDate = data?.data?.length ? data.data[data.data.length - 1] : null
