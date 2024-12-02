@@ -40,7 +40,6 @@ export const PublicPagePost = ({
 
   useEffect(() => {
     setTimeAgoStamp(getTimeAgo(tr ?? 'en', createdAt))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createdAt])
 
   return (
