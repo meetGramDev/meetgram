@@ -36,6 +36,7 @@ export const en = {
     "Followers": "Followers",
     "Following": "Following",
     "General Information": "General Information",
+    "Hide": 'hide',
     "January": "January",
     'July': "July",
     "June": "June",
@@ -59,6 +60,7 @@ export const en = {
     "Publication": "Publication",
     "Publications": "Publications",
     "Publish": "Publish",
+    "Registered users:": "Registered users:",
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
     'Select from computer': "S" + "elect from computer",
@@ -66,8 +68,10 @@ export const en = {
     "Select your country": "Select your country",
     "Send message": "Send message",
     "September": "September",
+    "Show more": 'Show more',
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",
+    "Success": 'Success',
     "Unfollow": "Unfollow",
     "We have sent a link to confirm your email to": "We have sent a link to confirm your email to ",
     "Yes": "Yes",
@@ -82,7 +86,6 @@ export const en = {
         passwordConfirmation: 'Password confirmation',
         passwordTerm: 'Your password must be between 6 and 20 characters',
     },
-
     errorsTr: {
 
         errorEmail: {InvalidEmail: 'Invalid email'},
@@ -117,6 +120,7 @@ export const en = {
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
     },
+
     language: 'English',
     policies: {
         "Privacy Policy": "Privacy Policy",
@@ -154,6 +158,19 @@ export const en = {
         signUp: 'Sign Up',
         termServ: 'Terms of Service',
         username: 'Username',
+    },
+    subscription: {
+        "Failed": "Failed",
+        "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.": "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.",
+        "You will be redirected to the Meetgram. It might take a few seconds.": "You will be redirected to the Meetgram. It might take a few seconds.",
+        buttons: {
+            "Back to payment": "Back to payment",
+            "Ok": "Ok",
+        },
+        message: {
+            "Payment was successful!": "Payment was successful!",
+            "Transaction failed. Please, write to support.": "Transaction failed. Please, write to support.",
+        }
     },
     test: 'Lorem Ipsum is simply dummy text of the printing',
     "text area": "text area",

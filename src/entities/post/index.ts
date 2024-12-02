@@ -1,4 +1,3 @@
-export { getPostMessage } from './lib/getPostMessage'
 export {
   useAddAnswerCommentMutation,
   useAddLikeToPostCommentMutation,

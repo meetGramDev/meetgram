@@ -109,7 +109,9 @@ export const UserManagement = () => {
     }
     const requestData: CreatePaymentRequestType = {
       amount: getSubscribeAmount.amount,
-      baseUrl: process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL || '',
+      baseUrl:
+        `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/${router.locale}${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL}` ||
+        '',
       paymentType: paymentMethod,
       typeSubscription: getSubscribeAmount.typeDescription,
     }

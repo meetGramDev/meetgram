@@ -38,6 +38,7 @@ export const ru: LanguagesObjType = {
     "Followers": "Подписчики",
     "Following": "Подписки",
     "General Information": "Общая информация",
+    "Hide": 'Скрыть',
     "January": "Январь",
     "July": "Июль",
     "June": "Июнь",
@@ -61,6 +62,7 @@ export const ru: LanguagesObjType = {
     "Publication": "Публикация",
     "Publications": "Публикации",
     "Publish": "Опубликовать",
+    "Registered users:": "Зарегистрированные пользователи:",
     "Resend verification link": "Отправить ссылку для подтверждения еще раз",
     "Save changes": "Сохранить изменения",
     "Select from computer": "Выбрать на компьютере",
@@ -68,8 +70,10 @@ export const ru: LanguagesObjType = {
     "Select your country": "Выберите вашу страну",
     "Send message": "Отправить сообщение",
     "September": "Сентябрь",
+    "Show more": "Показать",
     "Sign In": "Войти",
     "Sign Up": "Регистрация",
+    "Success": "Успешно",
     "Unfollow": "Отписаться",
     "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",
     "Yes": "Да",
@@ -115,12 +119,11 @@ export const ru: LanguagesObjType = {
         sendAgain: 'Если вы не получили письмо, отправьте ссылку еще раз.',
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
-    }, language: 'Русский',
-    policies: {
+    },
+    language: 'Русский', policies: {
         "Privacy Policy": "Политика конфиденциальности",
         "Terms Of Service": "Условия использования",
     },
-
     sidebarTr: {
         create: 'Создать',
         favorites: 'Избранное',
@@ -131,6 +134,7 @@ export const ru: LanguagesObjType = {
         search: 'Поиск',
         statistics: 'Статистика',
     },
+
     signInLang: {
         anAccount: 'Нет аккаунта?',
         email: 'Электронная почта',
@@ -139,7 +143,6 @@ export const ru: LanguagesObjType = {
         signIn: 'Войти',
         signUp: 'Регистрация',
     },
-
     signUpLang: {
         IAgree: 'Я согласен с',
         aler: 'Мы отправили ссылку для подтверждения вашей электронной почты на ',
@@ -154,6 +157,20 @@ export const ru: LanguagesObjType = {
         signUp: 'Регистрация',
         termServ: 'Условиями использования',
         username: 'Имя пользователя',
+    },
+
+    subscription: {
+        "Failed": "Отклонён",
+        "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.": "Пожалуйста, не обновляйте страницу, не закрывайте браузер и не нажимайте кнопку назад.",
+        "You will be redirected to the Meetgram. It might take a few seconds.": "Вы будете перенаправлены на Meetgram. Это может занять несколько секунд.",
+        buttons: {
+            "Back to payment": "Назад к платежам",
+            "Ok": "Ок",
+        },
+        message: {
+            "Payment was successful!": "Оплата прошла успешно!",
+            "Transaction failed. Please, write to support.": "Оплата не прошла. Обратитесь в службу поддержки."
+        }
     },
     test: 'Lorem Ipsum — это просто текст-«рыба» в полиграфии',
     "text area": "текстовое поле",

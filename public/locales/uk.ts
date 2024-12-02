@@ -39,6 +39,7 @@ export const uk: LanguagesObjType = {
     "Followers": "Підписники",
     "Following": "Підписки",
     "General Information": "Загальна інформація",
+    "Hide": "Приховати",
     "January": "Січень",
     "July": "Липень",
     "June": "Червень",
@@ -62,6 +63,7 @@ export const uk: LanguagesObjType = {
     "Publication": "Публікація",
     "Publications": "Публікації",
     "Publish": "Опублікувати",
+    "Registered users:": "Зареєстровані користувачі:",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Save changes": "Зберегти зміни",
     "Select from computer": "Виберіть з комп’ютера",
@@ -69,8 +71,10 @@ export const uk: LanguagesObjType = {
     "Select your country": "Виберіть вашу країну",
     "Send message": "Відправити повідомлення",
     "September": "Вересень",
+    "Show more": "Показати",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
+    "Success": "Успіх",
     "Unfollow": "Відписатися",
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
     "Yes": "Так",
@@ -116,14 +120,12 @@ export const uk: LanguagesObjType = {
         sendLink: 'Надіслати Посилання',
         sendLinkDialog: 'Ми відправили посилання для підтвердження вашої електронної пошти на',
     },
-
     language: 'Українська',
+
     policies: {
         "Privacy Policy": "Політика конфіденційності",
         "Terms Of Service": "Умови використання",
     },
-
-
     sidebarTr: {
         create: 'Створити',
         favorites: 'Вибране',
@@ -134,6 +136,8 @@ export const uk: LanguagesObjType = {
         search: 'Пошук',
         statistics: 'Статистика',
     },
+
+
     signInLang: {
         anAccount: 'Немаєш акаунт?',
         email: 'Електронна пошта',
@@ -142,7 +146,6 @@ export const uk: LanguagesObjType = {
         signIn: 'Увійти',
         signUp: 'Реєстрація',
     },
-
     signUpLang: {
         IAgree: 'Я погоджуюсь з',
         aler: 'Ми відправили посилання для підтвердження вашої електронної пошти на ',
@@ -157,6 +160,20 @@ export const uk: LanguagesObjType = {
         signUp: 'Реєстрація',
         termServ: ' Умовами надання послуг',
         username: "Ім'я користувача",
+    },
+
+    subscription: {
+        "Failed": "Відхилений",
+        "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.": "Будь ласка, не оновлюйте сторінку, не закривайте браузер та не натискайте кнопку назад.",
+        "You will be redirected to the Meetgram. It might take a few seconds.": "Ви будете перенаправлені на Meetgram.",
+        buttons: {
+            "Back to payment": "Назад до платежів",
+            "Ok": "Ок",
+        },
+        message: {
+            "Payment was successful!": "Оплата пройшла успішно!",
+            "Transaction failed. Please, write to support.": "Оплата не прошла. Будь ласка, зверніться в підтримку."
+        }
     },
     test: 'Lorem Ipsum — це просто текст-«риба» у поліграфії',
     "text area": "текстове поле",
