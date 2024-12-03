@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
+import { UsersListDialog } from '@/features/pagination'
 import { useSearchUsersQuery } from '@/features/search/model/services/search.services'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { HOME } from '@/shared/config/router'
@@ -13,7 +14,7 @@ const SearchUser: NextPageWithLayout = () => {
   const [str, setStr] = useState('')
   const [searchStr, setSearchStr] = useState('')
   const [timerId, setTimerId] = useState(0)
-  const { data } = useSearchUsersQuery({ searchQuery: searchStr })
+  const { data, isFetching, isLoading, isSuccess } = useSearchUsersQuery({ searchQuery: searchStr })
 
   useEffect(() => {
     setTimerId(
