@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { UsersListDialog } from '@/features/pagination'
+import { SearchDialog } from '@/features/search'
 import { useSearchUsersQuery } from '@/features/search/model/services/search.services'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { HOME } from '@/shared/config/router'
@@ -26,12 +27,15 @@ const SearchUser: NextPageWithLayout = () => {
     return clearTimeout(timerId)
   }, [str])
 
+  const onChangeValue = (value: string) => {
+    setStr(value)
+  }
+
   return (
-    <div>
-      <h1>Search</h1>
-      {/*<SearchDialog />*/}
-      <Input onChange={e => setStr(e.currentTarget.value)} placeholder={'Search'} type={'search'} />
-      Recent requests
+    <div className={'pl-6 pt-8'}>
+      <h1 className={'pb-3'}>Search</h1>
+      <SearchDialog onValueChange={onChangeValue} placeholder={'Search'} type={'search'} />
+      <p className={'font-bold leading-6'}>Recent requests</p>
       {data &&
         data.items &&
         data.items.map(item => (
