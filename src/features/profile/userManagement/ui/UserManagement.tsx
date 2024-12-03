@@ -3,15 +3,6 @@ import { toast } from 'react-toastify'
 
 import { changeCostOfPayment } from '@/features/profile/userManagement/lib/changeCostOfPayment'
 import { createRadioGroupData } from '@/features/profile/userManagement/lib/createRadioGroupData'
-import {
-  useCreatePaymentSubscriptionMutation,
-  useGetCostOfPaymentSubscriptionQuery,
-  useGetCurrentPaymentQuery,
-} from '@/features/profile/userManagement/model/services/subscription.service'
-import {
-  CreatePaymentRequestType,
-  PaymentType,
-} from '@/features/profile/userManagement/model/types/services'
 import { AccountManagerField } from '@/features/profile/userManagement/ui/accountManagerField'
 import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
@@ -23,6 +14,14 @@ import { useRouter } from 'next/router'
 
 import s from './UserManagement.module.scss'
 
+import {
+  useCancelAutoRenewalMutation,
+  useCreatePaymentSubscriptionMutation,
+  useGetCostOfPaymentSubscriptionQuery,
+  useGetCurrentPaymentQuery,
+} from '../model/services/subscription.service'
+import { CreatePaymentRequestType, PaymentType } from '../model/types/services'
+
 const managerItems: RadioGroupProps['options'] = [
   { label: 'Personal', value: 'Personal' },
   { label: 'Business', value: 'Business' },
@@ -32,6 +31,9 @@ export const UserManagement = () => {
   const { data } = useGetCurrentPaymentQuery()
   const { data: costOfPaymentData } = useGetCostOfPaymentSubscriptionQuery()
   const [createPayment, { isLoading }] = useCreatePaymentSubscriptionMutation()
+  const [cancelAutoRenewal, { isLoading: cancelAutoRenewalLoading }] =
+    useCancelAutoRenewalMutation()
+  const locale = useRouter().locale
 
   const router = useRouter()
   let newCostOfPayment
@@ -107,7 +109,9 @@ export const UserManagement = () => {
     }
     const requestData: CreatePaymentRequestType = {
       amount: getSubscribeAmount.amount,
-      baseUrl: process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL || '',
+      baseUrl:
+        `${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/${router.locale}${process.env.NEXT_PUBLIC_PAYMENT_REDIRECT_URL}` ||
+        '',
       paymentType: paymentMethod,
       typeSubscription: getSubscribeAmount.typeDescription,
     }
@@ -115,15 +119,69 @@ export const UserManagement = () => {
     return requestData
   }
 
-  useClientProgress(isLoading)
+  const cancelAutoRenewalHandler = async () => {
+    try {
+      if (data?.hasAutoRenewal) {
+        await cancelAutoRenewal().unwrap()
+        toast.success('Auto-renewal has been turned off')
+      }
+    } catch (error) {
+      const err = serverErrorHandler(error)
+
+      if (typeof err === 'string') {
+        toast.error(err)
+      }
+
+      setError(err)
+    }
+  }
+
+  const humanReadableDate = (dateOf: string, options?: { addDays?: number }) => {
+    const date = new Date(dateOf)
+
+    const daysToAdd = options?.addDays ?? 0
+
+    date.setDate(date.getDate() + daysToAdd)
+
+    return date.toLocaleDateString(locale, {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+    })
+  }
+
+  const lastDate = data?.data?.length ? data.data[data.data.length - 1] : null
+
+  useClientProgress(isLoading || cancelAutoRenewalLoading)
 
   return (
     <div className={s.wrapper}>
       <AccountManagerField fieldTitle={'Current Subscription:'}>
-        {data?.data?.length
-          ? data?.data.map(val => <div key={val.subscriptionId}>{val.dateOfPayment}</div>)
-          : 'You do not have subscriptions'}
+        {lastDate !== null ? (
+          <div className={'flex flex-row gap-16'}>
+            <div className={'flex flex-col gap-3'}>
+              <p className={'text-light-1000'}>Expire at</p>
+              <span>{humanReadableDate(lastDate.endDateOfSubscription)}</span>
+            </div>
+            {lastDate.autoRenewal && (
+              <div className={'flex flex-col gap-3'}>
+                <p className={'text-light-1000'}>Next payment</p>
+                <span>{humanReadableDate(lastDate.endDateOfSubscription, { addDays: 1 })}</span>
+              </div>
+            )}
+          </div>
+        ) : (
+          'You do not have subscriptions'
+        )}
       </AccountManagerField>
+      <Button
+        className={'-mt-2 mb-4 w-min whitespace-nowrap'}
+        disabled={data?.hasAutoRenewal === false || cancelAutoRenewalLoading}
+        onClick={cancelAutoRenewalHandler}
+        variant={'secondary'}
+      >
+        {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
+      </Button>
       <AccountManagerField fieldTitle={'Account type:'}>
         <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
       </AccountManagerField>

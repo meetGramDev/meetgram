@@ -1,14 +1,17 @@
+import { useTranslate } from '@/shared/lib'
+
 type PropsType = {
   usersCount: number
 }
 
 export const TotalUsersCount = ({ usersCount }: PropsType) => {
   const arrayOfCount = usersCount.toString().split('')
+  const t = useTranslate()
 
   return (
     <div className={'mb-9 flex justify-between bg-dark-500 px-6 py-3'}>
       <div className={'flex justify-center self-center text-[18px] font-bold leading-6'}>
-        <h2>Registered users:</h2>
+        <h2>{t('Registered users:')}</h2>
       </div>
       <div className={'flex rounded-sm border-2 border-dark-300 bg-dark-700 p-2'}>
         {arrayOfCount.map((num, count, array) => {

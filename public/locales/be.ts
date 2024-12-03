@@ -63,6 +63,7 @@ export const be: LanguagesObjType = {
     "Publication": "Публікацыя",
     "Publications": "Публікацыі",
     "Publish": "Апублікаваць",
+    "Registered users:": "Зарэгістраваныя карыстальнікі:",
     "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
     "Save changes": "Захаваць змены",
     "Select from computer": "Выбраць на кампутары",

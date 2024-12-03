@@ -8,6 +8,14 @@ import { baseApi } from '@/shared/api'
 
 export const subscriptionServiceApi = baseApi.injectEndpoints({
   endpoints: builder => ({
+    cancelAutoRenewal: builder.mutation<void, void>({
+      invalidatesTags: (result, error, arg) => (!error ? ['subscriptions'] : []),
+      query: () => ({
+        method: 'POST',
+        url: '/subscriptions/canceled-auto-renewal',
+      }),
+    }),
+
     createPaymentSubscription: builder.mutation<PaymentSessionResponse, CreatePaymentRequestType>({
       invalidatesTags: (result, error, arg) => (!error ? ['subscriptions'] : []),
       query: body => ({
@@ -16,23 +24,24 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
         url: '/subscriptions',
       }),
     }),
-
     getCostOfPaymentSubscription: builder.query<CostOfPaymentSubscriptionType, void>({
-      query: body => ({
+      query: args => ({
         method: 'GET',
         url: '/subscriptions/cost-of-payment-subscriptions',
       }),
     }),
     getCurrentPayment: builder.query<CurrentPaymentType, void>({
-      query: body => ({
+      providesTags: () => [{ type: 'subscriptions' }],
+      query: args => ({
         method: 'GET',
-        url: '/subscriptions/current-payment-subscriptions',
+        url: `/subscriptions/current-payment-subscriptions`,
       }),
     }),
   }),
 })
 
 export const {
+  useCancelAutoRenewalMutation,
   useCreatePaymentSubscriptionMutation,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,

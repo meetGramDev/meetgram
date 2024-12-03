@@ -10,6 +10,7 @@ import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
 import { Button } from '@/shared/ui'
+import { clsx } from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -26,7 +27,6 @@ type Props = {
 
 export const Comment = ({ comment, onClick }: Props) => {
   const tr = useRouter().locale
-
   const isAuth = useAppSelector(selectIsUserAuth)
 
   const { data: answers } = useGetAnswerCommentsQuery({
@@ -38,7 +38,11 @@ export const Comment = ({ comment, onClick }: Props) => {
 
   const setLikeHandler = async (status: string) => {
     try {
-      likeComment({ commentId: comment.id, likeStatus: status, postId: comment.postId })
+      likeComment({
+        commentId: comment.id,
+        likeStatus: status,
+        postId: comment.postId,
+      })
     } catch (error) {
       serverErrorHandler(error)
     }

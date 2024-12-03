@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useGetPostCommentsQuery } from '@/entities/post/model/services/post.service'
+import { Loader } from '@/shared/ui'
 
 import { Comment } from './Comment'
 
@@ -44,8 +45,11 @@ export const Comments = ({ onClick, pageNumber, postId, setPageNumber }: Props) 
           <Comment comment={comment} onClick={onClick} />
         </div>
       ))}
-      {isFetching && <p>Загрузка...</p>}
-      {/* {!hasMore && <p>Больше комментариев нет.</p>} */}
+      {isFetching && (
+        <div className={'flex h-1/4 w-full items-center justify-center'}>
+          <Loader />
+        </div>
+      )}
       <div ref={ref} style={{ height: '1px' }}></div>
     </>
   )
