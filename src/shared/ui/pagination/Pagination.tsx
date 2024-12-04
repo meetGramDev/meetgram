@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import { clsx } from 'clsx'
+
 import styles from './styles.module.scss'
 
 import { Button } from '../button/button'
@@ -13,6 +15,7 @@ import { Button } from '../button/button'
  * @property {number} pageCount - Общее количество страниц
  */
 type Props = {
+  className?: string
   currentPage: number
   onPageChange: (page: number) => void
   onPerPageChange: (itemsPerPage: number) => void
@@ -20,6 +23,7 @@ type Props = {
 }
 
 export const Pagination = ({
+  className,
   currentPage,
   onPageChange,
   onPerPageChange,
@@ -74,6 +78,7 @@ export const Pagination = ({
   }, [currentPage])
 
   const handleChangePage = (selectedPage: number | string) => {
+    console.log('typeof selectedPage : ', typeof selectedPage)
     if (typeof selectedPage === 'number') {
       setPage(selectedPage)
       onPageChange(selectedPage) // Вызов функции из props для информирования родительского компонента
@@ -112,7 +117,7 @@ export const Pagination = ({
   }
 
   return (
-    <div className={styles.paginationWrapper}>
+    <div className={clsx(styles.paginationWrapper, className)}>
       {/* Кнопка для перехода на предыдущую страницу */}
       <Button
         className={`${styles.pageItem} ${styles.arrowBtnL}`}
@@ -159,6 +164,7 @@ export const Pagination = ({
           )}
         </div>
       </div>
+      {/* todo class text isn't in style*/}
       <span className={styles.text}> on page</span>
     </div>
   )
