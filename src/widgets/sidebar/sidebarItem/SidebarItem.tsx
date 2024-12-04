@@ -20,13 +20,22 @@ export type SidebarItemType = {
 
 type Props = {
   className?: string
+  currentItem?: null | number
+  id?: number
   item: SidebarItemType
+  setCurrentItem?: (id: null | number) => void
 }
 
-export const SidebarItem = ({ className, item }: Props) => {
+export const SidebarItem = ({ className, currentItem, id, item, setCurrentItem }: Props) => {
   const { setOpenAddingPost } = useActions(addPostActions)
   const router = useRouter()
   const userId = useAppSelector(state => state.user.accountData.userId)
+  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
+  const isActiveLink =
+    id !== undefined &&
+    currentItem === id &&
+    userId !== null &&
+    router.asPath.includes(String(userId))
 
   const handleClickCreatePost = () => {
     if (router.asPath === `${HOME}/${userId}`) {
@@ -34,7 +43,11 @@ export const SidebarItem = ({ className, item }: Props) => {
     }
   }
 
-  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
+  const currentLinkHandler = () => {
+    if (currentItem !== id && setCurrentItem !== undefined && id !== undefined) {
+      setCurrentItem(id)
+    }
+  }
 
   return (
     <>
@@ -48,7 +61,13 @@ export const SidebarItem = ({ className, item }: Props) => {
           {isMobile || item.name}
         </Button>
       ) : (
-        <Link className={clsx(s.item, className)} href={item.path} key={item.path} passHref>
+        <Link
+          className={clsx(s.item, className, s.link, isActiveLink && s.currentItem)}
+          href={item.path}
+          key={item.path}
+          onClick={currentLinkHandler}
+          passHref
+        >
           <item.Svg />
           {isMobile || item.name}
         </Link>
