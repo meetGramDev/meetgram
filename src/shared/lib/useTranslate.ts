@@ -1,8 +1,9 @@
-'use client'
+import { LocalesType, TranslationPhraseType } from '@/shared/config/i18n'
+import { flattenTranslations } from '@/shared/config/i18n/hooks/flattenTranslations'
 import { useRouter } from 'next/router'
 
 import { be } from '../../../public/locales/be'
-import { LenType, en } from '../../../public/locales/en'
+import { en } from '../../../public/locales/en'
 import { es } from '../../../public/locales/es'
 import { ru } from '../../../public/locales/ru'
 import { uk } from '../../../public/locales/uk'
@@ -10,17 +11,16 @@ import { uk } from '../../../public/locales/uk'
 export const useTranslate = () => {
   const { locale } = useRouter()
 
-  const lang = switcher(locale)
+  const lang = switcher(locale as LocalesType)
 
-  // TODO сделать типизацию
-  function t(phrase: any = '') {
-    return lang[phrase as keyof LenType] || phrase
+  const flattenTranslationTree = flattenTranslations(lang)
+
+  return function (phrase: TranslationPhraseType<typeof lang>) {
+    return flattenTranslationTree[phrase] ?? phrase
   }
-
-  return t
 }
 
-function switcher(language: string | undefined): LenType {
+function switcher<T extends LocalesType>(language: T) {
   switch (language) {
     case 'be':
       return be
@@ -34,3 +34,5 @@ function switcher(language: string | undefined): LenType {
       return en
   }
 }
+
+export type TranslateFuncType = ReturnType<typeof useTranslate>

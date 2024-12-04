@@ -1,4 +1,4 @@
-import { SubscriptionType } from '@/features/profile/subscriptions'
+import { SubscriptionType } from '@/features/profile/userManagement/model/types/services'
 
 export function formatSubscriptionType(subscription: SubscriptionType) {
   switch (subscription) {

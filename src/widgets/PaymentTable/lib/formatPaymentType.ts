@@ -1,4 +1,4 @@
-import { PaymentType } from '@/features/profile/subscriptions'
+import { PaymentType } from '@/features/profile/userManagement/model/types/services'
 
 export function formatPaymentType(payment: PaymentType) {
   switch (payment) {

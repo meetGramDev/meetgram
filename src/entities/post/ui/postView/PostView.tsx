@@ -9,6 +9,7 @@ import { Comments, getTimeAgo } from '@/features/posts/comments'
 import { LikeButton } from '@/features/posts/likePost'
 import { PostViewSelect } from '@/features/posts/postViewSelect'
 import { CloseIcon, FavoritesIcon, PaperPlane, SketchedFavourites } from '@/shared/assets'
+import { ExpandableText } from '@/shared/components/expandable-text'
 import { HOME } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
@@ -50,6 +51,8 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
   const isAuth = useAppSelector(selectIsUserAuth)
   const t = useTranslate()
 
+  const [isExpanded, setIsExpanded] = useState(false)
+
   const dateOfCreate = (postCreate: string) => {
     const date = new Date(postCreate)
 
@@ -64,11 +67,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     setTextContent(e.currentTarget.value)
   }
 
-  const addCommentHandler = (pageNumber: number) => {
+  const addCommentHandler = async (pageNumber: number) => {
     try {
       setTextContent('')
       if (textContent !== '') {
-        addComment({ body: { content: textContent }, pageNumber, postId })
+        await addComment({ body: { content: textContent }, pageNumber, postId })
       }
     } catch (err) {
       const message = serverErrorHandler(err)
@@ -79,11 +82,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     }
   }
 
-  const addAnswerHandler = (commentId: number) => {
+  const addAnswerHandler = async (commentId: number) => {
     try {
       setTextContent(`${post?.userName} `)
       if (textContent !== '') {
-        addAnswerComment({ body: { content: textContent }, commentId, postId })
+        await addAnswerComment({ body: { content: textContent }, commentId, postId })
         setCommentId(null)
       }
     } catch (err) {
@@ -114,6 +117,10 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
 
   const handleOnFollow = (userId: number) => followUser({ selectedUserId: userId })
 
+  const onToggleDescription = () => {
+    setIsExpanded(!isExpanded)
+  }
+
   const ownerProfile = `${HOME}/${userId}`
 
   return (
@@ -136,7 +143,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
             />
           )}
 
-          <div className={s.content}>
+          <div className={clsx(s.content, !isAuth && s.isNotAuthWidth)}>
             <div className={s.title}>
               <div className={s.userLink}>
                 <Link className={s.linkAvatar} href={ownerProfile}>
@@ -182,7 +189,13 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                       <Link className={s.descriptionUserName} href={ownerProfile}>
                         {post.userName}
                       </Link>
-                      {post.description}
+                      <ExpandableText
+                        hideCount={120}
+                        isExpanded={isExpanded}
+                        message={post.description}
+                        onExpand={onToggleDescription}
+                        showedCount={post.description.length}
+                      />
                     </div>
                   </div>
                   <span className={s.descriptionDate}>

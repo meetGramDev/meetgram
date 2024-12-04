@@ -83,8 +83,9 @@ export const Answer = ({ answer, onClick, postId }: Props) => {
         <span>{getTimeAgo(tr ?? 'en', answer.createdAt)}</span>
         {isAuth && (
           <>
-            {answer.isLiked && <span className={s.like}>Like:</span>}
-            {answer.likeCount !== 0 && answer.likeCount}
+            {answer.isLiked && answer.likeCount !== 0 && (
+              <span className={s.like}>Like: {answer.likeCount}</span>
+            )}
             <Button className={s.button} onClick={onClick} variant={'text'}>
               Answer
             </Button>
