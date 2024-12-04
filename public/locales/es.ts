@@ -2,6 +2,11 @@ import { LanguagesObjType } from './en';
 
 
 export const es: LanguagesObjType = {
+    "404": {
+        "Go back to": "Volver a la ",
+        "Homepage": "Página principal",
+        "Page not found": "Página no encontrada",
+    },
     "About me": "Sobre mí",
     "Account Management": "Gestión de la cuenta",
     "Add Photo": "Añadir foto",
@@ -32,8 +37,8 @@ export const es: LanguagesObjType = {
     "Edit Post": "Editar publicación",
     "Email sent": "Correo enviado",
     "Email verification link expired": "El enlace ha caducado",
-    "February": "Febrero",
-    "Filters": "Filtros", "First Name": "Nombre",
+    "February": "Febrero", "Filters": "Filtros",
+    "First Name": "Nombre",
     "Follow": "Seguir",
     "Followers": "Seguidores",
     "Following": "Siguiendo",
