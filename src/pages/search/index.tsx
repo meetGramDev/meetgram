@@ -8,14 +8,22 @@ import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { HOME } from '@/shared/config/router'
 import { NextPageWithLayout } from '@/shared/types'
 import { Button, Input } from '@/shared/ui'
+import { Pagination } from '@/shared/ui/pagination/Pagination'
 import { getMainLayout } from '@/widgets/layouts'
 import Link from 'next/link'
 
 const SearchUser: NextPageWithLayout = () => {
   const [str, setStr] = useState('')
   const [searchStr, setSearchStr] = useState('')
+  const [pageNumber, setPageNumber] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   const [timerId, setTimerId] = useState(0)
-  const { data, isFetching, isLoading, isSuccess } = useSearchUsersQuery({ searchQuery: searchStr })
+  const { data, isFetching, isLoading, isSuccess } = useSearchUsersQuery({
+    cursor: 0,
+    pageNumber,
+    pageSize,
+    searchQuery: searchStr,
+  })
 
   useEffect(() => {
     setTimerId(
@@ -65,6 +73,21 @@ const SearchUser: NextPageWithLayout = () => {
             </Button>
           </div>
         ))}
+      <div className={'mt-5'}>
+        {data && (
+          <Pagination
+            currentPage={data.page}
+            onPageChange={page => {
+              setPageNumber(page)
+            }}
+            onPerPageChange={itemsPerPage => {
+              setPageSize(itemsPerPage)
+            }}
+            options={[1, 5, 10, 20, 50, 100]}
+            pageCount={data.pagesCount}
+          />
+        )}
+      </div>
     </div>
   )
 }

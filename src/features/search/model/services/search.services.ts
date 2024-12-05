@@ -6,7 +6,7 @@ const searchService = baseApi.injectEndpoints({
     searchUsers: builder.query<PaginationType<SearchUserType>, PaginationQueriesType>({
       query: body => ({
         method: 'GET',
-        url: `/users?search=${body.searchQuery}`,
+        url: `/users?search=${body.searchQuery}&pageSize=${body.pageSize}&pageNumber=${body.pageNumber}&cursor=${body.cursor}`,
       }),
     }),
   }),
