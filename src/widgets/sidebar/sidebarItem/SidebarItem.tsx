@@ -32,10 +32,7 @@ export const SidebarItem = ({ className, currentItem, id, item, setCurrentItem }
   const userId = useAppSelector(state => state.user.accountData.userId)
   const isMobile = useMediaQuery({ query: '(max-width:650px)' })
   const isActiveLink =
-    id !== undefined &&
-    currentItem === id &&
-    userId !== null &&
-    router.asPath.includes(String(userId))
+    id && currentItem === id && userId !== null && router.asPath.includes(String(userId))
 
   const handleClickCreatePost = () => {
     if (router.asPath === `${HOME}/${userId}`) {
@@ -44,7 +41,7 @@ export const SidebarItem = ({ className, currentItem, id, item, setCurrentItem }
   }
 
   const currentLinkHandler = () => {
-    if (currentItem !== id && setCurrentItem !== undefined && id !== undefined) {
+    if (currentItem !== id && setCurrentItem && id) {
       setCurrentItem(id)
     }
   }
@@ -62,7 +59,7 @@ export const SidebarItem = ({ className, currentItem, id, item, setCurrentItem }
         </Button>
       ) : (
         <Link
-          className={clsx(s.item, className, s.link, isActiveLink && s.currentItem)}
+          className={clsx(s.item, className, isActiveLink && s.currentItem)}
           href={item.path}
           key={item.path}
           onClick={currentLinkHandler}

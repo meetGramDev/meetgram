@@ -18,9 +18,11 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  gap: 0.5rem;
   font-size: var(--fs-s);
   font-weight: var(--fw-500);
   line-height: var(--lh-m);
+
   transition: 0.3s;
 
   &:hover {
@@ -38,12 +40,6 @@
   &:nth-child(7) {
     margin-bottom: 7.25rem;
   }
-}
-
-.link {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
 }
 
 .currentItem {
