@@ -43,37 +43,21 @@ const SearchUser: NextPageWithLayout = () => {
     <div className={'pl-6 pt-8'}>
       <h1 className={'pb-3'}>Search</h1>
       <SearchDialog onValueChange={onChangeValue} placeholder={'Search'} type={'search'} />
-      <p className={'font-bold leading-6'}>Recent requests</p>
+      {str === '' && <p className={'font-bold leading-6'}>Recent requests</p>}
+
       {data &&
         data.items &&
         data.items.map(item => (
-          <div key={item.id}>
-            {' '}
-            <Button
-              as={Link}
-              className={'flex items-start justify-start text-light-100'}
-              href={`${HOME}/${item.id}`}
-              variant={'text'}
-            >
-              <div className={'mt-[12px] flex'}>
-                <Photo
-                  alt={'Friend avatar'}
-                  height={36}
-                  src={item.avatars[0]?.url || notUserPhoto}
-                  width={36}
-                />
-                <h2
-                  className={
-                    'ml-[12px] flex items-center justify-center text-[16px] font-bold leading-6'
-                  }
-                >
-                  {item.userName}
-                </h2>
-              </div>
-            </Button>
-          </div>
+          <UserSearch
+            firstName={item.firstName || 'First Name'}
+            key={item.id}
+            lastName={item.lastName || 'Last Name'}
+            url={item.avatars[0]?.url}
+            userId={item.id}
+            userName={item.userName || 'User Name'}
+          />
         ))}
-      <div className={'mt-5'}>
+      <div className={'ml-20 mr-20 mt-7'}>
         {data && (
           <Pagination
             currentPage={data.page}
@@ -95,3 +79,47 @@ const SearchUser: NextPageWithLayout = () => {
 SearchUser.getLayout = getMainLayout
 
 export default SearchUser
+
+type UserSearchPropsType = {
+  firstName?: string
+  key: number
+  lastName?: string
+  url?: string
+  userId: number
+  userName?: string
+}
+
+const UserSearch = ({ firstName, key, lastName, url, userId, userName }: UserSearchPropsType) => {
+  return (
+    <>
+      {' '}
+      <div key={key}>
+        <div className={'mt-[12px] flex'}>
+          <Button
+            as={Link}
+            className={'flex items-center justify-start text-light-100'}
+            href={`${HOME}/${userId}`}
+            variant={'text'}
+          >
+            <Photo alt={'Friend avatar'} height={36} src={url || notUserPhoto} width={36} />
+          </Button>
+
+          <div className={'ml-[12px]'}>
+            <Button
+              as={Link}
+              className={
+                'flex items-center justify-start text-[14px] font-bold leading-6 text-light-100'
+              }
+              href={`${HOME}/${userId}`}
+              variant={'link'}
+            >
+              {userName}
+            </Button>
+            {/*<p className={'flex items-center justify-start text-[16px] font-bold leading-6'}></p>*/}
+            <p className={'text-[14px] text-light-900'}>{`${firstName} ${lastName}`}</p>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
