@@ -32,15 +32,10 @@ export const PublicPagePost = ({
 }: Props) => {
   const tr = useRouter().locale
   const [isExpanded, setIsExpanded] = useState(false)
-  const [timeAgoStamp, setTimeAgoStamp] = useState('')
 
   const onToggleText = () => {
     setIsExpanded(!isExpanded)
   }
-
-  useEffect(() => {
-    setTimeAgoStamp(getTimeAgo(tr ?? 'en', createdAt))
-  }, [createdAt])
 
   return (
     <div className={s.publicPostWrapper}>
@@ -71,7 +66,9 @@ export const PublicPagePost = ({
         </div>
       </Button>
 
-      <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>{timeAgoStamp}</p>
+      <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>
+        {getTimeAgo(tr ?? 'en', createdAt)}
+      </p>
       <div className={'inline'}>
         <ExpandableText
           cutTextEnd={11}
