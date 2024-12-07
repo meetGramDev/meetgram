@@ -1,0 +1,32 @@
+@import '@/app/styles/mixins';
+
+.formWrapper {
+  @include flex(column, center, start, 1.5rem);
+  margin-top: 1.87rem;
+  width: 100%;
+  margin-left: 1.5rem;
+}
+
+.labelSkeleton {
+  @include skeleton-animation;
+  border-radius: 4px;
+  margin-bottom: -0.3rem;
+  width: 10.43rem;
+  height: 1rem;
+}
+
+.fieldSkeleton {
+  @include skeleton-animation;
+  height: 5.25rem;
+
+  width: 100%;
+  border-radius: 4px;
+}
+
+.buttonSkeleton {
+  @include skeleton-animation;
+  height: 2.5rem;
+  width: 15rem;
+  border-radius: 2px;
+  margin-bottom: 0.2rem;
+}

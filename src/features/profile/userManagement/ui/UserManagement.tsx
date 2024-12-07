@@ -21,6 +21,7 @@ import {
   useGetCurrentPaymentQuery,
 } from '../model/services/subscription.service'
 import { CreatePaymentRequestType, PaymentType } from '../model/types/services'
+import { UserManagementSkeleton } from './skeleton/UserManagementSkeleton'
 
 const managerItems: RadioGroupProps['options'] = [
   { label: 'Personal', value: 'Personal' },
@@ -155,85 +156,91 @@ export const UserManagement = () => {
   useClientProgress(isLoading || cancelAutoRenewalLoading)
 
   return (
-    <div className={s.wrapper}>
-      <AccountManagerField fieldTitle={'Current Subscription:'}>
-        {lastDate !== null ? (
-          <div className={'flex flex-row gap-16'}>
-            <div className={'flex flex-col gap-3'}>
-              <p className={'text-light-1000'}>Expire at</p>
-              <span>{humanReadableDate(lastDate.endDateOfSubscription)}</span>
-            </div>
-            {lastDate.autoRenewal && (
-              <div className={'flex flex-col gap-3'}>
-                <p className={'text-light-1000'}>Next payment</p>
-                <span>{humanReadableDate(lastDate.endDateOfSubscription, { addDays: 1 })}</span>
+    <>
+      {data && costOfPaymentData ? (
+        <div className={s.wrapper}>
+          <AccountManagerField fieldTitle={'Current Subscription:'}>
+            {lastDate !== null ? (
+              <div className={'flex flex-row gap-16'}>
+                <div className={'flex flex-col gap-3'}>
+                  <p className={'text-light-1000'}>Expire at</p>
+                  <span>{humanReadableDate(lastDate.endDateOfSubscription)}</span>
+                </div>
+                {lastDate.autoRenewal && (
+                  <div className={'flex flex-col gap-3'}>
+                    <p className={'text-light-1000'}>Next payment</p>
+                    <span>{humanReadableDate(lastDate.endDateOfSubscription, { addDays: 1 })}</span>
+                  </div>
+                )}
+              </div>
+            ) : (
+              'You do not have subscriptions'
+            )}
+          </AccountManagerField>
+          <Button
+            className={'-mt-2 mb-4 w-min whitespace-nowrap'}
+            disabled={data?.hasAutoRenewal === false || cancelAutoRenewalLoading}
+            onClick={cancelAutoRenewalHandler}
+            variant={'secondary'}
+          >
+            {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
+          </Button>
+          <AccountManagerField fieldTitle={'Account type:'}>
+            <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
+          </AccountManagerField>
+          <form>
+            {radioOptions.options[1].checked && (
+              <AccountManagerField fieldTitle={'Change your subscription:'}>
+                <RadioGroup
+                  className={s.radioGroup}
+                  onValueChange={onValueChangeSubscriptionHandler}
+                  options={cost.options}
+                />
+              </AccountManagerField>
+            )}
+            {typeof error === 'string' && <div className={s.error}>{error}</div>}
+            {radioOptions.options[1].checked && (
+              <div className={s.paymentWrapper}>
+                <div className={s.paymentButtonWrapper}>
+                  <Button
+                    className={s.paymentButton}
+                    onClick={e => {
+                      e.preventDefault()
+                      if (costOfPaymentData !== undefined) {
+                        const requestData = dataPacking('PAYPAL')
+
+                        handleSubmitForm(requestData)
+                      }
+                    }}
+                    type={'submit'}
+                    variant={'outlined'}
+                  >
+                    <PayPal />
+                  </Button>
+                  or
+                  <Button
+                    className={s.paymentButton}
+                    onClick={e => {
+                      e.preventDefault()
+                      if (costOfPaymentData !== undefined) {
+                        const requestData = dataPacking('STRIPE')
+
+                        handleSubmitForm(requestData)
+                      }
+                    }}
+                    type={'submit'}
+                    variant={'outlined'}
+                  >
+                    <Stripe />
+                  </Button>
+                </div>
               </div>
             )}
-          </div>
-        ) : (
-          'You do not have subscriptions'
-        )}
-      </AccountManagerField>
-      <Button
-        className={'-mt-2 mb-4 w-min whitespace-nowrap'}
-        disabled={data?.hasAutoRenewal === false || cancelAutoRenewalLoading}
-        onClick={cancelAutoRenewalHandler}
-        variant={'secondary'}
-      >
-        {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
-      </Button>
-      <AccountManagerField fieldTitle={'Account type:'}>
-        <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
-      </AccountManagerField>
-      <form>
-        {radioOptions.options[1].checked && (
-          <AccountManagerField fieldTitle={'Change your subscription:'}>
-            <RadioGroup
-              className={s.radioGroup}
-              onValueChange={onValueChangeSubscriptionHandler}
-              options={cost.options}
-            />
-          </AccountManagerField>
-        )}
-        {typeof error === 'string' && <div className={s.error}>{error}</div>}
-        {radioOptions.options[1].checked && (
-          <div className={s.paymentWrapper}>
-            <div className={s.paymentButtonWrapper}>
-              <Button
-                className={s.paymentButton}
-                onClick={e => {
-                  e.preventDefault()
-                  if (costOfPaymentData !== undefined) {
-                    const requestData = dataPacking('PAYPAL')
-
-                    handleSubmitForm(requestData)
-                  }
-                }}
-                type={'submit'}
-                variant={'outlined'}
-              >
-                <PayPal />
-              </Button>
-              or
-              <Button
-                className={s.paymentButton}
-                onClick={e => {
-                  e.preventDefault()
-                  if (costOfPaymentData !== undefined) {
-                    const requestData = dataPacking('STRIPE')
-
-                    handleSubmitForm(requestData)
-                  }
-                }}
-                type={'submit'}
-                variant={'outlined'}
-              >
-                <Stripe />
-              </Button>
-            </div>
-          </div>
-        )}
-      </form>
-    </div>
+          </form>
+        </div>
+      ) : (
+        <UserManagementSkeleton />
+      )}
+    </>
   )
 }
