@@ -1,13 +1,13 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { UsersListDialog } from '@/features/pagination'
 import { SearchDialog } from '@/features/search'
 import { useSearchUsersQuery } from '@/features/search/model/services/search.services'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { HOME } from '@/shared/config/router'
+import { useClientProgress } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
-import { Button, Input } from '@/shared/ui'
+import { Button, Loader } from '@/shared/ui'
 import { Pagination } from '@/shared/ui/pagination/Pagination'
 import { getMainLayout } from '@/widgets/layouts'
 import Link from 'next/link'
@@ -39,12 +39,17 @@ const SearchUser: NextPageWithLayout = () => {
     setStr(value)
   }
 
+  useClientProgress(isLoading || isFetching)
+  if (isLoading) {
+    return <Loader loaderClassName={'mx-auto my-6'} />
+  }
+
   return (
     <div className={'pl-6 pt-8'}>
       <h1 className={'pb-3'}>Search</h1>
       <SearchDialog onValueChange={onChangeValue} placeholder={'Search'} type={'search'} />
-      {str === '' && <p className={'font-bold leading-6'}>Recent requests</p>}
-
+      {/*{str === '' && <p className={'font-bold leading-6'}>Recent requests</p>}*/}
+      {str === '' && <p className={'font-bold leading-6'}>All users</p>}
       {data &&
         data.items &&
         data.items.map(item => (
