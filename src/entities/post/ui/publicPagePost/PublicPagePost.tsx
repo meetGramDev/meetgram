@@ -47,7 +47,6 @@ export const PublicPagePost = ({
         images={images}
         isPictureAsLink
         isPictureAsLinkTo={`${HOME}/${ownerId}?postId=${postId}&isOpenPost=true`}
-        // itemClassname={s.carouselItem}
       />
 
       <Button
