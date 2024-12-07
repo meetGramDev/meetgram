@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
-import { SearchDialog } from '@/features/search'
 import { useSearchUsersQuery } from '@/features/search/model/services/search.services'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { HOME } from '@/shared/config/router'
 import { useClientProgress } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
-import { Button, Loader } from '@/shared/ui'
+import { Button, Input, Loader } from '@/shared/ui'
 import { Pagination } from '@/shared/ui/pagination/Pagination'
 import { getMainLayout } from '@/widgets/layouts'
 import Link from 'next/link'
@@ -47,7 +46,13 @@ const SearchUser: NextPageWithLayout = () => {
   return (
     <div className={'pl-6 pt-8'}>
       <h1 className={'pb-3'}>Search</h1>
-      <SearchDialog onValueChange={onChangeValue} placeholder={'Search'} type={'search'} />
+      {/*<SearchDialog onValueChange={onChangeValue} placeholder={'Search'} type={'search'} />*/}
+      <Input
+        className={'mb-6'}
+        onChange={e => onChangeValue(e.currentTarget.value)}
+        placeholder={'Search'}
+        type={'search'}
+      />
       {/*{str === '' && <p className={'font-bold leading-6'}>Recent requests</p>}*/}
       {str === '' && <p className={'font-bold leading-6'}>All users</p>}
       {data &&
