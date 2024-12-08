@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 
-import { PaymentType, SubscriptionType } from '@/features/profile/subscriptions'
-import { nextSessionApi } from '@/shared/api/_next-auth'
+import { useGetPaymentsQuery } from '@/features/profile/userManagement'
+import {
+  PaymentType,
+  SubscriptionType,
+} from '@/features/profile/userManagement/model/types/services'
+/*import { PaymentType, SubscriptionType } from '@/features/profile/subscriptions'*/
 import { Pagination } from '@/shared/ui/pagination/Pagination'
 import {
   Table,
@@ -12,6 +16,7 @@ import {
   TableRow,
 } from '@/shared/ui/table/Table-components'
 import { formatPaymentType, formatSubscriptionType } from '@/widgets/PaymentTable/lib'
+import { clsx } from 'clsx'
 import { useRouter } from 'next/router'
 
 import s from './MyPayments.module.scss'
@@ -20,37 +25,34 @@ import { invoice } from './temporaryObject/invoice'
 
 export const MyPayments = () => {
   /** here srtart with tokkens*/
-  const token = nextSessionApi.getSessionToken()
+  /* const token = nextSessionApi.getSessionToken()
+                                
+                                                         const [tok, setTok] = useState('')
+                                
+                                
+                                                         useEffect(() => {
+                                                           token.then((e: any) => {
+                                                             console.log('token : ', e.data.accessToken)
+                                                             setTok(e.data.accessToken)
+                                                           })
+                                                         }, [])*/
 
-  const [tok, setTok] = useState('')
   const { locale } = useRouter()
 
-  useEffect(() => {
-    token.then((e: any) => {
-      console.log('token : ', e.data.accessToken)
-      setTok(e.data.accessToken)
-    })
-  }, [])
-
   /** які взагалі у мене є пейменти */
-  /*axios
-                                                                                                                                                                                                                                                                                                                                            .get('https://inctagram.work/api/v1/subscriptions/current-payment-subscriptions', {
-                                                                                                                                                                                                                                                                                                                                              headers: {
-                                                                                                                                                                                                                                                                                                                                                Authorization: `Bearer ${tok}`, // Add the token here
-                                                                                                                                                                                                                                                                                                                                                accept: 'application/json',
-                                                                                                                                                                                                                                                                                                                                              },
-                                                                                                                                                                                                                                                                                                                                            })
-                                                                                                                                                                                                                                                                                                                                            .then(response => {
-                                                                                                                                                                                                                                                                                                                                              console.log('tok', response.data?.data) // Successful response
-                                                                                                                                                                                                                                                                                                                                            })
-                                                                                                                                                                                                                                                                                                                                            .catch(error => {
-                                                                                                                                                                                                                                                                                                                                              console.error('Error:', error.response?.status, error.response?.data) // Detailed error
-                                                                                                                                                                                                                                                                                                                                            })*/
 
-  /* const date = new Date('2024-11-25T21:35:38.482Z')
-                                      
-                                      
-                                                                                                                                                                                                                                                                           const formatDate = `${date.getDate()} : ${date.getMonth()}`*/
+  const { currentData, data, isError, status } = useGetPaymentsQuery()
+
+  console.log(
+    'payments22222222 : ',
+    currentData,
+    '  isError: ',
+    isError,
+    '  data :',
+    data,
+    '  status: ',
+    status
+  )
 
   function formatDate(date: string): string {
     const dateForm = new Date(date)
@@ -115,6 +117,36 @@ export const MyPayments = () => {
     return amountCells() * x
   }
 
+  function table() {
+    if (!isError && !data?.length) {
+      return invoice?.map((el, i) => {
+        if (!isError) {
+          return (
+            <TableRow key={i}>
+              <TableCell>{formatDate(el.dateOfPayment)}</TableCell>
+              <TableCell>{formatDate(el.endDateOfSubscription)}</TableCell>
+              <TableCell>{'$ ' + el.price}</TableCell>
+              <TableCell>
+                {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
+              </TableCell>
+              <TableCell>{formatPaymentType(el.paymentType as PaymentType)}</TableCell>
+            </TableRow>
+          )
+        }
+      })
+    } else {
+      return (
+        <TableRow>
+          <TableCell>{0}</TableCell>
+          <TableCell>{0}</TableCell>
+          <TableCell>{0}</TableCell>
+          <TableCell>{0}</TableCell>
+          <TableCell>{0}</TableCell>
+        </TableRow>
+      )
+    }
+  }
+
   return (
     <div>
       <div>
@@ -128,32 +160,19 @@ export const MyPayments = () => {
               <TableHead className={'text-left'}>Payment Type</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {invoice.map((el, i) => {
-              if (i >= amountFrom(from) && i <= amountToo(from)) {
-                return (
-                  <TableRow key={i}>
-                    <TableCell>{formatDate(el.dateOfPayment)}</TableCell>
-                    <TableCell>{formatDate(el.endDateOfSubscription)}</TableCell>
-                    <TableCell>{'$ ' + el.price}</TableCell>
-                    <TableCell>
-                      {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
-                    </TableCell>
-                    <TableCell>{formatPaymentType(el.paymentType as PaymentType)}</TableCell>
-                  </TableRow>
-                )
-              }
-            })}
-          </TableBody>
+          <TableBody>{table()}</TableBody>
         </Table>
       </div>
-      <Pagination
-        className={s.paginationSize}
-        currentPage={1}
-        onPageChange={setFrom}
-        onPerPageChange={() => {}}
-        pageCount={Math.ceil((invoice.length + 1) / amountCells())}
-      />
+      <div className={s.paginationWrapper}>
+        <div className={clsx(s.paginationSize)}>
+          <Pagination
+            currentPage={1}
+            onPageChange={setFrom}
+            onPerPageChange={() => {}}
+            pageCount={Math.ceil((invoice.length + 1) / amountCells())}
+          />
+        </div>
+      </div>
     </div>
   )
 }

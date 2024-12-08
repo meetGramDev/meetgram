@@ -3,6 +3,19 @@
 }
 
 .tableSize {
+  bottom: 0;
   width: 80vw;
   margin: 24px;
+
+}
+
+.paginationWrapper {
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+
+  width: 100%;
+  padding: 100px;
+
+  background-color: var(--toastify-color-dark);
 }
