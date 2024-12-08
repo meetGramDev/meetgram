@@ -2,6 +2,11 @@ import { LanguagesObjType } from './en';
 
 
 export const be: LanguagesObjType = {
+    "404": {
+        "Go back to": "Вярнуцца на ",
+        "Homepage": "галоўную",
+        "Page not found": "Старонка не знойдзена",
+    },
     "About me": "Пра мяне",
     "Account Management": "Кіраванне акаўнтам",
     "Add Photo": "Дадаць фота",
