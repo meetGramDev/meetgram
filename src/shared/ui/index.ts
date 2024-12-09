@@ -1,3 +1,4 @@
+export { Logo404 } from './404-logo/Logo404'
 export { BackButton } from './backButton/BackButton'
 export { Button } from './button/button'
 export { Card } from './card/Card'
