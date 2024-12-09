@@ -11,11 +11,12 @@ const meta = {
     onPerPageChange: (perPage: number) => {
       console.log(`Items per page changed to: ${perPage}`)
     },
+    options: [5, 10, 20, 100],
     pageCount: 10,
   },
   component: Pagination,
   tags: ['autodocs'],
-  title: 'components/Pagination',
+  title: 'shared/Pagination',
 } satisfies Meta<typeof Pagination>
 
 export default meta

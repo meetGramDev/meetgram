@@ -1,4 +1,9 @@
 export const en = {
+    "404": {
+        "Go back to": "Go back to the ",
+        "Homepage": "Homepage",
+        "Page not found": "Page not found",
+    },
     "About me": "About me",
     "Account Management": "Account Management",
     'Add Photo': 'Add Photo',

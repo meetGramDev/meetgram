@@ -2,6 +2,11 @@ import { LanguagesObjType } from './en';
 
 
 export const uk: LanguagesObjType = {
+    "404": {
+        "Go back to": "Повернутися на ",
+        "Homepage": "головну",
+        "Page not found": "Сторінку не знайдено",
+    },
     "About me": "Про мене",
     "Account Management": "Керування акаунтом",
     "Add Photo": "Додайте фото",

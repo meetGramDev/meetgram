@@ -1,6 +1,11 @@
 import { LanguagesObjType } from './en';
 
 export const ru: LanguagesObjType = {
+    "404": {
+        "Go back to": "Вернуться на ",
+        "Homepage": "главную",
+        "Page not found": "Страница не найдена",
+    },
     "About me": "О себе",
     "Account Management": "Управление аккаунтом",
     "Add Photo": "Добавить фото",

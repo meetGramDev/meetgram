@@ -6,6 +6,7 @@ import { ServerMessagesType } from '@/shared/api'
 import { PRIVACY_POLICY } from '@/shared/config/router'
 import { cities } from '@/shared/const/citiesData'
 import { countries } from '@/shared/const/countriesData'
+import { useChangeZodErrorLang } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
@@ -30,8 +31,18 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   const { errorsTr, policies, signUpLang } = translate(locale)
 
   const t = useTranslate()
-  const { control, errors, getValues, handleSubmit, isDirty, isValid, register, setError } =
-    useUserSettings(errorsTr, data)
+  const {
+    control,
+    errors,
+    getValues,
+    handleSubmit,
+    isDirty,
+    isValid,
+    register,
+    setError,
+    touchedFields,
+    trigger,
+  } = useUserSettings(errorsTr, data)
 
   const isDisabled = !isValid || !isDirty || (start !== null && !validAge(Number(start)))
 
@@ -49,6 +60,8 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
       }
     }
   }, [error, setError, getValues])
+
+  useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName), [locale || 'en'])
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>

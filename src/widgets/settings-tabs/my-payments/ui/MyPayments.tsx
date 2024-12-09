@@ -26,16 +26,16 @@ import { invoice } from './temporaryObject/invoice'
 export const MyPayments = () => {
   /** here srtart with tokkens*/
   /* const token = nextSessionApi.getSessionToken()
-                                
-                                                         const [tok, setTok] = useState('')
-                                
-                                
-                                                         useEffect(() => {
-                                                           token.then((e: any) => {
-                                                             console.log('token : ', e.data.accessToken)
-                                                             setTok(e.data.accessToken)
-                                                           })
-                                                         }, [])*/
+  
+                                                             const [tok, setTok] = useState('')
+  
+  
+                                                             useEffect(() => {
+                                                               token.then((e: any) => {
+                                                                 console.log('token : ', e.data.accessToken)
+                                                                 setTok(e.data.accessToken)
+                                                               })
+                                                             }, [])*/
 
   const { locale } = useRouter()
 
@@ -169,6 +169,7 @@ export const MyPayments = () => {
             currentPage={1}
             onPageChange={setFrom}
             onPerPageChange={() => {}}
+            options={[1, 2, 3]}
             pageCount={Math.ceil((invoice.length + 1) / amountCells())}
           />
         </div>

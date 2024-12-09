@@ -1,0 +1,12 @@
+.errorCode {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  font: var(--font-large);
+  font-size: clamp(2.25rem, 2.1vw + 1rem, 3.25rem);
+  color: var(--primary-color-500);
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  white-space: nowrap;
+}

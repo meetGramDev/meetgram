@@ -1,0 +1,28 @@
+.screensaver {
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: var(--dark-color-900);
+
+  transition: opacity 0.5s;
+}
+
+.message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+
+  font: var(--font-large);
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+
+  & > p {
+    text-align: center;
+  }
+}
