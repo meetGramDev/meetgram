@@ -1,7 +1,10 @@
-import { LanguagesObjType } from './en';
+import {LanguagesObjType} from './en';
 
 
 export const be: LanguagesObjType = {
+    "1 day": "1 дзень",
+    "1 month": "1 месяц",
+    "7 days": "7 дзён",
     "404": {
         "Go back to": "Вярнуцца на ",
         "Homepage": "галоўную",
@@ -27,6 +30,7 @@ export const be: LanguagesObjType = {
     "Copy Link": "Скапіраваць спасылку",
     "Country": "Краіна",
     "Cropping": "Абразанне",
+    "Date of Payment": "Дата аплаты",
     "Date of birth": "Дата нараджэння",
     "December": "Снежань",
     "Delete Post": "Выдаліць публікацыю",
@@ -37,6 +41,7 @@ export const be: LanguagesObjType = {
     "Edit Post": "Рэдагаваць публікацыю",
     "Email sent": "Ліст адпраўлены",
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
+    "End date of subscription": "Дата заканчэння падпіскі",
     'February': "Люты",
     "Filters": "Фільтры",
     "First Name": "Імя",
@@ -62,7 +67,9 @@ export const be: LanguagesObjType = {
     "October": "Кастрычнік",
     "Ok": "Добра",
     "Owner avatar": "Аватар уладальніка",
+    "Payment Type": "Тып аплаты",
     "Post added successfully.": "Публікацыя паспяхова дададзена.",
+    "Price": "Кошт",
     "Profile Settings": "Налады профілю",
     "Public Page": "Публічная старонка",
     "Publication": "Публікацыя",
@@ -79,6 +86,7 @@ export const be: LanguagesObjType = {
     "Show more": "Паказаць",
     "Sign In": "Увайсці",
     "Sign Up": "Рэгістрацыя",
+    "Subscription Type": "Тып падпіскі",
     "Success": "Поспех",
     "Unfollow": "Спыніць сачэнне",
     "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ",
