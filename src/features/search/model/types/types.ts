@@ -11,6 +11,7 @@ export type UserFoundPropsType = {
 }
 export type SearchDialogWithPaginationType = {
   data?: PaginationType<SearchUserType>
+  searchStr: string
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
   setSearchStr: (value: string) => void

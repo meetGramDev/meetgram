@@ -7,37 +7,16 @@ import { Pagination } from '@/shared/ui/pagination/Pagination'
 
 export const SearchDialogWithPagination = ({
   data,
+  searchStr,
   setPageNumber,
   setPageSize,
   setSearchStr,
 }: SearchDialogWithPaginationType) => {
-  const [str, setStr] = useState('')
-  const [timerId, setTimerId] = useState(0)
-
-  useEffect(() => {
-    setTimerId(
-      +setTimeout(() => {
-        setSearchStr(str)
-      }, 1500)
-    )
-
-    return clearTimeout(timerId)
-  }, [str])
-
-  const onChangeValue = (value: string) => {
-    setStr(value)
-  }
-
   return (
     <>
       <h1 className={'pb-3'}>Search</h1>
-      <Input
-        className={'mb-6'}
-        onChange={e => onChangeValue(e.currentTarget.value)}
-        placeholder={'Search'}
-        type={'search'}
-      />
-      {str === '' && <p className={'font-bold leading-6'}>All users</p>}
+      <DebounceInput onValueQuery={setSearchStr} />
+      {searchStr === '' && <p className={'font-bold leading-6'}>All users</p>}
       {data &&
         data.items &&
         data.items.map(item => (
@@ -65,6 +44,39 @@ export const SearchDialogWithPagination = ({
           />
         )}
       </div>
+    </>
+  )
+}
+
+type DebounceInputProps = {
+  onValueQuery: (value: string) => void
+}
+const DebounceInput = ({ onValueQuery }: DebounceInputProps) => {
+  const [timerId, setTimerId] = useState(0)
+  const [str, setStr] = useState('')
+
+  useEffect(() => {
+    setTimerId(
+      +setTimeout(() => {
+        onValueQuery(str)
+      }, 1500)
+    )
+
+    return clearTimeout(timerId)
+  }, [str])
+
+  const onChangeValue = (value: string) => {
+    setStr(value)
+  }
+
+  return (
+    <>
+      <Input
+        className={'mb-6'}
+        onChange={e => onChangeValue(e.currentTarget.value)}
+        placeholder={'Search'}
+        type={'search'}
+      />
     </>
   )
 }

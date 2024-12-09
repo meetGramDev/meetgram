@@ -28,6 +28,7 @@ const SearchUser: NextPageWithLayout = () => {
     <div className={'pl-6 pt-8'}>
       <SearchDialogWithPagination
         data={data}
+        searchStr={searchStr}
         setPageNumber={setPageNumber}
         setPageSize={setPageSize}
         setSearchStr={setSearchStr}
