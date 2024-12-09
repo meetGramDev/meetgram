@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { SearchDialogWithPaginationType } from '@/features/search'
+import { SearchDialog, SearchDialogWithPaginationType } from '@/features/search'
 import { UserFound } from '@/features/search/ui/UserFound'
 import { Input } from '@/shared/ui'
 import { Pagination } from '@/shared/ui/pagination/Pagination'
@@ -15,7 +15,7 @@ export const SearchDialogWithPagination = ({
   return (
     <>
       <h1 className={'pb-3'}>Search</h1>
-      <DebounceInput onValueQuery={setSearchStr} />
+      <SearchDialog onValueQuery={setSearchStr} />
       {searchStr === '' && <p className={'font-bold leading-6'}>All users</p>}
       {data &&
         data.items &&
@@ -48,35 +48,35 @@ export const SearchDialogWithPagination = ({
   )
 }
 
-type DebounceInputProps = {
-  onValueQuery: (value: string) => void
-}
-const DebounceInput = ({ onValueQuery }: DebounceInputProps) => {
-  const [timerId, setTimerId] = useState(0)
-  const [str, setStr] = useState('')
-
-  useEffect(() => {
-    setTimerId(
-      +setTimeout(() => {
-        onValueQuery(str)
-      }, 1500)
-    )
-
-    return clearTimeout(timerId)
-  }, [str])
-
-  const onChangeValue = (value: string) => {
-    setStr(value)
-  }
-
-  return (
-    <>
-      <Input
-        className={'mb-6'}
-        onChange={e => onChangeValue(e.currentTarget.value)}
-        placeholder={'Search'}
-        type={'search'}
-      />
-    </>
-  )
-}
+// type DebounceInputProps = {
+//   onValueQuery: (value: string) => void
+// }
+// const DebounceInput = ({ onValueQuery }: DebounceInputProps) => {
+//   const [timerId, setTimerId] = useState(0)
+//   const [str, setStr] = useState('')
+//
+//   useEffect(() => {
+//     setTimerId(
+//       +setTimeout(() => {
+//         onValueQuery(str)
+//       }, 1500)
+//     )
+//
+//     return clearTimeout(timerId)
+//   }, [str])
+//
+//   const onChangeValue = (value: string) => {
+//     setStr(value)
+//   }
+//
+//   return (
+//     <>
+//       <Input
+//         className={'mb-6'}
+//         onChange={e => onChangeValue(e.currentTarget.value)}
+//         placeholder={'Search'}
+//         type={'search'}
+//       />
+//     </>
+//   )
+// }
