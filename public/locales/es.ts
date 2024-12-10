@@ -1,7 +1,10 @@
-import { LanguagesObjType } from './en';
+import {LanguagesObjType} from './en';
 
 
 export const es: LanguagesObjType = {
+    "1 day": "1 día",
+    "1 month": "1 mes",
+    "7 days": "7 días",
     "404": {
         "Go back to": "Volver a la ",
         "Homepage": "Página principal",
@@ -27,6 +30,7 @@ export const es: LanguagesObjType = {
     "Copy Link": "Copiar enlace",
     "Country": "País",
     "Cropping": "Recortar",
+    "Date of Payment": "Fecha de pago",
     "Date of birth": "Fecha de nacimiento",
     "December": "Diciembre",
     "Delete Post": "Eliminar publicación",
@@ -37,10 +41,11 @@ export const es: LanguagesObjType = {
     "Edit Post": "Editar publicación",
     "Email sent": "Correo enviado",
     "Email verification link expired": "El enlace ha caducado",
-    "February": "Febrero", "Filters": "Filtros",
+    "End date of subscription": "Fecha de finalización de la suscripción",
+    "February": "Febrero",
+    "Filters": "Filtros",
     "First Name": "Nombre",
-    "Follow": "Seguir",
-    "Followers": "Seguidores",
+    "Follow": "Seguir", "Followers": "Seguidores",
     "Following": "Siguiendo",
     "General Information": "Información general",
     "Hide": "Esconder",
@@ -61,7 +66,9 @@ export const es: LanguagesObjType = {
     "October": "Octubre",
     "Ok": "Ok",
     "Owner avatar": "Avatar del propietario",
+    "Payment Type": "Tipo de pago",
     "Post added successfully.": "Publicación agregada con éxito.",
+    "Price": "Precio",
     "Profile Settings": "Configuración del perfil",
     "Public Page": "Pagina Publica",
     "Publication": "Publicación",
@@ -78,6 +85,7 @@ export const es: LanguagesObjType = {
     "Show more": "Mostrar más",
     "Sign In": "Iniciar sesión",
     "Sign Up": "Registrarse",
+    "Subscription Type": "Tipo de suscripción",
     "Success": "El éxito",
     "Unfollow": "Dejar de seguir",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",

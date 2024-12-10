@@ -69,6 +69,7 @@ export const Pagination = ({
   }, [currentPage])
 
   const handleChangePage = (selectedPage: number | string) => {
+    console.log('typeof selectedPage : ', typeof selectedPage)
     if (typeof selectedPage === 'number') {
       setPage(selectedPage)
       onPageChange(selectedPage)
