@@ -1,6 +1,9 @@
-import { LanguagesObjType } from './en';
+import {LanguagesObjType} from './en';
 
 export const ru: LanguagesObjType = {
+    "1 day": "1 день",
+    "1 month": "1 месяц",
+    "7 days": "7 дней",
     "404": {
         "Go back to": "Вернуться на ",
         "Homepage": "главную",
@@ -26,6 +29,7 @@ export const ru: LanguagesObjType = {
     "Copy Link": "Копировать ссылку",
     "Country": "Страна",
     "Cropping": "Обрезка",
+    "Date of Payment": "Дата оплаты",
     "Date of birth": "Дата рождения",
     "December": "Декабрь",
     "Delete Post": "Удалить публикацию",
@@ -36,6 +40,7 @@ export const ru: LanguagesObjType = {
     "Edit Post": "Редактировать публикацию",
     "Email sent": "Письмо отправлено",
     "Email verification link expired": "Срок действия ссылки истек",
+    "End date of subscription": "Дата окончания подписки",
     "February": "Февраль",
     "Filters": "Фильтры",
     "First Name": "Имя",
@@ -61,7 +66,9 @@ export const ru: LanguagesObjType = {
     "October": "Октябрь",
     "Ok": "Хорошо",
     "Owner avatar": "Аватар владельца",
+    "Payment Type": "Тип оплаты",
     "Post added successfully.": "Публикация успешно добавлена.",
+    "Price": "Цена",
     "Profile Settings": "Настройки профиля",
     "Public Page": "Публичная страница",
     "Publication": "Публикация",
@@ -78,6 +85,7 @@ export const ru: LanguagesObjType = {
     "Show more": "Показать",
     "Sign In": "Войти",
     "Sign Up": "Регистрация",
+    "Subscription Type": "Тип подписки",
     "Success": "Успешно",
     "Unfollow": "Отписаться",
     "We have sent a link to confirm your email to": "Мы отправили ссылку для подтверждения вашей электронной почты на ",
