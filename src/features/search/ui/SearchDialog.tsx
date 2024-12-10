@@ -27,7 +27,7 @@ export const SearchDialog = ({ onValueQuery }: DebounceInputProps) => {
     )
 
     return clearTimeout(timerId)
-  }, [str])
+  }, [str, onValueQuery])
 
   const onChangeValue = (value: string) => {
     setStr(value)
@@ -36,7 +36,7 @@ export const SearchDialog = ({ onValueQuery }: DebounceInputProps) => {
   return (
     <>
       <Input
-        className={'mb-6'}
+        className={s.search}
         onChange={e => onChangeValue(e.currentTarget.value)}
         placeholder={'Search'}
         type={'search'}
@@ -44,21 +44,3 @@ export const SearchDialog = ({ onValueQuery }: DebounceInputProps) => {
     </>
   )
 }
-
-// type SearchDialogProps = {
-//   onValueChange: (value: string) => void
-//   placeholder: string
-//   type: string
-// }
-// export const SearchDialog = ({ onValueChange }: SearchDialogProps) => {
-//   return (
-//     <div className={'mb-6'}>
-//       <Input
-//         className={s.search}
-//         onChange={e => onValueChange(e.currentTarget.value)}
-//         placeholder={'Search'}
-//         type={'text'}
-//       />
-//     </div>
-//   )
-// }
