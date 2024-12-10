@@ -9,11 +9,11 @@ type Props = {
   children: ReactNode
   className?: string
 }
-
+//TODO change search dialog  component props
 export const ContainerWithSearch = ({ children, className }: Props) => {
   return (
     <div className={clsx(className, s.container)}>
-      <SearchDialog />
+      <SearchDialog onValueQuery={() => {}} />
       <div className={s.content}>{children}</div>
     </div>
   )

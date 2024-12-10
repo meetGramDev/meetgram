@@ -30,6 +30,7 @@ export const FollowersContent = ({ followCount, type, userName }: FollowersProps
   const [deleteFollower, { isLoading: isDeleteFollowerLoading }] = useDeleteFollowerMutation()
   const handleOnDeleteFollower = (userId: number) => deleteFollower(String(userId))
 
+  //TODO change ContainerWithSearch search dialog  component props
   return (
     <>
       {!isSuccess ? (
