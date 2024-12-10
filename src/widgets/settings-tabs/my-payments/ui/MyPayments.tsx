@@ -76,9 +76,9 @@ export const MyPayments = () => {
     const dateForm = new Date(date)
 
     if (locale === 'en') {
-      return `${dateForm.getMonth()}.${dateForm.getDay()}.${dateForm.getFullYear()}`
+      return `${dateForm.getMonth() + 1}.${dateForm.getDay()}.${dateForm.getFullYear()}`
     } else {
-      return `${dateForm.getDay()}.${dateForm.getMonth()}.${dateForm.getFullYear()}`
+      return `${dateForm.getDay()}.${dateForm.getMonth() + 1}.${dateForm.getFullYear()}`
     }
   }
 
@@ -128,17 +128,19 @@ export const MyPayments = () => {
           <TableBody>{table()}</TableBody>
         </Table>
       </div>
-      <div className={s.paginationWrapper}>
-        <div className={clsx(s.paginationSize)}>
-          <Pagination
-            currentPage={1}
-            onPageChange={setFrom}
-            onPerPageChange={setOnPage}
-            options={arrForOptions()}
-            pageCount={pages()}
-          />
+      {arrForOptions().length > 0 && (
+        <div className={s.paginationWrapper}>
+          <div className={clsx(s.paginationSize)}>
+            <Pagination
+              currentPage={1}
+              onPageChange={setFrom}
+              onPerPageChange={setOnPage}
+              options={arrForOptions()}
+              pageCount={pages()}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
