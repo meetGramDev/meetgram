@@ -8,6 +8,7 @@ import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { useDateFormatting } from '@/shared/lib/useDateFormatting'
 import { Button } from '@/shared/ui'
 import { RadioGroup, RadioGroupProps } from '@/shared/ui/radioGroup'
 import { useRouter } from 'next/router'
@@ -136,19 +137,7 @@ export const UserManagement = () => {
     }
   }
 
-  const humanReadableDate = (dateOf: string, options?: { addDays?: number }) => {
-    const date = new Date(dateOf)
-
-    const daysToAdd = options?.addDays ?? 0
-
-    date.setDate(date.getDate() + daysToAdd)
-
-    return date.toLocaleDateString(locale, {
-      day: 'numeric',
-      month: 'numeric',
-      year: 'numeric',
-    })
-  }
+  const humanReadableDate = useDateFormatting
 
   const lastDate = data?.data?.length ? data.data[data.data.length - 1] : null
 
