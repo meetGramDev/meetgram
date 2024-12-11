@@ -22,8 +22,6 @@ import { clsx } from 'clsx'
 
 import s from './MyPayments.module.scss'
 
-import { invoice } from './invose'
-
 export const MyPayments = () => {
   const t = useTranslate()
 
@@ -35,7 +33,7 @@ export const MyPayments = () => {
   const formatDate = useDateFormatting
 
   /**amount cells on page*/
-  function getAmountCells() {
+  const getAmountCells = () => {
     const number = screen - 440
 
     return Math.floor(number / 36)
@@ -44,27 +42,27 @@ export const MyPayments = () => {
   const [from, setFrom] = useState<number>(1)
   const [onPage, setOnPage] = useState<number>()
 
-  function getAmountFrom(x: number) {
+  const getAmountFrom = (x: number) => {
     const amount = getAmountCells()
 
     return onPage ? onPage * x - onPage : amount * x - amount
   }
 
-  function getAmountToo(x: number) {
+  const getAmountToo = (x: number) => {
     const amount = getAmountCells()
 
     return onPage ? onPage * x : amount * x
   }
 
   /** return how many pages have to be in the pagination*/
-  function getPages() {
+  const getPages = () => {
     const length = data?.length || 0
 
     return Math.ceil((length + 1) / (onPage ? onPage : getAmountCells()))
   }
 
   /** return array for options in pagination*/
-  function makeListForOptions() {
+  const makeListForOptions = () => {
     const arr = []
     const length = data?.length || 0
 
@@ -89,8 +87,8 @@ export const MyPayments = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {!isError && !data?.length ? (
-              invoice?.map((el, i) => {
+            {!isError && data?.length ? (
+              data?.map((el, i) => {
                 if (i >= getAmountFrom(from) && i <= getAmountToo(from)) {
                   return (
                     <TableRow key={i}>
