@@ -10,6 +10,9 @@ export const es: LanguagesObjType = {
         "Homepage": "Página principal",
         "Page not found": "Página no encontrada",
     },
+    "500": {
+        "Server error": "Error del servidor"
+    },
     "About me": "Sobre mí",
     "Account Management": "Gestión de la cuenta",
     "Add Photo": "Añadir foto",
