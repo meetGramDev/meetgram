@@ -105,11 +105,21 @@ export const MyPayments = () => {
               })
             ) : (
               <TableRow>
-                <TableCell>{0}</TableCell>
-                <TableCell>{0}</TableCell>
-                <TableCell>{0}</TableCell>
-                <TableCell>{0}</TableCell>
-                <TableCell>{0}</TableCell>
+                <TableCell>
+                  <div className={s.skeleton}></div>
+                </TableCell>
+                <TableCell>
+                  <div className={s.skeleton}></div>
+                </TableCell>
+                <TableCell>
+                  <div className={s.skeleton}></div>
+                </TableCell>
+                <TableCell>
+                  <div className={s.skeleton}></div>
+                </TableCell>
+                <TableCell>
+                  <div className={s.skeleton}></div>
+                </TableCell>
               </TableRow>
             )}
           </TableBody>
