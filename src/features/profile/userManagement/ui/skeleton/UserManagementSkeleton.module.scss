@@ -3,8 +3,8 @@
 .formWrapper {
   @include flex(column, center, start, 1.5rem);
 
-  margin-right: 3.75rem;
   margin-top: 1.87rem;
+  margin-right: 3.75rem;
   margin-left: 1.5rem;
 }
 
