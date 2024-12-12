@@ -181,6 +181,7 @@ export const ru: LanguagesObjType = {
             "Ok": "Ок",
         },
         message: {
+            "No transactions": "Транзакций нет",
             "Payment was successful!": "Оплата прошла успешно!",
             "Transaction failed. Please, write to support.": "Оплата не прошла. Обратитесь в службу поддержки."
         }

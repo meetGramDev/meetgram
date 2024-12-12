@@ -65,7 +65,7 @@ export const MyPayments = () => {
   }
 
   if (isError || data?.length === 0) {
-    return <div className={'mt-24 text-center'}>No transactions</div>
+    return <div className={'mt-24 text-center'}>{t('subscription.message.No transactions')}</div>
   }
 
   return (
@@ -118,10 +118,10 @@ export const MyPayments = () => {
                       </TableCell>
                       <TableCell className={'font-medium'}>{'$ ' + el.price}</TableCell>
                       <TableCell className={'font-medium'}>
-                        {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
+                        {formatSubscriptionType(el.subscriptionType)}
                       </TableCell>
                       <TableCell className={'font-medium'}>
-                        {formatPaymentType(el.paymentType as PaymentType)}
+                        {formatPaymentType(el.paymentType)}
                       </TableCell>
                     </TableRow>
                   )

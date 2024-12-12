@@ -181,6 +181,7 @@ export const en = {
             "Ok": "Ok",
         },
         message: {
+            "No transactions": "No transactions",
             "Payment was successful!": "Payment was successful!",
             "Transaction failed. Please, write to support.": "Transaction failed. Please, write to support.",
         }

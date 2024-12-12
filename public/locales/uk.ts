@@ -1,4 +1,4 @@
-import {LanguagesObjType} from './en';
+import { LanguagesObjType } from './en';
 
 
 export const uk: LanguagesObjType = {
@@ -184,6 +184,7 @@ export const uk: LanguagesObjType = {
             "Ok": "Ок",
         },
         message: {
+            "No transactions":  "Транзакцій немає",
             "Payment was successful!": "Оплата пройшла успішно!",
             "Transaction failed. Please, write to support.": "Оплата не прошла. Будь ласка, зверніться в підтримку."
         }

@@ -179,6 +179,7 @@ export const es: LanguagesObjType = {
             "Ok": "Ok",
         },
         message: {
+            "No transactions": "Sin transacciones",
             "Payment was successful!": "¡El pago fue exitoso!",
             "Transaction failed. Please, write to support.": "La transacción falló. Por favor, escribe al soporte."
         },
