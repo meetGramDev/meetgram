@@ -1,6 +1,6 @@
 .createPostButton {
   gap: 0.5rem;
-  align-self: baseline;
+  align-self: start;
   font: var(--font-regular-small);
   color: var(--light-color-100);
 
@@ -16,8 +16,9 @@
 .item {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
   gap: 0.5rem;
-
   font-size: var(--fs-s);
   font-weight: var(--fw-500);
   line-height: var(--lh-m);
@@ -39,4 +40,8 @@
   &:nth-child(7) {
     margin-bottom: 7.25rem;
   }
+}
+
+.currentItem {
+  color: var(--primary-color-500);
 }
