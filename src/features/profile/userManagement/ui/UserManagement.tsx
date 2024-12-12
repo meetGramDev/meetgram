@@ -8,7 +8,7 @@ import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
 import { serverErrorHandler, useClientProgress } from '@/shared/lib'
-import { useDateFormatting } from '@/shared/lib/useDateFormatting'
+import { dateFormatting } from '@/shared/lib/dateFormatting'
 import { Button } from '@/shared/ui'
 import { RadioGroup, RadioGroupProps } from '@/shared/ui/radioGroup'
 import { useRouter } from 'next/router'
@@ -137,8 +137,6 @@ export const UserManagement = () => {
     }
   }
 
-  const humanReadableDate = useDateFormatting
-
   const lastDate = data?.data?.length ? data.data[data.data.length - 1] : null
 
   useClientProgress(isLoading || cancelAutoRenewalLoading)
@@ -150,12 +148,19 @@ export const UserManagement = () => {
           <div className={'flex flex-row gap-16'}>
             <div className={'flex flex-col gap-3'}>
               <p className={'text-light-1000'}>Expire at</p>
-              <span>{humanReadableDate(lastDate.endDateOfSubscription)}</span>
+              <span>
+                {dateFormatting(lastDate.endDateOfSubscription, { locale: locale || 'en' })}
+              </span>
             </div>
             {lastDate.autoRenewal && (
               <div className={'flex flex-col gap-3'}>
                 <p className={'text-light-1000'}>Next payment</p>
-                <span>{humanReadableDate(lastDate.endDateOfSubscription, { addDays: 1 })}</span>
+                <span>
+                  {dateFormatting(lastDate.endDateOfSubscription, {
+                    addDays: 1,
+                    locale: locale || 'en',
+                  })}
+                </span>
               </div>
             )}
           </div>

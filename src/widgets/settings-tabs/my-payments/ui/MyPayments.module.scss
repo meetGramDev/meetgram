@@ -21,11 +21,4 @@
   background-color: var(--toastify-color-dark);
 }
 
-.skeleton {
-  width: 36px;
-  height: 36px;
 
-  @include skeleton-animation;
-
-  border-radius: 50%;
-}

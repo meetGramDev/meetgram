@@ -6,7 +6,7 @@ import {
   SubscriptionType,
 } from '@/features/profile/userManagement/model/types/services'
 import { useTranslate } from '@/shared/lib'
-import { useDateFormatting } from '@/shared/lib/useDateFormatting'
+import { dateFormatting } from '@/shared/lib/dateFormatting'
 import { useScreenHeightTracker } from '@/shared/lib/useScreenHeightTracker'
 import { Pagination } from '@/shared/ui/pagination/Pagination'
 import {
@@ -18,19 +18,18 @@ import {
   TableRow,
 } from '@/shared/ui/table/Table-components'
 import { formatPaymentType, formatSubscriptionType } from '@/widgets/PaymentTable/lib'
+import { Skeleton } from '@/widgets/settings-tabs/my-payments/ui/skeleton/Skeleton'
 import { clsx } from 'clsx'
+import { useRouter } from 'next/router'
 
 import s from './MyPayments.module.scss'
 
 export const MyPayments = () => {
   const t = useTranslate()
-
-  const { data, isError } = useGetPaymentsQuery()
+  const { locale } = useRouter()
+  const { data, isError, isLoading } = useGetPaymentsQuery()
 
   const screen = useScreenHeightTracker()
-
-  /** accept standard date and return European or English type */
-  const formatDate = useDateFormatting
 
   /**amount cells on page*/
   const getAmountCells = () => {
@@ -92,8 +91,12 @@ export const MyPayments = () => {
                 if (i >= getAmountFrom(from) && i <= getAmountToo(from)) {
                   return (
                     <TableRow key={i}>
-                      <TableCell>{formatDate(el.dateOfPayment)}</TableCell>
-                      <TableCell>{formatDate(el.endDateOfSubscription)}</TableCell>
+                      <TableCell>
+                        {dateFormatting(el.dateOfPayment, { locale: locale || 'en' })}
+                      </TableCell>
+                      <TableCell>
+                        {dateFormatting(el.endDateOfSubscription, { locale: locale || 'en' })}
+                      </TableCell>
                       <TableCell>{'$ ' + el.price}</TableCell>
                       <TableCell>
                         {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
@@ -106,19 +109,19 @@ export const MyPayments = () => {
             ) : (
               <TableRow>
                 <TableCell>
-                  <div className={s.skeleton}></div>
+                  <Skeleton />
                 </TableCell>
                 <TableCell>
-                  <div className={s.skeleton}></div>
+                  <Skeleton />
                 </TableCell>
                 <TableCell>
-                  <div className={s.skeleton}></div>
+                  <Skeleton />
                 </TableCell>
                 <TableCell>
-                  <div className={s.skeleton}></div>
+                  <Skeleton />
                 </TableCell>
                 <TableCell>
-                  <div className={s.skeleton}></div>
+                  <Skeleton />
                 </TableCell>
               </TableRow>
             )}
