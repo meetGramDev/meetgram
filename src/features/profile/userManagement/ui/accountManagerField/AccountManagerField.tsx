@@ -1,9 +1,11 @@
+import { type ReactNode } from 'react'
+
 import { Card } from '@/shared/ui'
 
-import s from '@/features/profile/userManagement/ui/accountManagerField/AccountManagerField.module.scss'
+import s from './AccountManagerField.module.scss'
 
 export type AccountManagerFieldProps = {
-  children: React.ReactNode
+  children: ReactNode
   fieldTitle: string
 }
 export const AccountManagerField = ({ children, fieldTitle }: AccountManagerFieldProps) => {

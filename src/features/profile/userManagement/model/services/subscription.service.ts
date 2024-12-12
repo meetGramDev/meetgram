@@ -2,6 +2,7 @@ import {
   CostOfPaymentSubscriptionType,
   CreatePaymentRequestType,
   CurrentPaymentType,
+  PaymentModel,
   PaymentSessionResponse,
 } from '@/features/profile/userManagement/model/types/services'
 import { baseApi } from '@/shared/api'
@@ -37,6 +38,13 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
         url: `/subscriptions/current-payment-subscriptions`,
       }),
     }),
+    getPayments: builder.query<PaymentModel[], void>({
+      providesTags: () => [{ type: 'subscriptions' }],
+      query: args => ({
+        method: 'GET',
+        url: '/subscriptions/my-payments',
+      }),
+    }),
   }),
 })
 
@@ -45,4 +53,5 @@ export const {
   useCreatePaymentSubscriptionMutation,
   useGetCostOfPaymentSubscriptionQuery,
   useGetCurrentPaymentQuery,
+  useGetPaymentsQuery,
 } = subscriptionServiceApi
