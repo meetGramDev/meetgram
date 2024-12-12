@@ -21,7 +21,7 @@ const SearchUser: NextPageWithLayout = () => {
 
   useClientProgress(isLoading || isFetching)
   if (isLoading) {
-    return <Loader loaderClassName={'mx-auto my-6'} />
+    return <Loader loaderClassName={'mx-auto my-80'} />
   }
 
   return (

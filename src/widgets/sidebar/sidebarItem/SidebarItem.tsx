@@ -1,4 +1,4 @@
-import { FC, SVGProps, useState } from 'react'
+import React, { FC, SVGProps, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
 import { addPostActions } from '@/features/posts/addPost'
@@ -20,19 +20,14 @@ export type SidebarItemType = {
 
 type Props = {
   className?: string
-  currentItem?: null | number
-  id?: number
   item: SidebarItemType
-  setCurrentItem?: (id: null | number) => void
 }
 
-export const SidebarItem = ({ className, currentItem, id, item, setCurrentItem }: Props) => {
+export const SidebarItem = ({ className, item }: Props) => {
   const { setOpenAddingPost } = useActions(addPostActions)
   const router = useRouter()
   const userId = useAppSelector(state => state.user.accountData.userId)
   const isMobile = useMediaQuery({ query: '(max-width:650px)' })
-  const isActiveLink =
-    id && currentItem === id && userId !== null && router.asPath.includes(String(userId))
 
   const handleClickCreatePost = () => {
     if (router.asPath === `${HOME}/${userId}`) {
@@ -40,11 +35,7 @@ export const SidebarItem = ({ className, currentItem, id, item, setCurrentItem }
     }
   }
 
-  const currentLinkHandler = () => {
-    if (currentItem !== id && setCurrentItem && id) {
-      setCurrentItem(id)
-    }
-  }
+  const isActiveLink = router.asPath === item.path
 
   return (
     <>
@@ -62,7 +53,6 @@ export const SidebarItem = ({ className, currentItem, id, item, setCurrentItem }
           className={clsx(s.item, className, isActiveLink && s.currentItem)}
           href={item.path}
           key={item.path}
-          onClick={currentLinkHandler}
           passHref
         >
           <item.Svg />
