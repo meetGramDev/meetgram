@@ -2,6 +2,9 @@ import { LanguagesObjType } from './en';
 
 
 export const uk: LanguagesObjType = {
+    "1 day": "1 день",
+    "1 month": "1 місяць",
+    "7 days": "7 днів",
     "404": {
         "Go back to": "Повернутися на ",
         "Homepage": "головну",
@@ -27,6 +30,7 @@ export const uk: LanguagesObjType = {
     "Copy Link": "Скопіювати посилання",
     "Country": "Країна",
     "Cropping": "Обрізання",
+    "Date of Payment": "Дата оплати",
     "Date of birth": "Дата народження",
     "December": "Грудень",
     "Delete Post": "Видалити публікацію",
@@ -37,6 +41,7 @@ export const uk: LanguagesObjType = {
     "Edit Post": "Редагувати публікацію",
     "Email sent": "Лист відправлено",
     "Email verification link expired": "Термін дії посилання завершився",
+    "End date of subscription": "Дата завершення підписки",
     "February": "Лютий",
     "Filters": "Фільтри",
     "First Name": "Ім'я",
@@ -62,7 +67,9 @@ export const uk: LanguagesObjType = {
     "October": "Жовтень",
     "Ok": "Гаразд",
     "Owner avatar": "Аватар власника",
+    "Payment Type": "Тип оплати",
     "Post added successfully.": "Публікацію успішно додано.",
+    "Price": "Ціна",
     "Profile Settings": "Налаштування профілю",
     "Public Page": "Публічна сторінка",
     "Publication": "Публікація",
@@ -79,6 +86,7 @@ export const uk: LanguagesObjType = {
     "Show more": "Показати",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
+    "Subscription Type": "Тип підписки",
     "Success": "Успіх",
     "Unfollow": "Відписатися",
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
@@ -176,6 +184,7 @@ export const uk: LanguagesObjType = {
             "Ok": "Ок",
         },
         message: {
+            "No transactions":  "Транзакцій немає",
             "Payment was successful!": "Оплата пройшла успішно!",
             "Transaction failed. Please, write to support.": "Оплата не прошла. Будь ласка, зверніться в підтримку."
         }

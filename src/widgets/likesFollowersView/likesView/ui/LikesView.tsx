@@ -36,6 +36,7 @@ export const LikesView = ({ disabled = false, likesCount, postId }: Props) => {
 
   const handleFollowUser = (userId: number) => followUser({ selectedUserId: userId })
 
+  //TODO change ContainerWithSearch search dialog  component props
   return (
     <Dialog
       title={t('Likes') as string}

@@ -1,5 +1,6 @@
-import { CostOfPaymentSubscriptionType } from '@/features/profile/userManagement'
-import { RadioGroupProps } from '@/shared/ui/radioGroup'
+import { RadioGroupProps } from '@/shared/ui'
+
+import { CostOfPaymentSubscriptionType } from '../model/types/services'
 
 export const changeCostOfPayment = (
   data: CostOfPaymentSubscriptionType
