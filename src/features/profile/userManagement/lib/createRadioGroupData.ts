@@ -1,4 +1,4 @@
-import { RadioGroupProps } from '@/shared/ui/radioGroup'
+import { RadioGroupProps } from '@/shared/ui'
 
 export const createRadioGroupData = (valueData: RadioGroupProps['options']): RadioGroupProps => {
   let returnedData

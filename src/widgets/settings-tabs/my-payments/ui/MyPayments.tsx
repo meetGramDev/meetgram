@@ -1,28 +1,20 @@
 import { useState } from 'react'
 
-import { useGetPaymentsQuery } from '@/features/profile/userManagement'
 import {
   PaymentType,
   SubscriptionType,
-} from '@/features/profile/userManagement/model/types/services'
-import { useTranslate } from '@/shared/lib'
-import { dateFormatting } from '@/shared/lib/dateFormatting'
-import { useScreenHeightTracker } from '@/shared/lib/useScreenHeightTracker'
-import { Pagination } from '@/shared/ui/pagination/Pagination'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/shared/ui/table/Table-components'
-import { formatPaymentType, formatSubscriptionType } from '@/widgets/PaymentTable/lib'
-import { Skeleton } from '@/widgets/settings-tabs/my-payments/ui/skeleton/Skeleton'
+  useGetPaymentsQuery,
+} from '@/features/profile/userManagement'
+import { dateFormatting, useScreenHeightTracker, useTranslate } from '@/shared/lib'
+import { Pagination } from '@/shared/ui'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'
 import { clsx } from 'clsx'
 import { useRouter } from 'next/router'
 
 import s from './MyPayments.module.scss'
+
+import { formatPaymentType, formatSubscriptionType } from '../lib'
+import { Skeleton } from './skeleton/Skeleton'
 
 export const MyPayments = () => {
   const t = useTranslate()
@@ -72,61 +64,69 @@ export const MyPayments = () => {
     return arr
   }
 
+  if (isError || data?.length === 0) {
+    return <div className={'mt-24 text-center'}>No transactions</div>
+  }
+
   return (
     <div>
       <div>
         <Table className={s.tableSize}>
           <TableHeader>
             <TableRow>
-              <TableHead className={'text-left'}>{t('Date of Payment')}</TableHead>
-              <TableHead className={'text-left'}>{t('End date of subscription')}</TableHead>
-              <TableHead className={'text-left'}>{t('Price')}</TableHead>
-              <TableHead className={'text-left'}>{t('Subscription Type')}</TableHead>
-              <TableHead className={'text-left'}>{t('Payment Type')}</TableHead>
+              <TableHead className={'w-80 text-left'}>{t('Date of Payment')}</TableHead>
+              <TableHead className={'w-80 text-left'}>{t('End date of subscription')}</TableHead>
+              <TableHead className={'w-[100px] text-left'}>{t('Price')}</TableHead>
+              <TableHead className={'w-80 text-left'}>{t('Subscription Type')}</TableHead>
+              <TableHead className={'w-80 text-left'}>{t('Payment Type')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {!isError && data?.length
-              ? data?.map((el, i) => {
-                  if (i >= getAmountFrom(from) && i <= getAmountToo(from)) {
-                    return (
-                      <TableRow key={i}>
-                        <TableCell>
-                          {dateFormatting(el.dateOfPayment, { locale: locale || 'en' })}
-                        </TableCell>
-                        <TableCell>
-                          {dateFormatting(el.endDateOfSubscription, { locale: locale || 'en' })}
-                        </TableCell>
-                        <TableCell>{'$ ' + el.price}</TableCell>
-                        <TableCell>
-                          {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
-                        </TableCell>
-                        <TableCell>{formatPaymentType(el.paymentType as PaymentType)}</TableCell>
-                      </TableRow>
-                    )
-                  }
-                })
-              : [1, 1, 1, 1].map((el, i) => {
+            {isLoading &&
+              [1, 1, 1, 1].map((el, i) => {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton />
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            {!isError &&
+              data?.length &&
+              data?.map((el, i) => {
+                if (i >= getAmountFrom(from) && i <= getAmountToo(from)) {
                   return (
                     <TableRow key={i}>
-                      <TableCell>
-                        <Skeleton />
+                      <TableCell className={'font-medium'}>
+                        {dateFormatting(el.dateOfPayment, { locale: locale || 'en' })}
                       </TableCell>
-                      <TableCell>
-                        <Skeleton />
+                      <TableCell className={'font-medium'}>
+                        {dateFormatting(el.endDateOfSubscription, { locale: locale || 'en' })}
                       </TableCell>
-                      <TableCell>
-                        <Skeleton />
+                      <TableCell className={'font-medium'}>{'$ ' + el.price}</TableCell>
+                      <TableCell className={'font-medium'}>
+                        {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
                       </TableCell>
-                      <TableCell>
-                        <Skeleton />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton />
+                      <TableCell className={'font-medium'}>
+                        {formatPaymentType(el.paymentType as PaymentType)}
                       </TableCell>
                     </TableRow>
                   )
-                })}
+                }
+              })}
           </TableBody>
         </Table>
       </div>

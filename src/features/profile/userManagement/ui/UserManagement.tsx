@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { changeCostOfPayment } from '@/features/profile/userManagement/lib/changeCostOfPayment'
-import { createRadioGroupData } from '@/features/profile/userManagement/lib/createRadioGroupData'
-import { AccountManagerField } from '@/features/profile/userManagement/ui/accountManagerField'
 import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
-import { serverErrorHandler, useClientProgress } from '@/shared/lib'
-import { dateFormatting } from '@/shared/lib/dateFormatting'
-import { Button } from '@/shared/ui'
-import { RadioGroup, RadioGroupProps } from '@/shared/ui/radioGroup'
+import { dateFormatting, serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { Button, RadioGroup, RadioGroupProps } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
 import s from './UserManagement.module.scss'
 
+import { changeCostOfPayment, createRadioGroupData } from '../lib'
 import {
   useCancelAutoRenewalMutation,
   useCreatePaymentSubscriptionMutation,
@@ -22,6 +18,7 @@ import {
   useGetCurrentPaymentQuery,
 } from '../model/services/subscription.service'
 import { CreatePaymentRequestType, PaymentType } from '../model/types/services'
+import { AccountManagerField } from './accountManagerField'
 
 const managerItems: RadioGroupProps['options'] = [
   { label: 'Personal', value: 'Personal' },
@@ -168,14 +165,16 @@ export const UserManagement = () => {
           'You do not have subscriptions'
         )}
       </AccountManagerField>
-      <Button
-        className={'-mt-2 mb-4 w-min whitespace-nowrap'}
-        disabled={data?.hasAutoRenewal === false || cancelAutoRenewalLoading}
-        onClick={cancelAutoRenewalHandler}
-        variant={'secondary'}
-      >
-        {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
-      </Button>
+      {data && data.data && data.data.length > 0 && (
+        <Button
+          className={'-mt-2 mb-4 w-min whitespace-nowrap'}
+          disabled={data?.hasAutoRenewal === false || cancelAutoRenewalLoading}
+          onClick={cancelAutoRenewalHandler}
+          variant={'secondary'}
+        >
+          {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
+        </Button>
+      )}
       <AccountManagerField fieldTitle={'Account type:'}>
         <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
       </AccountManagerField>

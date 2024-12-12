@@ -6,5 +6,7 @@ export {
   type CreatePaymentRequestType,
   type CurrentPaymentType,
   type DataResponseType,
+  type PaymentType,
+  type SubscriptionType,
 } from './model/types/services'
 export { UserManagement } from './ui/UserManagement'
