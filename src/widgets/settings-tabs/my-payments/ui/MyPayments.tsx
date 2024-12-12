@@ -86,45 +86,47 @@ export const MyPayments = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {!isError && data?.length ? (
-              data?.map((el, i) => {
-                if (i >= getAmountFrom(from) && i <= getAmountToo(from)) {
+            {!isError && data?.length
+              ? data?.map((el, i) => {
+                  if (i >= getAmountFrom(from) && i <= getAmountToo(from)) {
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>
+                          {dateFormatting(el.dateOfPayment, { locale: locale || 'en' })}
+                        </TableCell>
+                        <TableCell>
+                          {dateFormatting(el.endDateOfSubscription, { locale: locale || 'en' })}
+                        </TableCell>
+                        <TableCell>{'$ ' + el.price}</TableCell>
+                        <TableCell>
+                          {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
+                        </TableCell>
+                        <TableCell>{formatPaymentType(el.paymentType as PaymentType)}</TableCell>
+                      </TableRow>
+                    )
+                  }
+                })
+              : [1, 1, 1, 1].map((el, i) => {
                   return (
                     <TableRow key={i}>
                       <TableCell>
-                        {dateFormatting(el.dateOfPayment, { locale: locale || 'en' })}
+                        <Skeleton />
                       </TableCell>
                       <TableCell>
-                        {dateFormatting(el.endDateOfSubscription, { locale: locale || 'en' })}
+                        <Skeleton />
                       </TableCell>
-                      <TableCell>{'$ ' + el.price}</TableCell>
                       <TableCell>
-                        {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
+                        <Skeleton />
                       </TableCell>
-                      <TableCell>{formatPaymentType(el.paymentType as PaymentType)}</TableCell>
+                      <TableCell>
+                        <Skeleton />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton />
+                      </TableCell>
                     </TableRow>
                   )
-                }
-              })
-            ) : (
-              <TableRow>
-                <TableCell>
-                  <Skeleton />
-                </TableCell>
-                <TableCell>
-                  <Skeleton />
-                </TableCell>
-                <TableCell>
-                  <Skeleton />
-                </TableCell>
-                <TableCell>
-                  <Skeleton />
-                </TableCell>
-                <TableCell>
-                  <Skeleton />
-                </TableCell>
-              </TableRow>
-            )}
+                })}
           </TableBody>
         </Table>
       </div>
