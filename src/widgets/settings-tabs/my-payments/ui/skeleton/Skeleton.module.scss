@@ -1,0 +1,8 @@
+@import '@/app/styles/mixins';
+
+.skeleton {
+  width: 100%;
+  height: 24px;
+
+  @include skeleton-animation;
+}

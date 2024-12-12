@@ -186,6 +186,7 @@ export const be: LanguagesObjType = {
             "Ok": "Ок",
         },
         message: {
+            "No transactions": "Транзакцый няма",
             "Payment was successful!": "Аплата прайшла паспяхова!",
             "Transaction failed. Please, write to support.": "Аплата не прайшла. Калі ласка, звярніцеся ў падтрымку."
         }
