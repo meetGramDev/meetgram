@@ -6,6 +6,7 @@ import {
   SubscriptionType,
 } from '@/features/profile/userManagement/model/types/services'
 import { useTranslate } from '@/shared/lib'
+import { dateFormatting } from '@/shared/lib/dateFormatting'
 import { useScreenHeightTracker } from '@/shared/lib/useScreenHeightTracker'
 import { Pagination } from '@/shared/ui/pagination/Pagination'
 import {
@@ -17,6 +18,7 @@ import {
   TableRow,
 } from '@/shared/ui/table/Table-components'
 import { formatPaymentType, formatSubscriptionType } from '@/widgets/PaymentTable/lib'
+import { Skeleton } from '@/widgets/settings-tabs/my-payments/ui/skeleton/Skeleton'
 import { clsx } from 'clsx'
 import { useRouter } from 'next/router'
 
@@ -25,13 +27,12 @@ import s from './MyPayments.module.scss'
 export const MyPayments = () => {
   const t = useTranslate()
   const { locale } = useRouter()
-
-  const { data, isError } = useGetPaymentsQuery()
+  const { data, isError, isLoading } = useGetPaymentsQuery()
 
   const screen = useScreenHeightTracker()
 
   /**amount cells on page*/
-  function amountCells() {
+  const getAmountCells = () => {
     const number = screen - 440
 
     return Math.floor(number / 36)
@@ -40,27 +41,27 @@ export const MyPayments = () => {
   const [from, setFrom] = useState<number>(1)
   const [onPage, setOnPage] = useState<number>()
 
-  function amountFrom(x: number) {
-    const amount = amountCells()
+  const getAmountFrom = (x: number) => {
+    const amount = getAmountCells()
 
     return onPage ? onPage * x - onPage : amount * x - amount
   }
 
-  function amountToo(x: number) {
-    const amount = amountCells()
+  const getAmountToo = (x: number) => {
+    const amount = getAmountCells()
 
     return onPage ? onPage * x : amount * x
   }
 
   /** return how many pages have to be in the pagination*/
-  function pages() {
+  const getPages = () => {
     const length = data?.length || 0
 
-    return Math.ceil((length + 1) / (onPage ? onPage : amountCells()))
+    return Math.ceil((length + 1) / (onPage ? onPage : getAmountCells()))
   }
 
   /** return array for options in pagination*/
-  function arrForOptions() {
+  const makeListForOptions = () => {
     const arr = []
     const length = data?.length || 0
 
@@ -69,47 +70,6 @@ export const MyPayments = () => {
     }
 
     return arr
-  }
-
-  /** accept standard date and return European or English type */
-  function formatDate(date: string): string {
-    const dateForm = new Date(date)
-
-    if (locale === 'en') {
-      return `${dateForm.getMonth() + 1}.${dateForm.getDay()}.${dateForm.getFullYear()}`
-    } else {
-      return `${dateForm.getDay()}.${dateForm.getMonth() + 1}.${dateForm.getFullYear()}`
-    }
-  }
-
-  function table() {
-    if (!isError && data?.length) {
-      return data?.map((el, i) => {
-        if (i >= amountFrom(from) && i <= amountToo(from)) {
-          return (
-            <TableRow key={i}>
-              <TableCell>{formatDate(el.dateOfPayment)}</TableCell>
-              <TableCell>{formatDate(el.endDateOfSubscription)}</TableCell>
-              <TableCell>{'$ ' + el.price}</TableCell>
-              <TableCell>
-                {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
-              </TableCell>
-              <TableCell>{formatPaymentType(el.paymentType as PaymentType)}</TableCell>
-            </TableRow>
-          )
-        }
-      })
-    } else {
-      return (
-        <TableRow>
-          <TableCell>{0}</TableCell>
-          <TableCell>{0}</TableCell>
-          <TableCell>{0}</TableCell>
-          <TableCell>{0}</TableCell>
-          <TableCell>{0}</TableCell>
-        </TableRow>
-      )
-    }
   }
 
   return (
@@ -125,18 +85,58 @@ export const MyPayments = () => {
               <TableHead className={'text-left'}>{t('Payment Type')}</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>{table()}</TableBody>
+          <TableBody>
+            {!isError && data?.length ? (
+              data?.map((el, i) => {
+                if (i >= getAmountFrom(from) && i <= getAmountToo(from)) {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell>
+                        {dateFormatting(el.dateOfPayment, { locale: locale || 'en' })}
+                      </TableCell>
+                      <TableCell>
+                        {dateFormatting(el.endDateOfSubscription, { locale: locale || 'en' })}
+                      </TableCell>
+                      <TableCell>{'$ ' + el.price}</TableCell>
+                      <TableCell>
+                        {formatSubscriptionType(el.subscriptionType as SubscriptionType)}
+                      </TableCell>
+                      <TableCell>{formatPaymentType(el.paymentType as PaymentType)}</TableCell>
+                    </TableRow>
+                  )
+                }
+              })
+            ) : (
+              <TableRow>
+                <TableCell>
+                  <Skeleton />
+                </TableCell>
+                <TableCell>
+                  <Skeleton />
+                </TableCell>
+                <TableCell>
+                  <Skeleton />
+                </TableCell>
+                <TableCell>
+                  <Skeleton />
+                </TableCell>
+                <TableCell>
+                  <Skeleton />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
       </div>
-      {arrForOptions().length > 0 && (
+      {makeListForOptions().length > 0 && (
         <div className={s.paginationWrapper}>
           <div className={clsx(s.paginationSize)}>
             <Pagination
               currentPage={1}
               onPageChange={setFrom}
               onPerPageChange={setOnPage}
-              options={arrForOptions()}
-              pageCount={pages()}
+              options={makeListForOptions()}
+              pageCount={getPages()}
             />
           </div>
         </div>

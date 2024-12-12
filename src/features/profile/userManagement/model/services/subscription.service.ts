@@ -39,6 +39,7 @@ export const subscriptionServiceApi = baseApi.injectEndpoints({
       }),
     }),
     getPayments: builder.query<PaymentModel[], void>({
+      providesTags: () => [{ type: 'subscriptions' }],
       query: args => ({
         method: 'GET',
         url: '/subscriptions/my-payments',
