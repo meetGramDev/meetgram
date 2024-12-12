@@ -208,7 +208,6 @@ export const UserManagement = () => {
               <div className={s.paymentWrapper}>
                 <div className={s.paymentButtonWrapper}>
                   <Button
-                    as={'button'}
                     className={s.paymentButton}
                     onClick={e => onPaymentClickHandler(e, 'PAYPAL')}
                     type={'submit'}
@@ -219,7 +218,7 @@ export const UserManagement = () => {
                   or
                   <Button
                     className={s.paymentButton}
-                    onClick={e => onPaymentClickHandler(e, 'PAYPAL')}
+                    onClick={e => onPaymentClickHandler(e, 'STRIPE')}
                     type={'submit'}
                     variant={'outlined'}
                   >
