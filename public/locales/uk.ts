@@ -1,35 +1,55 @@
-import {LenType} from './en';
+import { LanguagesObjType } from './en';
 
 
-export const uk: LenType = {
+export const uk: LanguagesObjType = {
+    "1 day": "1 день",
+    "1 month": "1 місяць",
+    "7 days": "7 днів",
+    "404": {
+        "Go back to": "Повернутися на ",
+        "Homepage": "головну",
+        "Page not found": "Сторінку не знайдено",
+    },
     "About me": "Про мене",
     "Account Management": "Керування акаунтом",
     "Add Photo": "Додайте фото",
+    "Add a Comment": "Додати коментар",
     "Add a Profile Photo": "Додати фото профілю",
     "Add a profile photo": "Додати фото профілю",
+    "Add publication description": "Додати опис публікації",
     "April": "Квітень",
     "Are you really want to log out of your account": "Ви справді хочете вийти з акаунта ",
     "Are you sure you want to delete the photo?": "Ви впевнені, що хочете видалити фото?",
+    "Are you sure you want to delete this post?": "Ви впевнені, що хочете видалити цю публікацію?",
     "August": "Серпень",
     "Avatar": "Аватар",
     "Change profile photo": "Змінити фото профілю",
     "City": "Місто",
     "Close": "Закрити",
     "Congratulations!": "Вітаємо!",
+    "Copy Link": "Скопіювати посилання",
     "Country": "Країна",
+    "Cropping": "Обрізання",
+    "Date of Payment": "Дата оплати",
     "Date of birth": "Дата народження",
     "December": "Грудень",
+    "Delete Post": "Видалити публікацію",
     "Delete photo": "Видалити фото",
     "Devices": "Пристрої",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Ви дійсно хочете закрити створення публікації? Якщо ви закриєте, усе буде видалено",
     "Drag the photo here": "Перетягніть фото сюди",
+    "Edit Post": "Редагувати публікацію",
     "Email sent": "Лист відправлено",
     "Email verification link expired": "Термін дії посилання завершився",
+    "End date of subscription": "Дата завершення підписки",
     "February": "Лютий",
+    "Filters": "Фільтри",
     "First Name": "Ім'я",
+    "Follow": "Підписатися",
     "Followers": "Підписники",
     "Following": "Підписки",
     "General Information": "Загальна інформація",
+    "Hide": "Приховати",
     "January": "Січень",
     "July": "Липень",
     "June": "Червень",
@@ -46,9 +66,16 @@ export const uk: LenType = {
     "November": "Листопад",
     "October": "Жовтень",
     "Ok": "Гаразд",
+    "Owner avatar": "Аватар власника",
+    "Payment Type": "Тип оплати",
+    "Post added successfully.": "Публікацію успішно додано.",
+    "Price": "Ціна",
     "Profile Settings": "Налаштування профілю",
     "Public Page": "Публічна сторінка",
+    "Publication": "Публікація",
     "Publications": "Публікації",
+    "Publish": "Опублікувати",
+    "Registered users:": "Зареєстровані користувачі:",
     "Resend verification link": "Відправити посилання для підтвердження ще раз",
     "Save changes": "Зберегти зміни",
     "Select from computer": "Виберіть з комп’ютера",
@@ -56,8 +83,12 @@ export const uk: LenType = {
     "Select your country": "Виберіть вашу країну",
     "Send message": "Відправити повідомлення",
     "September": "Вересень",
+    "Show more": "Показати",
     "Sign In": "Увійти",
     "Sign Up": "Реєстрація",
+    "Subscription Type": "Тип підписки",
+    "Success": "Успіх",
+    "Unfollow": "Відписатися",
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
     "Yes": "Так",
     "Your email has been confirmed": "Вашу електронну пошту підтверджено",
@@ -102,14 +133,12 @@ export const uk: LenType = {
         sendLink: 'Надіслати Посилання',
         sendLinkDialog: 'Ми відправили посилання для підтвердження вашої електронної пошти на',
     },
-
     language: 'Українська',
+
     policies: {
         "Privacy Policy": "Політика конфіденційності",
         "Terms Of Service": "Умови використання",
     },
-
-
     sidebarTr: {
         create: 'Створити',
         favorites: 'Вибране',
@@ -120,6 +149,8 @@ export const uk: LenType = {
         search: 'Пошук',
         statistics: 'Статистика',
     },
+
+
     signInLang: {
         anAccount: 'Немаєш акаунт?',
         email: 'Електронна пошта',
@@ -128,7 +159,6 @@ export const uk: LenType = {
         signIn: 'Увійти',
         signUp: 'Реєстрація',
     },
-
     signUpLang: {
         IAgree: 'Я погоджуюсь з',
         aler: 'Ми відправили посилання для підтвердження вашої електронної пошти на ',
@@ -143,6 +173,21 @@ export const uk: LenType = {
         signUp: 'Реєстрація',
         termServ: ' Умовами надання послуг',
         username: "Ім'я користувача",
+    },
+
+    subscription: {
+        "Failed": "Відхилений",
+        "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.": "Будь ласка, не оновлюйте сторінку, не закривайте браузер та не натискайте кнопку назад.",
+        "You will be redirected to the Meetgram. It might take a few seconds.": "Ви будете перенаправлені на Meetgram.",
+        buttons: {
+            "Back to payment": "Назад до платежів",
+            "Ok": "Ок",
+        },
+        message: {
+            "No transactions":  "Транзакцій немає",
+            "Payment was successful!": "Оплата пройшла успішно!",
+            "Transaction failed. Please, write to support.": "Оплата не прошла. Будь ласка, зверніться в підтримку."
+        }
     },
     test: 'Lorem Ipsum — це просто текст-«риба» у поліграфії',
     "text area": "текстове поле",

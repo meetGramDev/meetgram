@@ -1,32 +1,52 @@
 export const en = {
+    "1 day": "1 day",
+    "1 month": "1 month",
+    "7 days": "7 days",
+    "404": {
+        "Go back to": "Go back to the ",
+        "Homepage": "Homepage",
+        "Page not found": "Page not found",
+    },
     "About me": "About me",
     "Account Management": "Account Management",
     'Add Photo': 'Add Photo',
+    "Add a Comment": "Add a Comment",
     "Add a Profile Photo": "Add a Profile Photo",
     "Add a profile photo": "Add a profile photo",
+    "Add publication description": "Add publication description",
     "April": "April",
     "Are you really want to log out of your account": "Are you really want to log out of your account ",
     "Are you sure you want to delete the photo?": "Are you sure you want to delete the photo?",
+    "Are you sure you want to delete this post?": "Are you sure you want to delete this post?",
     "August": "August",
     "Avatar": "Avatar",
     "Change profile photo": "Change profile photo",
     "City": "City",
     'Close': 'Close',
     "Congratulations!": "Congratulations!",
+    "Copy Link": "Copy Link",
     "Country": "Country",
+    "Cropping": "Cropping",
+    "Date of Payment": "Date of Payment",
     "Date of birth": "Date of birth",
     "December": "December",
+    "Delete Post": "Delete Post",
     "Delete photo": "Delete photo",
     "Devices": "Devices",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Do you really want to close the creation of a publication? If you close everything will be deleted",
     "Drag the photo here": "Drag the photo here",
+    "Edit Post": "Edit Post",
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
+    "End date of subscription": "End date of subscription",
     "February": "February",
+    "Filters": "Filters",
     "First Name": "First Name",
+    "Follow": "Follow",
     "Followers": "Followers",
     "Following": "Following",
     "General Information": "General Information",
+    "Hide": 'hide',
     "January": "January",
     'July': "July",
     "June": "June",
@@ -43,18 +63,29 @@ export const en = {
     "November": "November",
     "October": "October",
     "Ok": "Ok",
+    "Owner avatar": "Owner avatar",
+    "Payment Type": "Payment Type",
+    "Post added successfully.": "Post added successfully.",
+    "Price": "Price",
     "Profile Settings": "Profile Settings",
     "Public Page": "Public Page",
+    "Publication": "Publication",
     "Publications": "Publications",
+    "Publish": "Publish",
+    "Registered users:": "Registered users:",
     "Resend verification link": "Resend verification link",
     "Save changes": "Save changes",
-    'Select from computer': "Select from computer",
+    'Select from computer': "S" + "elect from computer",
     "Select your city": "Select your city",
     "Select your country": "Select your country",
     "Send message": "Send message",
     "September": "September",
+    "Show more": 'Show more',
     "Sign In": "Sign In",
     "Sign Up": "Sign Up",
+    "Subscription Type": "Subscription Type",
+    "Success": 'Success',
+    "Unfollow": "Unfollow",
     "We have sent a link to confirm your email to": "We have sent a link to confirm your email to ",
     "Yes": "Yes",
     "Your email has been confirmed": "Your email has been confirmed",
@@ -68,7 +99,6 @@ export const en = {
         passwordConfirmation: 'Password confirmation',
         passwordTerm: 'Your password must be between 6 and 20 characters',
     },
-
     errorsTr: {
 
         errorEmail: {InvalidEmail: 'Invalid email'},
@@ -103,6 +133,7 @@ export const en = {
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
     },
+
     language: 'English',
     policies: {
         "Privacy Policy": "Privacy Policy",
@@ -141,6 +172,20 @@ export const en = {
         termServ: 'Terms of Service',
         username: 'Username',
     },
+    subscription: {
+        "Failed": "Failed",
+        "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.": "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.",
+        "You will be redirected to the Meetgram. It might take a few seconds.": "You will be redirected to the Meetgram. It might take a few seconds.",
+        buttons: {
+            "Back to payment": "Back to payment",
+            "Ok": "Ok",
+        },
+        message: {
+            "No transactions": "No transactions",
+            "Payment was successful!": "Payment was successful!",
+            "Transaction failed. Please, write to support.": "Transaction failed. Please, write to support.",
+        }
+    },
     test: 'Lorem Ipsum is simply dummy text of the printing',
     "text area": "text area",
     validateFileTranslate: {
@@ -157,7 +202,6 @@ const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 export type ErrorsTr = typeof errorsTr
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
-export type TypeValidateFileTranslate = typeof validateFileTranslate;
-export type LenType = typeof en
+export type LanguagesObjType = typeof en
 
 

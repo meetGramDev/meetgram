@@ -19,7 +19,7 @@ const getUserSettingsSchema = (errorTr: ErrorsTr | undefined = undefined) => {
     aboutMe: getAboutMeConstraint(errorValidationFields),
     city: z.string(),
     country: z.string(),
-    dateOfBirth: z.any(),
+    dateOfBirth: z.any().optional(),
     firstName: getFirstNameConstraint(errorValidationFields),
     lastName: getLastNameConstraint(errorValidationFields),
     userName: getUserNameConstraint(errorValidationFields),
@@ -33,17 +33,18 @@ export type UserSettingsFormData = z.infer<typeof userSettingsSchema>
 export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
   const {
     control,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid, touchedFields },
     getValues,
     handleSubmit,
     register,
     setError,
+    trigger,
   } = useForm<UserSettingsFormData>({
     defaultValues: {
       aboutMe: data.aboutMe ?? '',
       city: data.city ?? '',
       country: data.country ?? '',
-      dateOfBirth: data.dateOfBirth ?? '',
+      dateOfBirth: data.dateOfBirth ?? null,
       firstName: data.firstName ?? '',
       lastName: data.lastName ?? '',
       userName: data.userName ?? '',
@@ -61,5 +62,7 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
     isValid,
     register,
     setError,
+    touchedFields,
+    trigger,
   }
 }

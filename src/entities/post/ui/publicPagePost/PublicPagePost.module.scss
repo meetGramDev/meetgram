@@ -11,30 +11,6 @@
   max-height: 415px;
 }
 
-.publicPost {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-
-  font-size: 14px;
-  line-height: 24px;
-  text-overflow: ellipsis;
-  word-break: break-word;
-  word-wrap: break-word;
-  white-space: normal;
-
-  -webkit-box-lines: unset;
-}
-
-.textExpanded {
-  //height: auto;
-
-  //max-height: max-content;
-
-  -webkit-line-clamp: unset;
-}
-
 .carouselWrapper {
   --slide-height-desktop: 15rem;
 

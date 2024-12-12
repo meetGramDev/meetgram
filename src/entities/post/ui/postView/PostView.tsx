@@ -9,12 +9,15 @@ import { Comments, getTimeAgo } from '@/features/posts/comments'
 import { LikeButton } from '@/features/posts/likePost'
 import { PostViewSelect } from '@/features/posts/postViewSelect'
 import { CloseIcon, FavoritesIcon, PaperPlane, SketchedFavourites } from '@/shared/assets'
+import { ExpandableText } from '@/shared/components/expandable-text'
 import { HOME } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import { isErrorMessageString } from '@/shared/types'
 import { Button, Dialog, ImageCarousel, TextArea } from '@/shared/ui'
 import { LikesView } from '@/widgets/likesFollowersView'
+import { clsx } from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -43,14 +46,17 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
   const [pageNumber, setPageNumber] = useState(0)
   const answerCommentRef = useRef<HTMLTextAreaElement>(null)
 
-  const tr = useRouter().locale
+  const locale = useRouter().locale
   const authUserId = useAppSelector(selectCurrentUserId)
   const isAuth = useAppSelector(selectIsUserAuth)
+  const t = useTranslate()
+
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const dateOfCreate = (postCreate: string) => {
     const date = new Date(postCreate)
 
-    return date.toLocaleDateString(tr ?? 'en-US', {
+    return date.toLocaleDateString(locale ?? 'en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -61,11 +67,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     setTextContent(e.currentTarget.value)
   }
 
-  const addCommentHandler = (pageNumber: number) => {
+  const addCommentHandler = async (pageNumber: number) => {
     try {
       setTextContent('')
       if (textContent !== '') {
-        addComment({ body: { content: textContent }, pageNumber, postId })
+        await addComment({ body: { content: textContent }, pageNumber, postId })
       }
     } catch (err) {
       const message = serverErrorHandler(err)
@@ -76,11 +82,11 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
     }
   }
 
-  const addAnswerHandler = (commentId: number) => {
+  const addAnswerHandler = async (commentId: number) => {
     try {
       setTextContent(`${post?.userName} `)
       if (textContent !== '') {
-        addAnswerComment({ body: { content: textContent }, commentId, postId })
+        await addAnswerComment({ body: { content: textContent }, commentId, postId })
         setCommentId(null)
       }
     } catch (err) {
@@ -111,6 +117,10 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
 
   const handleOnFollow = (userId: number) => followUser({ selectedUserId: userId })
 
+  const onToggleDescription = () => {
+    setIsExpanded(!isExpanded)
+  }
+
   const ownerProfile = `${HOME}/${userId}`
 
   return (
@@ -133,12 +143,12 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
             />
           )}
 
-          <div className={s.content}>
+          <div className={clsx(s.content, !isAuth && s.isNotAuthWidth)}>
             <div className={s.title}>
               <div className={s.userLink}>
                 <Link className={s.linkAvatar} href={ownerProfile}>
                   <Photo
-                    alt={'Owner avatar'}
+                    alt={t('Owner avatar')}
                     className={s.avatar}
                     height={36}
                     src={post.avatarOwner || notPhoto}
@@ -168,7 +178,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                   <div className={s.descriptionItems}>
                     <Link className={s.descriptionAvatar} href={ownerProfile}>
                       <Photo
-                        alt={'Owner avatar'}
+                        alt={t('Owner avatar')}
                         className={s.avatar}
                         height={36}
                         src={post.avatarOwner || notPhoto}
@@ -179,11 +189,17 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                       <Link className={s.descriptionUserName} href={ownerProfile}>
                         {post.userName}
                       </Link>
-                      {post.description}
+                      <ExpandableText
+                        hideCount={120}
+                        isExpanded={isExpanded}
+                        message={post.description}
+                        onExpand={onToggleDescription}
+                        showedCount={post.description.length}
+                      />
                     </div>
                   </div>
                   <span className={s.descriptionDate}>
-                    {getTimeAgo(tr ?? 'en', post.updatedAt || post.createdAt)}
+                    {getTimeAgo(locale ?? 'en', post.updatedAt || post.createdAt)}
                   </span>
                 </div>
               )}
@@ -218,7 +234,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                   </Button>
                 </div>
               )}
-              <div className={s.postLikes}>
+              <div className={clsx(s.postLikes, !isAuth && !post.likesCount && s.withoutLikes)}>
                 {!!post.likesCount && (
                   <LikesView disabled={!isAuth} likesCount={post.likesCount} postId={post.id} />
                 )}
@@ -229,7 +245,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
               <div className={s.commentContainer}>
                 <TextArea
                   className={s.commentTextArea}
-                  label={!textContent && 'Add a Comment...'}
+                  label={!textContent && t('Add a Comment') + '...'}
                   labelClassName={s.label}
                   maxLength={500}
                   onChange={changeTextAreaHandler}
@@ -237,7 +253,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                   value={textContent}
                 />
                 <Button className={s.publishButton} onClick={publishHandler} variant={'text'}>
-                  Publish
+                  {t('Publish')}
                 </Button>
               </div>
             )}

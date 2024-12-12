@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { baseApi } from '@/shared/api'
 import { nextSessionApi } from '@/shared/api/_next-auth'
 import { LogOutIcon } from '@/shared/assets/icons/LogOut'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { SIGN_IN } from '@/shared/config/router'
 import { useAppDispatch } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
@@ -30,7 +31,13 @@ export const LogOut = ({ disabled, email }: Props) => {
 
   const router = useRouter()
 
-  const handleLogOut = async () => {
+  const handleLogOut = async (isConfirm: boolean) => {
+    if (!isConfirm) {
+      setOpen(false)
+
+      return
+    }
+
     try {
       const resp = await logout().unwrap()
 
@@ -73,20 +80,15 @@ export const LogOut = ({ disabled, email }: Props) => {
         </Button>
       }
     >
-      <div className={s.logOutContent}>
-        <span className={s.contentText}>
-          {t('Are you really want to log out of your account')} &quot;
-          <span className={s.email}>{email}</span>&quot;?
-        </span>
-        <div className={s.contentButtons}>
-          <Button className={s.buttonWidth} onClick={handleLogOut} variant={'outlined'}>
-            {t('Yes')}
-          </Button>
-          <Button className={s.buttonWidth} onClick={() => setOpen(false)} variant={'primary'}>
-            {t('No')}
-          </Button>
-        </div>
-      </div>
+      <ConfirmClosingDialog
+        message={
+          <span className={s.contentText}>
+            {t('Are you really want to log out of your account')} &quot;
+            <span className={'font-bold'}>{email}</span>&quot; ?
+          </span>
+        }
+        onConfirm={handleLogOut}
+      />
     </Dialog>
   )
 }

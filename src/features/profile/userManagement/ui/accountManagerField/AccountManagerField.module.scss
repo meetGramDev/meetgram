@@ -1,0 +1,17 @@
+.card {
+  //width: 100%;
+  padding: 12px 24px;
+  font: var(--font-regular-small);
+}
+
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.fieldTitle {
+  margin-bottom: 1.125rem;
+  font: var(--font-h3);
+}

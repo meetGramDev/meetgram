@@ -1,0 +1,23 @@
+.container {
+  --lines-number: 3;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines-number);
+  line-clamp: var(--lines-number);
+
+  font-size: 14px;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+
+  -webkit-box-lines: unset;
+}
+
+.textExpanded {
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+}

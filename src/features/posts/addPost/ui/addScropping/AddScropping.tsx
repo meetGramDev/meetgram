@@ -3,6 +3,7 @@ import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { ImageIconOutlined } from '@/shared/assets/icons/ImageIconOutlined'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { sleep } from '@/shared/lib'
+import { useTranslate } from '@/shared/lib/useTranslate'
 import {
   Button,
   Carousel,
@@ -37,7 +38,7 @@ export const AddScropping = () => {
   const [mainCarouselApi, setMainCarouselApi] = useState<CarouselApi>()
   const [thumbCarouselApi, setThumbCarouselApi] = useState<CarouselApi>()
   const thumbsRef = useRef<HTMLDivElement | null>(null)
-
+  const t = useTranslate()
   //this function for change dialog page
   const handlePrevView = () => {
     actions.setAddingPostStage(AddingPostStage.ADD)
@@ -121,8 +122,7 @@ export const AddScropping = () => {
 
   return (
     <div className={s.wrapper} onMouseDown={handleClickOutside}>
-      <DialogHeader header={'Cropping'} onBack={handlePrevView} onNext={onNextPageView} />
-
+      <DialogHeader header={t('Cropping')} onBack={handlePrevView} onNext={onNextPageView} />
       <div className={s.carouselContainer}>
         <Carousel
           className={s.carousel}
@@ -140,6 +140,7 @@ export const AddScropping = () => {
                       id={index}
                       imageUrl={image.orig}
                       onCropComplete={handleSaveCropImg}
+                      zoomInit={[1]}
                     />
                   </div>
                 </CarouselItem>

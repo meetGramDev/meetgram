@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss'
 
+import defaultTheme from 'tailwindcss/defaultTheme'
+
 const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   plugins: [],
@@ -37,6 +39,7 @@ const config: Config = {
           500: '#edf3fa',
           700: '#d5dae0',
           900: '#8d9094',
+          1000: '#757575ff',
         },
         success: {
           100: '#80ffbf',
@@ -52,6 +55,9 @@ const config: Config = {
           700: '#996600',
           900: '#664400',
         },
+      },
+      fontFamily: {
+        sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         h1: ['20px', '36px'],

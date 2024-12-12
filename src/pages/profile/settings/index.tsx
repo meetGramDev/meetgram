@@ -1,25 +1,13 @@
-import { useMemo, useState } from 'react'
-import { toast } from 'react-toastify'
+import { useMemo } from 'react'
 
-import { UploadPhoto, UploadedPhotoType } from '@/features/profile/uploadUserPhoto'
-import {
-  FormSkeleton,
-  PhotoSkeleton,
-  UserSettingsForm,
-  UserSettingsFormData,
-  useGetProfileQuery,
-  useUpdateProfileMutation,
-} from '@/features/profile/userSettings'
-import { ServerMessagesType } from '@/shared/api'
-import { serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { PROFILE_SETTINGS } from '@/shared/config/router'
 import { useTranslate } from '@/shared/lib/useTranslate'
-import { NextPageWithLayout, isErrorServerMessagesType } from '@/shared/types'
-import { TabSwitcher } from '@/shared/ui'
-import { TabType } from '@/shared/ui/tabSwitcher/TabSwitcher'
-import { getMainLayout } from '@/widgets/layouts/ui/MainLayout/MainLayout'
+import { NextPageWithLayout } from '@/shared/types'
+import { TabContent, TabSwitcher, TabType } from '@/shared/ui'
+import { getMainLayout } from '@/widgets/layouts'
+import { AccountManagement, MyPayments, UserSettings } from '@/widgets/settings-tabs'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
-
-import s from './index.module.scss'
 
 const useTabs = () => {
   const t = useTranslate()
@@ -27,73 +15,65 @@ const useTabs = () => {
 
   return useMemo(() => {
     return [
-      { text: t('General Information'), value: 'generalInformation' },
+      { text: t('General Information'), value: 'general-information' },
       { text: t('Devices'), value: 'devices' },
-      { text: t('Account Management'), value: 'accountManagement' },
-      { text: t('My Payments'), value: 'myPayments' },
+      { text: t('Account Management'), value: 'account-management' },
+      { text: t('My Payments'), value: 'my-payments' },
     ]
   }, [locale])
 }
 
-const Settings: NextPageWithLayout = () => {
+export const getServerSideProps = async function (ctx) {
+  const activeTabKeys = Object.keys(ctx.query)
+
+  if (activeTabKeys.length === 0) {
+    return {
+      props: {
+        activeTab: null,
+      },
+    }
+  }
+
+  return {
+    props: {
+      activeTab: activeTabKeys[0],
+    },
+  }
+} satisfies GetServerSideProps<{
+  activeTab: null | string
+}>
+
+const Settings: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
+  activeTab,
+}) => {
   const tabs: TabType[] = useTabs()
-  const { data, isLoading: getProfileLoading } = useGetProfileQuery()
+  const router = useRouter()
 
-  const [activeTab, setActiveTab] = useState(tabs[0].value)
-  const [error, setError] = useState<ServerMessagesType[]>([])
-
-  const profileAvatar: UploadedPhotoType | undefined =
-    data && data.avatars.length !== 0
-      ? {
-          height: data.avatars[0].height,
-          url: data.avatars[0].url,
-          width: data.avatars[0].width,
-        }
-      : undefined
-
-  const [updateProfile, { isLoading: updateProfileLoading }] = useUpdateProfileMutation()
-
-  useClientProgress(getProfileLoading || updateProfileLoading)
-
-  const updateProfileData = async (data: UserSettingsFormData) => {
-    try {
-      for (const key in data) {
-        if (key === 'dateOfBirth' && data[key] === '') {
-          delete data[key]
-        }
-      }
-
-      await updateProfile(data).unwrap()
-      toast.success('Profile has successfully updated')
-    } catch (e) {
-      const err = serverErrorHandler(e)
-
-      if (isErrorServerMessagesType(err)) {
-        setError(err)
-      }
+  const handleTabChange = (value: string) => {
+    if (value === tabs[0].value) {
+      router.push(PROFILE_SETTINGS, undefined, { locale: router.locale })
+    } else {
+      router.push(`${router.pathname}?${value}`, undefined, {
+        locale: router.locale,
+      })
     }
   }
 
   return (
     <div>
-      <TabSwitcher onValueChange={setActiveTab} tabs={tabs} value={activeTab} />
-      <div className={s.settingsWrapper}>
-        {data && !getProfileLoading ? (
-          <>
-            <div>
-              <UploadPhoto key={data?.avatars.length} profileAvatar={profileAvatar} />
-            </div>
-            <UserSettingsForm data={data} error={error} onSubmit={updateProfileData} />
-          </>
-        ) : (
-          <>
-            <div>
-              <PhotoSkeleton />
-            </div>
-            <FormSkeleton />
-          </>
-        )}
-      </div>
+      <TabSwitcher onValueChange={handleTabChange} tabs={tabs} value={activeTab ?? tabs[0].value}>
+        <TabContent value={tabs[0].value}>
+          <UserSettings />
+        </TabContent>
+
+        <TabContent value={tabs[2].value}>
+          <AccountManagement />
+        </TabContent>
+
+        <TabContent value={tabs[3].value}>
+          <MyPayments />
+        </TabContent>
+      </TabSwitcher>
     </div>
   )
 }

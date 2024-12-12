@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 
-import { ConfirmClosingDialog } from '@/features/dialog/confirmClosing'
 import {
   AddDescription,
   AddImages,
@@ -12,6 +11,7 @@ import {
 } from '@/features/posts/addPost'
 import { AddFilter } from '@/features/posts/addPost/ui/addFilter/AddFilter'
 import { AddScropping } from '@/features/posts/addPost/ui/addScropping/AddScropping'
+import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { useActions, useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Dialog } from '@/shared/ui'

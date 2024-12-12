@@ -1,35 +1,55 @@
-import {LenType} from './en';
+import {LanguagesObjType} from './en';
 
 
-export const be: LenType = {
+export const be: LanguagesObjType = {
+    "1 day": "1 дзень",
+    "1 month": "1 месяц",
+    "7 days": "7 дзён",
+    "404": {
+        "Go back to": "Вярнуцца на ",
+        "Homepage": "галоўную",
+        "Page not found": "Старонка не знойдзена",
+    },
     "About me": "Пра мяне",
     "Account Management": "Кіраванне акаўнтам",
     "Add Photo": "Дадаць фота",
+    "Add a Comment": "Дадаць каментар",
     "Add a Profile Photo": "Дадаць фота профілю",
     "Add a profile photo": "Дадаць фота профілю",
+    "Add publication description": "Дадаць апісанне публікацыі",
     "April": "Красавік",
     "Are you really want to log out of your account": "Вы сапраўды хочаце выйсці са свайго акаўнта ",
     "Are you sure you want to delete the photo?": "Вы ўпэўнены, што хочаце выдаліць фота?",
+    "Are you sure you want to delete this post?": "Вы ўпэўнены, што хочаце выдаліць гэтую публікацыю?",
     "August": "Жнівень",
     "Avatar": "Аватар",
     "Change profile photo": "Змяніць фота профілю",
     "City": "Горад",
     "Close": "Закрыць",
     "Congratulations!": "Віншуем!",
+    "Copy Link": "Скапіраваць спасылку",
     "Country": "Краіна",
+    "Cropping": "Абразанне",
+    "Date of Payment": "Дата аплаты",
     "Date of birth": "Дата нараджэння",
     "December": "Снежань",
+    "Delete Post": "Выдаліць публікацыю",
     "Delete photo": "Выдаліць фота",
     "Devices": "Прылады",
     "Do you really want to close the creation of a publication? If you close everything will be deleted": "Вы сапраўды хочаце спыніць стварэнне публікацыі? Калі вы закрыеце, усё будзе выдалена",
     "Drag the photo here": "Перацягніце фота сюды",
+    "Edit Post": "Рэдагаваць публікацыю",
     "Email sent": "Ліст адпраўлены",
     "Email verification link expired": "Тэрмін дзеяння спасылкі завершаны",
+    "End date of subscription": "Дата заканчэння падпіскі",
     'February': "Люты",
+    "Filters": "Фільтры",
     "First Name": "Імя",
+    "Follow": "Сачыць",
     "Followers": "Падпісанты",
     "Following": "Падпісаны",
     "General Information": "Агульная інфармацыя",
+    "Hide": "Схаваць",
     "January": "Студзень",
     "July": "Ліпень",
     "June": "Чэрвень",
@@ -46,9 +66,16 @@ export const be: LenType = {
     "November": "Лістапад",
     "October": "Кастрычнік",
     "Ok": "Добра",
+    "Owner avatar": "Аватар уладальніка",
+    "Payment Type": "Тып аплаты",
+    "Post added successfully.": "Публікацыя паспяхова дададзена.",
+    "Price": "Кошт",
     "Profile Settings": "Налады профілю",
     "Public Page": "Публічная старонка",
+    "Publication": "Публікацыя",
     "Publications": "Публікацыі",
+    "Publish": "Апублікаваць",
+    "Registered users:": "Зарэгістраваныя карыстальнікі:",
     "Resend verification link": "Адправіць спасылку для пацверджання яшчэ раз",
     "Save changes": "Захаваць змены",
     "Select from computer": "Выбраць на кампутары",
@@ -56,8 +83,12 @@ export const be: LenType = {
     "Select your country": "Абярыце вашу краіну",
     "Send message": "Адправіць паведамленне",
     "September": "Верасень",
+    "Show more": "Паказаць",
     "Sign In": "Увайсці",
     "Sign Up": "Рэгістрацыя",
+    "Subscription Type": "Тып падпіскі",
+    "Success": "Поспех",
+    "Unfollow": "Спыніць сачэнне",
     "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ",
     "Yes": "Так",
     "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
@@ -108,7 +139,6 @@ export const be: LenType = {
         "Privacy Policy": "Палітыка прыватнасці",
         "Terms Of Service": "Умовы выкарыстоўвання",
     },
-
     sidebarTr: {
         create: 'Стварыць',
         favorites: 'Абранае',
@@ -119,6 +149,7 @@ export const be: LenType = {
         search: 'Пошук',
         statistics: 'Статыстыка',
     },
+
     signInLang: {
         anAccount: 'Няма ўліковага запісу?',
         email: 'Электронная пошта',
@@ -127,7 +158,6 @@ export const be: LenType = {
         signIn: 'Увайсці',
         signUp: 'Рэгістрацыя',
     },
-
     signUpLang: {
         IAgree: 'Я згодны з',
         aler: 'Мы адправілі спасылку для пацверджання вашай электроннай пошты на ',
@@ -142,6 +172,21 @@ export const be: LenType = {
         signUp: 'Рэгістрацыя',
         termServ: 'Умовамі карыстання',
         username: 'Імя карыстальніка',
+    },
+
+    subscription: {
+        "Failed": "Адхілены",
+        "Please do not refresh the page or click the 'Back' or 'Close' button of your browser.": "Калі ласка, не абнаўляйце старонку, не закрывайце браўзэр і не націскайце кнопку назад.",
+        "You will be redirected to the Meetgram. It might take a few seconds.": "Вы будзеце перанакіраваны на Meetgram. Гэта можа заняць некалькі секунд.",
+        buttons: {
+            "Back to payment": "Назад да плацяжоў",
+            "Ok": "Ок",
+        },
+        message: {
+            "No transactions": "Транзакцый няма",
+            "Payment was successful!": "Аплата прайшла паспяхова!",
+            "Transaction failed. Please, write to support.": "Аплата не прайшла. Калі ласка, звярніцеся ў падтрымку."
+        }
     },
     test: 'Lorem Ipsum — гэта проста тэкст-запаўняльнік у друку',
     "text area": "тэкставае поле",
