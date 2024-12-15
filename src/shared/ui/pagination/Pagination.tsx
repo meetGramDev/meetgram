@@ -11,9 +11,11 @@ import { Button } from '../button/button'
  * @property {function} onPageChange - Функция, вызываемая при изменении страницы (принимает номер новой страницы)
  * @property {function} onPerPageChange - Функция, вызываемая при изменении количества элементов на странице (принимает новое значение)
  * @property {number} pageCount - Общее количество страниц
+ * @property {boolean} isDropdownUp - Определяет, раскрывается ли выпадающий список вверх
  */
 type Props = {
   currentPage: number
+  isDropdownUp?: boolean
   onPageChange: (page: number) => void
   onPerPageChange: (itemsPerPage: number) => void
   options: number[]
@@ -22,6 +24,7 @@ type Props = {
 
 export const Pagination = ({
   currentPage,
+  isDropdownUp = false,
   onPageChange,
   onPerPageChange,
   options,
@@ -69,7 +72,6 @@ export const Pagination = ({
   }, [currentPage])
 
   const handleChangePage = (selectedPage: number | string) => {
-    console.log('typeof selectedPage : ', typeof selectedPage)
     if (typeof selectedPage === 'number') {
       setPage(selectedPage)
       onPageChange(selectedPage)
@@ -134,7 +136,9 @@ export const Pagination = ({
             <span className={`${styles.arrow} ${isDropdownOpen ? styles.open : ''}`} />
           </div>
           {isDropdownOpen && (
-            <div className={styles.options}>
+            <div
+              className={`${styles.options} ${isDropdownUp ? styles.optionsUp : styles.optionsDown}`}
+            >
               {options.map(option => (
                 <div
                   className={`${styles.option} ${option === perPage ? styles.selectedOption : ''}`}

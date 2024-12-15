@@ -109,6 +109,11 @@
   box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
 }
 
+.optionsUp {
+  top: auto;
+  bottom: 100%;
+}
+
 .option {
   cursor: pointer;
   padding: 8px 6px;
