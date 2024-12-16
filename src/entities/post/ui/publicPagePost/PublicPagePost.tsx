@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { ImageType } from '@/entities/post'
