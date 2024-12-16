@@ -3,6 +3,21 @@
 
 .dialog {
   overflow-y: auto;
+
+  @media (width <= $screen-size-mobile) {
+       top: 47vh;
+    width: 90%;
+
+  }
+}
+
+.mobileEmptyPhotoSize {
+  @media (width <= $screen-size-mobile) {
+    width: 19rem;
+    height: 20rem;
+  }
+
+
 }
 
 .photo {
