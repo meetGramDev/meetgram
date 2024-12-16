@@ -111,7 +111,7 @@ export const UploadPhoto = ({ profileAvatar }: Props) => {
       )}
 
       <Dialog
-        className={s.dialog}
+        className={clsx(s.dialog)}
         onOpenChange={open => setOpenUpload(open)}
         open={openUpload}
         title={t('Add a Profile Photo')}
