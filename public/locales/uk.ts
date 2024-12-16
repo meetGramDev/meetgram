@@ -10,6 +10,9 @@ export const uk: LanguagesObjType = {
         "Homepage": "головну",
         "Page not found": "Сторінку не знайдено",
     },
+    "500": {
+        "Server error": " Помилка сервера"
+    },
     "About me": "Про мене",
     "Account Management": "Керування акаунтом",
     "Add Photo": "Додайте фото",
