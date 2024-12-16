@@ -6,6 +6,7 @@ import { cn } from '@/shared/lib/cn'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Nullable } from '@/shared/types'
 import { Button, Dropzone, DropzoneRef } from '@/shared/ui'
+import { clsx } from 'clsx'
 
 import s from './UploadPhoto.module.scss'
 
@@ -108,9 +109,9 @@ export const UploadPhotoForm = ({ onErrorMessage, onSend, onSuccessMessage }: Pr
         className={cn('mt-6 space-y-9 md:mx-32 md:space-y-14', !file.url && 'md:first:mt-[4.5rem]')}
       >
         {!file.url && (
-          <div className={'flex flex-col items-center justify-center gap-9'}>
+          <div className={clsx('flex flex-col items-center justify-center gap-9')}>
             <Dropzone onFileSelect={handleFileSelect} ref={dropzoneRef}>
-              <Photo type={'empty'} variant={'square'} />
+              <Photo className={s.mobileEmptyPhotoSize} type={'empty'} variant={'square'} />
             </Dropzone>
             <Button fullWidth onClick={handleSelectFileClick} variant={'primary'}>
               {t('Select from computer') as string}

@@ -57,7 +57,7 @@ export const Photo = <T extends PhotoType = 'fill'>({
   return (
     <div className={clsx(s.container, containerClassname)}>
       {type === 'empty' ? (
-        <div className={clsx(s.iconContainer, s[variant], iconContainerClassname)}>
+        <div className={clsx(s.iconContainer, s[variant], iconContainerClassname, className)}>
           <ImgOutline className={clsx(s.icon, iconClassname)} />
         </div>
       ) : (
