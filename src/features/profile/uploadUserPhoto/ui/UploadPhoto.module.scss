@@ -5,9 +5,8 @@
   overflow-y: auto;
 
   @media (width <= $screen-size-mobile) {
-       top: 47vh;
+    top: 47vh;
     width: 90%;
-
   }
 }
 
@@ -16,8 +15,6 @@
     width: 19rem;
     height: 20rem;
   }
-
-
 }
 
 .photo {
