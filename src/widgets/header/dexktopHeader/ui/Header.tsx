@@ -39,6 +39,9 @@ export const Header = ({ className, notification }: Props) => {
         <div className={'flex items-center justify-end gap-[1.5rem]'}>
           {isAuth && (
             <>
+              {
+                //this can be dropdown radix
+              }
               <Button variant={'text'}>
                 <div className={'relative text-light-100'}>
                   <Notification
