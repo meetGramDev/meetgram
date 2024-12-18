@@ -1,0 +1,32 @@
+.dropdown {
+  position: relative;
+}
+
+.dropdownToggle {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  position: absolute;
+  z-index: calc(infinity);
+  top: 100%;
+  left: 0;
+  background-color: var(--dark-color-500);
+  border: 1px solid var(--dark-color-100);
+  border-radius: 4px;
+  width: auto;
+  padding: 10px;
+  list-style: none;
+  margin: 0;
+}
+
+.dropdownItem {
+  padding: 8px;
+  color: var(--light-color-100);
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background-color: var(--light-color-900);
+}
