@@ -81,7 +81,7 @@ export const Comment = ({ comment, onClick }: Props) => {
         </div>
       </div>
       <div className={s.commentFooter}>
-        <span>{getTimeAgo(tr ?? 'en', comment.createdAt)}</span>
+        <time>{getTimeAgo(tr ?? 'en', comment.createdAt)}</time>
         {isAuth && (
           <>
             {comment.isLiked && comment.likeCount !== 0 && (
