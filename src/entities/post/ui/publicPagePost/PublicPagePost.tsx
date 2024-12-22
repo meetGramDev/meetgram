@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Photo } from '@/entities/photo'
 import { ImageType } from '@/entities/post'
@@ -30,15 +30,15 @@ export const PublicPagePost = ({
   postId,
   userName,
 }: Props) => {
-  const tr = useRouter().locale
   const [isExpanded, setIsExpanded] = useState(false)
+  const tr = useRouter().locale
 
   const onToggleText = () => {
     setIsExpanded(!isExpanded)
   }
 
   return (
-    <div className={s.publicPostWrapper}>
+    <main className={s.publicPostWrapper}>
       <ImageCarousel
         btnIconCarousel={s.buttonIconCarousel}
         buttonCarouselClassname={s.buttonWrapperCarousel}
@@ -65,9 +65,12 @@ export const PublicPagePost = ({
         </div>
       </Button>
 
-      <p className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}>
+      <time
+        className={'mb-[3px] mt-[12px] text-[12px] leading-4 text-light-900'}
+        suppressHydrationWarning
+      >
         {getTimeAgo(tr ?? 'en', createdAt)}
-      </p>
+      </time>
       <div className={'inline'}>
         <ExpandableText
           cutTextEnd={11}
@@ -78,6 +81,6 @@ export const PublicPagePost = ({
           showedCount={237}
         />
       </div>
-    </div>
+    </main>
   )
 }

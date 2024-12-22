@@ -80,7 +80,7 @@ export const Answer = ({ answer, onClick, postId }: Props) => {
         </div>
       </div>
       <div className={s.answerFooter}>
-        <span>{getTimeAgo(tr ?? 'en', answer.createdAt)}</span>
+        <time>{getTimeAgo(tr ?? 'en', answer.createdAt)}</time>
         {isAuth && (
           <>
             {answer.isLiked && answer.likeCount !== 0 && (
