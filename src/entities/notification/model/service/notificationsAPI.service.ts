@@ -33,3 +33,9 @@ export const notificationsAPI = baseApi.injectEndpoints({
     }),
   }),
 })
+
+export const {
+  useDeleteNotificationByIdMutation,
+  useGetUserNotificationsQuery,
+  useMarkNotificationAsReadMutation,
+} = notificationsAPI
