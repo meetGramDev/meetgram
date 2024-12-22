@@ -1,5 +1,5 @@
 export type GetNotificationsRequest = {
-  cursor?: string
+  cursor?: number
   isRead?: boolean
   pageSize?: number
   sortBy?: string
