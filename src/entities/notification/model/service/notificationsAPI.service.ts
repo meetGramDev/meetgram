@@ -21,7 +21,8 @@ export const notificationsAPI = baseApi.injectEndpoints({
     >({
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => ({
         method: 'GET',
-        url: `notifications/${cursor}?sortBy=${sortBy}&sortDirection=${sortDirection || 'desc'}&isRead=${isRead}&pageSize=${pageSize}`,
+        // url: `notifications/${cursor}?sortBy=${sortBy}&sortDirection=${sortDirection || 'desc'}&isRead=${isRead}&pageSize=${pageSize}`,
+        url: `notifications/`,
       }),
     }),
     markNotificationAsRead: builder.mutation<void, MarkNotificationsAsReadResponse>({

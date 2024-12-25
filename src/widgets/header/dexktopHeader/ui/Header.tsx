@@ -4,6 +4,7 @@ import { HOME, PROFILE, PUBLIC_PAGE, SIGN_IN, SIGN_UP } from '@/shared/config/ro
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui/button/button'
+import Dropdown from '@/shared/ui/dropdown/dropdown'
 import { LangSwitcher } from '@/widgets/langSwitcher'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -42,22 +43,48 @@ export const Header = ({ className, notification }: Props) => {
               {
                 //this can be dropdown radix
               }
-              <Button variant={'text'}>
-                <div className={'relative text-light-100'}>
-                  <Notification
-                    className={'fill-current transition-all duration-300 hover:fill-accent-500'}
-                  />
-                  {notification && (
-                    <div
-                      className={
-                        'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
-                      }
-                    >
-                      {notification}
-                    </div>
-                  )}
-                </div>
-              </Button>
+              <Dropdown
+                isOpen
+                onSelect={option => {}}
+                onToggle={() => {}}
+                options={[
+                  { id: 1, label: 'Message 1' },
+                  { id: 2, label: 'Message 2' },
+                ]}
+              >
+                <Button variant={'text'}>
+                  <div className={'relative text-light-100'}>
+                    <Notification
+                      className={'fill-current transition-all duration-300 hover:fill-accent-500'}
+                    />
+                    {notification && (
+                      <div
+                        className={
+                          'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
+                        }
+                      >
+                        {notification}
+                      </div>
+                    )}
+                  </div>
+                </Button>
+              </Dropdown>
+              {/*<Button variant={'text'}>*/}
+              {/*  <div className={'relative text-light-100'}>*/}
+              {/*    <Notification*/}
+              {/*      className={'fill-current transition-all duration-300 hover:fill-accent-500'}*/}
+              {/*    />*/}
+              {/*    {notification && (*/}
+              {/*      <div*/}
+              {/*        className={*/}
+              {/*          'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'*/}
+              {/*        }*/}
+              {/*      >*/}
+              {/*        {notification}*/}
+              {/*      </div>*/}
+              {/*    )}*/}
+              {/*  </div>*/}
+              {/*</Button>*/}
             </>
           )}
           <LangSwitcher />
