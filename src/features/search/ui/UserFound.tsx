@@ -15,7 +15,6 @@ export const UserFound = ({
 }: UserFoundPropsType) => {
   return (
     <>
-      {' '}
       <div key={key}>
         <div className={'mt-[12px] flex'}>
           <Button
@@ -38,7 +37,6 @@ export const UserFound = ({
             >
               {userName}
             </Button>
-            {/*<p className={'flex items-center justify-start text-[16px] font-bold leading-6'}></p>*/}
             <p className={'text-[14px] text-light-900'}>{`${firstName} ${lastName}`}</p>
           </div>
         </div>

@@ -23,6 +23,7 @@ export type UserListProps = {
   maxPageSize?: number
   onDeleteFollowers?: (id: number) => void
   onFollow?: (id: number) => void
+  searchString?: string
   setEndCursor: (cursorId: number | undefined) => void
   totalCount?: number
 }
@@ -37,6 +38,7 @@ export const UsersListDialog = ({
   maxPageSize = 8,
   onDeleteFollowers,
   onFollow,
+  searchString,
   setEndCursor,
   totalCount,
 }: UserListProps) => {
@@ -62,9 +64,13 @@ export const UsersListDialog = ({
     return <div className={'pl-4 font-semibold'}>Error. Data can not be loaded</div>
   }
 
+  const filteredUsers = searchString
+    ? data?.items.filter(user => user.userName?.toLowerCase().includes(searchString.toLowerCase()))
+    : data?.items
+
   return (
     <ul className={s.list}>
-      {data.items.map((user, i) => {
+      {filteredUsers.map((user, i) => {
         if (data.items.length === i + 1) {
           return (
             <>
