@@ -23,7 +23,7 @@ const MAX_PAGE_SIZE = 8
 
 export const LikesView = ({ disabled = false, likesCount, postId }: Props) => {
   const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
-
+  const [searchString, setSearchString] = useState('')
   const { data, isFetching, isLoading, isSuccess } = useGetWhoLikedPostQuery({
     cursor: endCursorId,
     pageSize: MAX_PAGE_SIZE,
@@ -63,7 +63,7 @@ export const LikesView = ({ disabled = false, likesCount, postId }: Props) => {
       {!isSuccess ? (
         <Loader />
       ) : (
-        <ContainerWithSearch>
+        <ContainerWithSearch setSearchStr={setSearchString}>
           <UsersListDialog
             data={data}
             disabled={isFollowLoading}
@@ -73,6 +73,7 @@ export const LikesView = ({ disabled = false, likesCount, postId }: Props) => {
             isSuccess={isSuccess}
             maxPageSize={MAX_PAGE_SIZE}
             onFollow={handleFollowUser}
+            searchString={searchString}
             setEndCursor={setEndCursorId}
           />
         </ContainerWithSearch>
