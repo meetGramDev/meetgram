@@ -19,16 +19,18 @@ export const notificationsAPI = baseApi.injectEndpoints({
       GetNotificationsResponse<NotificationType>,
       GetNotificationsRequest
     >({
-      query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => ({
+      providesTags: ['notifications'],
+      query: args => ({
         method: 'GET',
-        // url: `notifications/${cursor}?sortBy=${sortBy}&sortDirection=${sortDirection || 'desc'}&isRead=${isRead}&pageSize=${pageSize}`,
+        params: args,
         url: `notifications/`,
       }),
     }),
     markNotificationAsRead: builder.mutation<void, MarkNotificationsAsReadResponse>({
+      invalidatesTags: ['notifications'],
       query: ids => ({
-        body: { ids },
-        method: 'POST',
+        body: ids,
+        method: 'PUT',
         url: 'notifications/mark-as-read',
       }),
     }),

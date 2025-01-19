@@ -1,0 +1,21 @@
+.wrapper {
+  width: 327px;
+}
+
+.headerWrapper {
+  display: flex;
+  align-items: baseline;
+  font-size: var(--fs-s);
+  line-height: var(--lh-m);
+}
+
+.subHeader {
+  font-size: var(--fs-xs);
+  color: var(--primary-color-500);
+}
+
+.notificationMessage {
+  //font-family: Roboto;
+  font-size: var(--fs-s);
+  line-height: var(--lh-m);
+}
