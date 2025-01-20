@@ -1,15 +1,7 @@
-import { ReactElement, ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
-import {
-  useGetUserNotificationsQuery,
-  useMarkNotificationAsReadMutation,
-} from '@/entities/notification/model/service/notificationsAPI.service'
-import { useAppSelector } from '@/shared/config/storeHooks'
-import { useInfiniteScroll } from '@/shared/lib'
-import { Loader } from '@/shared/ui'
 import { Header, MobileHeader } from '@/widgets/header'
-import { PAGE_SIZE } from '@/widgets/postsList'
 import { MobileSidebar, Sidebar } from '@/widgets/sidebar'
 import clsx from 'clsx'
 import { Inter } from 'next/font/google'

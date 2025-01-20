@@ -42,48 +42,28 @@ export const NotificationsView = () => {
     undefined
   )
 
-  const firstRenderSkipPagination = useRef(true)
-
-  const { ref } = useInfiniteScroll(
-    () => {
-      if (
-        !firstRenderSkipPagination.current &&
-        notificationsData &&
-        notificationsData?.items &&
-        notificationsData.items.length >= PAGE_SIZE &&
-        notificationsData.items.length !== notificationsData.totalCount
-      ) {
-        setEndCursorNotificationId(notificationsData?.items.at(-1)?.id)
-      }
-      // if (firstRenderSkipPagination.current) {
-      //   firstRenderSkipPagination.current = false
-      // }
-    },
-    {
-      threshold: 0.9,
-    }
-  )
-
   const { data: notificationsData } = useGetUserNotificationsQuery({
     cursor: endCursorNotificationId,
     // isRead: false,
-    // pageSize: 10,
+    // pageSize: 12,
     // sortBy: 'notifyAt',
     // sortDirection: 'desc',
   })
 
-  console.log(endCursorNotificationId)
-  useEffect(() => {
-    if (endCursorNotificationId !== undefined) {
-      setEndCursorNotificationId(undefined)
-    }
-  }, [endCursorNotificationId])
+  // useEffect(() => {
+  //   if (endCursorNotificationId !== undefined) {
+  //     setEndCursorNotificationId(undefined)
+  //   }
+  // }, [endCursorNotificationId])
+  // if (endCursorNotificationId !== undefined) {
+  //   setEndCursorNotificationId(undefined)
+  // }
 
-  const [markOfNotification, {}] = useMarkNotificationAsReadMutation()
+  // const [markOfNotification, {}] = useMarkNotificationAsReadMutation()
 
-  const notificationId = notificationsData?.items?.map(option => {
-    return +option.id
-  })
+  // const notificationId = notificationsData?.items?.map(option => {
+  //   return +option.id
+  // })
 
   const [openDropdown, setOpenDropdown] = useState(false)
 
@@ -96,6 +76,30 @@ export const NotificationsView = () => {
     }
   }
 
+  // const firstRenderSkipPagination = useRef(true)
+  const lastUserRef = useRef<HTMLElement>(null)
+
+  const { ref } = useInfiniteScroll(
+    () => {
+      if (
+        // !firstRenderSkipPagination.current &&
+        notificationsData &&
+        notificationsData?.items &&
+        notificationsData.items.length >= PAGE_SIZE &&
+        notificationsData.items.length !== notificationsData.totalCount
+      ) {
+        setEndCursorNotificationId(notificationsData?.items.at(-1)?.id)
+      }
+      // if (firstRenderSkipPagination.current) {
+      //   firstRenderSkipPagination.current = false
+      // }
+    },
+    {
+      root: lastUserRef.current,
+      threshold: 0.9,
+    }
+  )
+
   return (
     <>
       <Dropdown
@@ -104,6 +108,7 @@ export const NotificationsView = () => {
         onSelect={option => {}}
         onToggle={onChangeOpenNotifications}
         options={notificationsData?.items || []}
+        ref={ref}
         setEndCursor={setEndCursorNotificationId}
         totalCount={notificationsData?.totalCount}
       >

@@ -19,12 +19,34 @@ export const notificationsAPI = baseApi.injectEndpoints({
       GetNotificationsResponse<NotificationType>,
       GetNotificationsRequest
     >({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.cursor !== previousArg?.cursor
+      },
+      merge: (currentCacheData, responseData, otherArgs) => {
+        if (!otherArgs.arg.cursor) {
+          return responseData
+        }
+
+        Object.assign(currentCacheData, responseData)
+        currentCacheData.items.push(...responseData.items)
+      },
       providesTags: ['notifications'],
-      query: args => ({
-        method: 'GET',
-        params: args,
-        url: `notifications/`,
-      }),
+      query: args => {
+        let url = `notifications/`
+
+        if (args.cursor) {
+          url += args.cursor
+        }
+
+        return {
+          method: 'GET',
+          params: args,
+          url,
+        }
+      },
+      serializeQueryArgs: ({ queryArgs }) => {
+        return `${queryArgs.pageSize}`
+      },
     }),
     markNotificationAsRead: builder.mutation<void, MarkNotificationsAsReadResponse>({
       invalidatesTags: ['notifications'],

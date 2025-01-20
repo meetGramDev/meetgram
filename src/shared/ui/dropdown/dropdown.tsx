@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react'
+import React, { ReactNode, forwardRef, useEffect, useRef, useState } from 'react'
 
 import { useMarkNotificationAsReadMutation } from '@/entities/notification/model/service/notificationsAPI.service'
 import { NotificationType } from '@/entities/notification/model/types/service.types'
@@ -23,28 +23,25 @@ interface DropdownProps {
   totalCount?: number
 }
 
-const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
+const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
   ({ children, header, isOpen, onSelect, onToggle, options, setEndCursor, totalCount }, ref) => {
     const dropdownRef = useRef<HTMLDivElement | null>(null)
 
-    const lastNotificationRef = useRef<HTMLElement>(null)
+    // const lastNotificationRef = useRef<HTMLElement>(null)
 
-    const { ref: liRef } = useInfiniteScroll(
-      () => {
-        debugger
-        if (options && options.length > 12 && totalCount !== options.length) {
-          if (options.length) {
-            setEndCursor(options?.at(-1)?.id)
-          }
-        }
-      },
-      {
-        root: lastNotificationRef.current,
-        threshold: 1,
-      }
-    )
-
-    debugger
+    // const { ref: liRef } = useInfiniteScroll(
+    //   () => {
+    //     debugger
+    //     if (options && options.length > 12 && totalCount !== options.length) {
+    //       if (options.length) {
+    //         setEndCursor(options?.at(-1)?.id)
+    //       }
+    //     }
+    //   },
+    //   {
+    //     threshold: 1,
+    //   }
+    // )
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
@@ -77,21 +74,40 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         {isOpen && (
           <ul className={styles.dropdownMenu}>
             {header && <div className={styles.header}>{header}</div>}
-            {options.map(option => (
-              <li
-                className={styles.dropdownItem}
-                key={option.id}
-                onClick={() => handleSelect(option)}
-                ref={liRef}
-              >
-                {/*{option.label}*/}
-                <Notification
-                  createdAt={option.createdAt}
-                  isRead={option.isRead}
-                  message={option.message}
-                />
-              </li>
-            ))}
+            {options.map((option, item) => {
+              if (options?.at(-1)?.id === option.id) {
+                return (
+                  <li
+                    className={styles.dropdownItem}
+                    key={option.id}
+                    onClick={() => handleSelect(option)}
+                    ref={ref}
+                  >
+                    {/*{option.label}*/}
+                    <Notification
+                      createdAt={option.createdAt}
+                      isRead={option.isRead}
+                      message={option.message}
+                    />
+                  </li>
+                )
+              } else {
+                return (
+                  <li
+                    className={styles.dropdownItem}
+                    key={option.id}
+                    onClick={() => handleSelect(option)}
+                  >
+                    {/*{option.label}*/}
+                    <Notification
+                      createdAt={option.createdAt}
+                      isRead={option.isRead}
+                      message={option.message}
+                    />
+                  </li>
+                )
+              }
+            })}
           </ul>
         )}
       </div>

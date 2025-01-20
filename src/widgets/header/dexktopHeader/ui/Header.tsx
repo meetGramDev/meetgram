@@ -10,7 +10,6 @@ import { NotificationsView } from '@/widgets/notificationsView/ui/NotificationsV
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { io } from 'socket.io-client'
 
 type Props = {
   className?: string
