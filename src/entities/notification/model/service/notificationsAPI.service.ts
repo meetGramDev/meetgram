@@ -22,25 +22,23 @@ export const notificationsAPI = baseApi.injectEndpoints({
       forceRefetch({ currentArg, previousArg }) {
         return currentArg?.cursor !== previousArg?.cursor
       },
-      merge: (currentCacheData, responseData, otherArgs) => {
-        if (!otherArgs.arg.cursor) {
+      merge: (currentCacheData, responseData, { arg }) => {
+        if (!arg.cursor) {
           return responseData
         }
-
-        Object.assign(currentCacheData, responseData)
         currentCacheData.items.push(...responseData.items)
       },
       providesTags: ['notifications'],
-      query: args => {
+      query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {
         let url = `notifications/`
 
-        if (args.cursor) {
-          url += args.cursor
+        if (cursor) {
+          url += cursor
         }
 
         return {
           method: 'GET',
-          params: args,
+          params: { isRead, pageSize, sortBy, sortDirection },
           url,
         }
       },
