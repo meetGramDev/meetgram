@@ -18,7 +18,7 @@ export const Notification = ({ createdAt, id, isRead, message }: NotificationPro
         {!isRead && <p className={s.subHeader}>&nbsp;Новое</p>}
       </div>
       <p className={s.notificationMessage}>{message}</p>
-      {getTimeAgo('en', createdAt)}
+      <div className={s.time}>{getTimeAgo('en', createdAt)}</div>
     </div>
   )
 }

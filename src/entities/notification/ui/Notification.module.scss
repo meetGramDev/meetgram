@@ -15,7 +15,11 @@
 }
 
 .notificationMessage {
-  //font-family: Roboto;
   font-size: var(--fs-s);
   line-height: var(--lh-m);
+}
+
+.time {
+  font-size: var(--fs-s);
+  color: var(--dark-color-100);
 }

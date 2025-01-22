@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import {
   useGetUserNotificationsQuery,
@@ -7,7 +8,7 @@ import {
 import { Notification } from '@/shared/assets/icons/Notification'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { useInfiniteScroll } from '@/shared/lib'
-import { Button } from '@/shared/ui'
+import { Button, ToastWrapper } from '@/shared/ui'
 import Dropdown from '@/shared/ui/dropdown/dropdown'
 import { PAGE_SIZE } from '@/widgets/postsList'
 import { io } from 'socket.io-client'
@@ -25,10 +26,10 @@ export const NotificationsView = () => {
   useEffect(() => {
     if (queryParams.query.accessToken) {
       const socket = io('https://inctagram.work', queryParams)
+      const notify = (message: string) => toast.success(message)
 
       socket.on('notifications', (message: any) => {
-        console.log('here')
-        console.log(message)
+        notify(message.message)
       })
 
       return () => {
@@ -49,21 +50,6 @@ export const NotificationsView = () => {
     // sortBy: 'notifyAt',
     // sortDirection: 'desc',
   })
-
-  // useEffect(() => {
-  //   if (endCursorNotificationId !== undefined) {
-  //     setEndCursorNotificationId(undefined)
-  //   }
-  // }, [endCursorNotificationId])
-  // if (endCursorNotificationId !== undefined) {
-  //   setEndCursorNotificationId(undefined)
-  // }
-
-  // const [markOfNotification, {}] = useMarkNotificationAsReadMutation()
-
-  // const notificationId = notificationsData?.items?.map(option => {
-  //   return +option.id
-  // })
 
   const [openDropdown, setOpenDropdown] = useState(false)
 
