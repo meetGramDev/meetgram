@@ -5,13 +5,34 @@ import {
   useGetUserNotificationsQuery,
   useMarkNotificationAsReadMutation,
 } from '@/entities/notification/model/service/notificationsAPI.service'
+import { NotificationType } from '@/entities/notification/model/types/service.types'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { useInfiniteScroll } from '@/shared/lib'
-import { Button, ToastWrapper } from '@/shared/ui'
+import { Button } from '@/shared/ui'
 import Dropdown from '@/shared/ui/dropdown/dropdown'
 import { PAGE_SIZE } from '@/widgets/postsList'
 import { io } from 'socket.io-client'
+
+const sortingData = (arr: NotificationType[]) => {
+  const newArr = arr.map(item => ({ ...item }))
+
+  newArr.sort((a, b) => {
+    if (a.id > b.id) {
+      return -1
+    }
+    if (a.id == b.id) {
+      return 0
+    }
+    if (a.id < b.id) {
+      return 1
+    }
+  })
+
+  const newNewArr = newArr.filter((item, count) => item?.id !== newArr[count + 1]?.id)
+
+  return newNewArr
+}
 
 export const NotificationsView = () => {
   //websocket
@@ -47,9 +68,19 @@ export const NotificationsView = () => {
     cursor: endCursorNotificationId,
     // isRead: false,
     // pageSize: 12,
-    // sortBy: 'notifyAt',
-    // sortDirection: 'desc',
+    sortBy: 'notifyAt',
+    sortDirection: 'desc',
   })
+  const [markOfNotification] = useMarkNotificationAsReadMutation()
+
+  const sortedData = notificationsData && sortingData(notificationsData?.items)
+
+  const newNotificationsData = { ...notificationsData, items: sortedData }
+  const notificationId = sortedData?.map(item => {
+    return item.id
+  })
+
+  console.log(notificationId)
 
   const [openDropdown, setOpenDropdown] = useState(false)
 
@@ -57,7 +88,8 @@ export const NotificationsView = () => {
     if (isDropdownOpen) {
       setOpenDropdown(true)
     } else {
-      // markOfNotification({ ids: notificationId })
+      notificationId && markOfNotification({ ids: notificationId })
+
       setOpenDropdown(false)
     }
   }
@@ -65,16 +97,37 @@ export const NotificationsView = () => {
   // const firstRenderSkipPagination = useRef(true)
   const lastUserRef = useRef<HTMLElement>(null)
 
+  // const { ref } = useInfiniteScroll(
+  //   () => {
+  //     if (
+  //       // !firstRenderSkipPagination.current &&
+  //       notificationsData &&
+  //       notificationsData?.items &&
+  //       notificationsData.items.length >= PAGE_SIZE &&
+  //       notificationsData.items.length !== notificationsData.totalCount
+  //     ) {
+  //       setEndCursorNotificationId(notificationsData?.items.at(-1)?.id)
+  //     }
+  //     // if (firstRenderSkipPagination.current) {
+  //     //   firstRenderSkipPagination.current = false
+  //     // }
+  //   },
+  //   {
+  //     root: lastUserRef.current,
+  //     threshold: 0.9,
+  //   }
+  // )
+
   const { ref } = useInfiniteScroll(
     () => {
       if (
         // !firstRenderSkipPagination.current &&
-        notificationsData &&
-        notificationsData?.items &&
-        notificationsData.items.length >= PAGE_SIZE &&
-        notificationsData.items.length !== notificationsData.totalCount
+        newNotificationsData &&
+        newNotificationsData?.items &&
+        newNotificationsData.items.length >= PAGE_SIZE &&
+        newNotificationsData.items.length !== newNotificationsData.totalCount
       ) {
-        setEndCursorNotificationId(notificationsData?.items.at(-1)?.id)
+        setEndCursorNotificationId(newNotificationsData?.items.at(-1)?.id)
       }
       // if (firstRenderSkipPagination.current) {
       //   firstRenderSkipPagination.current = false
@@ -86,40 +139,44 @@ export const NotificationsView = () => {
     }
   )
 
+  console.log(newNotificationsData)
+
   return (
     <>
-      <Dropdown
-        header={'Уведомления'}
-        isOpen={openDropdown}
-        onSelect={option => {}}
-        onToggle={onChangeOpenNotifications}
-        options={notificationsData?.items || []}
-        ref={ref}
-        setEndCursor={setEndCursorNotificationId}
-        totalCount={notificationsData?.totalCount}
-      >
-        <Button variant={'text'}>
-          <div className={'relative text-light-100'}>
-            <Notification
-              className={'fill-current transition-all duration-300 hover:fill-accent-500'}
-            />
-            {!!notificationsData?.notReadCount && (
-              <div
-                className={
-                  'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
-                }
-              >
-                {notificationsData?.notReadCount}
-              </div>
-            )}
-          </div>
-        </Button>
-        {/*{notificationsData?.items.length !== notificationsData?.totalCount && (*/}
-        {/*  <div className={'flex justify-center py-5'} ref={ref}>*/}
-        {/*    <Loader />*/}
-        {/*  </div>*/}
-        {/*)}*/}
-      </Dropdown>
+      {newNotificationsData && (
+        <Dropdown
+          header={'Уведомления'}
+          isOpen={openDropdown}
+          onSelect={option => {}}
+          onToggle={onChangeOpenNotifications}
+          options={newNotificationsData?.items || []}
+          ref={ref}
+          setEndCursor={setEndCursorNotificationId}
+          totalCount={newNotificationsData?.totalCount}
+        >
+          <Button variant={'text'}>
+            <div className={'relative text-light-100'}>
+              <Notification
+                className={'fill-current transition-all duration-300 hover:fill-accent-500'}
+              />
+              {!!newNotificationsData?.notReadCount && (
+                <div
+                  className={
+                    'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
+                  }
+                >
+                  {newNotificationsData?.notReadCount}
+                </div>
+              )}
+            </div>
+          </Button>
+          {/*{notificationsData?.items.length !== notificationsData?.totalCount && (*/}
+          {/*  <div className={'flex justify-center py-5'} ref={ref}>*/}
+          {/*    <Loader />*/}
+          {/*  </div>*/}
+          {/*)}*/}
+        </Dropdown>
+      )}
     </>
   )
 }
