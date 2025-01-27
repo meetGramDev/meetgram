@@ -19,29 +19,13 @@ interface DropdownProps {
   onSelect: (option: NotificationType) => void
   onToggle: (state: boolean) => void
   options: NotificationType[]
-  setEndCursor: (cursorId: number | undefined) => void
+  setEndCursor?: (cursorId: number | undefined) => void
   totalCount?: number
 }
 
 const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
   ({ children, header, isOpen, onSelect, onToggle, options, setEndCursor, totalCount }, ref) => {
     const dropdownRef = useRef<HTMLDivElement | null>(null)
-
-    // const lastNotificationRef = useRef<HTMLElement>(null)
-
-    // const { ref: liRef } = useInfiniteScroll(
-    //   () => {
-    //     debugger
-    //     if (options && options.length > 12 && totalCount !== options.length) {
-    //       if (options.length) {
-    //         setEndCursor(options?.at(-1)?.id)
-    //       }
-    //     }
-    //   },
-    //   {
-    //     threshold: 1,
-    //   }
-    // )
 
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
@@ -98,7 +82,6 @@ const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
                     key={option.id}
                     onClick={() => handleSelect(option)}
                   >
-                    {/*{option.label}*/}
                     <Notification
                       createdAt={option.createdAt}
                       isRead={option.isRead}

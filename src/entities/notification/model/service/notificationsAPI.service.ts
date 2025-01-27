@@ -27,6 +27,9 @@ export const notificationsAPI = baseApi.injectEndpoints({
           return responseData
         }
         currentCacheData.items.push(...responseData.items)
+        currentCacheData.notReadCount = responseData.notReadCount
+        currentCacheData.pageSize = responseData.pageSize
+        currentCacheData.totalCount = responseData.totalCount
       },
       providesTags: ['notifications'],
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {

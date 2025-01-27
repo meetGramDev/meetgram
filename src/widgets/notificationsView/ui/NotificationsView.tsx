@@ -20,12 +20,12 @@ const sortingData = (arr: NotificationType[]) => {
   newArr.sort((a, b) => {
     if (a.id > b.id) {
       return -1
-    }
-    if (a.id == b.id) {
+    } else if (a.id == b.id) {
       return 0
-    }
-    if (a.id < b.id) {
+    } else if (a.id < b.id) {
       return 1
+    } else {
+      return 0
     }
   })
 
@@ -68,8 +68,8 @@ export const NotificationsView = () => {
     cursor: endCursorNotificationId,
     // isRead: false,
     // pageSize: 12,
-    sortBy: 'notifyAt',
-    sortDirection: 'desc',
+    // sortBy: 'notifyAt',
+    // sortDirection: 'desc',
   })
   const [markOfNotification] = useMarkNotificationAsReadMutation()
 
@@ -80,15 +80,13 @@ export const NotificationsView = () => {
     return item.id
   })
 
-  console.log(notificationId)
-
   const [openDropdown, setOpenDropdown] = useState(false)
 
-  const onChangeOpenNotifications = (isDropdownOpen: boolean) => {
+  const onChangeOpenNotifications = (isDropdownOpen: boolean = false) => {
     if (isDropdownOpen) {
       setOpenDropdown(true)
     } else {
-      notificationId && markOfNotification({ ids: notificationId })
+      markOfNotification({ ids: notificationId ?? [] })
 
       setOpenDropdown(false)
     }
@@ -97,31 +95,9 @@ export const NotificationsView = () => {
   // const firstRenderSkipPagination = useRef(true)
   const lastUserRef = useRef<HTMLElement>(null)
 
-  // const { ref } = useInfiniteScroll(
-  //   () => {
-  //     if (
-  //       // !firstRenderSkipPagination.current &&
-  //       notificationsData &&
-  //       notificationsData?.items &&
-  //       notificationsData.items.length >= PAGE_SIZE &&
-  //       notificationsData.items.length !== notificationsData.totalCount
-  //     ) {
-  //       setEndCursorNotificationId(notificationsData?.items.at(-1)?.id)
-  //     }
-  //     // if (firstRenderSkipPagination.current) {
-  //     //   firstRenderSkipPagination.current = false
-  //     // }
-  //   },
-  //   {
-  //     root: lastUserRef.current,
-  //     threshold: 0.9,
-  //   }
-  // )
-
   const { ref } = useInfiniteScroll(
     () => {
       if (
-        // !firstRenderSkipPagination.current &&
         newNotificationsData &&
         newNotificationsData?.items &&
         newNotificationsData.items.length >= PAGE_SIZE &&
@@ -129,17 +105,12 @@ export const NotificationsView = () => {
       ) {
         setEndCursorNotificationId(newNotificationsData?.items.at(-1)?.id)
       }
-      // if (firstRenderSkipPagination.current) {
-      //   firstRenderSkipPagination.current = false
-      // }
     },
     {
       root: lastUserRef.current,
       threshold: 0.9,
     }
   )
-
-  console.log(newNotificationsData)
 
   return (
     <>
@@ -159,24 +130,37 @@ export const NotificationsView = () => {
               <Notification
                 className={'fill-current transition-all duration-300 hover:fill-accent-500'}
               />
-              {!!newNotificationsData?.notReadCount && (
-                <div
-                  className={
-                    'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
-                  }
-                >
-                  {newNotificationsData?.notReadCount}
-                </div>
-              )}
+              {/*{!!newNotificationsData?.notReadCount && (*/}
+              {/*  <div*/}
+              {/*    className={*/}
+              {/*      'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'*/}
+              {/*    }*/}
+              {/*  >*/}
+              {/*    /!*{newNotificationsData?.notReadCount}*!/*/}
+              {/*    {newNotificationsData?.notReadCount}*/}
+              {/*  </div>*/}
+              {/*)}*/}
+              {notificationsData?.notReadCount !== 0 &&
+                notificationsData?.notReadCount !== undefined &&
+                NotificationsCount(notificationsData?.notReadCount)}
             </div>
           </Button>
-          {/*{notificationsData?.items.length !== notificationsData?.totalCount && (*/}
-          {/*  <div className={'flex justify-center py-5'} ref={ref}>*/}
-          {/*    <Loader />*/}
-          {/*  </div>*/}
-          {/*)}*/}
         </Dropdown>
       )}
     </>
+  )
+}
+
+const NotificationsCount = (count: number) => {
+  console.log(count)
+
+  return (
+    <div
+      className={
+        'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
+      }
+    >
+      {count}
+    </div>
   )
 }
