@@ -15,11 +15,9 @@ const SearchUser: NextPageWithLayout = () => {
 
   const router = useRouter()
 
-  // useEffect(() => {
-  //   router.push(`/users?search=${''}&pageSize=${10}&pageNumber=${1}`)
-  // }, [])
-
-  console.log(router.asPath)
+  useEffect(() => {
+    router.push(`/users?search=${searchStr}&pageSize=${pageSize}&pageNumber=${pageNumber}`)
+  }, [searchStr, pageNumber, pageSize])
 
   const { data, isFetching, isLoading, isSuccess } = useSearchUsersQuery({
     cursor: 0,

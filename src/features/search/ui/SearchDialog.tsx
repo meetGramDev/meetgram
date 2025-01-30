@@ -11,17 +11,11 @@ type DebounceInputProps = {
 export const SearchDialog = ({ onValueQuery }: DebounceInputProps) => {
   const [timerId, setTimerId] = useState(0)
   const [str, setStr] = useState('')
-  // const [searchStr, setSearchStr] = useState('')
-  const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-
-  const router = useRouter()
 
   useEffect(() => {
     setTimerId(
       +setTimeout(() => {
         onValueQuery(str)
-        // router.push(`/users?search=${str}&pageSize=${pageSize}&pageNumber=${pageNumber}`)
       }, 1500)
     )
 
