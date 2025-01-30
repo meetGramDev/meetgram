@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { SearchDialogWithPagination } from '@/features/search'
 import { useSearchUsersQuery } from '@/features/search/model/services/search.services'
@@ -6,11 +6,20 @@ import { useClientProgress } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
 import { Loader } from '@/shared/ui'
 import { getMainLayout } from '@/widgets/layouts'
+import { useRouter } from 'next/router'
 
 const SearchUser: NextPageWithLayout = () => {
   const [searchStr, setSearchStr] = useState('')
   const [pageNumber, setPageNumber] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+
+  const router = useRouter()
+
+  // useEffect(() => {
+  //   router.push(`/users?search=${''}&pageSize=${10}&pageNumber=${1}`)
+  // }, [])
+
+  console.log(router.asPath)
 
   const { data, isFetching, isLoading, isSuccess } = useSearchUsersQuery({
     cursor: 0,
