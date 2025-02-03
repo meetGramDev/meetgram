@@ -9,20 +9,36 @@ import { getMainLayout } from '@/widgets/layouts'
 import { useRouter } from 'next/router'
 
 const SearchUser: NextPageWithLayout = () => {
-  const [searchStr, setSearchStr] = useState('')
-  const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-
   const router = useRouter()
 
+  const { pageNumber = '1', pageSize = '10', search = '' } = router.query
+  const [searchStr, setSearchStr] = useState<string>(search as string)
+  const [pageNumberState, setPageNumber] = useState<number>(Number(pageNumber))
+  const [pageSizeState, setPageSize] = useState<number>(Number(pageSize))
+
   useEffect(() => {
-    router.push(`/users?search=${searchStr}&pageSize=${pageSize}&pageNumber=${pageNumber}`)
-  }, [searchStr, pageNumber, pageSize])
+    if (router.isReady) {
+      setSearchStr(search as string)
+      setPageSize(Number(pageSize))
+      setPageNumber(Number(pageNumber))
+    }
+  }, [router.isReady, search, pageNumber, pageSize])
+
+  useEffect(() => {
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: { pageNumber: pageNumberState, pageSize: pageSizeState, search: searchStr },
+      },
+      undefined,
+      { shallow: true }
+    )
+  }, [searchStr, pageNumberState, pageSizeState])
 
   const { data, isFetching, isLoading, isSuccess } = useSearchUsersQuery({
     cursor: 0,
-    pageNumber,
-    pageSize,
+    pageNumber: pageNumberState,
+    pageSize: pageSizeState,
     searchQuery: searchStr,
   })
 
