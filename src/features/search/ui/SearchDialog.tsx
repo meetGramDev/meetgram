@@ -6,11 +6,11 @@ import s from './SearchDialog.module.scss'
 
 type DebounceInputProps = {
   onValueQuery: (value: string) => void
-  value: string
+  value?: string
 }
 export const SearchDialog = ({ onValueQuery, value }: DebounceInputProps) => {
   const [timerId, setTimerId] = useState(0)
-  const [str, setStr] = useState<string>(value)
+  const [str, setStr] = useState<string>(value || '')
 
   useEffect(() => {
     setTimerId(
