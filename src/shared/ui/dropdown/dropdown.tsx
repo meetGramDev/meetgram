@@ -14,6 +14,7 @@ import styles from './dropdown.module.scss'
 
 interface DropdownProps {
   children: ReactNode
+  deleteNotification: (id: number) => void
   header?: string
   isOpen: boolean
   onSelect: (option: NotificationType) => void
@@ -24,7 +25,20 @@ interface DropdownProps {
 }
 
 const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
-  ({ children, header, isOpen, onSelect, onToggle, options, setEndCursor, totalCount }, ref) => {
+  (
+    {
+      children,
+      deleteNotification,
+      header,
+      isOpen,
+      onSelect,
+      onToggle,
+      options,
+      setEndCursor,
+      totalCount,
+    },
+    ref
+  ) => {
     const dropdownRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
@@ -58,7 +72,7 @@ const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
         {isOpen && (
           <ul className={styles.dropdownMenu}>
             {header && <div className={styles.header}>{header}</div>}
-            {options.map((option, item) => {
+            {options.map((option, index) => {
               if (options?.at(-1)?.id === option.id) {
                 return (
                   <li
@@ -70,6 +84,8 @@ const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
                     {/*{option.label}*/}
                     <Notification
                       createdAt={option.createdAt}
+                      deleteNotification={deleteNotification}
+                      id={option.id}
                       isRead={option.isRead}
                       message={option.message}
                     />
@@ -84,6 +100,8 @@ const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
                   >
                     <Notification
                       createdAt={option.createdAt}
+                      deleteNotification={deleteNotification}
+                      id={option.id}
                       isRead={option.isRead}
                       message={option.message}
                     />

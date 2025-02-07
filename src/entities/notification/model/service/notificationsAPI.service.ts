@@ -10,6 +10,7 @@ import { baseApi } from '@/shared/api'
 export const notificationsAPI = baseApi.injectEndpoints({
   endpoints: builder => ({
     deleteNotificationById: builder.mutation<any, DeleteNotificationByIdRequest>({
+      invalidatesTags: ['notifications'],
       query: args => ({
         method: 'DELETE',
         url: `notifications/${args.id}`,

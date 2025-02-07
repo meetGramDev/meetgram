@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import { NotificationsCount } from '@/entities/notification'
 import {
+  useDeleteNotificationByIdMutation,
   useGetUserNotificationsQuery,
   useMarkNotificationAsReadMutation,
 } from '@/entities/notification/model/service/notificationsAPI.service'
@@ -14,6 +16,7 @@ import Dropdown from '@/shared/ui/dropdown/dropdown'
 import { PAGE_SIZE } from '@/widgets/postsList'
 import { io } from 'socket.io-client'
 
+// for sorting and filtered notifications data
 const sortingData = (arr: NotificationType[]) => {
   const newArr = arr.map(item => ({ ...item }))
 
@@ -67,16 +70,23 @@ export const NotificationsView = () => {
   const { data: notificationsData } = useGetUserNotificationsQuery({
     cursor: endCursorNotificationId,
     // isRead: false,
-    // pageSize: 12,
+    // pageSize: 140,
     // sortBy: 'notifyAt',
-    // sortDirection: 'desc',
+    // sortDirection: 'asc',
   })
+
   const [markOfNotification] = useMarkNotificationAsReadMutation()
 
-  const sortedData = notificationsData && sortingData(notificationsData?.items)
+  const [deleteNotification] = useDeleteNotificationByIdMutation()
 
-  const newNotificationsData = { ...notificationsData, items: sortedData }
-  const notificationId = sortedData?.map(item => {
+  //const sortedData = notificationsData && sortingData(notificationsData?.items)
+
+  // const newNotificationsData = { ...notificationsData, items: sortedData }
+  // const notificationId = sortedData?.map(item => {
+  //   return item.id
+  // })
+
+  const notificationId = notificationsData?.items?.map(item => {
     return item.id
   })
 
@@ -92,18 +102,38 @@ export const NotificationsView = () => {
     }
   }
 
-  // const firstRenderSkipPagination = useRef(true)
   const lastUserRef = useRef<HTMLElement>(null)
+
+  const deleteNotificationHandler = (id: number) => {
+    deleteNotification({ id })
+  }
+
+  // const { ref } = useInfiniteScroll(
+  //   () => {
+  //     if (
+  //       newNotificationsData &&
+  //       newNotificationsData?.items &&
+  //       newNotificationsData.items.length >= PAGE_SIZE &&
+  //       newNotificationsData.items.length !== newNotificationsData.totalCount
+  //     ) {
+  //       setEndCursorNotificationId(newNotificationsData?.items.at(-1)?.id)
+  //     }
+  //   },
+  //   {
+  //     root: lastUserRef.current,
+  //     threshold: 0.9,
+  //   }
+  // )
 
   const { ref } = useInfiniteScroll(
     () => {
       if (
-        newNotificationsData &&
-        newNotificationsData?.items &&
-        newNotificationsData.items.length >= PAGE_SIZE &&
-        newNotificationsData.items.length !== newNotificationsData.totalCount
+        notificationsData &&
+        notificationsData?.items &&
+        notificationsData.items.length >= PAGE_SIZE &&
+        notificationsData.items.length !== notificationsData.totalCount
       ) {
-        setEndCursorNotificationId(newNotificationsData?.items.at(-1)?.id)
+        setEndCursorNotificationId(notificationsData?.items.at(-1)?.id)
       }
     },
     {
@@ -114,53 +144,55 @@ export const NotificationsView = () => {
 
   return (
     <>
-      {newNotificationsData && (
+      {/*{newNotificationsData && (*/}
+      {/*  <Dropdown*/}
+      {/*    header={'Уведомления'}*/}
+      {/*    isOpen={openDropdown}*/}
+      {/*    onSelect={option => {}}*/}
+      {/*    onToggle={onChangeOpenNotifications}*/}
+      {/*    options={newNotificationsData?.items || []}*/}
+      {/*    ref={ref}*/}
+      {/*    setEndCursor={setEndCursorNotificationId}*/}
+      {/*    totalCount={newNotificationsData?.totalCount}*/}
+      {/*  >*/}
+      {/*    <Button variant={'text'}>*/}
+      {/*      <div className={'relative text-light-100'}>*/}
+      {/*        <Notification*/}
+      {/*          className={'fill-current transition-all duration-300 hover:fill-accent-500'}*/}
+      {/*        />*/}
+
+      {/*        {notificationsData?.notReadCount !== 0 &&*/}
+      {/*          notificationsData?.notReadCount !== undefined &&*/}
+      {/*          NotificationsCount(notificationsData.notReadCount)}*/}
+      {/*      </div>*/}
+      {/*    </Button>*/}
+      {/*  </Dropdown>*/}
+      {/*)}*/}
+      {notificationsData && (
         <Dropdown
+          deleteNotification={deleteNotificationHandler}
           header={'Уведомления'}
           isOpen={openDropdown}
           onSelect={option => {}}
           onToggle={onChangeOpenNotifications}
-          options={newNotificationsData?.items || []}
+          options={notificationsData?.items || []}
           ref={ref}
           setEndCursor={setEndCursorNotificationId}
-          totalCount={newNotificationsData?.totalCount}
+          totalCount={notificationsData?.totalCount}
         >
           <Button variant={'text'}>
             <div className={'relative text-light-100'}>
               <Notification
                 className={'fill-current transition-all duration-300 hover:fill-accent-500'}
               />
-              {/*{!!newNotificationsData?.notReadCount && (*/}
-              {/*  <div*/}
-              {/*    className={*/}
-              {/*      'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'*/}
-              {/*    }*/}
-              {/*  >*/}
-              {/*    /!*{newNotificationsData?.notReadCount}*!/*/}
-              {/*    {newNotificationsData?.notReadCount}*/}
-              {/*  </div>*/}
-              {/*)}*/}
+
               {notificationsData?.notReadCount !== 0 &&
                 notificationsData?.notReadCount !== undefined &&
-                NotificationsCount(notificationsData?.notReadCount)}
+                NotificationsCount(notificationsData.notReadCount)}
             </div>
           </Button>
         </Dropdown>
       )}
     </>
-  )
-}
-
-const NotificationsCount = (count: number) => {
-  console.log(count)
-
-  return (
-    <div
-      className={
-        'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
-      }
-    >
-      {count}
-    </div>
   )
 }
