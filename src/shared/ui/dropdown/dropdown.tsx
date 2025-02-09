@@ -61,7 +61,7 @@ const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
 
     const handleSelect = (option: NotificationType) => {
       onSelect(option)
-      onToggle(false)
+      //onToggle(false)
     }
 
     return (

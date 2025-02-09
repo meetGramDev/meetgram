@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { NotificationsCount } from '@/entities/notification'
@@ -71,11 +71,11 @@ export const NotificationsView = () => {
     cursor: endCursorNotificationId,
     // isRead: false,
     // pageSize: 140,
-    // sortBy: 'notifyAt',
-    // sortDirection: 'asc',
+    sortBy: 'notifyAt',
+    sortDirection: 'asc',
   })
 
-  const [markOfNotification] = useMarkNotificationAsReadMutation()
+  const [markOfNotification, { isLoading, isSuccess }] = useMarkNotificationAsReadMutation()
 
   const [deleteNotification] = useDeleteNotificationByIdMutation()
 
@@ -92,15 +92,18 @@ export const NotificationsView = () => {
 
   const [openDropdown, setOpenDropdown] = useState(false)
 
-  const onChangeOpenNotifications = (isDropdownOpen: boolean = false) => {
-    if (isDropdownOpen) {
-      setOpenDropdown(true)
-    } else {
-      markOfNotification({ ids: notificationId ?? [] })
+  const onChangeOpenNotifications = useCallback(
+    (isDropdownOpen: boolean) => {
+      if (isDropdownOpen) {
+        setOpenDropdown(true)
+      } else {
+        markOfNotification({ ids: notificationId ?? [] })
 
-      setOpenDropdown(false)
-    }
-  }
+        setOpenDropdown(false)
+      }
+    },
+    [openDropdown, notificationId?.length]
+  )
 
   const lastUserRef = useRef<HTMLElement>(null)
 

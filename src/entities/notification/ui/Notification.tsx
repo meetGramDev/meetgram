@@ -29,7 +29,7 @@ export const Notification = ({
         <p className={s.notificationMessage}>{message}</p>
         <div className={s.time}>{getTimeAgo('en', createdAt)}</div>
       </div>
-      <Button onClick={() => deleteNotification(id)} variant={'link'}>
+      <Button className={'z-10'} onClick={() => deleteNotification(id)} variant={'link'}>
         <Wastebasket />
       </Button>
     </div>
