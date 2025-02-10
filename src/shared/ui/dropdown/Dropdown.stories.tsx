@@ -28,6 +28,7 @@ const options: NotificationType[] = [
 export const Default: Story = {
   args: {
     children: <Button>Click me to toggle dropdown</Button>,
+    deleteNotification: (id: number) => console.log(`Delete notification ${id}`),
     isOpen: false,
     onSelect: (option: NotificationType) => console.log(`Selected: ${option.message}`),
     onToggle: (state: boolean) => console.log(`Dropdown toggled: ${state}`),
@@ -38,6 +39,7 @@ export const Default: Story = {
 export const WithCustomOptions: Story = {
   args: {
     children: <Button>Click me for custom options</Button>,
+    deleteNotification: (id: number) => console.log(`Delete notification ${id}`),
     isOpen: false,
     onSelect: (option: NotificationType) => console.log(`You selected: ${option.message}`),
     onToggle: (state: boolean) => console.log(`Dropdown toggled: ${state}`),
@@ -52,6 +54,7 @@ export const WithCustomOptions: Story = {
 export const OpenedInitially: Story = {
   args: {
     children: <Button>Dropdown is open initially</Button>,
+    deleteNotification: (id: number) => console.log(`Delete notification ${id}`),
     isOpen: true,
     onSelect: (option: NotificationType) => console.log(`Selected: ${option.message}`),
     onToggle: (state: boolean) => console.log(`Dropdown toggled: ${state}`),
@@ -62,6 +65,7 @@ export const OpenedInitially: Story = {
 export const Disabled: Story = {
   args: {
     children: <Button>Click me for dropdown</Button>,
+    deleteNotification: (id: number) => console.log(`Delete notification ${id}`),
     isOpen: false,
     onSelect: (option: NotificationType) => console.log(`Selected: ${option.message}`),
     onToggle: (state: boolean) => console.log(`Dropdown toggled: ${state}`),
@@ -76,6 +80,7 @@ export const Disabled: Story = {
 export const TextTrigger: Story = {
   args: {
     children: <span style={{ color: 'blue', cursor: 'pointer' }}>Click here for dropdown</span>,
+    deleteNotification: (id: number) => console.log(`Delete notification ${id}`),
     isOpen: false,
     onSelect: (option: NotificationType) => console.log(`Selected: ${option.message}`),
     onToggle: (state: boolean) => console.log(`Dropdown toggled: ${state}`),
