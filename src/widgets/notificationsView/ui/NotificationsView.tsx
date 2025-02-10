@@ -75,7 +75,7 @@ export const NotificationsView = () => {
     sortDirection: 'asc',
   })
 
-  const [markOfNotification, { isLoading, isSuccess }] = useMarkNotificationAsReadMutation()
+  const [markOfNotification] = useMarkNotificationAsReadMutation()
 
   const [deleteNotification] = useDeleteNotificationByIdMutation()
 
@@ -92,18 +92,18 @@ export const NotificationsView = () => {
 
   const [openDropdown, setOpenDropdown] = useState(false)
 
-  const onChangeOpenNotifications = useCallback(
-    (isDropdownOpen: boolean) => {
-      if (isDropdownOpen) {
-        setOpenDropdown(true)
-      } else {
-        markOfNotification({ ids: notificationId ?? [] })
+  const onChangeOpenNotifications = (isDropdownOpen: boolean) => {
+    if (isDropdownOpen === openDropdown) {
+      return
+    }
 
-        setOpenDropdown(false)
-      }
-    },
-    [openDropdown, notificationId?.length]
-  )
+    if (isDropdownOpen) {
+      setOpenDropdown(true)
+    } else {
+      setOpenDropdown(false)
+      markOfNotification({ ids: notificationId || [] })
+    }
+  }
 
   const lastUserRef = useRef<HTMLElement>(null)
 

@@ -35,7 +35,7 @@ export const SidebarItem = ({ className, item }: Props) => {
     }
   }
 
-  const isActiveLink = router.asPath === item.path
+  const isActiveLink = router.asPath === item.path || router.asPath.includes(item.path)
 
   return (
     <>
