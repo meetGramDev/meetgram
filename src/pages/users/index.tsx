@@ -25,14 +25,29 @@ const SearchUser: NextPageWithLayout = () => {
   }, [router.isReady, search, pageNumber, pageSize])
 
   useEffect(() => {
-    router.replace(
-      {
+    if (searchStr === '' && pageNumberState === 1 && pageSizeState === 10) {
+      router.replace({
         pathname: router.pathname,
-        query: { pageNumber: pageNumberState, pageSize: pageSizeState, search: searchStr },
-      },
-      undefined,
-      { shallow: true }
-    )
+      })
+    } else if (searchStr !== '') {
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: { pageNumber: 1, pageSize: pageSizeState, search: searchStr },
+        },
+        undefined,
+        { shallow: true }
+      )
+    } else {
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: { pageNumber: pageNumberState, pageSize: pageSizeState, search: searchStr },
+        },
+        undefined,
+        { shallow: true }
+      )
+    }
   }, [searchStr, pageNumberState, pageSizeState])
 
   const { data, isFetching, isLoading, isSuccess } = useSearchUsersQuery({
