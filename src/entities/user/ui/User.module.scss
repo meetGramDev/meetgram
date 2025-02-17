@@ -36,7 +36,8 @@
   display: flex;
   gap: 100px;
   align-items: center;
-  justify-content: flex-start;
+
+  //justify-content: space-between;
 
   margin-bottom: 24px;
 }
@@ -52,6 +53,25 @@
 .aboutMeText {
   min-width: 100%;
   word-break: break-word;
+}
+
+@media (width <= 899px) {
+  .buttonPublications {
+    //flex-wrap: wrap;
+    gap: 70px;
+  }
+
+  .userPhoto {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (width <= 763px) {
+  .buttonPublications {
+    gap: 20px;
+    justify-content: space-between;
+  }
 }
 
 @media (width <= $screen-size-mobile) {
