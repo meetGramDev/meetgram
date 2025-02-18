@@ -76,8 +76,8 @@
 
 @media (width <= $screen-size-mobile) {
   .userPhoto {
-    width: 4.68rem;
-    height: 4.68rem;
+    width: 10.68rem;
+    height: 10.68rem;
   }
 
   .buttonPublications {
@@ -89,14 +89,23 @@
     font: var(--font-small-link);
   }
 
+  .userData {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .userInformation {
+    flex-wrap: wrap;
     justify-content: center;
-    margin-left: 7%;
+
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .userWrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 0.75rem;
     padding: 2.25rem 1.5rem 0;
   }
@@ -104,8 +113,13 @@
   .userName {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    font: var(--font-regular-small);
+
+    margin-bottom: 0;
+
+    //gap: 0.75rem;
+    //font: var(--font-regular-link);
+    font-size: 3rem;
+    text-align: center;
   }
 }
 
