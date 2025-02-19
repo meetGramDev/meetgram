@@ -18,7 +18,7 @@ export const SearchDialogWithPagination = ({
   return (
     <>
       <h1 className={'pb-3'}>Search</h1>
-      <SearchDialog onValueQuery={setSearchStr} />
+      <SearchDialog onValueQuery={setSearchStr} value={searchStr} />
       {searchStr === '' && <p className={'font-bold leading-6'}>All users</p>}
       {data &&
         data.items &&

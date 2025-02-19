@@ -10,7 +10,7 @@ type Props = {
   className?: string
   setSearchStr: (value: string) => void
 }
-//TODO change search dialog  component props
+//TODO change users dialog  component props
 export const ContainerWithSearch = ({ children, className, setSearchStr }: Props) => {
   return (
     <div className={clsx(className, s.container)}>
