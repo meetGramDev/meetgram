@@ -77,7 +77,7 @@ const Dropdown = React.forwardRef<HTMLLIElement, DropdownProps>(
                 return (
                   <li
                     className={styles.dropdownItem}
-                    key={option.id}
+                    key={option.createdAt}
                     onClick={() => handleSelect(option)}
                     ref={ref}
                   >
