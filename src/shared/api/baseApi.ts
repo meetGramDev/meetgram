@@ -87,5 +87,6 @@ export const baseApi = createApi({
     'follow',
     'commentAnswerLike',
     'subscriptions',
+    'notifications',
   ],
 })

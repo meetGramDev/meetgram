@@ -9,6 +9,12 @@ export const SearchDialogWithPagination = ({
   setPageSize,
   setSearchStr,
 }: SearchDialogWithPaginationType) => {
+  const usualOptions = [1, 5, 10, 20, 50, 100]
+
+  const changingPageSize = data?.pageSize
+
+  const finishOptions = [changingPageSize || 10, ...usualOptions]
+
   return (
     <>
       <h1 className={'pb-3'}>Search</h1>
@@ -36,7 +42,7 @@ export const SearchDialogWithPagination = ({
             onPerPageChange={itemsPerPage => {
               setPageSize(itemsPerPage)
             }}
-            options={[1, 5, 10, 20, 50, 100]}
+            options={finishOptions}
             pageCount={data.pagesCount}
           />
         )}

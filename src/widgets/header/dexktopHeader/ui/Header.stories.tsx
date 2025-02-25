@@ -18,9 +18,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    notification: 3,
-  },
+  args: {},
 }
 
 export const NotAuthorized: Story = {}
