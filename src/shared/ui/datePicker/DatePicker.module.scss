@@ -1,3 +1,5 @@
+@import '@/app/styles/screens';
+
 .globalWrapper {
   :global(.react-datepicker__calendar-icon) {
     width: 24px;
@@ -83,7 +85,6 @@
 .calendar {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: space-between;
   background-color: var(--dark-color-500);
 
   &:global(.react-datepicker) {
@@ -159,6 +160,10 @@
     &:hover {
       background-color: var(--primary-color-700);
     }
+  }
+
+  @media (width <= $screen-size-mobile) {
+    left: -10%;
   }
 
   /* ======= */

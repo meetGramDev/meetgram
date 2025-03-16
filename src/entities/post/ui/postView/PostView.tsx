@@ -198,9 +198,9 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
                       />
                     </div>
                   </div>
-                  <span className={s.descriptionDate}>
+                  <time className={s.descriptionDate} suppressHydrationWarning>
                     {getTimeAgo(locale ?? 'en', post.updatedAt || post.createdAt)}
-                  </span>
+                  </time>
                 </div>
               )}
               <Comments

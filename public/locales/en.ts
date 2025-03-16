@@ -7,6 +7,9 @@ export const en = {
         "Homepage": "Homepage",
         "Page not found": "Page not found",
     },
+    "500": {
+        "Server error": "Server error"
+    },
     "About me": "About me",
     "Account Management": "Account Management",
     'Add Photo': 'Add Photo',

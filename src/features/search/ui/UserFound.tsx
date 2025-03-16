@@ -5,18 +5,10 @@ import { HOME } from '@/shared/config/router'
 import { Button } from '@/shared/ui'
 import Link from 'next/link'
 
-export const UserFound = ({
-  firstName,
-  key,
-  lastName,
-  url,
-  userId,
-  userName,
-}: UserFoundPropsType) => {
+export const UserFound = ({ firstName, lastName, url, userId, userName }: UserFoundPropsType) => {
   return (
     <>
-      {' '}
-      <div key={key}>
+      <div key={userId}>
         <div className={'mt-[12px] flex'}>
           <Button
             as={Link}
@@ -38,7 +30,6 @@ export const UserFound = ({
             >
               {userName}
             </Button>
-            {/*<p className={'flex items-center justify-start text-[16px] font-bold leading-6'}></p>*/}
             <p className={'text-[14px] text-light-900'}>{`${firstName} ${lastName}`}</p>
           </div>
         </div>

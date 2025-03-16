@@ -9,6 +9,9 @@ export const ru: LanguagesObjType = {
         "Homepage": "главную",
         "Page not found": "Страница не найдена",
     },
+    "500": {
+        "Server error": "Ошибка сервера"
+    },
     "About me": "О себе",
     "Account Management": "Управление аккаунтом",
     "Add Photo": "Добавить фото",

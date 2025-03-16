@@ -10,6 +10,9 @@ export const be: LanguagesObjType = {
         "Homepage": "галоўную",
         "Page not found": "Старонка не знойдзена",
     },
+    "500": {
+        "Server error": "Памылка сервера"
+    },
     "About me": "Пра мяне",
     "Account Management": "Кіраванне акаўнтам",
     "Add Photo": "Дадаць фота",
@@ -54,8 +57,8 @@ export const be: LanguagesObjType = {
     "July": "Ліпень",
     "June": "Чэрвень",
     "Last Name": "Прозвішча",
-    "Like": "Падабацца",
-    "Likes": "Падабацца",
+    "Like": "Падабаецца",
+    "Likes": "Падабаецца",
     "Log Out": "Выйсці",
     "Looks like the verification link has expired. Not to worry, we can send the link again": "Падаецца, спасылка для пацверджання пратэрмінавана. Не хвалюйцеся, мы можам адправіць спасылку зноў",
     "March": "Сакавік",

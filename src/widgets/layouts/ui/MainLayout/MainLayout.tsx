@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
 import { Header, MobileHeader } from '@/widgets/header'
@@ -15,7 +15,15 @@ const MainLayout = ({ children, isPublic }: { children: ReactNode; isPublic?: bo
 
   return (
     <div className={`min-h-[calc(100vh_-_3.75rem_-_72px)] ${inter.className}`}>
-      <div>{isMobile ? <MobileHeader /> : <Header />}</div>
+      <div>
+        {isMobile ? (
+          <MobileHeader />
+        ) : (
+          <div>
+            <Header />
+          </div>
+        )}
+      </div>
       <div className={s.page}>
         {!isPublic && !isMobile && <Sidebar className={s.fixedSidebar} />}
         <main className={clsx(isPublic ? s.public : s.main)}>{children}</main>

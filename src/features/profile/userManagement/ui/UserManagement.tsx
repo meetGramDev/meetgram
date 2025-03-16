@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { ServerMessagesType } from '@/shared/api'
@@ -139,6 +139,18 @@ export const UserManagement = () => {
 
   useClientProgress(isLoading || cancelAutoRenewalLoading)
 
+  const onPaymentClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    paymentMethod: PaymentType
+  ) => {
+    e.preventDefault()
+    if (costOfPaymentData !== undefined) {
+      const requestData = dataPacking(paymentMethod)
+
+      handleSubmitForm(requestData)
+    }
+  }
+
   return (
     <>
       {data && costOfPaymentData ? (
@@ -197,14 +209,7 @@ export const UserManagement = () => {
                 <div className={s.paymentButtonWrapper}>
                   <Button
                     className={s.paymentButton}
-                    onClick={e => {
-                      e.preventDefault()
-                      if (costOfPaymentData !== undefined) {
-                        const requestData = dataPacking('PAYPAL')
-
-                        handleSubmitForm(requestData)
-                      }
-                    }}
+                    onClick={e => onPaymentClickHandler(e, 'PAYPAL')}
                     type={'submit'}
                     variant={'outlined'}
                   >
@@ -213,14 +218,7 @@ export const UserManagement = () => {
                   or
                   <Button
                     className={s.paymentButton}
-                    onClick={e => {
-                      e.preventDefault()
-                      if (costOfPaymentData !== undefined) {
-                        const requestData = dataPacking('STRIPE')
-
-                        handleSubmitForm(requestData)
-                      }
-                    }}
+                    onClick={e => onPaymentClickHandler(e, 'STRIPE')}
                     type={'submit'}
                     variant={'outlined'}
                   >
