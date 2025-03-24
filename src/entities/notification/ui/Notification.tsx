@@ -1,8 +1,11 @@
 import { getTimeAgo } from '@/features/posts/comments'
 import { Wastebasket } from '@/shared/assets/icons/Wastebasket'
+import { useTranslate } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 
 import s from './Notification.module.scss'
+
+import { NotificationTr } from '../../../../public/locales/en'
 
 export type NotificationProps = {
   createdAt: string
@@ -19,11 +22,14 @@ export const Notification = ({
   isRead,
   message,
 }: NotificationProps) => {
+  const t = useTranslate()
+
   return (
     <div className={s.wrapper}>
       <div className={s.header}>
         <div className={s.headerWrapper}>
-          Новое уведомление!
+          {/*Новое уведомление!*/}
+          {t('notification.message.New notification')}
           {!isRead && <p className={s.subHeader}>&nbsp;Новое</p>}
         </div>
         <p className={s.notificationMessage}>{message}</p>

@@ -123,8 +123,7 @@ export const en = {
             wrongUsername: 'Wrong username'
         },
     },
-
-    forgoPasswordForm: {
+   forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
         email: 'Email',
@@ -135,9 +134,16 @@ export const en = {
         sendAgain: 'If you do not receive an email send link again.',
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
-    },
-
+    }
+  ,
     language: 'English',
+
+    notification: {
+        message: {
+            'New notification': 'New notification!',
+        }
+
+    },
     policies: {
         "Privacy Policy": "Privacy Policy",
         "Terms Of Service": "Terms Of Service",
@@ -198,7 +204,7 @@ export const en = {
     }
 }
 
-const {errorsTr, sidebarTr, validateFileTranslate} = en
+const {errorsTr, notification, sidebarTr, validateFileTranslate} = en
 const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 
 
@@ -206,5 +212,5 @@ export type ErrorsTr = typeof errorsTr
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
 export type LanguagesObjType = typeof en
-
+export type NotificationTr = typeof notification
 
