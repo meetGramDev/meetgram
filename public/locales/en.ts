@@ -61,8 +61,11 @@ export const en = {
     "March": "March",
     "May": "May",
     "My Payments": "My Payments",
+    "New": "New",
+    "New notification": "New notification!",
     "Next": "Next",
     "No": "No",
+    "Notifications": "Notifications",
     "November": "November",
     "October": "October",
     "Ok": "Ok",
@@ -137,13 +140,6 @@ export const en = {
     }
   ,
     language: 'English',
-
-    notification: {
-        message: {
-            'New notification': 'New notification!',
-        }
-
-    },
     policies: {
         "Privacy Policy": "Privacy Policy",
         "Terms Of Service": "Terms Of Service",
@@ -204,7 +200,7 @@ export const en = {
     }
 }
 
-const {errorsTr, notification, sidebarTr, validateFileTranslate} = en
+const {errorsTr, sidebarTr, validateFileTranslate} = en
 const {errorEmail, errorSignUp, errorValidationFields} = errorsTr
 
 
@@ -212,5 +208,4 @@ export type ErrorsTr = typeof errorsTr
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
 export type LanguagesObjType = typeof en
-export type NotificationTr = typeof notification
 

@@ -10,13 +10,14 @@ import {
 import { NotificationType } from '@/entities/notification/model/types/service.types'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { useInfiniteScroll } from '@/shared/lib'
+import { useInfiniteScroll, useTranslate } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import Dropdown from '@/shared/ui/dropdown/dropdown'
 import { PAGE_SIZE } from '@/widgets/postsList'
 import { io } from 'socket.io-client'
 
 export const NotificationsView = () => {
+  const t = useTranslate()
   //websocket
   const token = useAppSelector(state => state.user.accessToken)
 
@@ -153,7 +154,7 @@ export const NotificationsView = () => {
       {notificationsData && (
         <Dropdown
           deleteNotification={deleteNotificationHandler}
-          header={'Уведомления'}
+          header={t('Notifications')}
           isOpen={openDropdown}
           onSelect={option => {}}
           onToggle={onChangeOpenNotifications}

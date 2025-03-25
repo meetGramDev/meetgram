@@ -12,7 +12,9 @@
 .headerWrapper {
   display: flex;
   align-items: baseline;
+
   font-size: var(--fs-s);
+  font-weight: var(--fw-700);
   line-height: var(--lh-m);
 }
 
