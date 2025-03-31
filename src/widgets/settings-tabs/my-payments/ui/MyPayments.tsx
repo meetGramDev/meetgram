@@ -1,10 +1,6 @@
 import { useState } from 'react'
 
-import {
-  PaymentType,
-  SubscriptionType,
-  useGetPaymentsQuery,
-} from '@/features/profile/userManagement'
+import { useGetPaymentsQuery } from '@/features/profile/userManagement'
 import { dateFormatting, useScreenHeightTracker, useTranslate } from '@/shared/lib'
 import { Pagination } from '@/shared/ui'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/ui/table'

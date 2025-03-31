@@ -103,3 +103,17 @@
     outline: none;
   }
 }
+
+@media (width <= 40.625rem) {
+  .hearts {
+    margin-left: 0.25rem;
+  }
+
+  .commentContent {
+    width: 70vw;
+  }
+
+  /* .isMobile {
+    width:100vw
+  } */
+}

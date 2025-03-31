@@ -10,7 +10,6 @@ import withoutPhoto from '@/shared/assets/img/not-photo-user.jpg'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { serverErrorHandler } from '@/shared/lib'
 import { Button } from '@/shared/ui'
-import { clsx } from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -49,7 +48,7 @@ export const Comment = ({ comment, onClick }: Props) => {
   }
 
   return (
-    <>
+    <div className={s.isMobile}>
       <div className={s.commentsContainer} key={comment.id}>
         <div className={s.avatars}>
           <Photo
@@ -96,6 +95,6 @@ export const Comment = ({ comment, onClick }: Props) => {
       {answers && (
         <Answers answers={answers} onClick={() => onClick(comment.id)} postId={comment.postId} />
       )}
-    </>
+    </div>
   )
 }
