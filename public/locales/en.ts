@@ -61,8 +61,11 @@ export const en = {
     "March": "March",
     "May": "May",
     "My Payments": "My Payments",
+    "New": "New",
+    "New notification": "New notification!",
     "Next": "Next",
     "No": "No",
+    "Notifications": "Notifications",
     "November": "November",
     "October": "October",
     "Ok": "Ok",
@@ -123,8 +126,7 @@ export const en = {
             wrongUsername: 'Wrong username'
         },
     },
-
-    forgoPasswordForm: {
+   forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
         email: 'Email',
@@ -135,8 +137,8 @@ export const en = {
         sendAgain: 'If you do not receive an email send link again.',
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
-    },
-
+    }
+  ,
     language: 'English',
     policies: {
         "Privacy Policy": "Privacy Policy",
@@ -206,5 +208,4 @@ export type ErrorsTr = typeof errorsTr
 export type ErrorValidationFields = typeof errorValidationFields
 export type ErrorEmail = typeof errorEmail
 export type LanguagesObjType = typeof en
-
 

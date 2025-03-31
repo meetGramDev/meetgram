@@ -10,34 +10,14 @@ import {
 import { NotificationType } from '@/entities/notification/model/types/service.types'
 import { Notification } from '@/shared/assets/icons/Notification'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { useInfiniteScroll } from '@/shared/lib'
+import { useInfiniteScroll, useTranslate } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import Dropdown from '@/shared/ui/dropdown/dropdown'
 import { PAGE_SIZE } from '@/widgets/postsList'
 import { io } from 'socket.io-client'
 
-// for sorting and filtered notifications data
-const sortingData = (arr: NotificationType[]) => {
-  const newArr = arr.map(item => ({ ...item }))
-
-  newArr.sort((a, b) => {
-    if (a.id > b.id) {
-      return -1
-    } else if (a.id == b.id) {
-      return 0
-    } else if (a.id < b.id) {
-      return 1
-    } else {
-      return 0
-    }
-  })
-
-  const newNewArr = newArr.filter((item, count) => item?.id !== newArr[count + 1]?.id)
-
-  return newNewArr
-}
-
 export const NotificationsView = () => {
+  const t = useTranslate()
   //websocket
   const token = useAppSelector(state => state.user.accessToken)
 
@@ -71,8 +51,8 @@ export const NotificationsView = () => {
     cursor: endCursorNotificationId,
     // isRead: false,
     // pageSize: 140,
-    sortBy: 'notifyAt',
-    sortDirection: 'asc',
+    sortBy: 'id',
+    sortDirection: 'desc',
   })
 
   const [markOfNotification] = useMarkNotificationAsReadMutation()
@@ -174,7 +154,7 @@ export const NotificationsView = () => {
       {notificationsData && (
         <Dropdown
           deleteNotification={deleteNotificationHandler}
-          header={'Уведомления'}
+          header={t('Notifications')}
           isOpen={openDropdown}
           onSelect={option => {}}
           onToggle={onChangeOpenNotifications}
