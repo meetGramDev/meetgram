@@ -63,7 +63,7 @@ export const ru: LanguagesObjType = {
     "March": "Март",
     "May": "Май",
     "My Payments": "Мои платежи",
-    "New": "Нет",
+    "New": "Новое",
     "New notification": "Новое уведомление!",
     "Next": "Далее",
     "No": "Нет",
