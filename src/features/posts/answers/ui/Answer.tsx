@@ -48,7 +48,7 @@ export const Answer = ({ answer, onClick, postId }: Props) => {
             alt={'user photo'}
             className={s.photo}
             height={36}
-            src={answer.from.avatars[0].url || withoutPhoto}
+            src={answer.from.avatars.length ? answer.from.avatars[0].url : withoutPhoto}
             width={36}
           />
         </div>
@@ -80,7 +80,7 @@ export const Answer = ({ answer, onClick, postId }: Props) => {
         </div>
       </div>
       <div className={s.answerFooter}>
-        <span>{getTimeAgo(tr ?? 'en', answer.createdAt)}</span>
+        <time>{getTimeAgo(tr ?? 'en', answer.createdAt)}</time>
         {isAuth && (
           <>
             {answer.isLiked && answer.likeCount !== 0 && (

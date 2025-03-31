@@ -1,3 +1,5 @@
+@import '@/app/styles/screens';
+
 .list {
   display: flex;
   width: 100%;
@@ -64,7 +66,7 @@
   font: var(--font-h3);
 }
 
-@media (width <= 650px) {
+@media (width <= $screen-size-mobile) {
   .list {
     position: absolute;
     overflow: auto;

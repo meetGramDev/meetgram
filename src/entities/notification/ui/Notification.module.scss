@@ -1,0 +1,34 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.header {
+  //display: flex;
+  padding-right: 20px;
+}
+
+.headerWrapper {
+  display: flex;
+  align-items: baseline;
+
+  font-size: var(--fs-s);
+  font-weight: var(--fw-700);
+  line-height: var(--lh-m);
+}
+
+.subHeader {
+  font-size: var(--fs-xs);
+  color: var(--primary-color-500);
+}
+
+.notificationMessage {
+  font-size: var(--fs-s);
+  line-height: var(--lh-m);
+}
+
+.time {
+  font-size: var(--fs-s);
+  color: var(--dark-color-100);
+}

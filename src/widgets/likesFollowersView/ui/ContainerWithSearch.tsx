@@ -8,12 +8,13 @@ import s from './style.module.scss'
 type Props = {
   children: ReactNode
   className?: string
+  setSearchStr: (value: string) => void
 }
-//TODO change search dialog  component props
-export const ContainerWithSearch = ({ children, className }: Props) => {
+//TODO change users dialog  component props
+export const ContainerWithSearch = ({ children, className, setSearchStr }: Props) => {
   return (
     <div className={clsx(className, s.container)}>
-      <SearchDialog onValueQuery={() => {}} />
+      <SearchDialog onValueQuery={setSearchStr} />
       <div className={s.content}>{children}</div>
     </div>
   )

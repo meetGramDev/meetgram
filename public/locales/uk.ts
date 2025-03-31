@@ -10,6 +10,9 @@ export const uk: LanguagesObjType = {
         "Homepage": "головну",
         "Page not found": "Сторінку не знайдено",
     },
+    "500": {
+        "Server error": " Помилка сервера"
+    },
     "About me": "Про мене",
     "Account Management": "Керування акаунтом",
     "Add Photo": "Додайте фото",
@@ -61,8 +64,11 @@ export const uk: LanguagesObjType = {
     "March": "Березень",
     "May": "Травень",
     "My Payments": "Мої платежі",
+    "New": "Нове",
+    "New notification": "Нове повідомлення!",
     "Next": "Наступний",
     "No": "Ні",
+    "Notifications": "Повідомлення",
     "November": "Листопад",
     "October": "Жовтень",
     "Ok": "Гаразд",

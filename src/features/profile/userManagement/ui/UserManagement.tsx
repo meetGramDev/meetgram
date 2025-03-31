@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { MouseEventHandler, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { ServerMessagesType } from '@/shared/api'
@@ -19,6 +19,7 @@ import {
 } from '../model/services/subscription.service'
 import { CreatePaymentRequestType, PaymentType } from '../model/types/services'
 import { AccountManagerField } from './accountManagerField'
+import { UserManagementSkeleton } from './skeleton/UserManagementSkeleton'
 
 const managerItems: RadioGroupProps['options'] = [
   { label: 'Personal', value: 'Personal' },
@@ -138,95 +139,99 @@ export const UserManagement = () => {
 
   useClientProgress(isLoading || cancelAutoRenewalLoading)
 
+  const onPaymentClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    paymentMethod: PaymentType
+  ) => {
+    e.preventDefault()
+    if (costOfPaymentData !== undefined) {
+      const requestData = dataPacking(paymentMethod)
+
+      handleSubmitForm(requestData)
+    }
+  }
+
   return (
-    <div className={s.wrapper}>
-      <AccountManagerField fieldTitle={'Current Subscription:'}>
-        {lastDate !== null ? (
-          <div className={'flex flex-row gap-16'}>
-            <div className={'flex flex-col gap-3'}>
-              <p className={'text-light-1000'}>Expire at</p>
-              <span>
-                {dateFormatting(lastDate.endDateOfSubscription, { locale: locale || 'en' })}
-              </span>
-            </div>
-            {lastDate.autoRenewal && (
-              <div className={'flex flex-col gap-3'}>
-                <p className={'text-light-1000'}>Next payment</p>
-                <span>
-                  {dateFormatting(lastDate.endDateOfSubscription, {
-                    addDays: 1,
-                    locale: locale || 'en',
-                  })}
-                </span>
+    <>
+      {data && costOfPaymentData ? (
+        <div className={s.wrapper}>
+          <AccountManagerField fieldTitle={'Current Subscription:'}>
+            {lastDate !== null ? (
+              <div className={'flex flex-row gap-16'}>
+                <div className={'flex flex-col gap-3'}>
+                  <p className={'text-light-1000'}>Expire at</p>
+                  <span>
+                    {dateFormatting(lastDate.endDateOfSubscription, { locale: locale || 'en' })}
+                  </span>
+                </div>
+                {lastDate.autoRenewal && (
+                  <div className={'flex flex-col gap-3'}>
+                    <p className={'text-light-1000'}>Next payment</p>
+                    <span>
+                      {dateFormatting(lastDate.endDateOfSubscription, {
+                        addDays: 1,
+                        locale: locale || 'en',
+                      })}
+                    </span>
+                  </div>
+                )}
+              </div>
+            ) : (
+              'You do not have subscriptions'
+            )}
+          </AccountManagerField>
+          {data && data.data && data.data.length > 0 && (
+            <Button
+              className={'-mt-2 mb-4 w-min whitespace-nowrap'}
+              disabled={data?.hasAutoRenewal === false || cancelAutoRenewalLoading}
+              onClick={cancelAutoRenewalHandler}
+              variant={'secondary'}
+            >
+              {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
+            </Button>
+          )}
+          <AccountManagerField fieldTitle={'Account type:'}>
+            <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
+          </AccountManagerField>
+          <form>
+            {radioOptions.options[1].checked && (
+              <AccountManagerField fieldTitle={'Change your subscription:'}>
+                <RadioGroup
+                  className={s.radioGroup}
+                  onValueChange={onValueChangeSubscriptionHandler}
+                  options={cost.options}
+                />
+              </AccountManagerField>
+            )}
+            {typeof error === 'string' && <div className={s.error}>{error}</div>}
+            {radioOptions.options[1].checked && (
+              <div className={s.paymentWrapper}>
+                <div className={s.paymentButtonWrapper}>
+                  <Button
+                    className={s.paymentButton}
+                    onClick={e => onPaymentClickHandler(e, 'PAYPAL')}
+                    type={'submit'}
+                    variant={'outlined'}
+                  >
+                    <PayPal />
+                  </Button>
+                  or
+                  <Button
+                    className={s.paymentButton}
+                    onClick={e => onPaymentClickHandler(e, 'STRIPE')}
+                    type={'submit'}
+                    variant={'outlined'}
+                  >
+                    <Stripe />
+                  </Button>
+                </div>
               </div>
             )}
-          </div>
-        ) : (
-          'You do not have subscriptions'
-        )}
-      </AccountManagerField>
-      {data && data.data && data.data.length > 0 && (
-        <Button
-          className={'-mt-2 mb-4 w-min whitespace-nowrap'}
-          disabled={data?.hasAutoRenewal === false || cancelAutoRenewalLoading}
-          onClick={cancelAutoRenewalHandler}
-          variant={'secondary'}
-        >
-          {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
-        </Button>
+          </form>
+        </div>
+      ) : (
+        <UserManagementSkeleton />
       )}
-      <AccountManagerField fieldTitle={'Account type:'}>
-        <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
-      </AccountManagerField>
-      <form>
-        {radioOptions.options[1].checked && (
-          <AccountManagerField fieldTitle={'Change your subscription:'}>
-            <RadioGroup
-              className={s.radioGroup}
-              onValueChange={onValueChangeSubscriptionHandler}
-              options={cost.options}
-            />
-          </AccountManagerField>
-        )}
-        {typeof error === 'string' && <div className={s.error}>{error}</div>}
-        {radioOptions.options[1].checked && (
-          <div className={s.paymentWrapper}>
-            <div className={s.paymentButtonWrapper}>
-              <Button
-                className={s.paymentButton}
-                onClick={e => {
-                  e.preventDefault()
-                  if (costOfPaymentData !== undefined) {
-                    const requestData = dataPacking('PAYPAL')
-
-                    handleSubmitForm(requestData)
-                  }
-                }}
-                type={'submit'}
-                variant={'outlined'}
-              >
-                <PayPal />
-              </Button>
-              or
-              <Button
-                className={s.paymentButton}
-                onClick={e => {
-                  e.preventDefault()
-                  if (costOfPaymentData !== undefined) {
-                    const requestData = dataPacking('STRIPE')
-
-                    handleSubmitForm(requestData)
-                  }
-                }}
-                type={'submit'}
-                variant={'outlined'}
-              >
-                <Stripe />
-              </Button>
-            </div>
-          </div>
-        )}
-      </form>
-    </div>
+    </>
   )
 }

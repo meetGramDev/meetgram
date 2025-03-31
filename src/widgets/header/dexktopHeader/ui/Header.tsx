@@ -1,26 +1,30 @@
+import { useEffect } from 'react'
+
 import { selectCurrentUserId, selectIsUserAuth } from '@/entities/user'
-import { Notification } from '@/shared/assets/icons/Notification'
-import { HOME, PROFILE, PUBLIC_PAGE, SIGN_IN, SIGN_UP } from '@/shared/config/router'
+import { PROFILE, PUBLIC_PAGE, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui/button/button'
 import { LangSwitcher } from '@/widgets/langSwitcher'
+import { NotificationsView } from '@/widgets/notificationsView/ui/NotificationsView'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 type Props = {
   className?: string
-  notification?: number
 }
 
-export const Header = ({ className, notification }: Props) => {
+export const Header = ({ className }: Props) => {
   const router = useRouter()
 
   const t = useTranslate()
 
   const isAuth = useAppSelector(selectIsUserAuth)
   const userId = useAppSelector(selectCurrentUserId)
+  // const notificationsOptions = notifications?.map(item => {
+  //   return { id: item.id, label: item.message }
+  // })
 
   return (
     <header
@@ -37,26 +41,7 @@ export const Header = ({ className, notification }: Props) => {
       </Link>
       <div className={'flex items-center justify-between gap-[2.25rem]'}>
         <div className={'flex items-center justify-end gap-[1.5rem]'}>
-          {isAuth && (
-            <>
-              <Button variant={'text'}>
-                <div className={'relative text-light-100'}>
-                  <Notification
-                    className={'fill-current transition-all duration-300 hover:fill-accent-500'}
-                  />
-                  {notification && (
-                    <div
-                      className={
-                        'absolute left-[10px] top-[-5px] flex aspect-square h-[13px] items-center justify-center rounded-full bg-danger-500 px-1 text-[0.625rem] text-light-100'
-                      }
-                    >
-                      {notification}
-                    </div>
-                  )}
-                </div>
-              </Button>
-            </>
-          )}
+          {isAuth && <NotificationsView />}
           <LangSwitcher />
         </div>
 

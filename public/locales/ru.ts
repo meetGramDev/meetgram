@@ -9,6 +9,9 @@ export const ru: LanguagesObjType = {
         "Homepage": "главную",
         "Page not found": "Страница не найдена",
     },
+    "500": {
+        "Server error": "Ошибка сервера"
+    },
     "About me": "О себе",
     "Account Management": "Управление аккаунтом",
     "Add Photo": "Добавить фото",
@@ -60,8 +63,11 @@ export const ru: LanguagesObjType = {
     "March": "Март",
     "May": "Май",
     "My Payments": "Мои платежи",
+    "New": "Новое",
+    "New notification": "Новое уведомление!",
     "Next": "Далее",
     "No": "Нет",
+    "Notifications": "Уведомления",
     "November": "Ноябрь",
     "October": "Октябрь",
     "Ok": "Хорошо",

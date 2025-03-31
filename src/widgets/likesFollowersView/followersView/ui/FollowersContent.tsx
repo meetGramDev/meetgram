@@ -17,6 +17,8 @@ const MAX_PAGE_SIZE = 8
 
 export const FollowersContent = ({ followCount, type, userName }: FollowersProps) => {
   const [endCursorId, setEndCursorId] = useState<number | undefined>(undefined)
+  const [searchString, setSearchString] = useState('')
+
   const { data, isFetching, isLoading, isSuccess } = useGetUserFollowingOrFollowersQuery({
     cursor: endCursorId,
     isGetFollowers: type === 'followers',
@@ -30,7 +32,7 @@ export const FollowersContent = ({ followCount, type, userName }: FollowersProps
   const [deleteFollower, { isLoading: isDeleteFollowerLoading }] = useDeleteFollowerMutation()
   const handleOnDeleteFollower = (userId: number) => deleteFollower(String(userId))
 
-  //TODO change ContainerWithSearch search dialog  component props
+  //TODO change ContainerWithSearch users dialog  component props
   return (
     <>
       {!isSuccess ? (
@@ -38,7 +40,7 @@ export const FollowersContent = ({ followCount, type, userName }: FollowersProps
           <Loader />
         </div>
       ) : (
-        <ContainerWithSearch className={s.container}>
+        <ContainerWithSearch className={s.container} setSearchStr={setSearchString}>
           <UsersListDialog
             data={data}
             disabled={isFollowLoading || isDeleteFollowerLoading}
@@ -48,6 +50,7 @@ export const FollowersContent = ({ followCount, type, userName }: FollowersProps
             isSuccess={isSuccess}
             maxPageSize={MAX_PAGE_SIZE}
             onFollow={handleFollowUser}
+            searchString={searchString}
             setEndCursor={setEndCursorId}
             totalCount={followCount}
             {...(type === 'followers' ? { onDeleteFollowers: handleOnDeleteFollower } : {})}

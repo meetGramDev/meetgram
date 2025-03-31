@@ -1,4 +1,4 @@
-import { FC, SVGProps, useState } from 'react'
+import React, { FC, SVGProps, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 
 import { addPostActions } from '@/features/posts/addPost'
@@ -27,6 +27,7 @@ export const SidebarItem = ({ className, item }: Props) => {
   const { setOpenAddingPost } = useActions(addPostActions)
   const router = useRouter()
   const userId = useAppSelector(state => state.user.accountData.userId)
+  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
 
   const handleClickCreatePost = () => {
     if (router.asPath === `${HOME}/${userId}`) {
@@ -34,7 +35,7 @@ export const SidebarItem = ({ className, item }: Props) => {
     }
   }
 
-  const isMobile = useMediaQuery({ query: '(max-width:650px)' })
+  const isActiveLink = router.asPath === item.path || router.asPath.includes(item.path)
 
   return (
     <>
@@ -48,7 +49,12 @@ export const SidebarItem = ({ className, item }: Props) => {
           {isMobile || item.name}
         </Button>
       ) : (
-        <Link className={clsx(s.item, className)} href={item.path} key={item.path} passHref>
+        <Link
+          className={clsx(s.item, className, isActiveLink && s.currentItem)}
+          href={item.path}
+          key={item.path}
+          passHref
+        >
           <item.Svg />
           {isMobile || item.name}
         </Link>
