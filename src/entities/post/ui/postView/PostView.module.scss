@@ -4,6 +4,8 @@
   .container {
     overflow: hidden auto;
     flex-direction: column;
+    max-height: 85vh;
+
   }
 
   .mobileBack {
@@ -24,5 +26,9 @@
 
   .commentContainer {
     width: 80vw;
+  }
+
+  .shiftPosition{
+    transform: translate(-50%, -50%);
   }
 }

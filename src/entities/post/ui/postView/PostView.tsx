@@ -130,6 +130,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
   const title = (
     <div className={s.title}>
       <div className={s.userLink}>
+        {/** photo avatar*/}
         <Link className={s.linkAvatar} href={ownerProfile}>
           <Photo
             alt={t('Owner avatar')}
@@ -194,7 +195,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
   )
 
   return (
-    <Dialog onOpenChange={isOpen} open={open}>
+    <Dialog className={s.shiftPosition} onOpenChange={isOpen} open={open}>
       <div className={s.mobileBack}>
         {/** if is post open entire post dialog*/}
         {post && (
