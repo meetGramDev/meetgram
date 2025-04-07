@@ -11,18 +11,16 @@
   transform: translate(-43%, -50%);
 }
 
-
 .container {
   position: relative;
   display: flex;
   max-height: 80vh;
-
 }
 
 .post {
   --slide-height-desktop: 80vh;
 
-  /*тут 50% змінено на 10 ф запрацювало*/
+  /* тут 50% змінено на 10 ф запрацювало */
   flex: 1 0 10%;
 }
 
@@ -56,8 +54,10 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-/*temporary comment*/
-  /*width: 95%;*/
+
+  /* temporary comment */
+
+  /* width: 95%; */
   height: 3.68rem;
 
   border-bottom: 1px solid var(--dark-color-100);
