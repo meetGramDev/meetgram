@@ -30,13 +30,14 @@ export const DialogHeader = (props: Props) => {
 
   const addingPostStage = useAppSelector(selectAddingPostStage)
   const imagesNumber = useAppSelector(selectNumberOfImages)
-  const { clearEditedImages } = useActions(addPostActions)
+  const { clearEditedImages, setFilterData } = useActions(addPostActions)
 
   const [openConfirm, setOpenConfirm] = useState(false)
 
   const handleCloseAddingPost = (isConfirm: boolean) => {
     if (isConfirm) {
       clearEditedImages()
+      setFilterData({ filter: '', index: 0 })
       onBack()
     } else {
       setOpenConfirm(false)

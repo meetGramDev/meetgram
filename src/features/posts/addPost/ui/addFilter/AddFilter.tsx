@@ -14,79 +14,48 @@ import { DialogHeader } from '../common/DialogHeader'
 
 export const AddFilter = () => {
   const actions = useActions(addPostActions)
-  const images = useAppSelector(state => state.addPost.images)
-  const [selectedFilter, setSelectedFilter] = useState<string>('')
+  const { filter, images, index } = useAppSelector(state => state.addPost)
   const [filtersForImages, setFiltersForImages] = useState<string[]>(Array(images.length).fill(''))
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [smallImageIndex, setSmallImageIndex] = useState<number>(0)
   const [bigImageIndex, setBigImageIndex] = useState<number>(0)
-  const filteredImages = useRef(new Map())
+
   const t = useTranslate()
 
   const selectImage = (filter: string, index: number) => {
-    const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
-    const image = new Image()
-    const currentImage = images[bigImageIndex]
-
-    image.src = currentImage.image
-
-    image.onload = () => {
-      if (canvas && ctx) {
-        canvas.width = image.width
-        canvas.height = image.height
-
-        ctx.filter = 'none'
-        ctx.drawImage(image, 0, 0, image.width, image.height)
-
-        setSelectedFilter(filter)
-        setSmallImageIndex(index)
-        const dataUrl = canvas.toDataURL('image/jpeg')
-
-        filteredImages.current.set(bigImageIndex, dataUrl)
-      }
-    }
-
+    actions.setFilterData({ filter, index })
     const updatedFilters = [...filtersForImages]
 
     updatedFilters[bigImageIndex] = filter
     setFiltersForImages(updatedFilters)
   }
 
-  const saveImageToCanvas = (imageSrc: string, filter: string, imageIndex: number) => {
-    const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
-    const image = new Image()
+  const handleNextView = () => {
+    images.map((el, elIndx) => {
+      const canvas = canvasRef.current
+      const ctx = canvas?.getContext('2d')
+      const image = new Image()
 
-    image.src = imageSrc
+      image.src = el.image
 
-    image.onload = () => {
-      if (canvas && ctx) {
-        canvas.width = image.width
-        canvas.height = image.height
-        if (filter !== filter) {
-          ctx.filter = 'none'
+      image.onload = () => {
+        if (canvas && ctx) {
+          canvas.width = image.width
+          canvas.height = image.height
+          ctx.filter = filterMap[filtersForImages[elIndx]] || 'none'
+          ctx.drawImage(image, 0, 0, image.width, image.height)
+
+          const dataUrl = canvas.toDataURL('image/jpeg')
+
+          actions.updateImage({ image: { filter: dataUrl }, index: elIndx })
         }
-        ctx.filter = filterMap[filter] || 'none'
-        ctx.drawImage(image, 0, 0, image.width, image.height)
-
-        const dataUrl = canvas.toDataURL('image/jpeg')
-
-        filteredImages.current.set(imageIndex, dataUrl)
       }
-    }
+    })
+
+    actions.setAddingPostStage(AddingPostStage.DESCRIPTION)
   }
 
   const handleNextCarousel = () => {
-    if (!selectedFilter) {
-      setFiltersForImages(Array(images.length).fill(''))
-    }
     const nextIndex = bigImageIndex + 1
-
-    const currentImage = images[bigImageIndex]
-    const currentFilter = filtersForImages[bigImageIndex] || selectedFilter
-
-    saveImageToCanvas(currentImage.image, currentFilter, bigImageIndex)
 
     setBigImageIndex(nextIndex)
 
@@ -95,24 +64,14 @@ export const AddFilter = () => {
     if (nextFilter) {
       const filterIndex = filters.indexOf(nextFilter)
 
-      setSmallImageIndex(filterIndex)
+      actions.setFilterData({ index: filterIndex })
     } else {
-      setSmallImageIndex(0)
-      setSelectedFilter('')
+      actions.setFilterData({ filter: '', index: 0 })
     }
   }
 
   const handlePrevCarousel = () => {
-    if (!selectedFilter) {
-      setFiltersForImages(Array(images.length).fill('none'))
-    }
-
     const prevIndex = bigImageIndex > 0 ? bigImageIndex - 1 : images.length - 1
-
-    const currentImage = images[bigImageIndex]
-    const currentFilter = filtersForImages[bigImageIndex] || selectedFilter
-
-    saveImageToCanvas(currentImage.image, currentFilter, bigImageIndex)
 
     setBigImageIndex(prevIndex)
 
@@ -121,46 +80,14 @@ export const AddFilter = () => {
     if (prevFilter && prevFilter !== 'none') {
       const filterIndex = filters.indexOf(prevFilter)
 
-      setSmallImageIndex(filterIndex)
-      setSelectedFilter(prevFilter)
+      actions.setFilterData({ filter: prevFilter, index: filterIndex })
     } else {
-      setSmallImageIndex(0)
-      setSelectedFilter('none')
+      actions.setFilterData({ filter: 'none', index: 0 })
     }
-  }
-
-  const handleNextView = () => {
-    const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
-    const image = new Image()
-    const currentImage = images[bigImageIndex]
-
-    image.src = currentImage.image
-
-    image.onload = () => {
-      if (canvas && ctx) {
-        canvas.width = image.width
-        canvas.height = image.height
-
-        const currentFilter = filtersForImages[bigImageIndex] || selectedFilter
-
-        ctx.filter = filterMap[currentFilter]
-        ctx.drawImage(image, 0, 0, image.width, image.height)
-
-        const dataUrl = canvas.toDataURL('image/jpeg')
-
-        filteredImages.current.set(bigImageIndex, dataUrl)
-        if (filteredImages.current.size !== 0) {
-          filteredImages.current.forEach((image, index) => {
-            actions.updateImage({ image: { filter: image }, index: index })
-          })
-        }
-      }
-    }
-    actions.setAddingPostStage(AddingPostStage.DESCRIPTION)
   }
 
   const handlePrevStep = () => {
+    actions.setFilterData({ filter: '', index: 0 })
     actions.setAddingPostStage(AddingPostStage.CROPPING)
   }
 
@@ -171,13 +98,10 @@ export const AddFilter = () => {
         <div className={s.leftSide}>
           <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
           <ImageCarousel
-            className={clsx(
-              s.bigImage,
-              s[`filter-${filtersForImages[bigImageIndex] || selectedFilter}`]
-            )}
+            className={clsx(s.bigImage, s[`filter-${filtersForImages[bigImageIndex] || filter}`])}
             images={images.map((image, index) => ({
               ...image,
-              image: filteredImages.current.get(index) || image.image,
+              image: image.image,
             }))}
             keyName={'image'}
             onNext={handleNextCarousel}
@@ -199,7 +123,7 @@ export const AddFilter = () => {
                   className={clsx(
                     s.smallImage,
                     s[`filter-${filter}`],
-                    smallImageIndex === indexOfFilter ? s.select : ''
+                    index === indexOfFilter ? s.select : ''
                   )}
                   height={108}
                   src={images[bigImageIndex]?.image}
