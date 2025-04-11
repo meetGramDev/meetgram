@@ -8,7 +8,9 @@ export const addPostSlice = createSlice({
   initialState: {
     addingPostStage: AddingPostStage.ADD as AddingPostStage,
     currentIndex: null as Nullable<number>,
+    filter: '' as string | undefined,
     images: [] as ImageType[],
+    index: 0,
     isOpenModal: false,
   },
   name: 'addPost',
@@ -34,6 +36,10 @@ export const addPostSlice = createSlice({
     },
     setAddingPostStage: (state, { payload }: PayloadAction<AddingPostStage>) => {
       state.addingPostStage = payload
+    },
+    setFilterData: (state, { payload }: PayloadAction<{ filter?: string; index: number }>) => {
+      state.filter = payload.filter
+      state.index = payload.index
     },
     setOpenAddingPost: (state, { payload }: PayloadAction<boolean>) => {
       state.isOpenModal = payload
