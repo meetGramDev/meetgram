@@ -60,3 +60,18 @@
   font: var(--font-regular-small);
   color: var(--danger-color-500);
 }
+
+@media (width <= 40.625rem) {
+  .paymentButtonWrapper {
+    width: 100%;
+  }
+
+  .paymentWrapper {
+    justify-content: center;
+  }
+
+   .wrapper{
+    margin-right: 0;
+    padding: 1.87rem 1rem 5rem;
+  }
+}

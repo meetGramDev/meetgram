@@ -15,3 +15,9 @@
   margin-bottom: 1.125rem;
   font: var(--font-h3);
 }
+
+@media (width <= 40.625rem) {
+  .fieldTitle{
+    margin-bottom: 0.75rem;
+  }
+}
