@@ -6,6 +6,7 @@ import { useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui/button/button'
 import { LangSwitcher } from '@/widgets/langSwitcher'
+import { SocketIoApi } from '@/widgets/notificationsView/lib/useConnectSocket'
 import { NotificationsView } from '@/widgets/notificationsView/ui/NotificationsView'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -22,9 +23,14 @@ export const Header = ({ className }: Props) => {
 
   const isAuth = useAppSelector(selectIsUserAuth)
   const userId = useAppSelector(selectCurrentUserId)
+  //const token = useAppSelector(state => state.user.accessToken)
+
   // const notificationsOptions = notifications?.map(item => {
   //   return { id: item.id, label: item.message }
   // })
+  // useEffect(() => {
+  //   token && SocketIoApi.createConnection(token)
+  // }, [token])
 
   return (
     <header
