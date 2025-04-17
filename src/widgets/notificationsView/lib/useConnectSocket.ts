@@ -1,23 +1,37 @@
-import { Socket, io } from 'socket.io-client'
+import { useEffect, useRef } from 'react'
 
-class SocketIoApi {
-  static socket: Socket | null
+import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
 
-  static createConnection(token: string) {
-    const queryParams = {
-      query: {
-        accessToken: token,
-      },
-    }
+export const useConnectSocket = (token: null | string) => {
+  const isConnectedRef = useRef(false)
 
-    this.socket = io('https://inctagram.work', queryParams)
-    this.socket.on('connect', () => {
-      console.log('ws: socket connected')
-    })
-    this.socket.on('disconnect', () => {
-      console.log('ws: disconnected')
+  const createConnectSocket = (token: string) => {
+    SocketIoApi.createConnection(token)
+    isConnectedRef.current = true
+    SocketIoApi.socket?.on('NOTIFICATION', (data: any) => {
+      console.log('notification connected')
+      console.log('NOTIFICATION', data)
     })
   }
-}
 
-export default SocketIoApi
+  useEffect(() => {
+    if (!token || isConnectedRef.current) {
+      return
+    }
+
+    const socket = SocketIoApi.socket
+
+    if (socket && socket.connected) {
+      isConnectedRef.current = true
+
+      return
+    }
+
+    createConnectSocket(token)
+
+    return () => {
+      console.log('notification disconnected')
+      socket?.disconnect()
+    }
+  }, [token])
+}

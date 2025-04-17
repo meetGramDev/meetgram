@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { NotificationsCount } from '@/entities/notification'
 import {
@@ -11,7 +11,8 @@ import { useAppSelector } from '@/shared/config/storeHooks'
 import { useInfiniteScroll, useTranslate } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import Dropdown from '@/shared/ui/dropdown/dropdown'
-import SocketIoApi from '@/widgets/notificationsView/lib/useConnectSocket'
+import { useConnectSocket } from '@/widgets/notificationsView/lib/useConnectSocket'
+import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
 import { PAGE_SIZE } from '@/widgets/postsList'
 
 export const NotificationsView = () => {
@@ -19,17 +20,8 @@ export const NotificationsView = () => {
   //websocket
   const token = useAppSelector(state => state.user.accessToken)
 
-  useEffect(() => {
-    token && SocketIoApi.createConnection(token)
+  useConnectSocket(token)
 
-    return () => {
-      SocketIoApi.socket?.disconnect()
-      console.log('ws: disconnected')
-      // SocketIoApi.socket?.on('disconnect', () => {
-      //   console.log('disconnect')
-      // })
-    }
-  }, [])
   //notifications
   const [endCursorNotificationId, setEndCursorNotificationId] = useState<number | undefined>(
     undefined
@@ -88,6 +80,17 @@ export const NotificationsView = () => {
       threshold: 0.9,
     }
   )
+
+  //web-socket
+
+  const createConnectSocket = (token: string) => {
+    SocketIoApi.createConnection(token)
+
+    // SocketIoApi.socket?.on('NOTIFICATION', (data: any) => {
+    //   console.log('NOTIFICATION', data)
+    //   // setUpdateData(JSON.stringify(data))
+    // })
+  }
 
   return (
     <>
