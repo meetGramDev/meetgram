@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { NotificationsCount } from '@/entities/notification'
 import {
@@ -12,7 +12,6 @@ import { useInfiniteScroll, useTranslate } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import Dropdown from '@/shared/ui/dropdown/dropdown'
 import { useConnectSocket } from '@/widgets/notificationsView/lib/useConnectSocket'
-import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
 import { PAGE_SIZE } from '@/widgets/postsList'
 
 export const NotificationsView = () => {
@@ -80,17 +79,6 @@ export const NotificationsView = () => {
       threshold: 0.9,
     }
   )
-
-  //web-socket
-
-  const createConnectSocket = (token: string) => {
-    SocketIoApi.createConnection(token)
-
-    // SocketIoApi.socket?.on('NOTIFICATION', (data: any) => {
-    //   console.log('NOTIFICATION', data)
-    //   // setUpdateData(JSON.stringify(data))
-    // })
-  }
 
   return (
     <>

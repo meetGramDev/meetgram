@@ -1,3 +1,4 @@
+import { RootState } from '@/app/lib'
 import {
   DeleteNotificationByIdRequest,
   GetNotificationsRequest,
@@ -46,6 +47,7 @@ export const notificationsAPI = baseApi.injectEndpoints({
           url,
         }
       },
+
       serializeQueryArgs: ({ queryArgs }) => {
         return `${queryArgs.pageSize}`
       },

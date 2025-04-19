@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { toast } from 'react-toastify'
 
 import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
 
@@ -8,8 +9,9 @@ export const useConnectSocket = (token: null | string) => {
   const createConnectSocket = (token: string) => {
     SocketIoApi.createConnection(token)
     isConnectedRef.current = true
-    SocketIoApi.socket?.on('NOTIFICATION', (data: any) => {
+    SocketIoApi.socket?.on('notification', (data: any) => {
       console.log('notification connected')
+      toast.info(data)
       console.log('NOTIFICATION', data)
     })
   }
