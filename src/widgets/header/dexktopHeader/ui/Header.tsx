@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { selectCurrentUserId, selectIsUserAuth } from '@/entities/user'
 import { PROFILE, PUBLIC_PAGE, SIGN_IN, SIGN_UP } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
@@ -22,9 +20,6 @@ export const Header = ({ className }: Props) => {
 
   const isAuth = useAppSelector(selectIsUserAuth)
   const userId = useAppSelector(selectCurrentUserId)
-  // const notificationsOptions = notifications?.map(item => {
-  //   return { id: item.id, label: item.message }
-  // })
 
   return (
     <header
