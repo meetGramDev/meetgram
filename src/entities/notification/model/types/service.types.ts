@@ -22,6 +22,14 @@ export type NotificationType = {
   message: string
   notifyAt: string
 }
+
+export type SocketNotificationsType = {
+  clientId: string
+  id: number
+  isRead: boolean
+  message: string
+  notifyAt: string
+}
 export type MarkNotificationsAsReadResponse = {
   ids: number[]
 }
