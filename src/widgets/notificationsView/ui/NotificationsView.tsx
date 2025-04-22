@@ -29,7 +29,7 @@ export const NotificationsView = () => {
   const { data: notificationsData } = useGetUserNotificationsQuery({
     cursor: endCursorNotificationId,
     // isRead: false,
-    // pageSize: 140,
+    pageSize: 100,
     sortBy: 'id',
     sortDirection: 'desc',
   })

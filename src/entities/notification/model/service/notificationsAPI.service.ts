@@ -1,4 +1,3 @@
-import { RootState } from '@/app/lib'
 import {
   DeleteNotificationByIdRequest,
   GetNotificationsRequest,
@@ -11,7 +10,6 @@ import { baseApi } from '@/shared/api'
 export const notificationsAPI = baseApi.injectEndpoints({
   endpoints: builder => ({
     deleteNotificationById: builder.mutation<any, DeleteNotificationByIdRequest>({
-      invalidatesTags: ['notifications'],
       query: args => ({
         method: 'DELETE',
         url: `notifications/${args.id}`,
@@ -33,7 +31,6 @@ export const notificationsAPI = baseApi.injectEndpoints({
         currentCacheData.pageSize = responseData.pageSize
         currentCacheData.totalCount = responseData.totalCount
       },
-      providesTags: ['notifications'],
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {
         let url = `notifications/`
 
@@ -53,7 +50,6 @@ export const notificationsAPI = baseApi.injectEndpoints({
       },
     }),
     markNotificationAsRead: builder.mutation<void, MarkNotificationsAsReadResponse>({
-      invalidatesTags: ['notifications'],
       query: ids => ({
         body: ids,
         method: 'PUT',
