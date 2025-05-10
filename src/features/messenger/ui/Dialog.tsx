@@ -2,13 +2,13 @@ import { Button } from '@/shared/ui'
 
 import { Avatar, AvatarProps } from './Avatar'
 
-type Props = {
+export type DialogProps = {
   lastMessage?: string
   time?: string
   userName?: string
 } & AvatarProps
 
-export const Dialog = ({ avatar, lastMessage, time, userName }: Props) => {
+export const Dialog = ({ avatar, lastMessage, time, userName }: DialogProps) => {
   return (
     <li className={'border-b border-dark-300 p-3 last:border-b-0 hover:bg-dark-100'}>
       <Button className={'text-regular14 text-light-100 no-underline'} variant={'link'}>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { CurrentDialogUser, Dialog, DialogWindow, MessageInput } from '@/features/messenger'
+import { CurrentDialogUser, DialogList, DialogWindow } from '@/features/messenger'
 import { MessageStatus, MessageType } from '@/features/messenger/model/types'
 import { NextPageWithLayout } from '@/shared/types'
 import { Card } from '@/shared/ui'
@@ -26,73 +26,7 @@ const Chats: NextPageWithLayout = () => {
             <DebounceSearch defaultValue={searchQuery} onValueQuery={setSearchQuery} />
           </div>
           <div className={'col-start-1 row-start-2 overflow-y-auto border-r border-dark-300'}>
-            <ul>
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-              <Dialog
-                lastMessage={'Some fucking special ...'}
-                time={new Date().toLocaleDateString()}
-                userName={'username'}
-              />
-            </ul>
+            <DialogList />
           </div>
           <div className={'col-start-2 border-b border-dark-300'}>
             <CurrentDialogUser id={'1'} userName={'userName'} />
@@ -101,84 +35,81 @@ const Chats: NextPageWithLayout = () => {
             className={'col-start-2 row-start-2 h-full border-b border-r border-dark-300 bg-black'}
           >
             {/*<EmptyDialog />*/}
-            <div className={'grid h-full w-full grid-rows-[1fr_auto]'}>
-              <DialogWindow
-                messages={[
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.SENT,
-                    text: 'Hi! How are you?',
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    isYours: true,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.RECEIVED,
-                    text: 'Hi! I’m fine! Did you go into space yesterday? :D',
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.READ,
-                    text: "Ahahahahaha, just kidding! I'm still just learning to fly and code :D",
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.READ,
-                    text: 'Another text',
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.READ,
-                    text: 'Another text',
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.READ,
-                    text: 'Another text',
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.READ,
-                    text: 'Another text',
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.READ,
-                    text: 'Another text',
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.READ,
-                    text: 'Another text',
-                  },
-                  {
-                    createdAt: new Date(),
-                    id: 1,
-                    messageType: MessageType.TEXT,
-                    status: MessageStatus.READ,
-                    text: 'Another text',
-                  },
-                ]}
-              />
-              <MessageInput />
-            </div>
+            <DialogWindow
+              messages={[
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.SENT,
+                  text: 'Hi! How are you?',
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  isYours: true,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.RECEIVED,
+                  text: 'Hi! I’m fine! Did you go into space yesterday? :D',
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: "Ahahahahaha, just kidding! I'm still just learning to fly and code :D",
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: 'Another text',
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: 'Another text',
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: 'Another text',
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: 'Another text',
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: 'Another text',
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: 'Another text',
+                },
+                {
+                  createdAt: new Date(),
+                  id: 1,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: 'Another text',
+                },
+              ]}
+            />
           </div>
         </Card>
       </div>

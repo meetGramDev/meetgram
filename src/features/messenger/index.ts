@@ -1,5 +1,4 @@
 export { CurrentDialogUser } from './ui/CurrentDialogUser'
-export { Dialog } from './ui/Dialog'
+export { DialogList } from './ui/DialogList'
 export { DialogWindow } from './ui/DialogWindow'
 export { EmptyDialog } from './ui/EmptyDialog'
-export { MessageInput } from './ui/MessageInput'
