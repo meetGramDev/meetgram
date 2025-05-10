@@ -3,7 +3,6 @@ import { Button } from '@/shared/ui'
 import { Avatar, AvatarProps } from './Avatar'
 
 type Props = {
-  avatar?: { alt?: string; src?: string }
   lastMessage?: string
   time?: string
   userName?: string

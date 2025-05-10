@@ -1,10 +1,10 @@
 import { useState } from 'react'
 
+import { CurrentDialogUser, Dialog, DialogWindow, MessageInput } from '@/features/messenger'
+import { MessageStatus, MessageType } from '@/features/messenger/model/types'
 import { NextPageWithLayout } from '@/shared/types'
 import { Card } from '@/shared/ui'
 import { getMainLayout } from '@/widgets/layouts'
-import { CurrentDialogUser, Dialog, DialogWindow, MessageInput } from '@/widgets/messenger'
-import { MessageStatus, MessageType } from '@/widgets/messenger/model/types'
 import { DebounceSearch } from '@meetgram/ui-kit'
 
 const Chats: NextPageWithLayout = () => {
@@ -12,10 +12,9 @@ const Chats: NextPageWithLayout = () => {
 
   return (
     <div className={'mb-10 ml-6 mr-16 mt-8'}>
-      <h2 className={'mb-3 text-h1 font-bold'}>Messenger</h2>
       <div
         className={
-          'flex h-[calc(100vh_-_theme(spacing.10)_-_theme(spacing.8)_-_theme(spacing.3)_-_36px_-_3.75rem)] flex-col'
+          'flex h-[calc(100vh-theme(spacing.10)-theme(spacing.8)-theme(spacing.3)-3.75rem)] flex-col'
         }
       >
         <Card
