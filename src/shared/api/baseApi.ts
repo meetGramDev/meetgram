@@ -88,5 +88,6 @@ export const baseApi = createApi({
     'commentAnswerLike',
     'subscriptions',
     'notifications',
+    'messages',
   ],
 })

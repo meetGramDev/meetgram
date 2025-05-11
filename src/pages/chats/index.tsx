@@ -1,7 +1,12 @@
 import { useState } from 'react'
 
-import { CurrentDialogUser, DialogList, DialogWindow } from '@/features/messenger'
-import { MessageStatus, MessageType } from '@/features/messenger/model/types'
+import {
+  CurrentDialogUser,
+  DialogList,
+  DialogWindow,
+  MessageStatus,
+  MessageType,
+} from '@/features/messenger'
 import { NextPageWithLayout } from '@/shared/types'
 import { Card } from '@/shared/ui'
 import { getMainLayout } from '@/widgets/layouts'
