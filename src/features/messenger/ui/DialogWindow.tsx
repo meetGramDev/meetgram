@@ -1,3 +1,6 @@
+import { useState } from 'react'
+
+import { ChatScrollContainer } from '@/features/messenger/lib/ChatScrollContainer'
 import { cn } from '@/shared/lib'
 import { useRouter } from 'next/router'
 
@@ -37,27 +40,38 @@ const messages: {
     text: "Ahahahahaha, just kidding! I'm still just learning to fly and code :D",
   },
 ]
+let isYours = true
 
 type Props = {
   className?: string
 }
 
 export const DialogWindow = ({ className }: Props) => {
+  const [value, setValue] = useState(messages)
+
   const router = useRouter()
   const handleOnMessage = (msg: string) => {
-    messages.push({
-      createdAt: new Date().toISOString(),
-      id: Math.random(),
-      messageType: MessageType.TEXT,
-      status: MessageStatus.SENT,
-      text: msg,
-    })
+    setValue(oldValue => [
+      ...oldValue,
+      {
+        createdAt: new Date().toISOString(),
+        id: Math.random(),
+        isYours,
+        messageType: MessageType.TEXT,
+        status: MessageStatus.SENT,
+        text: msg,
+      },
+    ])
+    isYours = !isYours
   }
 
   return (
     <div className={'flex h-full w-full flex-col'}>
-      <div className={cn('flex flex-col gap-6 overflow-y-auto py-8', className)}>
-        {messages.map(message => (
+      <ChatScrollContainer
+        className={cn('flex flex-col gap-6 overflow-y-auto py-8', className)}
+        isSending
+      >
+        {value.map(message => (
           <MessageBubble
             id={message.id}
             isSent={message.isYours}
@@ -68,7 +82,7 @@ export const DialogWindow = ({ className }: Props) => {
             time={formatDateISOToTime(new Date(message.createdAt), router.locale)}
           />
         ))}
-      </div>
+      </ChatScrollContainer>
       <div className={'relative mt-auto w-full p-[2px]'}>
         <MessageInput onMessage={handleOnMessage} />
       </div>

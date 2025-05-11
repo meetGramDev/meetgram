@@ -22,6 +22,7 @@ export const MessageInput = ({ onMessage }: Props) => {
   const registerMessage = (value?: string) => {
     onMessage?.(value ?? message)
     setMessage('')
+    setShouldShowSendBtn(false)
   }
 
   // Adjust height based on content
@@ -38,7 +39,6 @@ export const MessageInput = ({ onMessage }: Props) => {
     const trimmedValue = e.currentTarget.value.trim()
 
     setMessage(e.currentTarget.value)
-    onMessage?.(trimmedValue)
     if (trimmedValue) {
       setShouldRender(true)
       // Use a small timeout to ensure the DOM is updated before starting animation
@@ -96,7 +96,9 @@ export const MessageInput = ({ onMessage }: Props) => {
       >
         {shouldRender ? (
           <SendButton
-            className={shouldShowSendBtn ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}
+            className={cn(
+              shouldShowSendBtn ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+            )}
             onClick={() => registerMessage(message.trim())}
             type={'button'}
           />
@@ -107,8 +109,8 @@ export const MessageInput = ({ onMessage }: Props) => {
               !shouldShowSendBtn ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
             )}
           >
-            <SendButton btnType={'VOICE'} className={'text-light-100'} />
-            <SendButton btnType={'IMAGE'} className={'text-light-100'} />
+            <SendButton btnType={'VOICE'} className={'text-light-100'} type={'button'} />
+            <SendButton btnType={'IMAGE'} className={'text-light-100'} type={'button'} />
           </div>
         )}
       </div>
