@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
+import { useRouter } from 'next/router'
 
 import { useGetAllDialogsQuery } from '../model/services/messagesApi.service'
 import { Dialog } from './Dialog'
@@ -9,6 +10,7 @@ import { Dialog } from './Dialog'
 const MAX_DIALOGS_SIZE = 12
 
 export const DialogList = () => {
+  const router = useRouter()
   const [lastItemId, setLastItemId] = useState<null | number>(null)
 
   const { data, isError, isFetching, isLoading, isSuccess } = useGetAllDialogsQuery({
@@ -54,7 +56,7 @@ export const DialogList = () => {
         {data.items.length > 0 ? (
           <ul>
             {data.items.map(d => (
-              <Dialog dialog={d} key={d.id} />
+              <Dialog dialog={d} key={d.id} locale={router.locale} />
             ))}
             {!hasMoreItems && (
               <li

@@ -1,3 +1,5 @@
+import { Checkmark } from '@/shared/assets/icons/Checkmark'
+import { DoneAll } from '@/shared/assets/icons/DoneAll'
 import { cn } from '@/shared/lib'
 
 import { MessageStatus, MessageType } from '../model/types'
@@ -12,6 +14,8 @@ type Props = {
   time: string
 } & AvatarProps
 
+const ICON_SIZE = 16
+
 export const MessageBubble = ({ avatar, isSent, message, messageType, status, time }: Props) => {
   return (
     <div className={cn('flex items-end gap-3 pl-6', isSent && 'justify-end pr-6')}>
@@ -23,11 +27,24 @@ export const MessageBubble = ({ avatar, isSent, message, messageType, status, ti
         )}
       >
         <p className={'text-pretty'}>{message}</p>
-        <time
-          className={cn('self-end text-end text-small text-light-900', isSent && 'text-accent-100')}
+        <span
+          className={cn(
+            'inline-flex items-center gap-1 self-end text-end text-[12px] leading-4 text-light-900 transition-colors duration-300',
+            isSent && 'text-accent-100'
+          )}
         >
-          {time}
-        </time>
+          <time>{time}</time>
+          {isSent && (
+            <span
+              className={cn('text-light-900', status === MessageStatus.READ && 'text-accent-100')}
+            >
+              {status === MessageStatus.SENT && <Checkmark height={ICON_SIZE} width={ICON_SIZE} />}
+              {(status === MessageStatus.RECEIVED || status === MessageStatus.READ) && (
+                <DoneAll height={ICON_SIZE} width={ICON_SIZE} />
+              )}
+            </span>
+          )}
+        </span>
       </div>
     </div>
   )

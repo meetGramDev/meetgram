@@ -2,8 +2,8 @@ import { Avatar } from '@/shared/types'
 
 export enum MessageStatus {
   READ = 'READ',
-  'RECEIVED' = 'RECEIVED',
-  'SENT' = 'SENT',
+  RECEIVED = 'RECEIVED',
+  SENT = 'SENT',
 }
 
 export enum MessageType {
