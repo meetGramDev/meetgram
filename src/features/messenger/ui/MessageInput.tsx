@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
 
+import { cn } from '@/shared/lib'
 import { TextArea } from '@/shared/ui'
 
 import { SendButton } from './buttons/SendButton'
@@ -8,9 +9,15 @@ type Props = {
   onMessage?: (message: string) => void
 }
 
+const ANIMATION_DURATION = 300
+const ANIMATION_DELAY = 10
+
 export const MessageInput = ({ onMessage }: Props) => {
   const [message, setMessage] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const [shouldRender, setShouldRender] = useState(true)
+  const [shouldShowSendBtn, setShouldShowSendBtn] = useState(false)
 
   const registerMessage = (value?: string) => {
     onMessage?.(value ?? message)
@@ -28,10 +35,17 @@ export const MessageInput = ({ onMessage }: Props) => {
   }
 
   const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const currentValue = e.currentTarget.value
+    const trimmedValue = e.currentTarget.value.trim()
 
-    setMessage(currentValue)
-    onMessage?.(currentValue.trim())
+    setMessage(e.currentTarget.value)
+    onMessage?.(trimmedValue)
+    if (trimmedValue) {
+      setShouldRender(true)
+      // Use a small timeout to ensure the DOM is updated before starting animation
+      setTimeout(() => setShouldShowSendBtn(true), ANIMATION_DELAY)
+    } else {
+      setShouldShowSendBtn(false)
+    }
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -53,6 +67,17 @@ export const MessageInput = ({ onMessage }: Props) => {
     adjustHeight()
   }, [message])
 
+  // Handle the removal of send btns after animation completes
+  useEffect(() => {
+    if (!shouldShowSendBtn) {
+      const timer = setTimeout(() => setShouldRender(false), ANIMATION_DURATION)
+
+      return () => clearTimeout(timer)
+    } else {
+      setShouldRender(true)
+    }
+  }, [shouldShowSendBtn])
+
   return (
     <>
       <TextArea
@@ -66,11 +91,22 @@ export const MessageInput = ({ onMessage }: Props) => {
         rows={1}
         value={message}
       />
-      <div className={'absolute right-5 top-1/2 z-10 -translate-y-1/2'}>
-        {message.trim() ? (
-          <SendButton onClick={() => registerMessage(message.trim())} type={'button'} />
+      <div
+        className={`absolute right-5 top-1/2 z-10 -translate-y-1/2 transform overflow-x-hidden transition-all duration-${ANIMATION_DURATION} ease-in-out`}
+      >
+        {shouldRender ? (
+          <SendButton
+            className={shouldShowSendBtn ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'}
+            onClick={() => registerMessage(message.trim())}
+            type={'button'}
+          />
         ) : (
-          <div className={'flex gap-3'}>
+          <div
+            className={cn(
+              'flex gap-3',
+              !shouldShowSendBtn ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+            )}
+          >
             <SendButton btnType={'VOICE'} className={'text-light-100'} />
             <SendButton btnType={'IMAGE'} className={'text-light-100'} />
           </div>
