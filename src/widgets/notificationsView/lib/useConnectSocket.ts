@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 
 import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
 
-type NotificationsType = {
+export type NotificationsType = {
   clientId: string
   createdAt: string
   eventType: number

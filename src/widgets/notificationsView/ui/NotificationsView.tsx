@@ -17,9 +17,9 @@ import { PAGE_SIZE } from '@/widgets/postsList'
 export const NotificationsView = () => {
   const t = useTranslate()
   //websocket
-  const token = useAppSelector(state => state.user.accessToken)
-
-  useConnectSocket(token)
+  // const token = useAppSelector(state => state.user.accessToken)
+  //
+  // useConnectSocket(token)
 
   //notifications
   const [endCursorNotificationId, setEndCursorNotificationId] = useState<number | undefined>(
@@ -29,7 +29,7 @@ export const NotificationsView = () => {
   const { data: notificationsData } = useGetUserNotificationsQuery({
     cursor: endCursorNotificationId,
     // isRead: false,
-    pageSize: 100,
+    pageSize: 20,
     sortBy: 'id',
     sortDirection: 'desc',
   })

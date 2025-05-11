@@ -1,11 +1,18 @@
+import { toast } from 'react-toastify'
+
+import { RootState } from '@/app/lib'
 import {
   DeleteNotificationByIdRequest,
   GetNotificationsRequest,
   GetNotificationsResponse,
   MarkNotificationsAsReadResponse,
   NotificationType,
+  SocketNotificationsType,
 } from '@/entities/notification/model/types/service.types'
 import { baseApi } from '@/shared/api'
+import { NotificationsType } from '@/widgets/notificationsView/lib/useConnectSocket'
+import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
+import io, { Socket } from 'socket.io-client'
 
 export const notificationsAPI = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -31,6 +38,46 @@ export const notificationsAPI = baseApi.injectEndpoints({
         currentCacheData.pageSize = responseData.pageSize
         currentCacheData.totalCount = responseData.totalCount
       },
+      async onCacheEntryAdded(
+        arg,
+        { cacheDataLoaded, cacheEntryRemoved, getState, updateCachedData }
+      ) {
+        const token = (getState() as RootState).user.accessToken
+
+        SocketIoApi.createConnection(token)
+        const socket = SocketIoApi.socket
+
+        try {
+          await cacheDataLoaded
+
+          const listener = (event: SocketNotificationsType) => {
+            // const data = JSON.parse(event.)
+            const socketMessage: NotificationsType = {
+              createdAt: event.notifyAt,
+              id: event.id,
+              isRead: event.isRead,
+              message: event.message,
+            }
+
+            toast.info(event.message)
+            updateCachedData(draft => {
+              draft.items.unshift(socketMessage)
+              draft.notReadCount += 1
+            })
+          }
+
+          socket?.on('notifications', listener)
+        } catch {
+          await cacheEntryRemoved
+
+          socket?.close()
+        }
+
+        await cacheEntryRemoved
+
+        socket?.disconnect()
+      },
+
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {
         let url = `notifications/`
 
@@ -44,7 +91,6 @@ export const notificationsAPI = baseApi.injectEndpoints({
           url,
         }
       },
-
       serializeQueryArgs: ({ queryArgs }) => {
         return `${queryArgs.pageSize}`
       },
