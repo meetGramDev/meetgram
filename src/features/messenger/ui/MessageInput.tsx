@@ -1,6 +1,8 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useState } from 'react'
 
-import { Button, TextArea } from '@/shared/ui'
+import { TextArea } from '@/shared/ui'
+
+import { SendButton } from './buttons/SendButton'
 
 type Props = {
   onMessage?: (message: string) => void
@@ -9,24 +11,54 @@ type Props = {
 export const MessageInput = ({ onMessage }: Props) => {
   const [message, setMessage] = useState('')
 
+  const registerMessage = (value?: string) => {
+    onMessage?.(value ?? message)
+    setMessage('')
+  }
+
   const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setMessage(e.currentTarget.value)
-    onMessage?.(e.currentTarget.value)
+    const currentValue = e.currentTarget.value
+
+    setMessage(currentValue)
+    onMessage?.(currentValue.trim())
+  }
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    const currentValue = e.currentTarget.value.trim()
+
+    if (!currentValue) {
+      return
+    }
+
+    if (e.key === 'Enter') {
+      if (e.shiftKey) {
+        e.preventDefault()
+        registerMessage(currentValue)
+      }
+    }
   }
 
   return (
     <>
       <TextArea
-        className={'border-x-0 border-b-0 border-dark-300 bg-dark-900'}
+        className={
+          'border-x-0 border-b-0 border-dark-300 bg-dark-900 pr-[114px] placeholder:text-light-900'
+        }
         onChange={handleMessageChange}
-        placeholder={'Type message...'}
+        onKeyDown={handleKeyDown}
+        placeholder={'Type message... (shift+enter to send)'}
         value={message}
       />
-      {message && (
-        <Button className={'absolute right-3 top-1/2 z-10 -translate-y-1/2'} variant={'text'}>
-          Send message
-        </Button>
-      )}
+      <div className={'absolute right-5 top-1/2 z-10 -translate-y-1/2'}>
+        {message.trim() ? (
+          <SendButton onClick={() => registerMessage(message.trim())} type={'button'} />
+        ) : (
+          <div className={'flex gap-3'}>
+            <SendButton btnType={'VOICE'} className={'text-light-100'} />
+            <SendButton btnType={'IMAGE'} className={'text-light-100'} />
+          </div>
+        )}
+      </div>
     </>
   )
 }
