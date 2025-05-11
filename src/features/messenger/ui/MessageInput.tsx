@@ -1,20 +1,32 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { Button, TextArea } from '@/shared/ui'
 
-export const MessageInput = () => {
+type Props = {
+  onMessage?: (message: string) => void
+}
+
+export const MessageInput = ({ onMessage }: Props) => {
   const [message, setMessage] = useState('')
 
+  const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.currentTarget.value)
+    onMessage?.(e.currentTarget.value)
+  }
+
   return (
-    <div className={'relative flex h-full w-full justify-between'}>
+    <>
       <TextArea
-        onChange={e => setMessage(e.currentTarget.value)}
+        className={'border-x-0 border-b-0 border-dark-300 bg-dark-900'}
+        onChange={handleMessageChange}
         placeholder={'Type message...'}
         value={message}
-      ></TextArea>
-      <Button className={'b-0 absolute right-0 z-10'} variant={'text'}>
-        Send message
-      </Button>
-    </div>
+      />
+      {message && (
+        <Button className={'absolute right-3 top-1/2 z-10 -translate-y-1/2'} variant={'text'}>
+          Send message
+        </Button>
+      )}
+    </>
   )
 }

@@ -32,7 +32,9 @@ const Chats: NextPageWithLayout = () => {
             <CurrentDialogUser id={'1'} userName={'userName'} />
           </div>
           <div
-            className={'col-start-2 row-start-2 h-full border-b border-r border-dark-300 bg-black'}
+            className={
+              'col-start-2 row-start-2 h-full overflow-y-hidden border-r border-dark-300 bg-black'
+            }
           >
             {/*<EmptyDialog />*/}
             <DialogWindow
@@ -46,7 +48,7 @@ const Chats: NextPageWithLayout = () => {
                 },
                 {
                   createdAt: new Date(),
-                  id: 1,
+                  id: 2,
                   isYours: true,
                   messageType: MessageType.TEXT,
                   status: MessageStatus.RECEIVED,
@@ -54,7 +56,7 @@ const Chats: NextPageWithLayout = () => {
                 },
                 {
                   createdAt: new Date(),
-                  id: 1,
+                  id: 3,
                   messageType: MessageType.TEXT,
                   status: MessageStatus.READ,
                   text: "Ahahahahaha, just kidding! I'm still just learning to fly and code :D",
@@ -64,46 +66,46 @@ const Chats: NextPageWithLayout = () => {
                   id: 1,
                   messageType: MessageType.TEXT,
                   status: MessageStatus.READ,
-                  text: 'Another text',
+                  text: 'Hi! I’m fine! Did you go into space yesterday? :D',
                 },
                 {
                   createdAt: new Date(),
-                  id: 1,
+                  id: 4,
+                  messageType: MessageType.TEXT,
+                  status: MessageStatus.READ,
+                  text: "Ahahahahaha, just kidding! I'm still just learning to fly and code :D",
+                },
+                {
+                  createdAt: new Date(),
+                  id: 5,
                   messageType: MessageType.TEXT,
                   status: MessageStatus.READ,
                   text: 'Another text',
                 },
                 {
                   createdAt: new Date(),
-                  id: 1,
+                  id: 6,
                   messageType: MessageType.TEXT,
                   status: MessageStatus.READ,
                   text: 'Another text',
                 },
                 {
                   createdAt: new Date(),
-                  id: 1,
+                  id: 7,
                   messageType: MessageType.TEXT,
                   status: MessageStatus.READ,
                   text: 'Another text',
                 },
                 {
                   createdAt: new Date(),
-                  id: 1,
+                  id: 8,
                   messageType: MessageType.TEXT,
                   status: MessageStatus.READ,
                   text: 'Another text',
                 },
                 {
                   createdAt: new Date(),
-                  id: 1,
-                  messageType: MessageType.TEXT,
-                  status: MessageStatus.READ,
-                  text: 'Another text',
-                },
-                {
-                  createdAt: new Date(),
-                  id: 1,
+                  id: 9,
                   messageType: MessageType.TEXT,
                   status: MessageStatus.READ,
                   text: 'Another text',

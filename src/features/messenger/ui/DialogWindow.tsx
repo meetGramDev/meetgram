@@ -18,12 +18,12 @@ type Props = {
 
 export const DialogWindow = ({ className, messages }: Props) => {
   return (
-    <div className={'grid h-full w-full grid-rows-[1fr_auto]'}>
-      <div className={cn('flex h-full flex-col gap-6 overflow-y-auto py-8', className)}>
+    <div className={'flex h-full w-full flex-col'}>
+      <div className={cn('flex flex-col gap-6 overflow-y-auto py-8', className)}>
         {messages.map(message => (
           <MessageBubble
             id={message.id}
-            isYours={message.isYours}
+            isSent={message.isYours}
             key={message.id}
             message={message.text}
             messageType={message.messageType}
@@ -32,7 +32,9 @@ export const DialogWindow = ({ className, messages }: Props) => {
           />
         ))}
       </div>
-      <MessageInput />
+      <div className={'relative mt-auto w-full p-[2px]'}>
+        <MessageInput />
+      </div>
     </div>
   )
 }
