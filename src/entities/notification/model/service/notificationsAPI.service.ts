@@ -10,9 +10,7 @@ import {
   SocketNotificationsType,
 } from '@/entities/notification/model/types/service.types'
 import { baseApi } from '@/shared/api'
-import { NotificationsType } from '@/widgets/notificationsView/lib/useConnectSocket'
 import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
-import io, { Socket } from 'socket.io-client'
 
 export const notificationsAPI = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -44,6 +42,9 @@ export const notificationsAPI = baseApi.injectEndpoints({
       ) {
         const token = (getState() as RootState).user.accessToken
 
+        if (!token) {
+          return
+        }
         SocketIoApi.createConnection(token)
         const socket = SocketIoApi.socket
 
@@ -52,11 +53,12 @@ export const notificationsAPI = baseApi.injectEndpoints({
 
           const listener = (event: SocketNotificationsType) => {
             // const data = JSON.parse(event.)
-            const socketMessage: NotificationsType = {
+            const socketMessage: NotificationType = {
               createdAt: event.notifyAt,
               id: event.id,
               isRead: event.isRead,
               message: event.message,
+              notifyAt: event.notifyAt,
             }
 
             toast.info(event.message)
