@@ -49,13 +49,20 @@ type Props = {
 export const DialogWindow = ({ className }: Props) => {
   const [value, setValue] = useState(messages)
 
+  const [latestMessageId, setLatestMessageId] = useState<null | number>(null)
+
   const router = useRouter()
+
+  const resetAnimation = () => setTimeout(() => setLatestMessageId(null), 300)
+
   const handleOnMessage = (msg: string) => {
+    const id = Math.random()
+
     setValue(oldValue => [
       ...oldValue,
       {
         createdAt: new Date().toISOString(),
-        id: Math.random(),
+        id,
         isYours,
         messageType: MessageType.TEXT,
         status: MessageStatus.SENT,
@@ -63,16 +70,23 @@ export const DialogWindow = ({ className }: Props) => {
       },
     ])
     isYours = !isYours
+
+    setLatestMessageId(id)
+    resetAnimation()
   }
 
   return (
     <div className={'flex h-full w-full flex-col'}>
       <ChatScrollContainer
-        className={cn('flex flex-col gap-6 overflow-y-auto py-8', className)}
+        className={cn('flex flex-col gap-6 overflow-y-auto overflow-x-hidden py-8', className)}
         isSending
       >
         {value.map(message => (
           <MessageBubble
+            className={cn(
+              message.id === latestMessageId &&
+                `${message.isYours ? 'animate-popInRight' : 'animate-popInLeft'} `
+            )}
             id={message.id}
             isSent={message.isYours}
             key={message.id}

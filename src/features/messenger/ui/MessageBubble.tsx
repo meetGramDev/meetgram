@@ -6,6 +6,7 @@ import { MessageStatus, MessageType } from '../model/types'
 import { Avatar, AvatarProps } from './Avatar'
 
 type Props = {
+  className?: string
   id: number | string
   isSent?: boolean
   message: string
@@ -16,9 +17,17 @@ type Props = {
 
 const ICON_SIZE = 16
 
-export const MessageBubble = ({ avatar, isSent, message, messageType, status, time }: Props) => {
+export const MessageBubble = ({
+  avatar,
+  className,
+  isSent,
+  message,
+  messageType,
+  status,
+  time,
+}: Props) => {
   return (
-    <div className={cn('flex items-end gap-3 pl-6', isSent && 'justify-end pr-6')}>
+    <div className={cn('flex items-end gap-3 pl-6', isSent && 'justify-end pr-6', className)}>
       {!isSent && <Avatar avatar={avatar} size={36} />}
       <div
         className={cn(
@@ -26,7 +35,7 @@ export const MessageBubble = ({ avatar, isSent, message, messageType, status, ti
           isSent && 'bg-accent-900'
         )}
       >
-        <p className={'text-pretty'}>{message}</p>
+        <p className={'whitespace-pre-wrap text-pretty break-words'}>{message}</p>
         <span
           className={cn(
             'inline-flex items-center gap-1 self-end text-end text-[12px] leading-4 text-light-900 transition-colors duration-300',
