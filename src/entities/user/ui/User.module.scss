@@ -1,8 +1,6 @@
-@use "@/app/styles/mixins" as mixins;
+@use '@/app/styles/mixins' as mixins;
 
 @import '../../../app/styles/screens';
-
-
 
 .userWrapper {
   position: relative;
@@ -65,13 +63,12 @@
   }
 
   .buttonPublications {
-    gap:10%;
+    gap: 10%;
     justify-content: space-around;
-
   }
 
   .userLinks {
-     font: var(--font-small-link);
+    font: var(--font-small-link);
   }
 
   .userInformation {
