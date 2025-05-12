@@ -72,6 +72,7 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
             </div>
           )}
           {'publicationsCount' in userData && (
+            /*todo тут те що я шукав */
             <div className={s.buttonPublications}>
               <FollowersView
                 followCount={userData.followingCount}
