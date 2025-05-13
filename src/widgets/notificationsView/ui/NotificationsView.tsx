@@ -29,10 +29,12 @@ export const NotificationsView = () => {
   const { data: notificationsData } = useGetUserNotificationsQuery({
     cursor: endCursorNotificationId,
     // isRead: false,
-    pageSize: 20,
+    pageSize: 10,
     sortBy: 'id',
     sortDirection: 'desc',
   })
+
+  console.log(endCursorNotificationId)
 
   const [markOfNotification] = useMarkNotificationAsReadMutation()
 

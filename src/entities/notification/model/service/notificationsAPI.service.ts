@@ -15,6 +15,7 @@ import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
 export const notificationsAPI = baseApi.injectEndpoints({
   endpoints: builder => ({
     deleteNotificationById: builder.mutation<any, DeleteNotificationByIdRequest>({
+      invalidatesTags: ['notifications'],
       query: args => ({
         method: 'DELETE',
         url: `notifications/${args.id}`,
@@ -79,7 +80,7 @@ export const notificationsAPI = baseApi.injectEndpoints({
 
         socket?.disconnect()
       },
-
+      providesTags: ['notifications'],
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {
         let url = `notifications/`
 
@@ -98,6 +99,7 @@ export const notificationsAPI = baseApi.injectEndpoints({
       },
     }),
     markNotificationAsRead: builder.mutation<void, MarkNotificationsAsReadResponse>({
+      invalidatesTags: ['notifications'],
       query: ids => ({
         body: ids,
         method: 'PUT',
