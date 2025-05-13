@@ -80,6 +80,7 @@ export const notificationsAPI = baseApi.injectEndpoints({
 
         socket?.disconnect()
       },
+
       providesTags: ['notifications'],
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {
         let url = `notifications/`
@@ -100,6 +101,24 @@ export const notificationsAPI = baseApi.injectEndpoints({
     }),
     markNotificationAsRead: builder.mutation<void, MarkNotificationsAsReadResponse>({
       invalidatesTags: ['notifications'],
+      async onQueryStarted({ ids }, { dispatch, getState, queryFulfilled }) {
+        const patchResult = dispatch(
+          notificationsAPI.util.updateQueryData('getUserNotifications', {}, draft => {
+            draft.items.forEach(item => {
+              if (ids.includes(item.id) && !item.isRead) {
+                item.isRead = true
+                draft.notReadCount -= 1
+              }
+            })
+          })
+        )
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
       query: ids => ({
         body: ids,
         method: 'PUT',
