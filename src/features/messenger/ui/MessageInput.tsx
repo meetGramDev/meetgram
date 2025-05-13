@@ -6,13 +6,14 @@ import { TextArea } from '@/shared/ui'
 import { SendButton } from './buttons/SendButton'
 
 type Props = {
+  disabled?: boolean
   onMessage?: (message: string) => void
 }
 
 const ANIMATION_DURATION = 300
 const ANIMATION_DELAY = 10
 
-export const MessageInput = ({ onMessage }: Props) => {
+export const MessageInput = ({ disabled, onMessage }: Props) => {
   const [message, setMessage] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -84,6 +85,7 @@ export const MessageInput = ({ onMessage }: Props) => {
         className={
           'max-h-20 min-h-12 overflow-auto border-x-0 border-b-0 border-dark-300 bg-dark-900 pr-[114px] placeholder:text-light-900'
         }
+        disabled={disabled}
         onChange={handleMessageChange}
         onKeyDown={handleKeyDown}
         placeholder={'Type message... (shift+enter to send)'}
@@ -99,6 +101,7 @@ export const MessageInput = ({ onMessage }: Props) => {
             className={cn(
               shouldShowSendBtn ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
             )}
+            disabled={disabled}
             onClick={() => registerMessage(message.trim())}
             type={'button'}
           />
@@ -109,8 +112,18 @@ export const MessageInput = ({ onMessage }: Props) => {
               !shouldShowSendBtn ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
             )}
           >
-            <SendButton btnType={'VOICE'} className={'text-light-100'} type={'button'} />
-            <SendButton btnType={'IMAGE'} className={'text-light-100'} type={'button'} />
+            <SendButton
+              btnType={'VOICE'}
+              className={'text-light-100'}
+              disabled={disabled}
+              type={'button'}
+            />
+            <SendButton
+              btnType={'IMAGE'}
+              className={'text-light-100'}
+              disabled={disabled}
+              type={'button'}
+            />
           </div>
         )}
       </div>

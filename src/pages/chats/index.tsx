@@ -1,19 +1,16 @@
 import { useState } from 'react'
 
-import {
-  CurrentDialogUser,
-  DialogList,
-  DialogWindow,
-  MessageStatus,
-  MessageType,
-} from '@/features/messenger'
+import { CurrentDialogUser, DialogList, DialogWindow } from '@/features/messenger'
 import { NextPageWithLayout } from '@/shared/types'
 import { Card } from '@/shared/ui'
 import { getMainLayout } from '@/widgets/layouts'
 import { DebounceSearch } from '@meetgram/ui-kit'
+import { useRouter } from 'next/router'
 
 const Chats: NextPageWithLayout = () => {
   const [searchQuery, setSearchQuery] = useState('')
+  const router = useRouter()
+  const query = router.query as { dialog: string }
 
   return (
     <div className={'mb-10 ml-6 mr-16 mt-8'}>
@@ -31,18 +28,17 @@ const Chats: NextPageWithLayout = () => {
             <DebounceSearch defaultValue={searchQuery} onValueQuery={setSearchQuery} />
           </div>
           <div className={'col-start-1 row-start-2 overflow-y-auto border-r border-dark-300'}>
-            <DialogList />
+            <DialogList dialoguePartnerId={query.dialog} />
           </div>
           <div className={'col-start-2 border-b border-dark-300'}>
-            <CurrentDialogUser id={'1'} userName={'userName'} />
+            <CurrentDialogUser id={query.dialog} />
           </div>
           <div
             className={
               'col-start-2 row-start-2 h-full overflow-y-hidden border-r border-dark-300 bg-black'
             }
           >
-            {/*<EmptyDialog />*/}
-            <DialogWindow />
+            <DialogWindow dialoguePartnerId={+query.dialog} />
           </div>
         </Card>
       </div>

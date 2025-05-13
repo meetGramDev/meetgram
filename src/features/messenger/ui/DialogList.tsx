@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
+import { selectCurrentUserId, useGetPublicProfileByIdQuery } from '@/entities/user'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { useInfiniteScroll } from '@/shared/lib'
 import { Loader } from '@/shared/ui'
+import { skipToken } from '@reduxjs/toolkit/query'
 import { useRouter } from 'next/router'
 
 import { useGetAllDialogsQuery } from '../model/services/messagesApi.service'
@@ -9,8 +12,17 @@ import { Dialog } from './Dialog'
 
 const MAX_DIALOGS_SIZE = 12
 
-export const DialogList = () => {
+type Props = {
+  dialoguePartnerId?: string
+}
+
+export const DialogList = ({ dialoguePartnerId }: Props) => {
   const router = useRouter()
+  const currentUserId = useAppSelector(selectCurrentUserId)
+  const { data: userData, isSuccess: isUserDataSuccess } = useGetPublicProfileByIdQuery(
+    dialoguePartnerId ?? skipToken
+  )
+
   const [lastItemId, setLastItemId] = useState<null | number>(null)
 
   const { data, isError, isFetching, isLoading, isSuccess } = useGetAllDialogsQuery({
@@ -55,10 +67,21 @@ export const DialogList = () => {
       <>
         {data.items.length > 0 ? (
           <ul>
-            {data.items.map(d => (
-              <Dialog dialog={d} key={d.id} locale={router.locale} />
-            ))}
-            {!hasMoreItems && (
+            {data.items.map(d => {
+              const isYours = currentUserId === d.ownerId
+
+              return (
+                <Dialog
+                  dialog={d}
+                  isLastMsgYours={isYours}
+                  isSelected={isUserDataSuccess && d.userName === userData?.userName}
+                  key={d.id}
+                  linkTo={`${router.pathname}?dialog=${isYours ? d.receiverId : d.ownerId}`}
+                  locale={router.locale}
+                />
+              )
+            })}
+            {hasMoreItems && (
               <li
                 className={'mt-3 flex h-fit w-full justify-center'}
                 key={'098_783jku$5-@'}

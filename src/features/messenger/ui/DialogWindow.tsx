@@ -1,105 +1,98 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
+import { selectCurrentUserId, useGetPublicProfileByIdQuery } from '@/entities/user'
 import { ChatScrollContainer } from '@/features/messenger/lib/ChatScrollContainer'
+import { useAppSelector } from '@/shared/config/storeHooks'
 import { cn } from '@/shared/lib'
-import { useRouter } from 'next/router'
+import { skipToken } from '@reduxjs/toolkit/query'
 
-import { formatDateISOToTime } from '../lib/formatDateISOToTime'
-import { MessageStatus, MessageType } from '../model/types'
+import {
+  useGetMessagesByUserQuery,
+  useSendMessageMutation,
+} from '../model/services/messagesApi.service'
+import { EmptyDialog } from './EmptyDialog'
 import { MessageBubble } from './MessageBubble'
 import { MessageInput } from './MessageInput'
 
-const messages: {
-  createdAt: string
-  id: number | string
-  isYours?: boolean
-  messageType: MessageType
-  status: MessageStatus
-  text: string
-}[] = [
-  {
-    createdAt: '2025-05-09T01:33:29.809Z',
-    id: 1,
-    messageType: MessageType.TEXT,
-    status: MessageStatus.SENT,
-    text: 'Hi! How are you?',
-  },
-  {
-    createdAt: '2025-05-09T10:36:00.809Z',
-    id: 2,
-    isYours: true,
-    messageType: MessageType.TEXT,
-    status: MessageStatus.READ,
-    text: 'Hi! I’m fine! Did you go into space yesterday? :D',
-  },
-  {
-    createdAt: '2025-05-10T15:51:39.809Z',
-    id: 3,
-    messageType: MessageType.TEXT,
-    status: MessageStatus.READ,
-    text: "Ahahahahaha, just kidding! I'm still just learning to fly and code :D",
-  },
-]
-let isYours = true
-
 type Props = {
   className?: string
+  dialoguePartnerId?: number
 }
 
-export const DialogWindow = ({ className }: Props) => {
-  const [value, setValue] = useState(messages)
+export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
+  const currentUserId = useAppSelector(selectCurrentUserId)
+  const { data, isError, isSuccess } = useGetMessagesByUserQuery(
+    {
+      dialoguePartnerId: dialoguePartnerId || 0,
+    },
+    { skip: !dialoguePartnerId }
+  )
+  const { data: userData, isSuccess: isUserDataSuccess } = useGetPublicProfileByIdQuery(
+    String(dialoguePartnerId) ?? skipToken
+  )
 
   const [latestMessageId, setLatestMessageId] = useState<null | number>(null)
-
-  const router = useRouter()
+  const [sendMessage, { isLoading: isSendingMessage }] = useSendMessageMutation()
 
   const resetAnimation = () => setTimeout(() => setLatestMessageId(null), 300)
 
-  const handleOnMessage = (msg: string) => {
-    const id = Math.random()
+  const handleOnMessage = async (msg: string) => {
+    if (!dialoguePartnerId) {
+      return
+    }
 
-    setValue(oldValue => [
-      ...oldValue,
-      {
-        createdAt: new Date().toISOString(),
-        id,
-        isYours,
-        messageType: MessageType.TEXT,
-        status: MessageStatus.SENT,
-        text: msg,
-      },
-    ])
-    isYours = !isYours
+    try {
+      const data = await sendMessage({ message: msg, receiverId: dialoguePartnerId }).unwrap()
 
-    setLatestMessageId(id)
-    resetAnimation()
+      if (data) {
+        setLatestMessageId(data.message.id)
+        resetAnimation()
+      }
+    } catch (error) {
+      toast.error('Ops, something went wrong. Cannot send message')
+    }
   }
 
-  return (
-    <div className={'flex h-full w-full flex-col'}>
-      <ChatScrollContainer
-        className={cn('flex flex-col gap-6 overflow-y-auto overflow-x-hidden py-8', className)}
-        isSending
-      >
-        {value.map(message => (
-          <MessageBubble
-            className={cn(
-              message.id === latestMessageId &&
-                `${message.isYours ? 'animate-popInRight' : 'animate-popInLeft'} `
-            )}
-            id={message.id}
-            isSent={message.isYours}
-            key={message.id}
-            message={message.text}
-            messageType={message.messageType}
-            status={message.status}
-            time={formatDateISOToTime(new Date(message.createdAt), router.locale)}
-          />
-        ))}
-      </ChatScrollContainer>
-      <div className={'relative mt-auto w-full p-[2px]'}>
-        <MessageInput onMessage={handleOnMessage} />
+  if (isError) {
+    return <EmptyDialog text={'Something went wrong, cannot load messages'} />
+  }
+
+  if (isSuccess) {
+    return (
+      <div className={'flex h-full w-full flex-col'}>
+        {data.items.length > 0 && (
+          <ChatScrollContainer
+            className={cn('flex flex-col gap-6 overflow-y-auto overflow-x-hidden py-8', className)}
+            isSending
+          >
+            {data.items.map(message => (
+              <MessageBubble
+                avatar={
+                  isUserDataSuccess && userData.avatars.length
+                    ? {
+                        alt: `${userData.userName} photo`,
+                        src: userData.avatars[1].url,
+                      }
+                    : undefined
+                }
+                className={cn(
+                  message.id === latestMessageId &&
+                    `${message.ownerId === message.receiverId ? 'animate-popInRight' : 'animate-popInLeft'} `
+                )}
+                currentUserId={currentUserId}
+                key={message.id}
+                message={message}
+              />
+            ))}
+          </ChatScrollContainer>
+        )}
+        <div className={'relative mt-auto w-full p-[2px]'}>
+          <MessageInput disabled={isSendingMessage} onMessage={handleOnMessage} />
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
+
+  return <EmptyDialog />
 }
