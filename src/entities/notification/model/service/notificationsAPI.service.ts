@@ -15,7 +15,6 @@ import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
 export const notificationsAPI = baseApi.injectEndpoints({
   endpoints: builder => ({
     deleteNotificationById: builder.mutation<any, DeleteNotificationByIdRequest>({
-      invalidatesTags: ['notifications'],
       query: args => ({
         method: 'DELETE',
         url: `notifications/${args.id}`,
@@ -64,6 +63,13 @@ export const notificationsAPI = baseApi.injectEndpoints({
 
             toast.info(event.message)
             updateCachedData(draft => {
+              const findMessage = draft.items.find(elem => {
+                return elem.id === event.id
+              })
+
+              if (findMessage === undefined || findMessage.id === socketMessage.id) {
+                return
+              }
               draft.items.unshift(socketMessage)
               draft.notReadCount += 1
             })
@@ -81,7 +87,6 @@ export const notificationsAPI = baseApi.injectEndpoints({
         socket?.disconnect()
       },
 
-      providesTags: ['notifications'],
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {
         let url = `notifications/`
 
@@ -100,7 +105,6 @@ export const notificationsAPI = baseApi.injectEndpoints({
       },
     }),
     markNotificationAsRead: builder.mutation<void, MarkNotificationsAsReadResponse>({
-      invalidatesTags: ['notifications'],
       async onQueryStarted({ ids }, { dispatch, getState, queryFulfilled }) {
         const patchResult = dispatch(
           notificationsAPI.util.updateQueryData('getUserNotifications', {}, draft => {
