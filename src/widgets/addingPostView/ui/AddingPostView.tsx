@@ -22,7 +22,7 @@ export const AddingPostView = () => {
   const open = useAppSelector(selectIsDialogOpen)
   const currentAddingPostStage = useAppSelector(selectAddingPostStage)
   const isAddedImages = useAppSelector(selectIsAddedImages)
-  const { closeAddingPost, setAddingPostStage } = useActions(addPostActions)
+  const { closeAddingPost, setAddingPostStage, setFilterData } = useActions(addPostActions)
 
   const [openConfirmClosing, setOpenConfirmClosing] = useState(false)
 
@@ -37,6 +37,7 @@ export const AddingPostView = () => {
   const handleCloseAddingPost = (isConfirm: boolean) => {
     if (isConfirm) {
       setOpenConfirmClosing(false)
+      setFilterData({ filter: '', index: 0 })
       closeAddingPost()
     } else {
       setOpenConfirmClosing(false)
