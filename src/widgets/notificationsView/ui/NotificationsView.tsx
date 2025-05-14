@@ -7,21 +7,14 @@ import {
   useMarkNotificationAsReadMutation,
 } from '@/entities/notification/model/service/notificationsAPI.service'
 import { Notification } from '@/shared/assets/icons/Notification'
-import { useAppSelector } from '@/shared/config/storeHooks'
 import { useInfiniteScroll, useTranslate } from '@/shared/lib'
 import { Button } from '@/shared/ui'
 import Dropdown from '@/shared/ui/dropdown/dropdown'
-import { useConnectSocket } from '@/widgets/notificationsView/lib/useConnectSocket'
 import { PAGE_SIZE } from '@/widgets/postsList'
 
 export const NotificationsView = () => {
   const t = useTranslate()
-  //websocket
-  const token = useAppSelector(state => state.user.accessToken)
 
-  useConnectSocket(token)
-
-  //notifications
   const [endCursorNotificationId, setEndCursorNotificationId] = useState<number | undefined>(
     undefined
   )
@@ -29,7 +22,6 @@ export const NotificationsView = () => {
   const { data: notificationsData } = useGetUserNotificationsQuery({
     cursor: endCursorNotificationId,
     // isRead: false,
-    // pageSize: 140,
     sortBy: 'id',
     sortDirection: 'desc',
   })

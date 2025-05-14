@@ -11,6 +11,7 @@ class SocketIoApi {
       query: {
         accessToken: token,
       },
+      transports: ['websocket'],
     }
 
     this.socket = io('https://inctagram.work', queryParams)
