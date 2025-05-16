@@ -32,10 +32,10 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
     String(dialoguePartnerId) ?? skipToken
   )
 
-  const [latestMessageId, setLatestMessageId] = useState<null | number>(null)
+  const [latestMessage, setLatestMessage] = useState<null | string>(null)
   const [sendMessage, { isLoading: isSendingMessage }] = useSendMessageMutation()
 
-  const resetAnimation = () => setTimeout(() => setLatestMessageId(null), 300)
+  const resetAnimation = () => setTimeout(() => setLatestMessage(null), 300)
 
   const handleOnMessage = async (msg: string) => {
     if (!dialoguePartnerId) {
@@ -43,12 +43,10 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
     }
 
     try {
-      const data = await sendMessage({ message: msg, receiverId: dialoguePartnerId }).unwrap()
+      sendMessage({ message: msg, receiverId: dialoguePartnerId })
 
-      if (data) {
-        setLatestMessageId(data.message.id)
-        resetAnimation()
-      }
+      setLatestMessage(msg)
+      resetAnimation()
     } catch (error) {
       toast.error('Ops, something went wrong. Cannot send message')
     }
@@ -64,7 +62,7 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
         {data.items.length > 0 && (
           <ChatScrollContainer
             className={cn('flex flex-col gap-6 overflow-y-auto overflow-x-hidden py-8', className)}
-            isSending
+            isSending={!isSendingMessage}
           >
             {data.items.map(message => (
               <MessageBubble
@@ -77,7 +75,7 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
                     : undefined
                 }
                 className={cn(
-                  message.id === latestMessageId &&
+                  message.messageText === latestMessage &&
                     `${message.ownerId === message.receiverId ? 'animate-popInRight' : 'animate-popInLeft'} `
                 )}
                 currentUserId={currentUserId}

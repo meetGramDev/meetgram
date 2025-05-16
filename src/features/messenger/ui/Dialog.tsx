@@ -18,7 +18,7 @@ export const Dialog = ({ dialog, isLastMsgYours, isSelected, linkTo, locale }: D
   return (
     <li
       className={cn(
-        'border-b border-dark-300 p-3 last:border-b-0 hover:bg-dark-100',
+        'border-b border-dark-300 p-3 transition-colors duration-300 last:border-b-0 hover:bg-dark-100',
         isSelected && 'bg-dark-100'
       )}
     >
@@ -40,16 +40,20 @@ export const Dialog = ({ dialog, isLastMsgYours, isSelected, linkTo, locale }: D
             <time className={'place-self-end text-light-900'}>
               {formatDateISOToTime(new Date(dialog.updatedAt), locale, { showTime: false })}
             </time>
-            <p className={'col-span-2 text-light-900'}>
-              {isLastMsgYours ? (
-                <>
-                  <span className={'font-bold'}>You: </span>
-                  {dialog.messageText}
-                </>
-              ) : (
-                dialog.messageText
-              )}
-            </p>
+            {!isSelected ? (
+              <p className={'col-span-2 truncate text-light-900'}>
+                {isLastMsgYours ? (
+                  <>
+                    <span className={'font-bold'}>You: </span>
+                    {dialog.messageText}
+                  </>
+                ) : (
+                  dialog.messageText
+                )}
+              </p>
+            ) : (
+              <p className={'colspan-2 font-bold text-light-900'}>Active now</p>
+            )}
           </div>
         </div>
       </Button>

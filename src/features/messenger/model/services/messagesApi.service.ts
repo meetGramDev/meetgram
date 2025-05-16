@@ -1,5 +1,5 @@
-import { baseApi } from '@/shared/api'
-import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
+import { SocketIoApi, baseApi } from '@/shared/api'
+import { WS_MESSENGER_EVENTS_PATHS } from '@/shared/types'
 
 import {
   DialogMessagesArgsType,
@@ -8,8 +8,6 @@ import {
   GetAllMessagesArgsType,
   MessageModelType,
   MessageSendRequestType,
-  MessageStatus,
-  WS_MESSENGER_EVENTS_PATHS,
 } from '../types'
 
 export const messagesApi = baseApi.injectEndpoints({
@@ -30,25 +28,12 @@ export const messagesApi = baseApi.injectEndpoints({
         try {
           await cacheDataLoaded
 
-          const ws = SocketIoApi.socket
-
-          if (!ws) {
-            throw new Error('No Socket instance is available')
-          }
-
-          ws.on(
-            WS_MESSENGER_EVENTS_PATHS.MESSAGE_SEND,
-            (
-              msg: MessageModelType,
-              callback: (params: { message: MessageModelType; receiverId: number }) => void
-            ) => {
-              console.log('getAllDialogs, MESSAGE_SEND', msg)
-              callback({ message: msg, receiverId: msg.receiverId })
-            }
-          )
+          SocketIoApi.onMessageSent<MessageModelType>(msg => {
+            console.log('getAllDialogs, MESSAGE_SEND', msg)
+          })
 
           await cacheEntryRemoved
-          ws.off(WS_MESSENGER_EVENTS_PATHS.MESSAGE_SEND)
+          SocketIoApi.disconnectListeners([WS_MESSENGER_EVENTS_PATHS.MESSAGE_SEND])
         } catch (error) {
           console.error('WebSocket error in getAllDialogs:', error)
         }
@@ -62,34 +47,29 @@ export const messagesApi = baseApi.injectEndpoints({
     }),
     getMessagesByUser: builder.query<DialogMessagesResponseType, DialogMessagesArgsType>({
       keepUnusedDataFor: 0,
-      onCacheEntryAdded: async (args, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) => {
+      onCacheEntryAdded: async (_, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) => {
         try {
           await cacheDataLoaded
 
-          const ws = SocketIoApi.socket
-
-          if (!ws) {
-            throw new Error('No Socket instance is available')
-          }
-
-          ws.on(WS_MESSENGER_EVENTS_PATHS.RECEIVE_MESSAGE, (msg: MessageModelType) => {
-            console.log('🟢getMessagesByUser, RECEIVE_MESSAGE')
+          // получаем сообщение отправителем
+          SocketIoApi.onMessageReceived<MessageModelType>(msg => {
             updateCachedData(draft => {
               draft.items.push(msg)
             })
           })
 
-          ws.on(WS_MESSENGER_EVENTS_PATHS.MESSAGE_SEND, (msg: MessageModelType) => {
-            console.log('🟡getMessagesByUser, MESSAGE_SEND')
+          // принимаем сообщение получателем
+          SocketIoApi.onMessageSent<MessageModelType>(msg => {
             updateCachedData(draft => {
-              msg.status = MessageStatus.READ
               draft.items.push(msg)
             })
           })
 
           await cacheEntryRemoved
-          ws.off(WS_MESSENGER_EVENTS_PATHS.RECEIVE_MESSAGE)
-          ws.off(WS_MESSENGER_EVENTS_PATHS.MESSAGE_SEND)
+          SocketIoApi.disconnectListeners([
+            WS_MESSENGER_EVENTS_PATHS.RECEIVE_MESSAGE,
+            WS_MESSENGER_EVENTS_PATHS.MESSAGE_SEND,
+          ])
         } catch (error) {
           console.error('WebSocket error in getMessagesByUser:', error)
         }
@@ -110,29 +90,18 @@ export const messagesApi = baseApi.injectEndpoints({
       MessageSendRequestType
     >({
       queryFn: messageObj => {
-        const ws = SocketIoApi.socket
+        try {
+          SocketIoApi.sendMessage(messageObj)
 
-        if (!ws) {
+          return { data: null }
+        } catch (error) {
           return {
             error: {
-              error: "Failed to send message. WebSocket isn't connected",
+              error: `Failed to send message. ${error}`,
               status: 'CUSTOM_ERROR',
             },
           }
         }
-
-        let message = null
-
-        ws.emit(
-          WS_MESSENGER_EVENTS_PATHS.RECEIVE_MESSAGE,
-          messageObj,
-          (val: { message: MessageModelType; receiverId: number }) => {
-            console.log('Send message emitted', val)
-            message = val
-          }
-        )
-
-        return { data: message || null }
       },
     }),
   }),
