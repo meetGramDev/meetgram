@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { selectCurrentUserId, useGetPublicProfileByIdQuery } from '@/entities/user'
-import { ChatScrollContainer } from '@/features/messenger/lib/ChatScrollContainer'
-import { SocketIoApi } from '@/shared/api'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { cn } from '@/shared/lib'
 import { skipToken } from '@reduxjs/toolkit/query'
 
+import { ChatScrollContainer } from '../lib/ChatScrollContainer'
+import { useAnimateMessageBubble } from '../lib/useAnimateMessageBubble'
+import { useUnreadCounter } from '../lib/useUnreadCounter'
 import {
   useGetMessagesByUserQuery,
   useSendMessageMutation,
 } from '../model/services/messagesApi.service'
-import { MessageModelType } from '../model/types'
 import { EmptyDialog } from './EmptyDialog'
 import { MessageBubble } from './MessageBubble'
 import { MessageInput } from './MessageInput'
@@ -34,12 +33,10 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
     String(dialoguePartnerId) ?? skipToken
   )
 
-  const [latestMessage, setLatestMessage] = useState<null | string>(null)
   const [sendMessage, { isLoading: isSendingMessage }] = useSendMessageMutation()
 
-  const [unreadCount, setUnreadCount] = useState(0)
-
-  const resetAnimation = () => setTimeout(() => setLatestMessage(null), 300)
+  const { latestMessage, resetAnimation, setLatestMessage } = useAnimateMessageBubble()
+  const { handleOnBottomScrolled, setUnreadCount, unreadCount } = useUnreadCounter()
 
   const handleOnMessage = async (msg: string) => {
     if (!dialoguePartnerId) {
@@ -55,16 +52,6 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
       toast.error('Ops, something went wrong. Cannot send message')
     }
   }
-
-  const handleOnBottomScrolled = () => setUnreadCount(0)
-
-  useEffect(() => {
-    SocketIoApi.onMessageSent<MessageModelType>(msg => {
-      if (msg) {
-        setUnreadCount(prev => prev++)
-      }
-    })
-  }, [])
 
   if (isError) {
     return <EmptyDialog text={'Something went wrong, cannot load messages'} />
