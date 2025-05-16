@@ -15,3 +15,9 @@
   min-width: 50vw !important;
   max-width: 70vw !important;
 }
+
+@media (width <= 40.625rem) {
+  .triggerBtn {
+    font: var(--font-small-link);
+  }
+}

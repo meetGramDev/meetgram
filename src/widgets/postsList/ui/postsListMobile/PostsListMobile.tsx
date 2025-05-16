@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { Post } from '@/entities/post'
 import { ImageCarousel } from '@/shared/ui'
@@ -12,6 +12,8 @@ export const PostsListMobile = ({ isFollowing, posts, userId }: PostListProps) =
   const [showGallery, setShowGallery] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0)
   const itemRefs = useRef<(HTMLDivElement | null)[]>([])
+  /* give a size for post picture*/
+  const width = window.screen.availWidth / 16 / 3.26
   const handleTouch = (index: number) => {
     setSelectedImageIndex(index)
     setShowGallery(true)
@@ -34,6 +36,7 @@ export const PostsListMobile = ({ isFollowing, posts, userId }: PostListProps) =
             ref={el => {
               itemRefs.current[index] = el
             }}
+            style={{ '--pictureSize': width + 'rem' } as React.CSSProperties}
           >
             {!showGallery ? (
               <Post

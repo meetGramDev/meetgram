@@ -22,6 +22,7 @@ type Props = {
   userData: FullUserProfile | PublicProfile
 }
 
+/** USER HEAD INFO ABOUT USER ETC. NO POST PHOTO*/
 export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
   const t = useTranslate()
@@ -71,6 +72,7 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
             </div>
           )}
           {'publicationsCount' in userData && (
+            /*todo тут те що я шукав */
             <div className={s.buttonPublications}>
               <FollowersView
                 followCount={userData.followingCount}

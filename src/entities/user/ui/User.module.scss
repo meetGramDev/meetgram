@@ -1,3 +1,5 @@
+@use '@/app/styles/mixins' as mixins;
+
 @import '../../../app/styles/screens';
 
 .userWrapper {
@@ -62,7 +64,7 @@
 
   .buttonPublications {
     gap: 10%;
-    margin: 0;
+    justify-content: space-around;
   }
 
   .userLinks {
