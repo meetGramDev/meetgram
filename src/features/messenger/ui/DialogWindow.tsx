@@ -14,8 +14,7 @@ import {
 import { EmptyDialog } from './EmptyDialog'
 import { MessageBubble } from './MessageBubble'
 import { MessageInput } from './MessageInput'
-import { ToTheEnd } from './buttons/ToTheEnd'
-import { UnreadCount } from './buttons/UnreadCount'
+// import { UnreadCount } from './buttons/UnreadCount'
 
 type Props = {
   className?: string
@@ -88,8 +87,7 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
                 message={message}
               />
             ))}
-            <UnreadCount className={'left-1/2 -translate-x-1/2'} onClick={() => {}} unread={12} />
-            <ToTheEnd className={'ml-auto mr-3'} onClick={() => {}} />
+            {/* <UnreadCount className={'left-1/2 -translate-x-1/2'} onClick={() => {}} unread={12} /> */}
           </ChatScrollContainer>
         )}
         <div className={'relative mt-auto w-full p-[2px]'}>

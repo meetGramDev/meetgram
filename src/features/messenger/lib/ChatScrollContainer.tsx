@@ -1,5 +1,6 @@
 import { PropsWithChildren, useEffect, useRef, useState } from 'react'
 
+import { ToTheEnd } from '../ui/buttons/ToTheEnd'
 import { ChatScrollAnchor } from './ChatScrollAnchor'
 
 type Props = {
@@ -14,6 +15,8 @@ export const ChatScrollContainer = ({ children, className, isSending = false }: 
   const scrollAreaRef = useRef<HTMLDivElement>(null)
   const [isAtBottom, setIsAtBottom] = useState(false)
 
+  const [showArrow, setShowArrow] = useState(false)
+
   const handleScroll = () => {
     if (!scrollAreaRef.current) {
       return
@@ -21,7 +24,26 @@ export const ChatScrollContainer = ({ children, className, isSending = false }: 
 
     const { clientHeight, scrollHeight, scrollTop } = scrollAreaRef.current
 
+    if (scrollHeight - clientHeight > scrollTop + 100) {
+      setShowArrow(true)
+    } else {
+      setShowArrow(false)
+    }
+
     setIsAtBottom(scrollHeight - clientHeight <= scrollTop + 1)
+  }
+
+  const handleScrollToTheBottom = () => {
+    if (!scrollAreaRef.current) {
+      return
+    }
+
+    scrollAreaRef.current.scrollTo({
+      behavior: 'smooth',
+      top: scrollAreaRef.current.scrollHeight - scrollAreaRef.current.clientHeight,
+    })
+
+    setShowArrow(false)
   }
 
   useEffect(() => {
@@ -41,6 +63,7 @@ export const ChatScrollContainer = ({ children, className, isSending = false }: 
   return (
     <div className={className} onScroll={handleScroll} ref={scrollAreaRef}>
       {children}
+      {showArrow && <ToTheEnd className={'ml-auto mr-3'} onClick={handleScrollToTheBottom} />}
       <ChatScrollAnchor
         isAtBottom={isAtBottom}
         scrollAreaRef={scrollAreaRef}
