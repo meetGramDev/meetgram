@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { selectCurrentUserId, useGetPublicProfileByIdQuery } from '@/entities/user'
 import { ChatScrollContainer } from '@/features/messenger/lib/ChatScrollContainer'
+import { SocketIoApi } from '@/shared/api'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { cn } from '@/shared/lib'
 import { skipToken } from '@reduxjs/toolkit/query'
@@ -11,10 +12,10 @@ import {
   useGetMessagesByUserQuery,
   useSendMessageMutation,
 } from '../model/services/messagesApi.service'
+import { MessageModelType } from '../model/types'
 import { EmptyDialog } from './EmptyDialog'
 import { MessageBubble } from './MessageBubble'
 import { MessageInput } from './MessageInput'
-// import { UnreadCount } from './buttons/UnreadCount'
 
 type Props = {
   className?: string
@@ -36,6 +37,8 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
   const [latestMessage, setLatestMessage] = useState<null | string>(null)
   const [sendMessage, { isLoading: isSendingMessage }] = useSendMessageMutation()
 
+  const [unreadCount, setUnreadCount] = useState(0)
+
   const resetAnimation = () => setTimeout(() => setLatestMessage(null), 300)
 
   const handleOnMessage = async (msg: string) => {
@@ -53,6 +56,16 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
     }
   }
 
+  const handleOnBottomScrolled = () => setUnreadCount(0)
+
+  useEffect(() => {
+    SocketIoApi.onMessageSent<MessageModelType>(msg => {
+      if (msg) {
+        setUnreadCount(prev => prev++)
+      }
+    })
+  }, [])
+
   if (isError) {
     return <EmptyDialog text={'Something went wrong, cannot load messages'} />
   }
@@ -67,27 +80,31 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
               className
             )}
             isSending={!isSendingMessage}
+            onBottom={handleOnBottomScrolled}
+            scrollThreshold={unreadCount ? 50 : undefined}
+            unreadCount={unreadCount}
           >
-            {data.items.map(message => (
-              <MessageBubble
-                avatar={
-                  isUserDataSuccess && userData.avatars.length
-                    ? {
-                        alt: `${userData.userName} photo`,
-                        src: userData.avatars[1].url,
-                      }
-                    : undefined
-                }
-                className={cn(
-                  message.messageText === latestMessage &&
-                    `${message.ownerId === message.receiverId ? 'animate-popInRight' : 'animate-popInLeft'} `
-                )}
-                currentUserId={currentUserId}
-                key={message.id}
-                message={message}
-              />
-            ))}
-            {/* <UnreadCount className={'left-1/2 -translate-x-1/2'} onClick={() => {}} unread={12} /> */}
+            {() =>
+              data.items.map(message => (
+                <MessageBubble
+                  avatar={
+                    isUserDataSuccess && userData.avatars.length
+                      ? {
+                          alt: `${userData.userName} photo`,
+                          src: userData.avatars[1].url,
+                        }
+                      : undefined
+                  }
+                  className={cn(
+                    message.messageText === latestMessage &&
+                      `${message.ownerId === message.receiverId ? 'animate-popInRight' : 'animate-popInLeft'} `
+                  )}
+                  currentUserId={currentUserId}
+                  key={message.id}
+                  message={message}
+                />
+              ))
+            }
           </ChatScrollContainer>
         )}
         <div className={'relative mt-auto w-full p-[2px]'}>
