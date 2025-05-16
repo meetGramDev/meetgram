@@ -1,7 +1,10 @@
 import { translate } from '@/shared/lib'
 import { NextPageWithLayout } from '@/shared/types'
 import { getAuthLayout } from '@/widgets/layouts'
+import { clsx } from 'clsx'
 import { useRouter } from 'next/router'
+
+import s from './index.module.scss'
 
 const PrivacyPolicy: NextPageWithLayout = () => {
   const { locale } = useRouter()
@@ -12,7 +15,7 @@ const PrivacyPolicy: NextPageWithLayout = () => {
     <div className={'mx-16'}>
       <div className={'flex flex-col gap-5 text-center text-light-100'}>
         <h2 className={'text-h1 font-bold'}>{policies['Privacy Policy']}</h2>
-        <p className={'px-24 text-regular14'}>
+        <p className={clsx('px-24 text-regular14', s.root)}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Fames ac turpis egestas integer eget aliquet nibh. Amet
           consectetur adipiscing elit ut aliquam purus sit amet luctus. Tortor vitae purus faucibus
