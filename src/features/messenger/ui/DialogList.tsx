@@ -33,7 +33,7 @@ export const DialogList = ({ dialoguePartnerId }: Props) => {
   const hasMoreItems = data?.items.length !== data?.totalCount
   const { ref } = useInfiniteScroll(
     () => {
-      if (hasMoreItems && data?.items && data.items.length && data.items.at(-1)) {
+      if (hasMoreItems && data?.items && data.items.length) {
         const lastItem = data.items.at(-1)
 
         if (lastItem) {

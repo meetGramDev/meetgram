@@ -1,8 +1,11 @@
+import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { selectCurrentUserId, useGetPublicProfileByIdQuery } from '@/entities/user'
 import { useAppSelector } from '@/shared/config/storeHooks'
-import { cn } from '@/shared/lib'
+import { cn, useInfiniteScroll } from '@/shared/lib'
+import { Nullable } from '@/shared/types'
+import { Loader } from '@/shared/ui'
 import { skipToken } from '@reduxjs/toolkit/query'
 
 import { ChatScrollContainer } from '../lib/ChatScrollContainer'
@@ -21,11 +24,17 @@ type Props = {
   dialoguePartnerId?: number
 }
 
+const MESSAGES_PER_PAGE = 12
+
 export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
   const currentUserId = useAppSelector(selectCurrentUserId)
-  const { data, isError, isSuccess } = useGetMessagesByUserQuery(
+
+  const [cursor, setCursor] = useState<Nullable<number>>(null)
+  const { data, isError, isSuccess, refetch } = useGetMessagesByUserQuery(
     {
+      cursor: cursor ?? undefined,
       dialoguePartnerId: dialoguePartnerId || 0,
+      // pageSize: MESSAGES_PER_PAGE,
     },
     { skip: !dialoguePartnerId }
   )
@@ -36,7 +45,25 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
   const [sendMessage, { isLoading: isSendingMessage }] = useSendMessageMutation()
 
   const { latestMessage, resetAnimation, setLatestMessage } = useAnimateMessageBubble()
-  const { handleOnBottomScrolled, setUnreadCount, unreadCount } = useUnreadCounter()
+  const { handleOnBottomScrolled, unreadCount } = useUnreadCounter()
+
+  const containerRef = useRef<Nullable<HTMLDivElement>>(null)
+
+  const hasMoreItems = data?.items.length !== data?.totalCount
+  const { ref: scrollRef } = useInfiniteScroll(
+    () => {
+      if (data && data.items.length && hasMoreItems) {
+        const firstEl = data.items.at(0)
+
+        firstEl && setCursor(firstEl.id)
+      }
+    },
+    {
+      root: containerRef.current,
+      rootMargin: `100px`,
+      threshold: 0.3,
+    }
+  )
 
   const handleOnMessage = async (msg: string) => {
     if (!dialoguePartnerId) {
@@ -68,30 +95,38 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
             )}
             isSending={!isSendingMessage}
             onBottom={handleOnBottomScrolled}
+            ref={containerRef}
             scrollThreshold={unreadCount ? 50 : undefined}
             unreadCount={unreadCount}
           >
-            {() =>
-              data.items.map(message => (
-                <MessageBubble
-                  avatar={
-                    isUserDataSuccess && userData.avatars.length
-                      ? {
-                          alt: `${userData.userName} photo`,
-                          src: userData.avatars[1].url,
-                        }
-                      : undefined
-                  }
-                  className={cn(
-                    message.messageText === latestMessage &&
-                      `${message.ownerId === message.receiverId ? 'animate-popInRight' : 'animate-popInLeft'} `
-                  )}
-                  currentUserId={currentUserId}
-                  key={message.id}
-                  message={message}
-                />
-              ))
-            }
+            {({ ref }) => (
+              <>
+                {hasMoreItems && (
+                  <div className={'mb-3 flex h-fit w-full justify-center'} ref={scrollRef}>
+                    <Loader loaderClassName={'w-[30px] h-[30px]'} />
+                  </div>
+                )}
+                {data.items.map(message => (
+                  <MessageBubble
+                    avatar={
+                      isUserDataSuccess && userData.avatars.length
+                        ? {
+                            alt: `${userData.userName} photo`,
+                            src: userData.avatars[1].url,
+                          }
+                        : undefined
+                    }
+                    className={cn(
+                      message.messageText === latestMessage &&
+                        `${message.ownerId === message.receiverId ? 'animate-popInRight' : 'animate-popInLeft'} `
+                    )}
+                    currentUserId={currentUserId}
+                    key={message.id}
+                    message={message}
+                  />
+                ))}
+              </>
+            )}
           </ChatScrollContainer>
         )}
         <div className={'relative mt-auto w-full p-[2px]'}>

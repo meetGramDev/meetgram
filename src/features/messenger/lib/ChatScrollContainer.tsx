@@ -1,6 +1,7 @@
-import { ReactNode, RefObject, useEffect, useRef, useState } from 'react'
+import { ReactNode, RefObject, forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 
 import { cn } from '@/shared/lib'
+import { Nullable } from '@/shared/types'
 
 import { FloatButton } from '../ui/buttons/FloatButton'
 import { ToTheEnd } from '../ui/buttons/ToTheEnd'
@@ -30,82 +31,99 @@ type Props = {
 /**
  * Component's children can optionally either a ReactNode or a render prop function that receives scrollAreaRef and isAtBottom flag
  */
-export const ChatScrollContainer = ({
-  children,
-  className,
-  isSending = false,
-  onBottom,
-  scrollThreshold = 200,
-  unreadCount,
-}: Props) => {
-  const scrollAreaRef = useRef<HTMLDivElement>(null)
-  const [isAtBottom, setIsAtBottom] = useState(false)
+export const ChatScrollContainer = forwardRef<HTMLDivElement, Props>(
+  (
+    { children, className, isSending = false, onBottom, scrollThreshold = 200, unreadCount },
+    forwardedRef
+  ) => {
+    const scrollAreaRef = useRef<Nullable<HTMLDivElement>>(null)
+    const [isAtBottom, setIsAtBottom] = useState(false)
+    const [show, setShow] = useState(false)
 
-  const [show, setShow] = useState(false)
+    // merge both local and external refs
+    const setRefs = useCallback(
+      (element: HTMLDivElement | null) => {
+        // Set internal ref
+        if (scrollAreaRef) {
+          scrollAreaRef.current = element
+        }
 
-  const handleScroll = () => {
-    if (!scrollAreaRef.current) {
-      return
-    }
+        // Set forwarded ref
+        if (typeof forwardedRef === 'function') {
+          forwardedRef(element)
+        } else if (forwardedRef) {
+          forwardedRef.current = element
+        }
+      },
+      [forwardedRef]
+    )
 
-    const { clientHeight, scrollHeight, scrollTop } = scrollAreaRef.current
-
-    if (scrollHeight - clientHeight > scrollTop + scrollThreshold) {
-      setShow(true)
-    } else {
-      setShow(false)
-    }
-
-    setIsAtBottom(scrollHeight - clientHeight <= scrollTop + 1)
-  }
-
-  const handleScrollToTheBottom = () => {
-    if (!scrollAreaRef.current) {
-      return
-    }
-
-    scrollAreaRef.current.scrollTo({
-      behavior: 'smooth',
-      top: scrollAreaRef.current.scrollHeight - scrollAreaRef.current.clientHeight,
-    })
-
-    setShow(false)
-    setIsAtBottom(true)
-    onBottom?.()
-  }
-
-  useEffect(() => {
-    if (isSending) {
+    const handleScroll = () => {
       if (!scrollAreaRef.current) {
         return
       }
 
-      const { clientHeight, scrollHeight } = scrollAreaRef.current
+      const { clientHeight, scrollHeight, scrollTop } = scrollAreaRef.current
 
-      scrollAreaRef.current.scrollTop = scrollHeight - clientHeight
+      if (scrollHeight - clientHeight > scrollTop + scrollThreshold) {
+        setShow(true)
+      } else {
+        setShow(false)
+      }
 
-      setIsAtBottom(true)
+      setIsAtBottom(scrollHeight - clientHeight <= scrollTop + 1)
     }
-  }, [isSending])
 
-  return (
-    <div className={className} onScroll={handleScroll} ref={scrollAreaRef}>
-      {typeof children === 'function' ? children?.({ isAtBottom, ref: scrollAreaRef }) : children}
-      {show && (
-        <FloatButton
-          className={cn(
-            unreadCount ? 'left-1/2 min-w-[150px] max-w-[200px] -translate-x-1/2' : 'ml-auto mr-3'
-          )}
-          onClick={handleScrollToTheBottom}
-        >
-          {unreadCount ? <UnreadCount unread={unreadCount} /> : <ToTheEnd />}
-        </FloatButton>
-      )}
-      <ChatScrollAnchor
-        isAtBottom={isAtBottom}
-        scrollAreaRef={scrollAreaRef}
-        trackVisibility={isSending}
-      />
-    </div>
-  )
-}
+    const handleScrollToTheBottom = () => {
+      if (!scrollAreaRef.current) {
+        return
+      }
+
+      scrollAreaRef.current.scrollTo({
+        behavior: 'smooth',
+        top: scrollAreaRef.current.scrollHeight - scrollAreaRef.current.clientHeight,
+      })
+
+      setShow(false)
+      setIsAtBottom(true)
+      onBottom?.()
+    }
+
+    useEffect(() => {
+      if (isSending) {
+        if (!scrollAreaRef.current) {
+          return
+        }
+
+        const { clientHeight, scrollHeight } = scrollAreaRef.current
+
+        scrollAreaRef.current.scrollTop = scrollHeight - clientHeight
+
+        setIsAtBottom(true)
+      }
+    }, [isSending])
+
+    return (
+      <div className={className} onScroll={handleScroll} ref={setRefs}>
+        {typeof children === 'function' ? children?.({ isAtBottom, ref: scrollAreaRef }) : children}
+        {show && (
+          <FloatButton
+            className={cn(
+              unreadCount ? 'left-1/2 min-w-[150px] max-w-[200px] -translate-x-1/2' : 'ml-auto mr-3'
+            )}
+            onClick={handleScrollToTheBottom}
+          >
+            {unreadCount ? <UnreadCount unread={unreadCount} /> : <ToTheEnd />}
+          </FloatButton>
+        )}
+        <ChatScrollAnchor
+          isAtBottom={isAtBottom}
+          scrollAreaRef={scrollAreaRef}
+          trackVisibility={isSending}
+        />
+      </div>
+    )
+  }
+)
+
+ChatScrollContainer.displayName = 'ChatScrollContainer'

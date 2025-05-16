@@ -21,7 +21,8 @@ export const messagesApi = baseApi.injectEndpoints({
           return responseData
         }
 
-        Object.assign(currentCacheData, responseData)
+        currentCacheData.pageSize = responseData.pageSize
+        currentCacheData.totalCount = responseData.totalCount
         currentCacheData.items.push(...responseData.items)
       },
       onCacheEntryAdded: async (_, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) => {
@@ -46,7 +47,23 @@ export const messagesApi = baseApi.injectEndpoints({
       serializeQueryArgs: ({ endpointName }) => endpointName,
     }),
     getMessagesByUser: builder.query<DialogMessagesResponseType, DialogMessagesArgsType>({
+      forceRefetch: ({ currentArg, previousArg }) => {
+        return currentArg?.cursor !== previousArg?.cursor
+      },
       keepUnusedDataFor: 0,
+      merge(currentCacheData, responseData, otherArgs) {
+        if (!otherArgs.arg.cursor) {
+          return responseData
+        }
+
+        if (responseData.items.length === 0) {
+          return currentCacheData
+        }
+
+        currentCacheData.pageSize = responseData.pageSize
+        currentCacheData.totalCount = responseData.totalCount
+        currentCacheData.items.unshift(...responseData.items)
+      },
       onCacheEntryAdded: async (_, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) => {
         try {
           await cacheDataLoaded
@@ -78,6 +95,8 @@ export const messagesApi = baseApi.injectEndpoints({
         params,
         url: `/messenger/${dialoguePartnerId}`,
       }),
+      serializeQueryArgs: ({ endpointName, queryArgs }) =>
+        `${endpointName}${queryArgs.dialoguePartnerId}`,
       transformResponse(response: DialogMessagesResponseType) {
         // сообщения в исходном массиве расположены от нового к старому
         response.items.reverse()

@@ -30,7 +30,6 @@ export type LastMessageViewType = {
 
 type AllMessagesResponseType<T> = {
   items: T[]
-  notReadCount: number
   pageSize: number
   totalCount: number
 }

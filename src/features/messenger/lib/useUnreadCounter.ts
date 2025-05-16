@@ -24,5 +24,5 @@ export function useUnreadCounter(options?: { shouldCount?: boolean }) {
     return () => SocketIoApi.disconnectListeners([WS_MESSENGER_EVENTS_PATHS.MESSAGE_SEND])
   }, [])
 
-  return { handleOnBottomScrolled, setUnreadCount, unreadCount }
+  return { handleOnBottomScrolled, unreadCount }
 }
