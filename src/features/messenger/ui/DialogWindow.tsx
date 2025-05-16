@@ -14,6 +14,8 @@ import {
 import { EmptyDialog } from './EmptyDialog'
 import { MessageBubble } from './MessageBubble'
 import { MessageInput } from './MessageInput'
+import { ToTheEnd } from './buttons/ToTheEnd'
+import { UnreadCount } from './buttons/UnreadCount'
 
 type Props = {
   className?: string
@@ -61,7 +63,10 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
       <div className={'flex h-full w-full flex-col'}>
         {data.items.length > 0 && (
           <ChatScrollContainer
-            className={cn('flex flex-col gap-6 overflow-y-auto overflow-x-hidden py-8', className)}
+            className={cn(
+              'h-ful relative flex flex-col gap-6 overflow-y-auto overflow-x-hidden py-8',
+              className
+            )}
             isSending={!isSendingMessage}
           >
             {data.items.map(message => (
@@ -83,6 +88,8 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
                 message={message}
               />
             ))}
+            <UnreadCount className={'left-1/2 -translate-x-1/2'} onClick={() => {}} unread={12} />
+            <ToTheEnd className={'ml-auto mr-3'} onClick={() => {}} />
           </ChatScrollContainer>
         )}
         <div className={'relative mt-auto w-full p-[2px]'}>
