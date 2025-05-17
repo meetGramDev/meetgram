@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
-import { dateFormatting, serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { dateFormatting, serverErrorHandler, useClientProgress, useTranslate } from '@/shared/lib'
 import { Button, RadioGroup, RadioGroupProps } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
@@ -33,6 +33,8 @@ export const UserManagement = () => {
   const [cancelAutoRenewal, { isLoading: cancelAutoRenewalLoading }] =
     useCancelAutoRenewalMutation()
   const locale = useRouter().locale
+
+  const t = useTranslate()
 
   const router = useRouter()
   let newCostOfPayment
@@ -155,11 +157,11 @@ export const UserManagement = () => {
     <>
       {data && costOfPaymentData ? (
         <div className={s.wrapper}>
-          <AccountManagerField fieldTitle={'Current Subscription:'}>
+          <AccountManagerField fieldTitle={`${t('Current Subscription')}:`}>
             {lastDate !== null ? (
               <div className={'flex flex-row gap-16'}>
                 <div className={'flex flex-col gap-3'}>
-                  <p className={'text-light-1000'}>Expire at</p>
+                  <p className={'text-light-1000'}>{t('Expire at')}</p>
                   <span>
                     {dateFormatting(lastDate.endDateOfSubscription, { locale: locale || 'en' })}
                   </span>
@@ -177,7 +179,7 @@ export const UserManagement = () => {
                 )}
               </div>
             ) : (
-              'You do not have subscriptions'
+              t('You do not have subscriptions')
             )}
           </AccountManagerField>
           {data && data.data && data.data.length > 0 && (
@@ -187,10 +189,10 @@ export const UserManagement = () => {
               onClick={cancelAutoRenewalHandler}
               variant={'secondary'}
             >
-              {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
+              {data?.hasAutoRenewal ? t('Cancel Auto-Renewal') : t('Auto-Renewal disabled')}
             </Button>
           )}
-          <AccountManagerField fieldTitle={'Account type:'}>
+          <AccountManagerField fieldTitle={`${t('Account type')}:`}>
             <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
           </AccountManagerField>
           <form>
