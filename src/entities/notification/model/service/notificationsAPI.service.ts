@@ -39,6 +39,8 @@ export const notificationsAPI = baseApi.injectEndpoints({
         arg,
         { cacheDataLoaded, cacheEntryRemoved, getState, updateCachedData }
       ) {
+        let unsubscribe
+
         try {
           await cacheDataLoaded
 
@@ -66,16 +68,16 @@ export const notificationsAPI = baseApi.injectEndpoints({
             })
           }
 
-          SocketIoApi.onNotifications(listener)
+          unsubscribe = SocketIoApi.onNotifications(listener)
         } catch {
           await cacheEntryRemoved
 
-          SocketIoApi.closeConnection()
+          unsubscribe?.()
         }
 
         await cacheEntryRemoved
 
-        SocketIoApi.closeConnection()
+        unsubscribe?.()
       },
 
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {

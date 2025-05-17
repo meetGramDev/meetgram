@@ -8,13 +8,23 @@ import { Avatar } from './Avatar'
 
 export type DialogProps = {
   dialog: LastMessageViewType
+  isHighlighted?: boolean
   isLastMsgYours: boolean
   isSelected: boolean
   linkTo: string
   locale?: string
+  onClick?: () => void
 }
 
-export const Dialog = ({ dialog, isLastMsgYours, isSelected, linkTo, locale }: DialogProps) => {
+export const Dialog = ({
+  dialog,
+  isHighlighted,
+  isLastMsgYours,
+  isSelected,
+  linkTo,
+  locale,
+  onClick,
+}: DialogProps) => {
   return (
     <li
       className={cn(
@@ -26,9 +36,10 @@ export const Dialog = ({ dialog, isLastMsgYours, isSelected, linkTo, locale }: D
         as={Link}
         className={'block w-full text-regular14 text-light-100 no-underline'}
         href={linkTo}
+        onClick={onClick}
         variant={'link'}
       >
-        <div className={'flex h-full items-center gap-3'}>
+        <div className={'relative flex h-full items-center gap-3'}>
           <Avatar
             avatar={{
               alt: `${dialog.userName}'s photo`,
@@ -41,14 +52,28 @@ export const Dialog = ({ dialog, isLastMsgYours, isSelected, linkTo, locale }: D
               {formatDateISOToTime(new Date(dialog.updatedAt), locale, { showTime: false })}
             </time>
             {!isSelected ? (
-              <p className={'col-span-2 truncate text-light-900'}>
+              <p
+                className={cn(
+                  'col-span-2 truncate text-light-900',
+                  isHighlighted && 'font-bold text-light-300'
+                )}
+              >
                 {isLastMsgYours ? (
                   <>
                     <span className={'font-bold'}>You: </span>
                     {dialog.messageText}
                   </>
                 ) : (
-                  dialog.messageText
+                  <>
+                    <span
+                      className={cn(
+                        isHighlighted &&
+                          'after:absolute after:right-0 after:h-2 after:w-2 after:animate-pulse after:rounded-full after:bg-accent-500'
+                      )}
+                    >
+                      {dialog.messageText}
+                    </span>
+                  </>
                 )}
               </p>
             ) : (

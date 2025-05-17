@@ -7,6 +7,7 @@ import { FloatButton } from '../ui/buttons/FloatButton'
 import { ToTheEnd } from '../ui/buttons/ToTheEnd'
 import { UnreadCount } from '../ui/buttons/UnreadCount'
 import { ChatScrollAnchor } from './ChatScrollAnchor'
+import { useUnreadCounter } from './useUnreadCounter'
 
 type Props = {
   /**
@@ -32,13 +33,14 @@ type Props = {
  * Component's children can optionally either a ReactNode or a render prop function that receives scrollAreaRef and isAtBottom flag
  */
 export const ChatScrollContainer = forwardRef<HTMLDivElement, Props>(
-  (
-    { children, className, isSending = false, onBottom, scrollThreshold = 200, unreadCount },
-    forwardedRef
-  ) => {
+  ({ children, className, isSending = false }, forwardedRef) => {
     const scrollAreaRef = useRef<Nullable<HTMLDivElement>>(null)
     const [isAtBottom, setIsAtBottom] = useState(false)
     const [show, setShow] = useState(false)
+
+    const { resetCount, unreadCount } = useUnreadCounter({ shouldCount: !isAtBottom })
+
+    const scrollThreshold = unreadCount ? 50 : 200
 
     // merge both local and external refs
     const setRefs = useCallback(
@@ -71,7 +73,12 @@ export const ChatScrollContainer = forwardRef<HTMLDivElement, Props>(
         setShow(false)
       }
 
-      setIsAtBottom(scrollHeight - clientHeight <= scrollTop + 1)
+      const isBottom = scrollHeight - clientHeight <= scrollTop + 1
+
+      setIsAtBottom(isBottom)
+      if (isBottom) {
+        resetCount()
+      }
     }
 
     const handleScrollToTheBottom = () => {
@@ -86,7 +93,7 @@ export const ChatScrollContainer = forwardRef<HTMLDivElement, Props>(
 
       setShow(false)
       setIsAtBottom(true)
-      onBottom?.()
+      resetCount()
     }
 
     useEffect(() => {

@@ -38,7 +38,7 @@ const Chats: NextPageWithLayout = () => {
               'col-start-2 row-start-2 h-full overflow-y-hidden border-r border-dark-300 bg-black'
             }
           >
-            <DialogWindow dialoguePartnerId={Number(query.dialog)} />
+            <DialogWindow dialoguePartnerId={query.dialog} />
           </div>
         </Card>
       </div>

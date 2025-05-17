@@ -89,5 +89,6 @@ export const baseApi = createApi({
     'subscriptions',
     'notifications',
     'messages',
+    'dialogs',
   ],
 })

@@ -53,3 +53,7 @@ export type MessageSendRequestType = {
   message: string
   receiverId: number
 }
+
+export type UpdateMessageStatusArgsType = {
+  ids: number[]
+}

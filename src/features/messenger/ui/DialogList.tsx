@@ -8,6 +8,7 @@ import { skipToken } from '@reduxjs/toolkit/query'
 import { useRouter } from 'next/router'
 
 import { useGetAllDialogsQuery } from '../model/services/messagesApi.service'
+import { MessageStatus } from '../model/types'
 import { Dialog } from './Dialog'
 
 const MAX_DIALOGS_SIZE = 12
@@ -73,6 +74,9 @@ export const DialogList = ({ dialoguePartnerId }: Props) => {
               return (
                 <Dialog
                   dialog={d}
+                  isHighlighted={
+                    d.status === MessageStatus.SENT || d.status === MessageStatus.RECEIVED
+                  }
                   isLastMsgYours={isYours}
                   isSelected={isUserDataSuccess && d.userName === userData?.userName}
                   key={d.id}

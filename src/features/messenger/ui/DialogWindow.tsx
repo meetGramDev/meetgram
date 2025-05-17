@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { selectCurrentUserId, useGetPublicProfileByIdQuery } from '@/entities/user'
@@ -10,18 +10,19 @@ import { skipToken } from '@reduxjs/toolkit/query'
 
 import { ChatScrollContainer } from '../lib/ChatScrollContainer'
 import { useAnimateMessageBubble } from '../lib/useAnimateMessageBubble'
-import { useUnreadCounter } from '../lib/useUnreadCounter'
 import {
   useGetMessagesByUserQuery,
   useSendMessageMutation,
+  useUpdateMessageStatusMutation,
 } from '../model/services/messagesApi.service'
+import { MessageStatus } from '../model/types'
 import { EmptyDialog } from './EmptyDialog'
 import { MessageBubble } from './MessageBubble'
 import { MessageInput } from './MessageInput'
 
 type Props = {
   className?: string
-  dialoguePartnerId?: number
+  dialoguePartnerId?: string
 }
 
 const MESSAGES_PER_PAGE = 12
@@ -30,22 +31,22 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
   const currentUserId = useAppSelector(selectCurrentUserId)
 
   const [cursor, setCursor] = useState<Nullable<number>>(null)
-  const { data, isError, isSuccess, refetch } = useGetMessagesByUserQuery(
+  const { data, isError, isLoading, isSuccess } = useGetMessagesByUserQuery(
     {
       cursor: cursor ?? undefined,
-      dialoguePartnerId: dialoguePartnerId || 0,
-      // pageSize: MESSAGES_PER_PAGE,
+      dialoguePartnerId: +(dialoguePartnerId ?? 0),
+      pageSize: MESSAGES_PER_PAGE,
     },
     { skip: !dialoguePartnerId }
   )
   const { data: userData, isSuccess: isUserDataSuccess } = useGetPublicProfileByIdQuery(
-    String(dialoguePartnerId) ?? skipToken
+    dialoguePartnerId ?? skipToken
   )
 
   const [sendMessage, { isLoading: isSendingMessage }] = useSendMessageMutation()
+  const [updateMessageStatus] = useUpdateMessageStatusMutation()
 
   const { latestMessage, resetAnimation, setLatestMessage } = useAnimateMessageBubble()
-  const { handleOnBottomScrolled, unreadCount } = useUnreadCounter()
 
   const containerRef = useRef<Nullable<HTMLDivElement>>(null)
 
@@ -71,7 +72,7 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
     }
 
     try {
-      sendMessage({ message: msg, receiverId: dialoguePartnerId })
+      sendMessage({ message: msg, receiverId: +dialoguePartnerId })
 
       setLatestMessage(msg)
       resetAnimation()
@@ -79,6 +80,25 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
       toast.error('Ops, something went wrong. Cannot send message')
     }
   }
+
+  // read sent messages when data received or component mounted
+  useEffect(() => {
+    if (isLoading || !data || !data?.items) {
+      return
+    }
+
+    const idsToUpdate = data.items.reduce((acc: number[], item) => {
+      if (currentUserId !== item.ownerId && item.status !== MessageStatus.READ) {
+        acc.push(item.id)
+      }
+
+      return acc
+    }, [])
+
+    if (idsToUpdate.length !== 0) {
+      updateMessageStatus({ ids: idsToUpdate })
+    }
+  }, [isLoading, data?.items])
 
   if (isError) {
     return <EmptyDialog text={'Something went wrong, cannot load messages'} />
@@ -94,12 +114,9 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
               className
             )}
             isSending={!isSendingMessage}
-            onBottom={handleOnBottomScrolled}
             ref={containerRef}
-            scrollThreshold={unreadCount ? 50 : undefined}
-            unreadCount={unreadCount}
           >
-            {({ ref }) => (
+            {() => (
               <>
                 {hasMoreItems && (
                   <div className={'mb-3 flex h-fit w-full justify-center'} ref={scrollRef}>
