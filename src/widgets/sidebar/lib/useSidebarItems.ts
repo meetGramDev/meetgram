@@ -7,7 +7,7 @@ import { MessengerIcon } from '@/shared/assets/icons/Messenger'
 import { MyProfileIcon } from '@/shared/assets/icons/MyProfile'
 import { Search } from '@/shared/assets/icons/Search'
 import { StatisticsIcon } from '@/shared/assets/icons/Statistics'
-import { HOME, PUBLIC_PAGE } from '@/shared/config/router'
+import { CHATS, HOME, PUBLIC_PAGE } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { useRouter } from 'next/router'
@@ -22,7 +22,7 @@ export function useGetSidebarItems() {
       { Svg: HomeIcon, name: t('sidebarTr.home'), path: PUBLIC_PAGE },
       { Svg: CreateIcon, isCreatePost: true, name: t('sidebarTr.create'), path: `/create` },
       { Svg: MyProfileIcon, name: t('sidebarTr.myProfile'), path: `${HOME}/${userId}` },
-      { Svg: MessengerIcon, name: t('sidebarTr.messenger'), path: '/messenger' },
+      { Svg: MessengerIcon, name: t('sidebarTr.messenger'), path: CHATS },
       { Svg: Search, name: t('sidebarTr.search'), path: `/users` },
 
       { Svg: FavoritesIcon, name: t('sidebarTr.favorites'), path: '/favorites' },

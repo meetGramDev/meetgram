@@ -3,7 +3,7 @@ import { useMediaQuery } from 'react-responsive'
 import { FollowButton } from '@/entities/follow-btn'
 import { Photo } from '@/entities/photo'
 import notUserPhoto from '@/shared/assets/img/not-photo-user.jpg'
-import { PROFILE_SETTINGS } from '@/shared/config/router'
+import { CHATS, PROFILE_SETTINGS } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button } from '@/shared/ui'
@@ -19,6 +19,7 @@ import { PublicUserMetadata } from './userMetadata/PublicUserMetadata'
 type Props = {
   disabledFollowBtn?: boolean
   onFollow?: (id: number) => void
+  onSendMessage?: (id: number) => void
   userData: FullUserProfile | PublicProfile
 }
 
@@ -63,7 +64,7 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
                       userId={userData.id}
                       userName={userData.userName}
                     />
-                    <Button as={Link} href={'#'} variant={'secondary'}>
+                    <Button as={Link} href={`${CHATS}?dialog=${userData.id}`} variant={'secondary'}>
                       {t('Send message')}
                     </Button>
                   </div>

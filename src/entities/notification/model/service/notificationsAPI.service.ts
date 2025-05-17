@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify'
 
-import { RootState } from '@/app/lib'
+import { SocketIoApi, baseApi } from '@/shared/api'
+
 import {
   DeleteNotificationByIdRequest,
   GetNotificationsRequest,
@@ -8,9 +9,7 @@ import {
   MarkNotificationsAsReadResponse,
   NotificationType,
   SocketNotificationsType,
-} from '@/entities/notification/model/types/service.types'
-import { baseApi } from '@/shared/api'
-import SocketIoApi from '@/widgets/notificationsView/model/socketApi'
+} from '../types/service.types'
 
 export const notificationsAPI = baseApi.injectEndpoints({
   endpoints: builder => ({
@@ -40,13 +39,7 @@ export const notificationsAPI = baseApi.injectEndpoints({
         arg,
         { cacheDataLoaded, cacheEntryRemoved, getState, updateCachedData }
       ) {
-        const token = (getState() as RootState).user.accessToken
-
-        if (!token) {
-          return
-        }
-        SocketIoApi.createConnection(token)
-        const socket = SocketIoApi.socket
+        let unsubscribe
 
         try {
           await cacheDataLoaded
@@ -75,16 +68,16 @@ export const notificationsAPI = baseApi.injectEndpoints({
             })
           }
 
-          socket?.on('notifications', listener)
+          unsubscribe = SocketIoApi.onNotifications(listener)
         } catch {
           await cacheEntryRemoved
 
-          socket?.close()
+          unsubscribe?.()
         }
 
         await cacheEntryRemoved
 
-        socket?.disconnect()
+        unsubscribe?.()
       },
 
       query: ({ cursor, isRead, pageSize, sortBy, sortDirection }) => {

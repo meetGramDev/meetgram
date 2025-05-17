@@ -1,2 +1,2 @@
-export { AuthProvider } from './AuthProvider'
+export { AppWrapper } from './AppWrapper'
 export { ErrorBoundary } from './ErrorBoundary'

@@ -15,13 +15,13 @@ type TextAreaProps = {
 } & ComponentPropsWithoutRef<'textarea'>
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ disabled, error, label, labelClassName, rows = 3, value, ...rest }, ref) => {
+  ({ className, disabled, error, label, labelClassName, rows = 3, value, ...rest }, ref) => {
     const id = useId()
 
     const classNames = {
       errorMessage: clsx(s.label, error && s.error),
       label: clsx(s.label, disabled && s.disabled, labelClassName),
-      textArea: clsx(s.textArea, error && s.error, disabled && s.disabled),
+      textArea: clsx(s.textArea, error && s.error, disabled && s.disabled, className),
       textAreaWrapper: s.textAreaWrapper,
       wrapperComponent: clsx(s.wrapper),
     }
