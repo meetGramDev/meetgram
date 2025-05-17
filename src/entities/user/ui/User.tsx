@@ -23,7 +23,8 @@ type Props = {
   userData: FullUserProfile | PublicProfile
 }
 
-export const User = ({ disabledFollowBtn, onFollow, onSendMessage, userData }: Props) => {
+/** USER HEAD INFO ABOUT USER ETC. NO POST PHOTO*/
+export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
   const userPhoto = userData?.avatars.length ? userData.avatars[0] : notUserPhoto
   const t = useTranslate()
 
