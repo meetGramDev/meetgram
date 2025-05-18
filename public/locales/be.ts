@@ -28,8 +28,10 @@ export const be: LanguagesObjType = {
     "August": "Жнівень",
     "Auto-Renewal disabled": "Аўтаматычнае абнаўленне адключана",
     "Avatar": "Аватар",
+    "Business": "Бізнэс",
     "Cancel Auto-Renewal": "Адмяніць аўтаматычнае падаўжэнне",
     "Change profile photo": "Змяніць фота профілю",
+    "Change your subscription": "Змяніць падпіску",
     "City": "Горад",
     "Close": "Закрыць",
     "Congratulations!": "Віншуем!",
@@ -79,6 +81,7 @@ export const be: LanguagesObjType = {
     "Ok": "Добра",
     "Owner avatar": "Аватар уладальніка",
     "Payment Type": "Тып аплаты",
+    "Personal": "Асабісты",
     "Post added successfully.": "Публікацыя паспяхова дададзена.",
     "Price": "Кошт",
     "Profile Settings": "Налады профілю",
@@ -104,10 +107,12 @@ export const be: LanguagesObjType = {
     "Yes": "Так",
     "You do not have subscriptions": "У вас няма падпісак",
     "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
-    button: {
+
+        button: {
         Button: 'Кнопка',
         Link: 'Спасылка, якая выглядае як кнопка',
     },
+
     createNewPasswordForm: {
         createNewPassword: 'Стварыць новы пароль',
         newPassword: 'Новы пароль',
@@ -147,6 +152,9 @@ export const be: LanguagesObjType = {
         sendLinkDialog: 'Мы адправілі спасылку для пацверджання вашай электроннай пошты на',
     },
     language: 'Беларуская',
+    "per 1 day": "за 1 дзень",
+    "per 7 days": "за 7 дзён",
+    "per month": "у месяц",
     policies: {
         "Privacy Policy": "Палітыка прыватнасці",
         "Terms Of Service": "Умовы выкарыстоўвання",

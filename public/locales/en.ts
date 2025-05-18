@@ -25,8 +25,10 @@ export const en = {
     "August": "August",
     "Auto-Renewal disabled": "Auto-Renewal disabled",
     "Avatar": "Avatar",
+    "Business": "Business",
     "Cancel Auto-Renewal": "Cancel Auto-Renewal",
     "Change profile photo": "Change profile photo",
+    "Change your subscription": "Change your subscription",
     "City": "City",
     'Close': 'Close',
     "Congratulations!": "Congratulations!",
@@ -76,6 +78,7 @@ export const en = {
     "Ok": "Ok",
     "Owner avatar": "Owner avatar",
     "Payment Type": "Payment Type",
+    "Personal": "Personal",
     "Post added successfully.": "Post added successfully.",
     "Price": "Price",
     "Profile Settings": "Profile Settings",
@@ -132,7 +135,8 @@ export const en = {
             wrongUsername: 'Wrong username'
         },
     },
-   forgoPasswordForm: {
+
+        forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
         email: 'Email',
@@ -143,9 +147,12 @@ export const en = {
         sendAgain: 'If you do not receive an email send link again.',
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
-    }
-  ,
+    },
+
     language: 'English',
+    "per 1 day": "per 1 day",
+    "per 7 days": "per 7 days",
+    "per month": "per month",
     policies: {
         "Privacy Policy": "Privacy Policy",
         "Terms Of Service": "Terms Of Service",

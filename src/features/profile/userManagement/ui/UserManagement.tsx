@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { ServerMessagesType } from '@/shared/api'
@@ -40,7 +40,7 @@ export const UserManagement = () => {
   let newCostOfPayment
 
   const [radioOptions, setRadioOptions] = useState<RadioGroupProps>(
-    createRadioGroupData(managerItems)
+    createRadioGroupData(managerItems, t)
   )
 
   const [cost, setCost] = useState<RadioGroupProps>({} as RadioGroupProps)
@@ -49,10 +49,14 @@ export const UserManagement = () => {
 
   useEffect(() => {
     if (costOfPaymentData) {
-      newCostOfPayment = changeCostOfPayment(costOfPaymentData)
-      setCost(createRadioGroupData(newCostOfPayment))
+      newCostOfPayment = changeCostOfPayment(costOfPaymentData, t)
+      setCost(createRadioGroupData(newCostOfPayment, t))
     }
-  }, [costOfPaymentData])
+  }, [costOfPaymentData, locale])
+
+  useEffect(() => {
+    setRadioOptions(createRadioGroupData(managerItems, t))
+  }, [locale])
 
   const onValueChange = (value: string) => {
     setRadioOptions({
@@ -197,7 +201,7 @@ export const UserManagement = () => {
           </AccountManagerField>
           <form>
             {radioOptions.options[1].checked && (
-              <AccountManagerField fieldTitle={'Change your subscription:'}>
+              <AccountManagerField fieldTitle={`${t('Change your subscription')}:`}>
                 <RadioGroup
                   className={s.radioGroup}
                   onValueChange={onValueChangeSubscriptionHandler}

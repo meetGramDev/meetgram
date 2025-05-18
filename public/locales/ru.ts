@@ -27,8 +27,10 @@ export const ru: LanguagesObjType = {
     "August": "Август",
     "Auto-Renewal disabled": "Автоматическое продление отключено",
     "Avatar": "Аватар",
+    "Business": "Бизнес",
     "Cancel Auto-Renewal": "Отменить автоматическое продление",
     "Change profile photo": "Изменить фото профиля",
+    "Change your subscription": "Измените подписку",
     "City": "Город",
     "Close": "Закрыть",
     "Congratulations!": "Поздравляем!",
@@ -78,6 +80,7 @@ export const ru: LanguagesObjType = {
     "Ok": "Хорошо",
     "Owner avatar": "Аватар владельца",
     "Payment Type": "Тип оплаты",
+    "Personal": "Личный",
     "Post added successfully.": "Публикация успешно добавлена.",
     "Price": "Цена",
     "Profile Settings": "Настройки профиля",
@@ -133,7 +136,7 @@ export const ru: LanguagesObjType = {
             wrongUsername: 'Неправильное имя пользователя',
         },
     },
-    forgoPasswordForm: {
+        forgoPasswordForm: {
         again: ' Еще Раз',
         backSignIn: 'Вернуться ко входу',
         email: 'Электронная почта',
@@ -145,7 +148,12 @@ export const ru: LanguagesObjType = {
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
     },
-    language: 'Русский', policies: {
+
+    language: 'Русский',
+    "per 1 day": "за 1 день",
+    "per 7 days": "за 7 дней",
+    "per month": "за месяц",
+    policies: {
         "Privacy Policy": "Политика конфиденциальности",
         "Terms Of Service": "Условия использования",
     },

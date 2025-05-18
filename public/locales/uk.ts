@@ -28,8 +28,10 @@ export const uk: LanguagesObjType = {
     "August": "Серпень",
     "Auto-Renewal disabled": "Автоматичне поновлення вимкнено",
     "Avatar": "Аватар",
+    "Business": "Бізнес",
     "Cancel Auto-Renewal": "Скасувати автоматичне поновлення",
     "Change profile photo": "Змінити фото профілю",
+    "Change your subscription": "Змінити підписку",
     "City": "Місто",
     "Close": "Закрити",
     "Congratulations!": "Вітаємо!",
@@ -79,6 +81,7 @@ export const uk: LanguagesObjType = {
     "Ok": "Гаразд",
     "Owner avatar": "Аватар власника",
     "Payment Type": "Тип оплати",
+    "Personal": "Особистий",
     "Post added successfully.": "Публікацію успішно додано.",
     "Price": "Ціна",
     "Profile Settings": "Налаштування профілю",
@@ -104,7 +107,8 @@ export const uk: LanguagesObjType = {
     "Yes": "Так",
     "You do not have subscriptions": "У вас немає підписок",
     "Your email has been confirmed": "Вашу електронну пошту підтверджено",
-    button: {
+
+        button: {
         Button: 'Кнопка',
         Link: 'Посилання, що виглядає як кнопка',
     },
@@ -146,6 +150,9 @@ export const uk: LanguagesObjType = {
         sendLinkDialog: 'Ми відправили посилання для підтвердження вашої електронної пошти на',
     },
     language: 'Українська',
+    "per 1 day": "за 1 день",
+    "per 7 days": "за 7 днів",
+    "per month": "на місяць",
 
     policies: {
         "Privacy Policy": "Політика конфіденційності",
