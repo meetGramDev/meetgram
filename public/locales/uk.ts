@@ -27,6 +27,7 @@ export const uk: LanguagesObjType = {
     "Are you sure you want to delete this post?": "Ви впевнені, що хочете видалити цю публікацію?",
     "August": "Серпень",
     "Auto-Renewal disabled": "Автоматичне поновлення вимкнено",
+    "Auto-renewal has been turned off": "Автоматичне оновлення вимкнено",
     "Avatar": "Аватар",
     "Business": "Бізнес",
     "Cancel Auto-Renewal": "Скасувати автоматичне поновлення",
@@ -79,6 +80,7 @@ export const uk: LanguagesObjType = {
     "November": "Листопад",
     "October": "Жовтень",
     "Ok": "Гаразд",
+    "Or": "Або",
     "Owner avatar": "Аватар власника",
     "Payment Type": "Тип оплати",
     "Personal": "Особистий",
@@ -106,9 +108,9 @@ export const uk: LanguagesObjType = {
     "We have sent a link to confirm your email to": "Ми відправили посилання для підтвердження вашої електронної пошти на ",
     "Yes": "Так",
     "You do not have subscriptions": "У вас немає підписок",
-    "Your email has been confirmed": "Вашу електронну пошту підтверджено",
 
-        button: {
+        "Your email has been confirmed": "Вашу електронну пошту підтверджено",
+    button: {
         Button: 'Кнопка',
         Link: 'Посилання, що виглядає як кнопка',
     },

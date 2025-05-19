@@ -50,7 +50,7 @@ export const UserManagement = () => {
   useEffect(() => {
     if (costOfPaymentData) {
       newCostOfPayment = changeCostOfPayment(costOfPaymentData, t)
-      setCost(createRadioGroupData(newCostOfPayment, t))
+      setCost(createRadioGroupData(newCostOfPayment))
     }
   }, [costOfPaymentData, locale])
 
@@ -128,7 +128,7 @@ export const UserManagement = () => {
     try {
       if (data?.hasAutoRenewal) {
         await cancelAutoRenewal().unwrap()
-        toast.success('Auto-renewal has been turned off')
+        toast.success(t('Auto-renewal has been turned off'))
       }
     } catch (error) {
       const err = serverErrorHandler(error)
@@ -221,7 +221,7 @@ export const UserManagement = () => {
                   >
                     <PayPal />
                   </Button>
-                  or
+                  {t('Or')}
                   <Button
                     className={s.paymentButton}
                     onClick={e => onPaymentClickHandler(e, 'STRIPE')}

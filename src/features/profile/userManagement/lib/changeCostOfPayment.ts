@@ -1,12 +1,13 @@
 import { RadioGroupProps } from '@/shared/ui'
 
+import { LanguagesObjType } from '../../../../../public/locales/en'
 import { CostOfPaymentSubscriptionType } from '../model/types/services'
 
 export const changeCostOfPayment = (
   data: CostOfPaymentSubscriptionType,
-  t?: (key: string) => string
+  t?: (key: any) => string
 ): RadioGroupProps['options'] => {
-  const translateValue = (label: string) => {
+  const translateValue = (label: any) => {
     return t ? t(label) : label
   }
 

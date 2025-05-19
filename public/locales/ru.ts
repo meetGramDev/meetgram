@@ -26,6 +26,7 @@ export const ru: LanguagesObjType = {
     "Are you sure you want to delete this post?": "Вы уверены, что хотите удалить эту публикацию?",
     "August": "Август",
     "Auto-Renewal disabled": "Автоматическое продление отключено",
+    "Auto-renewal has been turned off": "Автопродление отключено",
     "Avatar": "Аватар",
     "Business": "Бизнес",
     "Cancel Auto-Renewal": "Отменить автоматическое продление",
@@ -78,6 +79,7 @@ export const ru: LanguagesObjType = {
     "November": "Ноябрь",
     "October": "Октябрь",
     "Ok": "Хорошо",
+    "Or": "Или",
     "Owner avatar": "Аватар владельца",
     "Payment Type": "Тип оплаты",
     "Personal": "Личный",
@@ -110,7 +112,7 @@ export const ru: LanguagesObjType = {
         Button: 'Кнопка',
         Link: 'Ссылка, которая выглядит как кнопка',
     },
-    createNewPasswordForm: {
+        createNewPasswordForm: {
         createNewPassword: 'Создать новый пароль',
         newPassword: 'Новый пароль',
         passwordConfirmation: 'Подтверждение пароля',
@@ -136,7 +138,7 @@ export const ru: LanguagesObjType = {
             wrongUsername: 'Неправильное имя пользователя',
         },
     },
-        forgoPasswordForm: {
+    forgoPasswordForm: {
         again: ' Еще Раз',
         backSignIn: 'Вернуться ко входу',
         email: 'Электронная почта',
@@ -148,7 +150,6 @@ export const ru: LanguagesObjType = {
         sendLink: 'Отправить Ссылку',
         sendLinkDialog: 'Мы отправили ссылку для подтверждения вашей электронной почты на',
     },
-
     language: 'Русский',
     "per 1 day": "за 1 день",
     "per 7 days": "за 7 дней",

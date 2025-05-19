@@ -27,6 +27,7 @@ export const be: LanguagesObjType = {
     "Are you sure you want to delete this post?": "Вы ўпэўнены, што хочаце выдаліць гэтую публікацыю?",
     "August": "Жнівень",
     "Auto-Renewal disabled": "Аўтаматычнае абнаўленне адключана",
+    "Auto-renewal has been turned off": "Аўтаматычнае абнаўленне было адключана",
     "Avatar": "Аватар",
     "Business": "Бізнэс",
     "Cancel Auto-Renewal": "Адмяніць аўтаматычнае падаўжэнне",
@@ -79,6 +80,7 @@ export const be: LanguagesObjType = {
     "November": "Лістапад",
     "October": "Кастрычнік",
     "Ok": "Добра",
+    "Or": "Або",
     "Owner avatar": "Аватар уладальніка",
     "Payment Type": "Тып аплаты",
     "Personal": "Асабісты",
@@ -105,14 +107,14 @@ export const be: LanguagesObjType = {
     "Unfollow": "Спыніць сачэнне",
     "We have sent a link to confirm your email to": "Мы адправілі спасылку для пацверджання вашай электроннай пошты на ",
     "Yes": "Так",
-    "You do not have subscriptions": "У вас няма падпісак",
-    "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
 
-        button: {
+        "You do not have subscriptions": "У вас няма падпісак",
+
+    "Your email has been confirmed": "Ваша электронная пошта была пацверджана",
+    button: {
         Button: 'Кнопка',
         Link: 'Спасылка, якая выглядае як кнопка',
     },
-
     createNewPasswordForm: {
         createNewPassword: 'Стварыць новы пароль',
         newPassword: 'Новы пароль',

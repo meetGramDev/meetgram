@@ -3,11 +3,11 @@ import { RadioGroupProps } from '@/shared/ui'
 
 export const createRadioGroupData = (
   valueData: RadioGroupProps['options'],
-  t?: (key: string) => string
+  t?: (key: any) => string
 ): RadioGroupProps => {
   let returnedData
 
-  const translateValue = (label: string) => {
+  const translateValue = (label: any) => {
     return t ? t(label) : label
   }
 
@@ -17,7 +17,7 @@ export const createRadioGroupData = (
         {
           checked: true,
           disabled: false,
-          label: translateValue(valueData[0].label),
+          label: valueData[0].label,
           value: translateValue(valueData[0].value),
         },
       ],

@@ -24,6 +24,7 @@ export const en = {
     "Are you sure you want to delete this post?": "Are you sure you want to delete this post?",
     "August": "August",
     "Auto-Renewal disabled": "Auto-Renewal disabled",
+    "Auto-renewal has been turned off": "Auto-renewal has been turned off",
     "Avatar": "Avatar",
     "Business": "Business",
     "Cancel Auto-Renewal": "Cancel Auto-Renewal",
@@ -76,6 +77,7 @@ export const en = {
     "November": "November",
     "October": "October",
     "Ok": "Ok",
+    "Or": "Or",
     "Owner avatar": "Owner avatar",
     "Payment Type": "Payment Type",
     "Personal": "Personal",
@@ -114,7 +116,8 @@ export const en = {
         passwordConfirmation: 'Password confirmation',
         passwordTerm: 'Your password must be between 6 and 20 characters',
     },
-    errorsTr: {
+
+        errorsTr: {
 
         errorEmail: {InvalidEmail: 'Invalid email'},
         errorNewPassword: {
@@ -136,7 +139,7 @@ export const en = {
         },
     },
 
-        forgoPasswordForm: {
+    forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
         email: 'Email',
@@ -148,7 +151,6 @@ export const en = {
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
     },
-
     language: 'English',
     "per 1 day": "per 1 day",
     "per 7 days": "per 7 days",

@@ -27,6 +27,7 @@ export const es: LanguagesObjType = {
     "Are you sure you want to delete this post?": "¿Estás seguro de que deseas eliminar esta publicación?",
     "August": "Agosto",
     "Auto-Renewal disabled": "Renovación automática deshabilitada",
+    "Auto-renewal has been turned off": "La renovación automática ha sido desactivada",
     "Avatar": "Avatar",
     "Business": "Negocio",
     "Cancel Auto-Renewal": "Cancelar renovación automática",
@@ -57,8 +58,8 @@ export const es: LanguagesObjType = {
     "First Name": "Nombre",
     "Follow": "Seguir",
     "Followers": "Seguidores",
-    "Following": "Siguiendo",
-    "General Information": "Información general", "Hide": "Esconder",
+    "Following": "Siguiendo", "General Information": "Información general",
+    "Hide": "Esconder",
     "January": "Enero",
     "July": "Julio",
     "June": "Junio",
@@ -78,6 +79,7 @@ export const es: LanguagesObjType = {
     "November": "Noviembre",
     "October": "Octubre",
     "Ok": "Ok",
+    "Or": "O",
     "Owner avatar": "Avatar del propietario",
     "Payment Type": "Tipo de pago",
     "Personal": "Personal",
@@ -104,10 +106,10 @@ export const es: LanguagesObjType = {
     "Unfollow": "Dejar de seguir",
     "We have sent a link to confirm your email to": "Hemos enviado un enlace para confirmar tu correo electrónico a ",
     "Yes": "Sí",
-    "You do not have subscriptions": "No tienes suscripciones",
-    "Your email has been confirmed": "Tu correo electrónico ha sido confirmado",
 
-        button: {
+        "You do not have subscriptions": "No tienes suscripciones",
+    "Your email has been confirmed": "Tu correo electrónico ha sido confirmado",
+    button: {
         Button: 'Botón',
         Link: 'Enlace que parece un botón',
     },
@@ -152,6 +154,7 @@ export const es: LanguagesObjType = {
     language: 'Español',
     "per 1 day": "por 1 día",
     "per 7 days": "por 7 días",
+
     "per month": "por mes",
     policies: {
         "Privacy Policy": "Política de Privacidad",
