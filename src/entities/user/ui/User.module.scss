@@ -27,7 +27,8 @@
 .userName {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1.25rem;
+
+  /* margin-bottom: 1.25rem; */
 }
 
 .userNameTitle {
@@ -54,6 +55,11 @@
 .aboutMeText {
   min-width: 100%;
   word-break: break-word;
+}
+
+.profileActions {
+  display: flex;
+  gap: 0.75rem;
 }
 
 @media (width <= $screen-size-mobile) {
@@ -89,9 +95,10 @@
     gap: 0.75rem;
     font: var(--font-regular-small);
   }
+
+  .profileActions{
+    flex-direction: column;
+  }
 }
 
-.profileActions {
-  display: flex;
-  gap: 0.75rem;
-}
+
