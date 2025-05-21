@@ -7,6 +7,10 @@ const config: Config = {
   plugins: [],
   theme: {
     extend: {
+      animation: {
+        popInLeft: 'popInLeft 300ms ease-out forwards',
+        popInRight: 'popInRight 300ms ease-out forwards',
+      },
       backgroundImage: {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -66,6 +70,18 @@ const config: Config = {
         regular14: ['14px', '24px'],
         regular16: ['16px', '24px'],
         small: ['12px', '16px'],
+      },
+      keyframes: {
+        popInLeft: {
+          '0%': { opacity: '0', transform: 'scale(0.5) translate(-20px)' },
+          '70%': { transform: 'scale(1.05) translate(0)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        popInRight: {
+          '0%': { opacity: '0', transform: 'scale(0.5) translateX(20px)' },
+          '70%': { transform: 'scale(1.05) translateX(0)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
       },
     },
   },

@@ -1,6 +1,7 @@
 export const {
   ACCOUNT_MANAGEMENT,
   ALL_PUBLIC_POSTS,
+  CHATS,
   CREATE_NEW_PASSWORD,
   FORGOT_PASSWORD,
   HOME,
@@ -14,6 +15,7 @@ export const {
 } = {
   ACCOUNT_MANAGEMENT: '/profile/settings?account-management',
   ALL_PUBLIC_POSTS: '/public-posts/all',
+  CHATS: '/chats',
   CREATE_NEW_PASSWORD: '/auth/create-new-password',
   FORGOT_PASSWORD: '/auth/forgot-password',
   HOME: '/profile',
