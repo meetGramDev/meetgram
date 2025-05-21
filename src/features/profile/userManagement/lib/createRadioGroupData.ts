@@ -1,12 +1,25 @@
+import { LocalesType, TranslationPhraseType } from '@/shared/config/i18n'
 import { RadioGroupProps } from '@/shared/ui'
 
-export const createRadioGroupData = (valueData: RadioGroupProps['options']): RadioGroupProps => {
+export const createRadioGroupData = (
+  valueData: RadioGroupProps['options'],
+  t?: (key: any) => string
+): RadioGroupProps => {
   let returnedData
+
+  const translateValue = (label: any) => {
+    return t ? t(label) : label
+  }
 
   if (valueData.length <= 1) {
     returnedData = {
       options: [
-        { checked: true, disabled: false, label: valueData[0].label, value: valueData[0].value },
+        {
+          checked: true,
+          disabled: false,
+          label: valueData[0].label,
+          value: translateValue(valueData[0].value),
+        },
       ],
     }
   } else {
@@ -16,15 +29,15 @@ export const createRadioGroupData = (valueData: RadioGroupProps['options']): Rad
           return {
             checked: true,
             disabled: false,
-            label: el.label,
-            value: el.value,
+            label: translateValue(el.label),
+            value: translateValue(el.value),
           }
         } else {
           return {
             checked: false,
             disabled: false,
-            label: el.label,
-            value: el.value,
+            label: translateValue(el.label),
+            value: translateValue(el.value),
           }
         }
       }),
