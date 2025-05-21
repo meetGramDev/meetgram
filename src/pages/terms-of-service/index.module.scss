@@ -16,3 +16,9 @@
   font: var(--font-regular-small);
   text-align: center;
 }
+
+@media (width <= 40.625rem) {
+  .root {
+    padding: 0 5px;
+  }
+}

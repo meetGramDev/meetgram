@@ -241,6 +241,7 @@ export const PostView = ({ isFollowing, isOpen, onEdit, open, post, postId, user
               </div>
               <div className={s.date}>{dateOfCreate(post.createdAt)}</div>
             </div>
+
             {isAuth && (
               <div className={s.commentContainer}>
                 <TextArea
