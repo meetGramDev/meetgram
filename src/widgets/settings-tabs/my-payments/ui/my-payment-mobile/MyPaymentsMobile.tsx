@@ -21,26 +21,24 @@ export const MyPaymentsMobile = () => {
             <div className={s.wrapper} key={i}>
               <ul className={s.unOrderList}>
                 <li className={s.list}>
-                  <text>{t('Date of Payment')}:</text>
-                  <text>{dateFormatting(el.dateOfPayment, { locale: locale || 'en' })}</text>
+                  <p>{t('Date of Payment')}:</p>
+                  <p>{dateFormatting(el.dateOfPayment, { locale: locale || 'en' })}</p>
                 </li>
                 <li className={s.list}>
-                  <text>{t('End date of subscription')}:</text>
-                  <text>
-                    {dateFormatting(el.endDateOfSubscription, { locale: locale || 'en' })}
-                  </text>
+                  <p>{t('End date of subscription')}:</p>
+                  <p>{dateFormatting(el.endDateOfSubscription, { locale: locale || 'en' })}</p>
                 </li>
                 <li className={s.list}>
-                  <text>{t('Price')}</text>
-                  <text>{'$ ' + el.price}</text>
+                  <p>{t('Price')}</p>
+                  <p>{'$ ' + el.price}</p>
                 </li>
                 <li className={s.list}>
-                  <text>{t('Subscription Type')}:</text>
-                  <text>{formatSubscriptionType(el.subscriptionType)}</text>
+                  <p>{t('Subscription Type')}:</p>
+                  <p>{formatSubscriptionType(el.subscriptionType)}</p>
                 </li>
                 <li className={s.list}>
-                  <text>{t('Payment Type')}:</text>
-                  <text>{formatPaymentType(el.paymentType)}</text>
+                  <p>{t('Payment Type')}:</p>
+                  <p>{formatPaymentType(el.paymentType)}</p>
                 </li>
               </ul>
             </div>
