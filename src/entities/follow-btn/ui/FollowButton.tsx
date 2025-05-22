@@ -102,7 +102,7 @@ export const FollowButton = ({
   }
 
   return (
-    <div className={'ml-auto'}>
+    <div className={'sm:ml-auto'}>
       {!isAuthUser && content}
 
       {confirmUnfollow && (
