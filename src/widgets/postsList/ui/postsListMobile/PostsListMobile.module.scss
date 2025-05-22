@@ -4,11 +4,12 @@ $max-post-width: 17.25rem;
 
 .postsList {
   display: grid;
-  grid-template-columns: repeat(3, minmax(7.5rem, $max-post-width));
-  gap: 0.75rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
   place-content: start center;
   justify-items: center;
 
+  margin-bottom: 2rem;
   padding: 0 1rem;
 }
 
@@ -19,6 +20,9 @@ $max-post-width: 17.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  width: var(--pictureSize);
+  height: var(--pictureSize);
 
   border-radius: 2px;
 

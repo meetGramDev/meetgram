@@ -3,6 +3,7 @@ import { selectCurrentUserId, selectIsUserAuth } from '@/entities/user'
 import { PROFILE, PUBLIC_PAGE } from '@/shared/config/router'
 import { useAppSelector } from '@/shared/config/storeHooks'
 import { LangSwitcher } from '@/widgets/langSwitcher'
+import { NotificationsView } from '@/widgets/notificationsView/ui/NotificationsView'
 import { MobileSidebarSelector } from '@/widgets/sidebar'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -23,6 +24,7 @@ export const MobileHeader = ({ className }: Props) => {
         Meetgram
       </Link>
       <div className={s.controls}>
+        {isAuth && <NotificationsView />}
         <LangSwitcher />
         {isAuth && <MobileSidebarSelector />}
       </div>

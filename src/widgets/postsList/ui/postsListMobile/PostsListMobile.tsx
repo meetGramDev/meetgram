@@ -19,7 +19,8 @@ export const PostsListMobile = ({ isFollowing, post, posts, userId }: PostListPr
 
   const [openEdit, setOpenEdit] = useState(false)
   const [openCloseEditingPost, setOpenCloseEditingPost] = useState(false)
-
+  /* give a size for post picture*/
+  const width = window.screen.availWidth / 16 / 3.26
   const handleEditPostDialog = ({ isDirty, isSuccess }: OnOpenChangeArgs) => {
     if (!isDirty) {
       setOpenEdit(false)
@@ -50,7 +51,11 @@ export const PostsListMobile = ({ isFollowing, post, posts, userId }: PostListPr
   return (
     <div className={s.postsList}>
       {posts?.map((post, i) => (
-        <div className={s.item} key={post.id}>
+        <div
+          className={s.item}
+          key={post.id}
+          style={{ '--pictureSize': width + 'rem' } as React.CSSProperties}
+        >
           <Link href={`/profile/${router.query.userId}?postId=${post.id}&isOpenPost=true`}>
             {post.images.length > 0 && (
               <Post
