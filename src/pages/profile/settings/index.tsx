@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useMediaQuery } from 'react-responsive'
 
 import { PROFILE_SETTINGS } from '@/shared/config/router'
 import { useTranslate } from '@/shared/lib/useTranslate'
@@ -6,6 +7,7 @@ import { NextPageWithLayout } from '@/shared/types'
 import { TabContent, TabSwitcher, TabType } from '@/shared/ui'
 import { getMainLayout } from '@/widgets/layouts'
 import { AccountManagement, MyPayments, UserSettings } from '@/widgets/settings-tabs'
+import { MyPaymentsMobile } from '@/widgets/settings-tabs/my-payments/ui/my-payment-mobile/MyPaymentsMobile'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 
@@ -48,6 +50,7 @@ const Settings: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerS
 }) => {
   const tabs: TabType[] = useTabs()
   const router = useRouter()
+  const isMobile = useMediaQuery({ query: '(max-width:40.625rem)' })
 
   const handleTabChange = (value: string) => {
     if (value === tabs[0].value) {
@@ -71,7 +74,7 @@ const Settings: NextPageWithLayout<InferGetServerSidePropsType<typeof getServerS
         </TabContent>
 
         <TabContent value={tabs[3].value}>
-          <MyPayments />
+          {isMobile ? <MyPaymentsMobile /> : <MyPayments />}
         </TabContent>
       </TabSwitcher>
     </div>
