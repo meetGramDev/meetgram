@@ -4,9 +4,9 @@ pipeline {
     agent any
     environment {
         ENV_TYPE = "production"
-        PORT = 3421
-        NAMESPACE = "meetgrams-online"
-        REGISTRY_HOSTNAME = "alexivanovdev"
+        PORT = 3888
+        NAMESPACE = "meetgram-org"
+        REGISTRY_HOSTNAME = "m1rade"
         REGISTRY = "registry.hub.docker.com"
         PROJECT = "meetgram"
         DEPLOYMENT_NAME = "meetgram-deployment"
@@ -33,7 +33,7 @@ pipeline {
              steps {
                  echo "Push image started..."
                      script {
-                          docker.withRegistry("https://${env.REGISTRY}", 'meetgrams-online') {
+                          docker.withRegistry("https://${env.REGISTRY}", 'meetgram-org') {
                             app.push("${env.IMAGE_NAME}")
                         }
                      }
