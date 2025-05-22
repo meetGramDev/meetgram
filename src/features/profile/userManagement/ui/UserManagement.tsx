@@ -1,10 +1,10 @@
-import { MouseEventHandler, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { ServerMessagesType } from '@/shared/api'
 import { PayPal } from '@/shared/assets/icons/PayPal'
 import { Stripe } from '@/shared/assets/icons/Stripe'
-import { dateFormatting, serverErrorHandler, useClientProgress } from '@/shared/lib'
+import { dateFormatting, serverErrorHandler, useClientProgress, useTranslate } from '@/shared/lib'
 import { Button, RadioGroup, RadioGroupProps } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
@@ -34,11 +34,13 @@ export const UserManagement = () => {
     useCancelAutoRenewalMutation()
   const locale = useRouter().locale
 
+  const t = useTranslate()
+
   const router = useRouter()
   let newCostOfPayment
 
   const [radioOptions, setRadioOptions] = useState<RadioGroupProps>(
-    createRadioGroupData(managerItems)
+    createRadioGroupData(managerItems, t)
   )
 
   const [cost, setCost] = useState<RadioGroupProps>({} as RadioGroupProps)
@@ -47,10 +49,14 @@ export const UserManagement = () => {
 
   useEffect(() => {
     if (costOfPaymentData) {
-      newCostOfPayment = changeCostOfPayment(costOfPaymentData)
+      newCostOfPayment = changeCostOfPayment(costOfPaymentData, t)
       setCost(createRadioGroupData(newCostOfPayment))
     }
-  }, [costOfPaymentData])
+  }, [costOfPaymentData, locale])
+
+  useEffect(() => {
+    setRadioOptions(createRadioGroupData(managerItems, t))
+  }, [locale])
 
   const onValueChange = (value: string) => {
     setRadioOptions({
@@ -122,7 +128,7 @@ export const UserManagement = () => {
     try {
       if (data?.hasAutoRenewal) {
         await cancelAutoRenewal().unwrap()
-        toast.success('Auto-renewal has been turned off')
+        toast.success(t('Auto-renewal has been turned off'))
       }
     } catch (error) {
       const err = serverErrorHandler(error)
@@ -155,11 +161,11 @@ export const UserManagement = () => {
     <>
       {data && costOfPaymentData ? (
         <div className={s.wrapper}>
-          <AccountManagerField fieldTitle={'Current Subscription:'}>
+          <AccountManagerField fieldTitle={`${t('Current Subscription')}:`}>
             {lastDate !== null ? (
               <div className={'flex flex-row gap-16'}>
                 <div className={'flex flex-col gap-3'}>
-                  <p className={'text-light-1000'}>Expire at</p>
+                  <p className={'text-light-1000'}>{t('Expire at')}</p>
                   <span>
                     {dateFormatting(lastDate.endDateOfSubscription, { locale: locale || 'en' })}
                   </span>
@@ -177,7 +183,7 @@ export const UserManagement = () => {
                 )}
               </div>
             ) : (
-              'You do not have subscriptions'
+              t('You do not have subscriptions')
             )}
           </AccountManagerField>
           {data && data.data && data.data.length > 0 && (
@@ -187,15 +193,15 @@ export const UserManagement = () => {
               onClick={cancelAutoRenewalHandler}
               variant={'secondary'}
             >
-              {data?.hasAutoRenewal ? 'Cancel Auto-Renewal' : 'Auto-Renewal disabled'}
+              {data?.hasAutoRenewal ? t('Cancel Auto-Renewal') : t('Auto-Renewal disabled')}
             </Button>
           )}
-          <AccountManagerField fieldTitle={'Account type:'}>
+          <AccountManagerField fieldTitle={`${t('Account type')}:`}>
             <RadioGroup onValueChange={onValueChange} options={radioOptions.options} />
           </AccountManagerField>
           <form>
             {radioOptions.options[1].checked && (
-              <AccountManagerField fieldTitle={'Change your subscription:'}>
+              <AccountManagerField fieldTitle={`${t('Change your subscription')}:`}>
                 <RadioGroup
                   className={s.radioGroup}
                   onValueChange={onValueChangeSubscriptionHandler}
@@ -215,7 +221,7 @@ export const UserManagement = () => {
                   >
                     <PayPal />
                   </Button>
-                  or
+                  {t('Or')}
                   <Button
                     className={s.paymentButton}
                     onClick={e => onPaymentClickHandler(e, 'STRIPE')}

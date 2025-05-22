@@ -170,3 +170,25 @@
     outline: none;
   }
 }
+
+@media (width <= 40.625rem) {
+  .hearts {
+    margin-left: 0.25rem;
+  }
+
+  .answerItems {
+    justify-content: center;
+  }
+
+  .answerContent {
+    width: 60vw;
+  }
+
+  .answerContainer {
+    justify-content: start;
+  }
+
+  .answersContainer {
+    overflow-x: hidden;
+  }
+}
