@@ -12,6 +12,7 @@ export const en = {
     },
     "About me": "About me",
     "Account Management": "Account Management",
+    "Account type": "Account type:",
     'Add Photo': 'Add Photo',
     "Add a Comment": "Add a Comment",
     "Add a Profile Photo": "Add a Profile Photo",
@@ -22,14 +23,20 @@ export const en = {
     "Are you sure you want to delete the photo?": "Are you sure you want to delete the photo?",
     "Are you sure you want to delete this post?": "Are you sure you want to delete this post?",
     "August": "August",
+    "Auto-Renewal disabled": "Auto-Renewal disabled",
+    "Auto-renewal has been turned off": "Auto-renewal has been turned off",
     "Avatar": "Avatar",
+    "Business": "Business",
+    "Cancel Auto-Renewal": "Cancel Auto-Renewal",
     "Change profile photo": "Change profile photo",
+    "Change your subscription": "Change your subscription",
     "City": "City",
     'Close': 'Close',
     "Congratulations!": "Congratulations!",
     "Copy Link": "Copy Link",
     "Country": "Country",
     "Cropping": "Cropping",
+    "Current Subscription": "Current Subscription",
     "Date of Payment": "Date of Payment",
     "Date of birth": "Date of birth",
     "December": "December",
@@ -42,6 +49,7 @@ export const en = {
     "Email sent": "Email sent",
     "Email verification link expired": "Email verification link expired",
     "End date of subscription": "End date of subscription",
+    "Expire at": "Expire at",
     "February": "February",
     "Filters": "Filters",
     "First Name": "First Name",
@@ -69,8 +77,10 @@ export const en = {
     "November": "November",
     "October": "October",
     "Ok": "Ok",
+    "Or": "Or",
     "Owner avatar": "Owner avatar",
     "Payment Type": "Payment Type",
+    "Personal": "Personal",
     "Post added successfully.": "Post added successfully.",
     "Price": "Price",
     "Profile Settings": "Profile Settings",
@@ -94,6 +104,7 @@ export const en = {
     "Unfollow": "Unfollow",
     "We have sent a link to confirm your email to": "We have sent a link to confirm your email to ",
     "Yes": "Yes",
+    "You do not have subscriptions": "You do not have subscriptions",
     "Your email has been confirmed": "Your email has been confirmed",
     button: {
         Button: 'Button',
@@ -105,7 +116,8 @@ export const en = {
         passwordConfirmation: 'Password confirmation',
         passwordTerm: 'Your password must be between 6 and 20 characters',
     },
-    errorsTr: {
+
+        errorsTr: {
 
         errorEmail: {InvalidEmail: 'Invalid email'},
         errorNewPassword: {
@@ -126,7 +138,8 @@ export const en = {
             wrongUsername: 'Wrong username'
         },
     },
-   forgoPasswordForm: {
+
+    forgoPasswordForm: {
         again: ' Again',
         backSignIn: 'Back to Sign In',
         email: 'Email',
@@ -137,9 +150,11 @@ export const en = {
         sendAgain: 'If you do not receive an email send link again.',
         sendLink: 'Send Link',
         sendLinkDialog: 'We have sent a link to confirm your email to',
-    }
-  ,
+    },
     language: 'English',
+    "per 1 day": "per 1 day",
+    "per 7 days": "per 7 days",
+    "per month": "per month",
     policies: {
         "Privacy Policy": "Privacy Policy",
         "Terms Of Service": "Terms Of Service",

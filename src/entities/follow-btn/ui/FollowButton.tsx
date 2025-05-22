@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { selectCurrentUser } from '@/entities/user'
 import { ConfirmClosingDialog } from '@/shared/components/dialog'
 import { useAppSelector } from '@/shared/config/storeHooks'
+import { useTranslate } from '@/shared/lib'
 import { Button, Dialog } from '@/shared/ui'
 import { useRouter } from 'next/router'
 
@@ -27,6 +28,7 @@ export const FollowButton = ({
   userId,
   userName,
 }: Props) => {
+  const t = useTranslate()
   const authUser = useAppSelector(selectCurrentUser)
   const isAuthUser = authUser.userId === userId
   const { query } = useRouter()
@@ -71,7 +73,7 @@ export const FollowButton = ({
             onClick={handleOnFollow}
             variant={isFollowing ? 'outlined' : 'primary'}
           >
-            {isFollowing ? 'Unfollow' : 'Follow'}
+            {isFollowing ? t('Unfollow') : t('Follow')}
           </Button>
         )}
         {isMyPage && isFollowedBy && (
@@ -95,7 +97,7 @@ export const FollowButton = ({
           onClick={handleOnFollow}
           variant={isFollowing ? 'outlined' : 'primary'}
         >
-          {isFollowing ? 'Unfollow' : 'Follow'}
+          {isFollowing ? t('Unfollow') : t('Follow')}
         </Button>
       </>
     )

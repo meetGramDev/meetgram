@@ -41,3 +41,13 @@
   width: 24px;
   height: 24px;
 }
+
+@media (width <= 40.625rem) {
+  .overlay {
+    background-color: rgb(0 0 0 / 10%);
+  }
+
+  .content {
+    border-top: none;
+  }
+}
