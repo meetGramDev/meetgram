@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { Profile } from '@/entities/user'
@@ -10,6 +10,8 @@ import { useChangeZodErrorLang } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
+import { OptionType } from '@/shared/ui/select/option'
+import { City, Country, ICity, ICountry } from 'country-state-city'
 import { useRouter } from 'next/router'
 
 import s from './UserSettings.module.scss'
@@ -25,6 +27,28 @@ type Props = {
 
 export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   const [start, setStart] = useState<Date | null | undefined>(null)
+
+  const unfilteredCountries = useMemo(() => Country.getAllCountries(), [])
+  const countries: OptionType[] = useMemo(
+    () =>
+      unfilteredCountries.map(country => {
+        return { label: country.name, value: country.isoCode }
+      }),
+    []
+  )
+
+  const [currentCountry, setCurrentCountry] = useState(data.country)
+  const [currentCity, setCurrentCity] = useState(null)
+
+  const unfilteredCities = useMemo(() => City.getCitiesOfCountry(currentCountry), [])
+
+  const cities: OptionType[] = useMemo(
+    () =>
+      unfilteredCities?.map(city => {
+        return { label: city.name, value: city.name }
+      }),
+    []
+  )
 
   const { locale } = useRouter()
 
@@ -135,7 +159,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
               <Select
                 contentClassName={s.scrollSelect}
                 label={t('Select your country')}
-                onValueChange={onChange}
+                onValueChange={e => {
+                  onChange(e)
+                  setCurrentCountry(e)
+                }}
                 options={countries}
                 placeholder={t('Country')}
                 rootClassName={s.selectWidth}
@@ -152,6 +179,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
             render={({ field: { onChange, value, ...field } }) => (
               <Select
                 contentClassName={s.scrollSelect}
+                disabled={data.country === null}
                 label={t('Select your city')}
                 onValueChange={onChange}
                 options={cities}
