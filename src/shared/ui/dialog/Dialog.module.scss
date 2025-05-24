@@ -48,6 +48,11 @@
   }
 
   .content {
-    border-top: none;
+    top: 80px;
+    bottom: 40px;
+    left: 0;
+    transform: translate(0, 0);
+
+    background-color: var(--dark-color-700);
   }
 }
