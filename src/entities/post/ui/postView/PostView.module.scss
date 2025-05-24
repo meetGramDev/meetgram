@@ -4,11 +4,11 @@
   .container {
     overflow: hidden auto;
     flex-direction: column;
-    max-height: 85vh;
   }
 
   .fix {
     position: fixed;
+    z-index: 100;
     bottom: 0;
     background-color: var(--dark-color-700);
   }
@@ -22,6 +22,7 @@
   }
 
   .title {
+    margin-left: 1rem;
     border-bottom: none;
   }
 
@@ -31,9 +32,47 @@
 
   .commentContainer {
     width: 80vw;
+    border-top: none;
   }
 
   .shiftPosition {
-    transform: translate(-50%, -50%);
+    transform: translate(0, 0);
+  }
+
+  .publishButton {
+    all: unset;
+
+    z-index: 100;
+
+    box-sizing: border-box;
+    min-width: 100%;
+
+    color: var(--primary-color-700);
+
+    background-color: var(--dark-color-700);
+    border-top: var(--dark-color-100) solid 1px;
+
+    &:hover {
+      color: var(--primary-color-100);
+    }
+
+    &:active {
+      outline: var(--primary-color-700);
+    }
+
+    &:focus-visible {
+      color: var(--primary-color-700);
+      outline: none;
+    }
+  }
+
+
+  .commentsField {
+    padding: 1.18rem 1rem 0;
+  }
+
+  .iconClose {
+    top: 12px;
+    left: -100%;
   }
 }
