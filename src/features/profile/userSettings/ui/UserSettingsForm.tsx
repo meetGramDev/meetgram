@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { Profile } from '@/entities/user'
@@ -40,15 +40,23 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   const [currentCountry, setCurrentCountry] = useState(data.country)
   const [currentCity, setCurrentCity] = useState(null)
 
-  const unfilteredCities = useMemo(() => City.getCitiesOfCountry(currentCountry), [])
+  const defineCities = (countryIsoCode: string) => {
+    const unfilteredCities = City.getCitiesOfCountry(countryIsoCode)
+    const cities: OptionType[] = unfilteredCities?.map(city => {
+      return { label: city.name, value: city.name }
+    })
 
-  const cities: OptionType[] = useMemo(
-    () =>
-      unfilteredCities?.map(city => {
-        return { label: city.name, value: city.name }
-      }),
-    []
-  )
+    return cities
+  }
+  //const unfilteredCities = useMemo(() => City.getCitiesOfCountry(currentCountry), [])
+
+  // const cities: OptionType[] = useMemo(
+  //   () =>
+  //     unfilteredCities?.map(city => {
+  //       return { label: city.name, value: city.name }
+  //     }),
+  //   []
+  // )
 
   const { locale } = useRouter()
 
@@ -66,6 +74,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
     setError,
     touchedFields,
     trigger,
+    watch,
   } = useUserSettings(errorsTr, data)
 
   const isDisabled = !isValid || !isDirty || (start !== null && !validAge(Number(start)))
@@ -86,6 +95,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   }, [error, setError, getValues])
 
   useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName), [locale || 'en'])
+
+  const countryWatcher = watch('country')
+
+  console.log(countryWatcher)
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
@@ -179,10 +192,10 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
             render={({ field: { onChange, value, ...field } }) => (
               <Select
                 contentClassName={s.scrollSelect}
-                disabled={data.country === null}
+                disabled={!countryWatcher}
                 label={t('Select your city')}
                 onValueChange={onChange}
-                options={cities}
+                options={defineCities(countryWatcher)}
                 placeholder={t('City')}
                 rootClassName={s.selectWidth}
                 value={value}

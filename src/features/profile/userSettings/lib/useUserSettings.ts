@@ -39,6 +39,7 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
     register,
     setError,
     trigger,
+    watch,
   } = useForm<UserSettingsFormData>({
     defaultValues: {
       aboutMe: data.aboutMe ?? '',
@@ -64,5 +65,6 @@ export const useUserSettings = (errorsTr: ErrorsTr, data: Profile) => {
     setError,
     touchedFields,
     trigger,
+    watch,
   }
 }
