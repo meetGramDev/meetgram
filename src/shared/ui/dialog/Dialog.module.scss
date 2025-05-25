@@ -41,3 +41,18 @@
   width: 24px;
   height: 24px;
 }
+
+@media (width <= 40.625rem) {
+  .overlay {
+    background-color: rgb(0 0 0 / 10%);
+  }
+
+  .content {
+    top: 80px;
+    bottom: 40px;
+    left: 0;
+    transform: translate(0, 0);
+
+    background-color: var(--dark-color-700);
+  }
+}

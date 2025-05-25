@@ -61,8 +61,8 @@ export const DialogWindow = ({ className, dialoguePartnerId }: Props) => {
     },
     {
       root: containerRef.current,
-      rootMargin: `100px`,
-      threshold: 0.3,
+      rootMargin: `200px`,
+      threshold: 0.1,
     }
   )
 

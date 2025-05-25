@@ -1,1 +1,1 @@
-export { MyPayments } from './ui/MyPayments'
+export { MyPayments } from './ui/my-payment-desktop/MyPayments'

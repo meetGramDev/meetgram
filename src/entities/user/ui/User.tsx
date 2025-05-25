@@ -73,6 +73,7 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
             </div>
           )}
           {'publicationsCount' in userData && (
+            /*todo тут те що я шукав */
             <div className={s.buttonPublications}>
               <FollowersView
                 followCount={userData.followingCount}
@@ -105,10 +106,26 @@ export const User = ({ disabledFollowBtn, onFollow, userData }: Props) => {
         </div>
       </div>
       {isMobile && (
-        <div className={s.userName}>
-          <h1 className={s.userNameTitle}>{userData.userName}</h1>
-          <div className={s.aboutMeText}>{userData?.aboutMe}</div>
-        </div>
+        <>
+          <div className={s.userName}>
+            <h1 className={s.userNameTitle}>{userData.userName}</h1>
+            {currentUserId !== userData.id && 'isFollowing' in userData && (
+              <div className={s.profileActions}>
+                <FollowButton
+                  disabled={disabledFollowBtn}
+                  isFollowing={userData.isFollowing}
+                  onFollow={onFollow}
+                  userId={userData.id}
+                  userName={userData.userName}
+                />
+                <Button as={Link} href={'#'} variant={'secondary'}>
+                  {t('Send message')}
+                </Button>
+              </div>
+            )}
+            <div className={s.aboutMeText}>{userData?.aboutMe}</div>
+          </div>
+        </>
       )}
     </div>
   )
