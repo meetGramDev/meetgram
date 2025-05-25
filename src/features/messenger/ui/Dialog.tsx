@@ -47,9 +47,11 @@ export const Dialog = ({
             }}
           />
           <div className={'grid w-full grid-cols-2 grid-rows-2 gap-2'}>
-            <p className={'place-self-start font-bold'}>{dialog.userName}</p>
-            <time className={'place-self-end text-light-900'}>
-              {formatDateISOToTime(new Date(dialog.updatedAt), locale, { showTime: false })}
+            <p className={'w-full place-self-start truncate font-bold'}>{dialog.userName}</p>
+            <time className={'-ml-[15px] place-self-end text-small text-light-900'}>
+              {formatDateISOToTime(new Date(dialog.updatedAt), locale, {
+                showTime: false,
+              })}
             </time>
             {!isSelected ? (
               <p
