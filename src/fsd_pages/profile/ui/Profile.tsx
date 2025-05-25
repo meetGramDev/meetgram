@@ -38,6 +38,7 @@ export const Profile = ({ id, isPublic = false, post, posts, publicUserData, use
       {!isPublic && (
         <>
           {!userProfileLoading && userData ? (
+            /*todo user date (follovers ect)*/
             <User
               disabledFollowBtn={isFollowLoading}
               onFollow={userId => followUser({ selectedUserId: userId })}
@@ -48,7 +49,7 @@ export const Profile = ({ id, isPublic = false, post, posts, publicUserData, use
           )}
         </>
       )}
-
+      {/*todo : побліковані фото*/}
       {!isPublic ? (
         <PostsList isFollowing={userData?.isFollowing} post={post} userId={userData?.id || id} />
       ) : (

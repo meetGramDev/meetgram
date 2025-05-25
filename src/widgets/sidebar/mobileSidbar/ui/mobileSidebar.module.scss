@@ -1,6 +1,7 @@
 .sidebar {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-around;
 
   width: 100vw;
@@ -13,5 +14,13 @@
 .move_item {
   &:nth-child(3) {
     order: 5;
+  }
+
+  &:nth-child(5) {
+    all: unset;
+  }
+
+  &:nth-child(2) {
+    all: unset;
   }
 }

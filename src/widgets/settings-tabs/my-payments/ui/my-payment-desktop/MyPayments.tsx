@@ -9,8 +9,8 @@ import { useRouter } from 'next/router'
 
 import s from './MyPayments.module.scss'
 
-import { formatPaymentType, formatSubscriptionType } from '../lib'
-import { Skeleton } from './skeleton/Skeleton'
+import { formatPaymentType, formatSubscriptionType } from '../../lib'
+import { Skeleton } from '../skeleton/Skeleton'
 
 export const MyPayments = () => {
   const t = useTranslate()

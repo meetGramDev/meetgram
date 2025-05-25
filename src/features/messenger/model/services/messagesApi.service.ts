@@ -115,6 +115,7 @@ export const messagesApi = baseApi.injectEndpoints({
               // добавляем только что отправленное сообщение
               updateCachedData(draft => {
                 draft.items.push(msg)
+                ++draft.totalCount
                 console.log('🟢 Cache was updated')
               })
             }
@@ -124,6 +125,7 @@ export const messagesApi = baseApi.injectEndpoints({
           unsubMessageSent = SocketIoApi.onMessageSent<MessageModelType>(msg => {
             updateCachedData(draft => {
               draft.items.push(msg)
+              ++draft.totalCount
               console.log('🟡 Cache was updated')
             })
 

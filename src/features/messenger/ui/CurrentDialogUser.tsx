@@ -11,11 +11,11 @@ type Props = {
 }
 
 export const CurrentDialogUser = ({ id }: Props) => {
-  const { data, isLoading, isSuccess } = useGetPublicProfileByIdQuery(id ?? skipToken)
+  const { data, isFetching, isSuccess } = useGetPublicProfileByIdQuery(id ?? skipToken)
 
   let innerHtml
 
-  if (isLoading) {
+  if (isFetching) {
     innerHtml = (
       <>
         <div className={'h-[48px] w-[48px] animate-pulse rounded-full bg-dark-100'}></div>
