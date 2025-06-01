@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { Profile } from '@/entities/user'
+import { useGetCountriesQuery } from '@/features/profile/userSettings'
 import { ServerMessagesType } from '@/shared/api'
 import { PRIVACY_POLICY } from '@/shared/config/router'
-import { cities } from '@/shared/const/citiesData'
-import { countries } from '@/shared/const/countriesData'
+//import { cities } from '@/shared/const/citiesData'
+//import { countries } from '@/shared/const/countriesData'
 import { useChangeZodErrorLang } from '@/shared/lib'
 import { translate } from '@/shared/lib/langSwitcher'
 import { useTranslate } from '@/shared/lib/useTranslate'
 import { Button, DatePicker, Input, Select, TextArea } from '@/shared/ui'
 import { OptionType } from '@/shared/ui/select/option'
-import { City, Country, ICity, ICountry } from 'country-state-city'
 import { useRouter } from 'next/router'
 
 import s from './UserSettings.module.scss'
@@ -27,36 +27,6 @@ type Props = {
 
 export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
   const [start, setStart] = useState<Date | null | undefined>(null)
-
-  const unfilteredCountries = useMemo(() => Country.getAllCountries(), [])
-  const countries: OptionType[] = useMemo(
-    () =>
-      unfilteredCountries.map(country => {
-        return { label: country.name, value: country.isoCode }
-      }),
-    []
-  )
-
-  const [currentCountry, setCurrentCountry] = useState(data.country)
-  const [currentCity, setCurrentCity] = useState(null)
-
-  const defineCities = (countryIsoCode: string) => {
-    const unfilteredCities = City.getCitiesOfCountry(countryIsoCode)
-    const cities: OptionType[] = unfilteredCities?.map(city => {
-      return { label: city.name, value: city.name }
-    })
-
-    return cities
-  }
-  //const unfilteredCities = useMemo(() => City.getCitiesOfCountry(currentCountry), [])
-
-  // const cities: OptionType[] = useMemo(
-  //   () =>
-  //     unfilteredCities?.map(city => {
-  //       return { label: city.name, value: city.name }
-  //     }),
-  //   []
-  // )
 
   const { locale } = useRouter()
 
@@ -76,6 +46,17 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
     trigger,
     watch,
   } = useUserSettings(errorsTr, data)
+  const countryWatcher = watch('country')
+
+  const { data: countriesAndCities } = useGetCountriesQuery()
+
+  const countries: OptionType[] = useMemo(
+    () =>
+      countriesAndCities?.data?.map(country => {
+        return { label: country.country, value: country.country }
+      }),
+    [countriesAndCities]
+  )
 
   const isDisabled = !isValid || !isDirty || (start !== null && !validAge(Number(start)))
 
@@ -96,9 +77,13 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName), [locale || 'en'])
 
-  const countryWatcher = watch('country')
+  const cities: OptionType[] = useMemo(() => {
+    const citiesOfCOuntry = countriesAndCities?.data?.find(
+      country => countryWatcher === country.country
+    )
 
-  console.log(countryWatcher)
+    return citiesOfCOuntry?.cities.map(city => ({ label: city, value: city }))
+  }, [countriesAndCities, countryWatcher])
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
@@ -165,25 +150,24 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
       </div>
       <div className={s.locationSelects}>
         <div className={s.selectWrapper}>
-          <Controller
-            control={control}
-            name={'country'}
-            render={({ field: { onChange, value, ...field } }) => (
-              <Select
-                contentClassName={s.scrollSelect}
-                label={t('Select your country')}
-                onValueChange={e => {
-                  onChange(e)
-                  setCurrentCountry(e)
-                }}
-                options={countries}
-                placeholder={t('Country')}
-                rootClassName={s.selectWidth}
-                value={value}
-                {...field}
-              />
-            )}
-          />
+          {countriesAndCities !== undefined && countries !== undefined && (
+            <Controller
+              control={control}
+              name={'country'}
+              render={({ field: { onChange, value, ...field } }) => (
+                <Select
+                  contentClassName={s.scrollSelect}
+                  label={t('Select your country')}
+                  onValueChange={onChange}
+                  options={countries}
+                  placeholder={t('Country')}
+                  rootClassName={s.selectWidth}
+                  value={value}
+                  {...field}
+                />
+              )}
+            />
+          )}
         </div>
         <div className={s.selectWrapper}>
           <Controller
@@ -195,7 +179,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
                 disabled={!countryWatcher}
                 label={t('Select your city')}
                 onValueChange={onChange}
-                options={defineCities(countryWatcher)}
+                options={cities}
                 placeholder={t('City')}
                 rootClassName={s.selectWidth}
                 value={value}

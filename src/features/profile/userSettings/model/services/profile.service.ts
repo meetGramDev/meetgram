@@ -1,18 +1,42 @@
 import { Profile } from '@/entities/user'
 import { baseApi } from '@/shared/api'
+import axios from 'axios'
 
 import { UserSettingsFormData } from '../../lib/useUserSettings'
 
 export const profileService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getCountries: builder.query<any, void>({
+    // getCities: builder.query<CountriesAndCitiesType<string[]>, { country: string }>({
+    //   queryFn: async (arg, api, extraOptions, baseQuery) => {
+    //     try {
+    //       const cities = await axios.get('https://countriesnow.space/api/v0.1/countries/cities', {
+    //         params: {
+    //           country: arg.country,
+    //         },
+    //       })
+    //
+    //       return { data: cities.data.data.map(city => ({ label: city, value: city })) }
+    //     } catch (error) {
+    //       return { error }
+    //     }
+    //   },
+    // }),
+    getCountries: builder.query<CountriesAndCitiesType<CountryAndCity[]>, void>({
       queryFn: async (arg, api, extraOptions, baseQuery) => {
         try {
-          const countries = await fetch('https://restcountries.com/v3.1/all')
+          let count
+          // const countries = await axios.get('https://restcountries.com/v3.1/all').then(res => {
+          //   count = res.data
+          //
+          //   return res.data
+          // })
+          const countries = await axios
+            .get('https://countriesnow.space/api/v0.1/countries')
+            .then(responseData => {
+              count = responseData.data
+            })
 
-          console.log(countries)
-
-          return { data: countries }
+          return { data: count }
         } catch (error) {
           return error
         }
@@ -36,5 +60,109 @@ export const profileService = baseApi.injectEndpoints({
   }),
 })
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = profileService
+export const { useGetCountriesQuery, useGetProfileQuery, useUpdateProfileMutation } = profileService
 export const { getProfile } = profileService.endpoints
+
+// todo types for link https://restcountries.com/v3.1/all
+type CountriesResponseType = {
+  altSpellings: string[]
+  area: number
+  borders: string[]
+  capital: string[]
+  capitalInfo: { latlng: number[] }
+  car: { side: string; signs: string[] }
+  cca2: string
+  cca3: string
+  ccn3: string
+  cioc: string
+  coatOfArms: { png: string; svg: string }
+  continents: string[]
+  currencies: { ERN: { name: string; symbol: string } }
+  demonyms: { eng: { f: string; m: string }; fra: { f: string; m: string } }
+  fifa: string
+  flag: string
+  flags: { alt: string; png: string; svg: string }
+  idd: { root: string; suffixes: string[] }
+  independent: true
+  landlocked: boolean
+  languages: { ara: string; eng: string; tir: string }
+  latlng: number[]
+  maps: { googleMaps: string; openStreetMaps: string }
+  name: {
+    common: string
+    nativeName: {
+      ara: { common: string; official: string }
+      eng: { common: string; official: string }
+      tir: { common: string; official: string }
+    }
+    official: string
+  }
+  population: number
+  postalCode: { format: null; regex: null }
+  region: string
+  startOfWeek: string
+  status: string
+  subregion: string
+  timezones: string[]
+  tld: string[]
+  translations: {
+    ara: TranslationType
+    bre: TranslationType
+    ces: TranslationType
+    cym: TranslationType
+    deu: TranslationType
+    est: TranslationType
+    fin: TranslationType
+    fra: TranslationType
+    hrv: TranslationType
+    hun: TranslationType
+    ind: TranslationType
+    ita: TranslationType
+    jpn: TranslationType
+    kor: TranslationType
+    nld: TranslationType
+    per: TranslationType
+    pol: TranslationType
+    por: TranslationType
+    rus: TranslationType
+    slk: TranslationType
+    spa: TranslationType
+    srp: TranslationType
+    swe: TranslationType
+    tur: TranslationType
+    urd: TranslationType
+    zho: TranslationType
+  }
+  unMember: true
+}
+type TranslationType = { common: string; official: string }
+
+// todo types for link https://countriesnow.space/api/v0.1/countries
+type CountriesAndCitiesType<T> = {
+  data: T
+  error: boolean
+  msg: string
+}
+
+type CountryAndCity = {
+  cities: string[]
+  country: string
+}
+
+//
+// getCountries: builder.query<CountriesResponseType[], void>({
+//   queryFn: async (arg, api, extraOptions, baseQuery) => {
+//     try {
+//       let count
+//       const countries = await axios.get('https://restcountries.com/v3.1/all').then(res => {
+//         count = res.data
+//
+//         return res.data
+//       })
+//
+//       return { data: count }
+//     } catch (error) {
+//       return error
+//     }
+//   },
+// }),
