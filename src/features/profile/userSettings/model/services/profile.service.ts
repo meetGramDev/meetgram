@@ -1,44 +1,44 @@
 import { Profile } from '@/entities/user'
 import { baseApi } from '@/shared/api'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import axios from 'axios'
 
 import { UserSettingsFormData } from '../../lib/useUserSettings'
 
 export const profileService = baseApi.injectEndpoints({
   endpoints: builder => ({
-    // getCities: builder.query<CountriesAndCitiesType<string[]>, { country: string }>({
-    //   queryFn: async (arg, api, extraOptions, baseQuery) => {
-    //     try {
-    //       const cities = await axios.get('https://countriesnow.space/api/v0.1/countries/cities', {
-    //         params: {
-    //           country: arg.country,
-    //         },
-    //       })
-    //
-    //       return { data: cities.data.data.map(city => ({ label: city, value: city })) }
-    //     } catch (error) {
-    //       return { error }
-    //     }
-    //   },
-    // }),
     getCountries: builder.query<CountriesAndCitiesType<CountryAndCity[]>, void>({
-      queryFn: async (arg, api, extraOptions, baseQuery) => {
+      queryFn: async () => {
         try {
-          let count
+          //todo второй вариант запросов на сервер для городов и стран
           // const countries = await axios.get('https://restcountries.com/v3.1/all').then(res => {
           //   count = res.data
-          //
           //   return res.data
           // })
-          const countries = await axios
-            .get('https://countriesnow.space/api/v0.1/countries')
-            .then(responseData => {
-              count = responseData.data
-            })
+          const countries = await axios.get<{
+            data: CountryAndCity[]
+            error: boolean
+            msg: string
+          }>('https://countriesnow.space/api/v0.1/countries')
+          const countData: CountriesAndCitiesType<CountryAndCity[]> = {
+            data: countries.data.data,
+            error: countries.data.error,
+            msg: countries.data.msg,
+          }
 
-          return { data: count }
-        } catch (error) {
-          return error
+          return { data: countData }
+        } catch (error: any) {
+          return {
+            //todo ока непонятно как обработать ошибку с сервера
+            // error: {
+            //   data: error.responce?.data || error.message,
+            //   status: error.responce?.status || 500,
+            // },
+            error: {
+              data: error,
+              status: error.status,
+            } as FetchBaseQueryError,
+          }
         }
       },
     }),
@@ -147,6 +147,8 @@ type CountriesAndCitiesType<T> = {
 type CountryAndCity = {
   cities: string[]
   country: string
+  iso2: string
+  iso3: string
 }
 
 //

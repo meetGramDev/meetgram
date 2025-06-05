@@ -50,7 +50,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   const { data: countriesAndCities } = useGetCountriesQuery()
 
-  const countries: OptionType[] = useMemo(
+  const countries: OptionType[] | undefined = useMemo(
     () =>
       countriesAndCities?.data?.map(country => {
         return { label: country.country, value: country.country }
@@ -77,7 +77,7 @@ export const UserSettingsForm = ({ data, error, onSubmit }: Props) => {
 
   useChangeZodErrorLang(touchedFields, fieldName => trigger(fieldName), [locale || 'en'])
 
-  const cities: OptionType[] = useMemo(() => {
+  const cities: OptionType[] | undefined = useMemo(() => {
     const citiesOfCOuntry = countriesAndCities?.data?.find(
       country => countryWatcher === country.country
     )
